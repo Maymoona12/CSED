@@ -46,7 +46,7 @@ export default function SignInSide() {
         <Grid item xs={12} sm={4} md={7}>
           {/* Make the logo smaller and place it in the top left corner */}
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '16px' }}>
-            <img src="Images\Logo.png" alt="Logo" style={{ width: '400px', height: 'auto' }} />
+            <img src="Images\Logo.png" alt="Logo" style={{ width: '500px', height: 'auto' }} />
             <Typography variant="h1" sx={{ mt: 2, color: 'purple', textAlign: 'center',fontFamily: 'Brush script MT' }}>
               Welcome
             </Typography>
