@@ -23,15 +23,13 @@ function Copyright(props) {
     >
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        CSED
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
     </Typography>
   );
 }
-
-// TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
@@ -40,32 +38,48 @@ export default function Signup() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
+      username: data.get("user_name"),
       email: data.get("email"),
       password: data.get("password"),
+      conform_password: data.get("conform_password"),
     });
   };
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Grid container component="main" sx={{ height: "100vh" }}>
+      <Grid
+        container
+        component="main"
+        sx={{ height: "100vh", alignItems: "flex-start" }}
+      >
         <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            backgroundImage:
-              "url(https://source.unsplash.com/random?wallpapers)",
-            backgroundRepeat: "no-repeat",
-            backgroundColor: (t) =>
-              t.palette.mode === "light"
-                ? t.palette.grey[50]
-                : t.palette.grey[900],
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
+        <Grid item xs={12} sm={4} md={7}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              margin: "16px",
+            }}
+          >
+            <img
+              src="./Images/Logo.png"
+              alt="Logo"
+              style={{ width: "500px", height: "auto" }}
+            />
+            <Typography
+              variant="h1"
+              sx={{
+                mt: 2,
+                color: "purple",
+                textAlign: "center",
+                fontFamily: "Brush Script MT",
+              }}
+            >
+              Welcome
+            </Typography>
+          </Box>
+        </Grid>
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
@@ -80,7 +94,7 @@ export default function Signup() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              Sign Up
             </Typography>
             <Box
               component="form"
@@ -88,6 +102,16 @@ export default function Signup() {
               onSubmit={handleSubmit}
               sx={{ mt: 1 }}
             >
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="user_name"
+                label="User Name"
+                name="user_name"
+                autoComplete="user_name"
+                autoFocus
+              />
               <TextField
                 margin="normal"
                 required
@@ -108,6 +132,16 @@ export default function Signup() {
                 id="password"
                 autoComplete="current-password"
               />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="conform_password"
+                label="Conform Password"
+                type="password"
+                id="conform_password"
+                autoComplete="current-password"
+              />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
@@ -118,17 +152,12 @@ export default function Signup() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
+                Sign Up
               </Button>
               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2">
                     Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
               </Grid>
