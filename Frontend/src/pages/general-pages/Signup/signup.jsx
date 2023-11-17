@@ -12,6 +12,7 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import "./style.css";
 
 function Copyright(props) {
   return (
@@ -50,7 +51,7 @@ export default function Signup() {
       <Grid
         container
         component="main"
-        sx={{ height: "100vh", alignItems: "flex-start" }}
+        sx={{ height: "100%", alignItems: "flex-start" }}
       >
         <CssBaseline />
         <Grid item xs={12} sm={4} md={7}>
@@ -71,7 +72,7 @@ export default function Signup() {
               variant="h1"
               sx={{
                 mt: 2,
-                color: "purple",
+                color: "black",
                 textAlign: "center",
                 fontFamily: "Brush Script MT",
               }}
@@ -88,9 +89,11 @@ export default function Signup() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
+              padding: "60px",
+              margin: "0px 0px",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <Avatar sx={{ m: 1, bgcolor: "black" }}>
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
@@ -120,7 +123,6 @@ export default function Signup() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                autoFocus
               />
               <TextField
                 margin="normal"
@@ -147,16 +149,30 @@ export default function Signup() {
                 label="Remember me"
               />
               <Button
+                className="signup"
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{
+                  mt: 3,
+                  mb: 2,
+                  background: "black",
+                  "&:hover": {
+                    background: "black",
+                  },
+                }}
               >
                 Sign Up
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
+                  <Link
+                    href="#"
+                    variant="body2"
+                    sx={{
+                      color: "black",
+                    }}
+                  >
                     Forgot password?
                   </Link>
                 </Grid>
