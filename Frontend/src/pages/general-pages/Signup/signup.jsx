@@ -12,7 +12,8 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import "./style.css";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 function Copyright(props) {
   return (
@@ -38,11 +39,19 @@ export default function Signup() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    const password = data.get("password");
+    const conformPassword = data.get("conform_password");
+
+    if (password !== conformPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
     console.log({
       username: data.get("user_name"),
       email: data.get("email"),
-      password: data.get("password"),
-      conform_password: data.get("conform_password"),
+      password,
+      conform_password: conformPassword,
     });
   };
 
@@ -89,8 +98,8 @@ export default function Signup() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              padding: "60px",
-              margin: "0px 0px",
+              padding: "70px",
+              margin: "auto",
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: "black" }}>
@@ -164,19 +173,6 @@ export default function Signup() {
               >
                 Sign Up
               </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link
-                    href="#"
-                    variant="body2"
-                    sx={{
-                      color: "black",
-                    }}
-                  >
-                    Forgot password?
-                  </Link>
-                </Grid>
-              </Grid>
               <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>

@@ -13,6 +13,11 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>
+        {/* <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/passwordpage" element={<ForgotPassword />} />
+          <Route path="/signup" element={<Signup />} />
+        </Routes> */}
       </Router>
     </>
   );
