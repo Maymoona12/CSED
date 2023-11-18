@@ -14,7 +14,19 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+// function Alert(props) {
+//   return <MuiAlert elevation={6} variant="filled" {...props} />;
+// }
 
+// function getPasswordStrength(password) {
+//   if (password.length < 6) {
+//     return "Weak";
+//   } else if (password.length < 10) {
+//     return "Medium";
+//   } else {
+//     return "Strong";
+//   }
+// }
 function Copyright(props) {
   return (
     <Typography
@@ -36,6 +48,23 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function Signup() {
+  // const [passwordStrength, setPasswordStrength] = React.useState("");
+  // const [openSnackbar, setOpenSnackbar] = React.useState(false);
+
+  // const handlePasswordChange = (event) => {
+  //   const password1 = event.target.value;
+  //   const strength = getPasswordStrength(password1);
+  //   setPasswordStrength(strength);
+
+  //   setOpenSnackbar(true);
+  // };
+  // const handleSnackbarClose = (event, reason) => {
+  //   event.preventDefault();
+  //   if (reason === "clickaway") {
+  //     return;
+  //   }
+  //   setOpenSnackbar(false);
+  // };
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -142,6 +171,7 @@ export default function Signup() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                // onChange={handlePasswordChange}
               />
               <TextField
                 margin="normal"
@@ -175,6 +205,15 @@ export default function Signup() {
               </Button>
               <Copyright sx={{ mt: 5 }} />
             </Box>
+            {/* <Snackbar
+              open={openSnackbar}
+              autoHideDuration={6000}
+              onClose={handleSnackbarClose}
+            >
+              <Alert severity="info">
+                Password Strength: {passwordStrength}
+              </Alert>
+            </Snackbar> */}
           </Box>
         </Grid>
       </Grid>
