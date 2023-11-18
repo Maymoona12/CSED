@@ -12,6 +12,7 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Link as RouterLink } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -142,26 +143,28 @@ export default function Login() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link
+                  <RouterLink
                     to="/passwordpage"
                     variant="body2"
-                    sx={{
+                    style={{
                       color: "black",
+                      textDecoration: "none",
                     }}
                   >
                     Forgot password?
-                  </Link>
+                  </RouterLink>
                 </Grid>
                 <Grid item>
-                  <Link
+                  <RouterLink
                     to="/signup"
                     variant="body2"
-                    sx={{
+                    style={{
                       color: "black",
+                      textDecoration: "none",
                     }}
                   >
                     {"Don't have an account? Sign Up"}
-                  </Link>
+                  </RouterLink>
                 </Grid>
               </Grid>
               <Copyright sx={{ mt: 5 }} />

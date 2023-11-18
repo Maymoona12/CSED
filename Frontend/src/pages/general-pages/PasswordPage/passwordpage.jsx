@@ -1,18 +1,18 @@
-import React from 'react';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import React from "react";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 
 const ForgotPassword = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     // Implement your password recovery logic here
-    console.log('Password recovery logic goes here');
+    console.log("Password recovery logic goes here");
   };
 
   return (
-    <div style={{paddingLeft:'450px'}}>
-      <Typography component="h1" variant="h4" style={{fontFamily:'serif'}}>
+    <div style={{ paddingLeft: "450px" }}>
+      <Typography component="h1" variant="h4" style={{ fontFamily: "serif" }}>
         Forgot Password
       </Typography>
       <form onSubmit={handleSubmit}>
@@ -26,7 +26,19 @@ const ForgotPassword = () => {
           autoComplete="email"
           autoFocus
         />
-        <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{
+            mt: 3,
+            mb: 2,
+            background: "black",
+            "&:hover": {
+              background: "black",
+            },
+          }}
+        >
           Send Recovery Email
         </Button>
       </form>
