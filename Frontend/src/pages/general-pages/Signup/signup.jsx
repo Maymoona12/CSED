@@ -12,8 +12,8 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Alert, AlertTitle } from "@material-ui/lab";
-import "./style.css";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 function Copyright(props) {
   return (
@@ -43,12 +43,8 @@ export default function Signup() {
     const conformPassword = data.get("conform_password");
 
     if (password !== conformPassword) {
-      return (
-        <Alert severity="error">
-          <AlertTitle>Error</AlertTitle>
-          Passwords do not match!— <strong>check it out!</strong>
-        </Alert>
-      );
+      alert("Passwords do not match!");
+      return;
     }
 
     console.log({
