@@ -67,6 +67,7 @@ export default function Coverpage() {
             height: "auto",
             display: "block",
             margin: "0 auto",
+            marginTop:"9px"
           }}
         />
         <Typography
