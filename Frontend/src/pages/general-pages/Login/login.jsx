@@ -69,7 +69,7 @@ export default function Login() {
               variant="h1"
               sx={{
                 mt: 2,
-                color: "black",
+                color: "purple",
                 textAlign: "center",
                 fontFamily: "Brush script MT",
               }}
