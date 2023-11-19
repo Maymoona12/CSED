@@ -12,21 +12,10 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-// function Alert(props) {
-//   return <MuiAlert elevation={6} variant="filled" {...props} />;
-// }
+import Stack from "@mui/material/Stack";
+import Snackbar from "@mui/material/Snackbar";
 
-// function getPasswordStrength(password) {
-//   if (password.length < 6) {
-//     return "Weak";
-//   } else if (password.length < 10) {
-//     return "Medium";
-//   } else {
-//     return "Strong";
-//   }
-// }
 function Copyright(props) {
   return (
     <Typography
@@ -44,27 +33,23 @@ function Copyright(props) {
     </Typography>
   );
 }
-
+const Alert = (props) => {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+};
 const defaultTheme = createTheme();
 
 export default function Signup() {
-  // const [passwordStrength, setPasswordStrength] = React.useState("");
-  // const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [passwordsMatch, setPasswordsMatch] = React.useState(true);
+  const handleClose = (event, reason) => {
+    event.preventDefault();
+    if (reason === "clickaway") {
+      return;
+    }
 
-  // const handlePasswordChange = (event) => {
-  //   const password1 = event.target.value;
-  //   const strength = getPasswordStrength(password1);
-  //   setPasswordStrength(strength);
+    setOpen(false);
+  };
 
-  //   setOpenSnackbar(true);
-  // };
-  // const handleSnackbarClose = (event, reason) => {
-  //   event.preventDefault();
-  //   if (reason === "clickaway") {
-  //     return;
-  //   }
-  //   setOpenSnackbar(false);
-  // };
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -72,10 +57,10 @@ export default function Signup() {
     const conformPassword = data.get("conform_password");
 
     if (password !== conformPassword) {
-      alert("Passwords do not match!");
+      setOpen(true);
+      setPasswordsMatch(false);
       return;
     }
-
     console.log({
       username: data.get("user_name"),
       email: data.get("email"),
@@ -205,18 +190,23 @@ export default function Signup() {
               </Button>
               <Copyright sx={{ mt: 5 }} />
             </Box>
-            {/* <Snackbar
-              open={openSnackbar}
-              autoHideDuration={6000}
-              onClose={handleSnackbarClose}
-            >
-              <Alert severity="info">
-                Password Strength: {passwordStrength}
-              </Alert>
-            </Snackbar> */}
           </Box>
         </Grid>
       </Grid>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert
+          onClose={() => {
+            handleClose(); // Close the Snackbar when the Alert is closed
+            setPasswordsMatch(true); // Reset the state
+          }}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          {passwordsMatch
+            ? "Password Strength: Weak"
+            : "Passwords do not match!"}
+        </Alert>
+      </Snackbar>
     </ThemeProvider>
   );
 }
