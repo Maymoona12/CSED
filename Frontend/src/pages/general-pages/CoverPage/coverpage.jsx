@@ -7,9 +7,11 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
 const images = [
-  "Images/image1.jpg",
-  "Images/image2.jpg",
-  "Images/image3.jpg",
+  "newphoto1.jpg",
+  "newphoto2.jpg",
+  "newphoto3.jpg",
+  "newphoto4.jpg",
+
   // Add more image paths as needed
 ];
 
@@ -23,13 +25,19 @@ export default function Coverpage() {
     }, 5000);
 
     return () => clearInterval(intervalId); // Cleanup interval on component unmount
-
   }, []);
 
   const currentImage = images[currentImageIndex];
 
   return (
-    <Box sx={{ flexGrow: 1, display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <Box
+      sx={{
+        flexGrow: 1,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
       <AppBar
         position="static"
         style={{ position: "fixed", top: 0, zIndex: 1000 }}
@@ -67,7 +75,7 @@ export default function Coverpage() {
             height: "auto",
             display: "block",
             margin: "0 auto",
-            marginTop:"19px"
+            marginTop: "19px",
           }}
         />
         <Typography
