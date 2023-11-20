@@ -7,10 +7,10 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
 const images = [
-  "newphoto1.jpg",
-  "newphoto2.jpg",
-  "newphoto3.jpg",
-  "newphoto4.jpg",
+  "Images/image1.jpg",
+  "Images/image2.jpg",
+  "Images/image3.jpg",
+  "Images/image5.jpg",
 
   // Add more image paths as needed
 ];
@@ -40,7 +40,13 @@ export default function Coverpage() {
     >
       <AppBar
         position="static"
-        style={{ position: "fixed", top: 0, zIndex: 1000 }}
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 1000,
+        }}
         sx={{ background: "black" }}
       >
         <Toolbar>
@@ -71,11 +77,11 @@ export default function Coverpage() {
           src={currentImage}
           alt="Slideshow"
           style={{
-            width: "100%", // Adjust the width as needed
+            width: "400px", // Adjust the width as needed
             height: "auto",
             display: "block",
             margin: "0 auto",
-            marginTop: "19px",
+            // marginTop: "10px",
           }}
         />
         <Typography
@@ -84,7 +90,9 @@ export default function Coverpage() {
           sx={{
             fontFamily: "Brush Script MT",
             color: "black",
-            margin: "20px", // Adjust the margin as needed
+            margin: "85px",
+            marginTop: "0px",
+            marginBottom: "0px",
           }}
         >
           Welcome to the CSED Community
