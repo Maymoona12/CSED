@@ -12,7 +12,6 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MuiAlert from "@mui/material/Alert";
-import Stack from "@mui/material/Stack";
 import Snackbar from "@mui/material/Snackbar";
 
 const Alert = (props) => {
@@ -37,9 +36,7 @@ export default function Signup() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const password = data.get("password");
-    const conformPassword = data.get("conform_password");
-
+  
     if (password !== conformPassword) {
       setOpen(true);
       setPasswordsMatch(false);
@@ -193,3 +190,4 @@ export default function Signup() {
     </ThemeProvider>
   );
 }
+
