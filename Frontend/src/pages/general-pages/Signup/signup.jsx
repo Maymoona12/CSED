@@ -3,8 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -48,19 +46,19 @@ export default function Signup() {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(enteredEmail)) {
-      setAlertMessage("Invalid email format !");
+      setAlertMessage(" Invalid email format !");
       setOpen(true);
       return;
     }
 
     if (enteredPassword !== enteredConfirmPassword) {
-      setAlertMessage("Passwords do not match !");
+      setAlertMessage(" Passwords do not match !");
       setOpen(true);
       return;
     }
 
     if (!isStrongPassword(enteredPassword)) {
-      setAlertMessage("Password must be strong (at least 8 characters including one uppercase letter, one lowercase letter, one digit, and one special character)!");
+      setAlertMessage("  Password must be strong (at least 8 characters including one uppercase letter one lowercase letter, one digit, and one special character) !");
       setOpen(true);
       return;
     }
@@ -115,8 +113,8 @@ export default function Signup() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              padding: "70px",
-              margin: "auto",
+              padding: "40px",
+              margin: "auto"
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: "black" }}>
@@ -171,10 +169,6 @@ export default function Signup() {
                 id="confirm_password"
                 autoComplete="current-password"
               />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
               <Button
                 className="signup"
                 type="submit"
@@ -197,7 +191,7 @@ export default function Signup() {
       </Grid>
 
       {/* Snackbar outside the grid for global positioning */}
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
+      <Snackbar open={open} autoHideDuration={10000} onClose={handleClose} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
         <div>
           <Alert
             onClose={() => {
@@ -205,7 +199,7 @@ export default function Signup() {
               setAlertMessage("");
             }}
             severity="error"
-            sx={{ width: "100%" }}
+            sx={{ width: "110%"  }}
           >
             {alertMessage}
           </Alert>
