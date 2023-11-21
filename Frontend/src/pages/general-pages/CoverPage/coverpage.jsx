@@ -90,7 +90,7 @@ export default function Coverpage() {
           sx={{
             fontFamily: "Brush Script MT",
             color: "black",
-            margin: "85px",
+            margin: "90px",
             marginTop: "0px",
             marginBottom: "0px",
           }}
