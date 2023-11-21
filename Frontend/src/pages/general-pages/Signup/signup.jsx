@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -11,43 +11,64 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import MuiAlert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 const Alert = (props) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 };
 
+const isStrongPassword = (password) => {
+  // Customize the password strength criteria as needed
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  return passwordRegex.test(password);
+};
+
 const defaultTheme = createTheme();
 
 export default function Signup() {
-  const [open, setOpen] = React.useState(false);
-  const [passwordsMatch, setPasswordsMatch] = React.useState(true);
+  const [open, setOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
   const handleClose = (event, reason) => {
-    event.preventDefault();
     if (reason === "clickaway") {
       return;
     }
-
+  
     setOpen(false);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-  
-    if (password !== conformPassword) {
+
+    const enteredEmail = data.get("email");
+    const enteredPassword = data.get("password");
+    const enteredConfirmPassword = data.get("confirm_password");
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(enteredEmail)) {
+      setAlertMessage("Invalid email format !");
       setOpen(true);
-      setPasswordsMatch(false);
+      return;
+    }
+
+    if (enteredPassword !== enteredConfirmPassword) {
+      setAlertMessage("Passwords do not match !");
+      setOpen(true);
+      return;
+    }
+
+    if (!isStrongPassword(enteredPassword)) {
+      setAlertMessage("Password must be strong (at least 8 characters including one uppercase letter, one lowercase letter, one digit, and one special character)!");
+      setOpen(true);
       return;
     }
 
     console.log({
       username: data.get("user_name"),
-      email: data.get("email"),
-      password,
-      conform_password: conformPassword,
+      email: enteredEmail,
+      password: enteredPassword,
     });
   };
 
@@ -128,6 +149,7 @@ export default function Signup() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                type="email"
               />
               <TextField
                 margin="normal"
@@ -143,10 +165,10 @@ export default function Signup() {
                 margin="normal"
                 required
                 fullWidth
-                name="conform_password"
-                label="Conform Password"
+                name="confirm_password"
+                label="Confirm Password"
                 type="password"
-                id="conform_password"
+                id="confirm_password"
                 autoComplete="current-password"
               />
               <FormControlLabel
@@ -173,21 +195,22 @@ export default function Signup() {
           </Box>
         </Grid>
       </Grid>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        <Alert
-          onClose={() => {
-            handleClose(); // Close the Snackbar when the Alert is closed
-            setPasswordsMatch(true); // Reset the state
-          }}
-          severity="error"
-          sx={{ width: "100%" }}
-        >
-          {passwordsMatch
-            ? "Password Strength: Weak"
-            : "Passwords do not match!"}
-        </Alert>
+
+      {/* Snackbar outside the grid for global positioning */}
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
+        <div>
+          <Alert
+            onClose={() => {
+              handleClose();
+              setAlertMessage("");
+            }}
+            severity="error"
+            sx={{ width: "100%" }}
+          >
+            {alertMessage}
+          </Alert>
+        </div>
       </Snackbar>
     </ThemeProvider>
   );
 }
-
