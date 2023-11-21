@@ -14,23 +14,6 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link as RouterLink } from "react-router-dom";
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="#">
-        CSED
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 const defaultTheme = createTheme();
 
 export default function Login() {
@@ -69,7 +52,7 @@ export default function Login() {
               variant="h1"
               sx={{
                 mt: 2,
-                color: "purple",
+                color: "black",
                 textAlign: "center",
                 fontFamily: "Brush script MT",
               }}
@@ -167,7 +150,6 @@ export default function Login() {
                   </RouterLink>
                 </Grid>
               </Grid>
-              <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
         </Grid>

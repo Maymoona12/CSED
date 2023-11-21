@@ -5,7 +5,6 @@ import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -16,31 +15,16 @@ import MuiAlert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import Snackbar from "@mui/material/Snackbar";
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        CSED
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 const Alert = (props) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 };
+
 const defaultTheme = createTheme();
 
 export default function Signup() {
   const [open, setOpen] = React.useState(false);
   const [passwordsMatch, setPasswordsMatch] = React.useState(true);
+
   const handleClose = (event, reason) => {
     event.preventDefault();
     if (reason === "clickaway") {
@@ -61,6 +45,7 @@ export default function Signup() {
       setPasswordsMatch(false);
       return;
     }
+
     console.log({
       username: data.get("user_name"),
       email: data.get("email"),
@@ -156,7 +141,6 @@ export default function Signup() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                // onChange={handlePasswordChange}
               />
               <TextField
                 margin="normal"
@@ -188,7 +172,6 @@ export default function Signup() {
               >
                 Sign Up
               </Button>
-              <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
         </Grid>
