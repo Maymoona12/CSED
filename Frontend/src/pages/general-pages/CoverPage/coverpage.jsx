@@ -7,10 +7,10 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
 const images = [
-  "Images/image1.jpg",
-  "Images/image2.jpg",
-  "Images/image3.jpg",
-  "Images/image5.jpg",
+  "CoverImages/image1.jpg",
+  "CoverImages/image2.jpg",
+  "CoverImages/image3.jpg",
+  "CoverImages/image5.jpg",
 
   // Add more image paths as needed
 ];

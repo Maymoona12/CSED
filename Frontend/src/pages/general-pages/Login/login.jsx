@@ -43,7 +43,7 @@ export default function Login() {
             }}
           >
             <img
-              src="Images\Logo.png"
+              src="./CoverImages/Logo.png"
               alt="Logo"
               style={{ width: "500px", height: "auto" }}
             />

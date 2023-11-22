@@ -88,7 +88,7 @@ export default function Signup() {
             }}
           >
             <img
-              src="./Images/Logo.png"
+              src="./CoverImages/Logo.png"
               alt="Logo"
               style={{ width: "500px", height: "auto" }}
             />
