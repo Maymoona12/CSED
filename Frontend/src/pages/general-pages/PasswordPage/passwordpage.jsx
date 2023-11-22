@@ -16,23 +16,16 @@ const Alert = (props) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 };
 
-// Function to generate a random verification code
 const generateRandomVerificationCode = () => {
-  // Replace this with your actual logic to generate a verification code
   return Math.floor(1000 + Math.random() * 9000).toString();
 };
 
-// Function to send the verification email
 const sendVerificationEmail = async (email, verificationCode) => {
-  // Replace this with your actual logic to send the verification email
-  // Example: Use a service like Nodemailer or an API to send the email
   console.log(`Sending verification email to ${email} with code ${verificationCode}`);
-  // Example using a hypothetical email sending library:
-  // await emailSendingLibrary.sendEmail(email, "Verification Code", `Your verification code is: ${verificationCode}`);
+  // Example: Use a service like Nodemailer or an API to send the email
 };
 
 const isStrongPassword = (password) => {
-  // Customize the password strength criteria as needed
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   return passwordRegex.test(password);
 };
@@ -42,6 +35,7 @@ const defaultTheme = createTheme();
 export default function Forgotpassword() {
   const [open, setOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
+  const [generatedVerificationCode, setGeneratedVerificationCode] = useState("");
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -51,7 +45,7 @@ export default function Forgotpassword() {
     setOpen(false);
   };
 
-  const handleSubmit = async (event) => {
+  const handleSendVerificationCode = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
@@ -64,10 +58,9 @@ export default function Forgotpassword() {
       return;
     }
 
-    // Generate a random verification code
     const verificationCode = generateRandomVerificationCode();
+    setGeneratedVerificationCode(verificationCode);
 
-    // Send the verification email
     try {
       await sendVerificationEmail(enteredEmail, verificationCode);
       setAlertMessage("Verification code sent successfully!");
@@ -75,6 +68,48 @@ export default function Forgotpassword() {
     } catch (error) {
       console.error("Error sending verification email:", error);
       setAlertMessage("Error sending verification code. Please try again.");
+      setOpen(true);
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+
+    const enteredEmail = data.get("email");
+    const enteredVerificationCode = data.get("verification_code");
+    const enteredNewPassword = data.get("new_password");
+    const enteredConfirmPassword = data.get("confirm_password");
+
+    if (enteredVerificationCode !== generatedVerificationCode) {
+      setAlertMessage("Invalid verification code!");
+      setOpen(true);
+      return;
+    }
+
+    if (enteredNewPassword !== enteredConfirmPassword) {
+      setAlertMessage("Passwords do not match!");
+      setOpen(true);
+      return;
+    }
+
+    if (!isStrongPassword(enteredNewPassword)) {
+      setAlertMessage("Password must meet strength criteria!");
+      setOpen(true);
+      return;
+    }
+
+    try {
+      // Replace the following with your actual logic to update the password
+      console.log(`Updating password for ${enteredEmail} to ${enteredNewPassword}`);
+
+      setAlertMessage("Password updated successfully!");
+      setOpen(true);
+
+      event.target.reset();
+    } catch (error) {
+      console.error("Error updating password:", error);
+      setAlertMessage("Error updating password. Please try again.");
       setOpen(true);
     }
   };
@@ -97,7 +132,7 @@ export default function Forgotpassword() {
             }}
           >
             <img
-              src="./Images/Logo.png"
+              src="./CoverImages/Logo.png"
               alt="Logo"
               style={{ width: "500px", height: "auto" }}
             />
@@ -135,7 +170,7 @@ export default function Forgotpassword() {
             <Box
               component="form"
               noValidate
-              onSubmit={handleSubmit}
+              onSubmit={handleSendVerificationCode}
               sx={{ mt: 1 }}
             >
               <TextField
@@ -148,7 +183,7 @@ export default function Forgotpassword() {
                 autoComplete="email"
                 type="email"
               />
-               <Button
+              <Button
                 className="recover_email"
                 type="submit"
                 fullWidth
@@ -164,6 +199,13 @@ export default function Forgotpassword() {
               >
                 Send Verification Code
               </Button>
+            </Box>
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{ mt: 1 }}
+            >
               <TextField
                 margin="normal"
                 required
@@ -172,7 +214,6 @@ export default function Forgotpassword() {
                 label="Verification Code"
                 name="verification_code"
                 autoComplete="verification_code"
-                
               />
               <TextField
                 margin="normal"
@@ -227,12 +268,11 @@ export default function Forgotpassword() {
               handleClose();
               setAlertMessage("");
             }}
-            severity="error"
+            severity={alertMessage.includes("success") ? "success" : "error"}
             sx={{ width: "110%" }}
           >
             {alertMessage}
           </Alert>
-          
         </div>
       </Snackbar>
     </ThemeProvider>
