@@ -88,7 +88,9 @@ const PhotoArchivePage = () => {
         const currentFolder = folders.find(
           (folder) => folder.id === selectedFolder
         );
-        return (prevIndex + 1) % currentFolder.photos.length;
+        const newIndex = (prevIndex + 1) % currentFolder.photos.length;
+        setSelectedPhoto(currentFolder.photos[newIndex]);
+        return newIndex;
       });
     }
   };
@@ -99,10 +101,13 @@ const PhotoArchivePage = () => {
         const currentFolder = folders.find(
           (folder) => folder.id === selectedFolder
         );
-        return (
+
+        const newIndex =
           (prevIndex - 1 + currentFolder.photos.length) %
-          currentFolder.photos.length
-        );
+          currentFolder.photos.length;
+        console.log("New index:", newIndex);
+        setSelectedPhoto(currentFolder.photos[newIndex]);
+        return newIndex;
       });
     }
   };

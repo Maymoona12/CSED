@@ -8,7 +8,8 @@ const PhotosPageContainer = ({
   handlePhotoClick,
   lightboxOpen,
   lightboxIndex,
-  setLightboxOpen, // Correct the prop name
+  setLightboxOpen,
+  setSelectedPhoto,
 }) => {
   const { folderId } = useParams();
   const [selectedFolder, setSelectedFolder] = useState(folderId);
@@ -16,14 +17,7 @@ const PhotosPageContainer = ({
   const handlePhotoClickWrapper = (photo, index, clickedFolderId) => {
     const clickedFolder =
       clickedFolderId !== undefined ? clickedFolderId : selectedFolder;
-    // console.log("Clicked photo object:", photo);
-    // console.log(
-    //   `Clicked on photo ${photo.alt} ${index + 1} in folder ${
-    //     clickedFolder || "undefined"
-    //   }`
-    // );
     setSelectedFolder(clickedFolder);
-    // console.log("Selected Folder:", clickedFolder);
     handlePhotoClick(photo, index, clickedFolder);
   };
 
@@ -35,6 +29,7 @@ const PhotosPageContainer = ({
       lightboxOpen={lightboxOpen}
       lightboxIndex={lightboxIndex}
       setLightboxOpen={setLightboxOpen}
+      setSelectedPhoto={setSelectedPhoto} // Pass setSelectedPhoto here
     />
   );
 };

@@ -1,5 +1,5 @@
-// photospage.jsx :
-import React, { useState } from "react";
+// photospage.jsx
+import React, { useState, useEffect } from "react";
 import Modal from "react-responsive-modal";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -7,19 +7,26 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import FoldersPage from "./foldersPage"; // Import the updated FoldersPage component
+import FoldersPage from "./foldersPage";
 
 const PhotosPage = ({
   folders,
   selectedFolder,
+  selectedPhoto,
   handlePhotoClick,
   lightboxOpen,
   lightboxIndex,
   setLightboxIndex,
-  selectedPhoto,
   setSelectedPhoto,
+  setLightboxOpen, // Make sure this prop is passed correctly
 }) => {
-  // const [selectedPhoto, setSelectedPhoto] = useState(null);
+  useEffect(() => {
+    // This effect runs when lightboxOpen prop changes
+    // If lightbox is closed, reset selectedPhoto to null
+    if (!lightboxOpen) {
+      setSelectedPhoto(null);
+    }
+  }, [lightboxOpen]);
 
   const handleNextPhoto = () => {
     console.log("Handling next photo");
@@ -55,7 +62,7 @@ const PhotosPage = ({
 
   const handleCloseLightbox = () => {
     console.log("Closing lightbox");
-    //setLightboxOpen(false);
+    setLightboxOpen(false); // Set lightboxOpen to false when closing the lightbox
     setSelectedPhoto(null);
   };
 
@@ -86,6 +93,7 @@ const PhotosPage = ({
       </div>
     );
   };
+
   return (
     <div>
       {/* AppBar */}

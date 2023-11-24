@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import FoldersPage from "./pages/photo-archive/foldersPage";
 import PhotosPage from "./pages/photo-archive/photospage";
 import PhotosPageContainer from "./pages/photo-archive/PhotosPageContainer";
-
+import PhotoArchivePage from "./pages/photo-archive/photoarchive";
 function App() {
   const [selectedFolder, setSelectedFolder] = useState("defaultFolder");
   const [selectedPhoto, setSelectedPhoto] = useState(null);
@@ -73,12 +73,12 @@ function App() {
   };
 
   const handlePhotoClick = (photo, index, clickedFolder) => {
-    // console.log("Clicked photo:", photo);
-    // console.log(
-    //   `Clicked on photo ${photo.alt} ${index + 1} in folder ${
-    //     clickedFolder || "undefined"
-    //   }`
-    // );
+    console.log("Clicked photo:", photo);
+    console.log(
+      `Clicked on photo ${photo.alt} ${index + 1} in folder ${
+        clickedFolder || "undefined"
+      }`
+    );
     setSelectedFolder(clickedFolder);
     setLightboxIndex(index);
     setLightboxOpen(true);
@@ -109,11 +109,13 @@ function App() {
                 setLightboxOpen={setLightboxOpen}
                 lightboxIndex={lightboxIndex}
                 setLightboxIndex={setLightboxIndex}
+                setSelectedPhoto={setSelectedPhoto}
               />
             }
           />
         </Routes>
       </Router>
+      {/* <PhotoArchivePage /> */}
     </>
   );
 }
