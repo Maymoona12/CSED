@@ -58,7 +58,7 @@ const FoldersPage = ({ folders, handleFolderClick, handlePhotoClick }) => {
       >
         <h1
           style={{
-            color: "black",
+            color: "green",
             fontFamily: "Brush Script MT",
           }}
         >
