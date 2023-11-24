@@ -1,19 +1,25 @@
-//FoldersPage:
+//folderspage:
 import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import FilterRoundedIcon from "@mui/icons-material/FilterRounded";
 import PhotosPage from "./photospage";
+import { useNavigate } from "react-router-dom";
 
-const FoldersPage = ({
-  folders = [], // Add this line  selectedFolder,
-  selectedFolder,
-  handleFolderClick,
-  handlePhotoClick,
-}) => {
-  // console.log("Folders:", folders); // Add this line
-  // console.log("Selected Folder:", selectedFolder); // Add this line
+const FoldersPage = ({ folders, handleFolderClick, handlePhotoClick }) => {
+  const [selectedFolder, setSelectedFolder] = useState(null);
+  const navigate = useNavigate();
+
+  const handleClick = (folderId) => {
+    handleFolderClick(folderId);
+    setSelectedFolder(folderId);
+
+    // Navigate to photospage only if a folder is selected
+    if (folderId) {
+      navigate(`/photospage/${folderId}`);
+    }
+  };
   return (
     <div>
       {/* AppBar */}
@@ -46,8 +52,8 @@ const FoldersPage = ({
           display: "flex",
           flexWrap: "wrap",
           marginBottom: "10px",
-          marginTop: "5px",
-          paddingTop: "30px",
+          marginTop: "0px",
+          paddingTop: "60px",
         }}
       >
         <h1
@@ -59,29 +65,6 @@ const FoldersPage = ({
           Photo Archive
         </h1>
       </div>
-      {/* Render selected folder's photos */}
-      {selectedFolder !== null && selectedFolder !== undefined && (
-        <div style={{ display: "flex", flexWrap: "wrap" }}>
-          {folders
-            .filter((folder) => folder.id === selectedFolder)
-            .map((folder) =>
-              folder.photos.map((photo) => (
-                <div
-                  key={photo.id}
-                  style={{ margin: "8px", width: "150px", cursor: "pointer" }}
-                  onClick={() => handlePhotoClick(photo)}
-                >
-                  <img
-                    src={photo.src}
-                    alt={photo.alt}
-                    style={{ width: "100%", height: "auto" }}
-                  />
-                </div>
-              ))
-            )}
-        </div>
-      )}
-
       {/* Render folders */}
       <div style={{ display: "flex", flexWrap: "wrap", marginTop: "100px" }}>
         {folders.map((folder) => (
@@ -94,8 +77,10 @@ const FoldersPage = ({
               marginRight: "200px",
               marginBottom: "10px",
               textAlign: "center",
+              color: "black",
             }}
           >
+            {/* Use the folder's ID as a key */}
             <FilterRoundedIcon
               style={{
                 marginBottom: "5px",
@@ -103,10 +88,10 @@ const FoldersPage = ({
                 color: "black",
                 cursor: "pointer",
               }}
-              onClick={() => handleFolderClick(folder.id)}
+              onClick={() => handleClick(folder.id)}
             />
             <h2
-              onClick={() => handleFolderClick(folder.id)}
+              onClick={() => handleClick(folder.id)}
               style={{
                 cursor: "pointer",
                 fontFamily: "Lucida Handwriting",
@@ -114,17 +99,31 @@ const FoldersPage = ({
             >
               {folder.name}
             </h2>
-            <pre>{JSON.stringify(folder, null, 2)}</pre>
           </div>
         ))}
       </div>
-
-      {/* Render PhotosPage component */}
-      <PhotosPage
-        selectedFolder={selectedFolder}
-        folders={folders}
-        handlePhotoClick={handlePhotoClick}
-      />
+      {/* Render selected folder's photos */}
+      {selectedFolder !== null && selectedFolder !== undefined && (
+        <div style={{ display: "flex", flexWrap: "wrap" }}>
+          {folders
+            .filter((folder) => folder.id === selectedFolder)
+            .flatMap((folder) =>
+              folder.photos.map((photo, index) => (
+                <div
+                  key={photo.id}
+                  style={{ margin: "8px", width: "150px", cursor: "pointer" }}
+                  onClick={() => handlePhotoClick(photo, index)}
+                >
+                  <img
+                    src={`/Images/${photo.src}`}
+                    alt={photo.alt}
+                    style={{ width: "100%", height: "auto" }}
+                  />
+                </div>
+              ))
+            )}
+        </div>
+      )}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-// PhotosPage :
+// photospage.jsx :
 import React, { useState } from "react";
 import Modal from "react-responsive-modal";
 import AppBar from "@mui/material/AppBar";
@@ -9,56 +9,63 @@ import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import FoldersPage from "./foldersPage"; // Import the updated FoldersPage component
 
-const PhotosPage = ({ folders, selectedFolder, handlePhotoClick }) => {
-  const [selectedPhoto, setSelectedPhoto] = useState(null);
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [lightboxIndex, setLightboxIndex] = useState(0);
+const PhotosPage = ({
+  folders,
+  selectedFolder,
+  handlePhotoClick,
+  lightboxOpen,
+  lightboxIndex,
+  setLightboxIndex,
+  selectedPhoto,
+  setSelectedPhoto,
+}) => {
+  // const [selectedPhoto, setSelectedPhoto] = useState(null);
 
   const handleNextPhoto = () => {
+    console.log("Handling next photo");
     if (selectedFolder) {
       setLightboxIndex((prevIndex) => {
         const currentFolder = folders.find(
           (folder) => folder.id === selectedFolder
         );
-        return (prevIndex + 1) % currentFolder.photos.length;
+        const newIndex = (prevIndex + 1) % currentFolder.photos.length;
+        console.log("New index:", newIndex);
+        setSelectedPhoto(currentFolder.photos[newIndex]);
+        return newIndex;
       });
     }
   };
 
   const handlePrevPhoto = () => {
+    console.log("Handling previous  photo");
     if (selectedFolder) {
       setLightboxIndex((prevIndex) => {
         const currentFolder = folders.find(
           (folder) => folder.id === selectedFolder
         );
-        return (
+        const newIndex =
           (prevIndex - 1 + currentFolder.photos.length) %
-          currentFolder.photos.length
-        );
+          currentFolder.photos.length;
+        console.log("New index:", newIndex);
+        setSelectedPhoto(currentFolder.photos[newIndex]);
+        return newIndex;
       });
     }
   };
 
   const handleCloseLightbox = () => {
-    setLightboxOpen(false);
+    console.log("Closing lightbox");
+    //setLightboxOpen(false);
     setSelectedPhoto(null);
   };
 
   const renderPhotos = () => {
-    if (!selectedFolder) {
-      return null;
-    }
-
     const currentFolder = folders.find(
-      (folder) => folder.id === selectedFolder
+      (folder) => folder.id === parseInt(selectedFolder)
     );
 
-    if (
-      !currentFolder ||
-      !currentFolder.photos ||
-      currentFolder.photos.length === 0
-    ) {
-      return <p>No photos available in this folder.</p>;
+    if (!currentFolder) {
+      return <div>No folder found</div>;
     }
 
     return (
@@ -70,7 +77,7 @@ const PhotosPage = ({ folders, selectedFolder, handlePhotoClick }) => {
             onClick={() => handlePhotoClick(photo, index)}
           >
             <img
-              src={photo.src}
+              src={`/Images/${photo.src}`}
               alt={photo.alt}
               style={{ width: "100%", height: "auto" }}
             />
@@ -79,7 +86,6 @@ const PhotosPage = ({ folders, selectedFolder, handlePhotoClick }) => {
       </div>
     );
   };
-
   return (
     <div>
       {/* AppBar */}
