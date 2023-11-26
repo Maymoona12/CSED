@@ -4,22 +4,31 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import FilterRoundedIcon from "@mui/icons-material/FilterRounded";
-import PhotosPage from "./photospage";
 import { useNavigate } from "react-router-dom";
 
-const FoldersPage = ({ folders, handleFolderClick, handlePhotoClick }) => {
+const FoldersPage = ({
+  folders,
+  handleFolderClick,
+  handlePhotoClick,
+  setLightboxOpen,
+  setSelectedPhoto,
+}) => {
   const [selectedFolder, setSelectedFolder] = useState(null);
   const navigate = useNavigate();
 
-  const handleClick = (folderId) => {
+  const handleClick = (folderId, callback) => {
     handleFolderClick(folderId);
     setSelectedFolder(folderId);
 
     // Navigate to photospage only if a folder is selected
     if (folderId) {
+      if (callback && typeof callback === "function") {
+        callback(); // Set lightboxOpen to true
+      }
       navigate(`/photospage/${folderId}`);
     }
   };
+
   return (
     <div>
       {/* AppBar */}
@@ -58,7 +67,7 @@ const FoldersPage = ({ folders, handleFolderClick, handlePhotoClick }) => {
       >
         <h1
           style={{
-            color: "green",
+            color: "black",
             fontFamily: "Brush Script MT",
           }}
         >
@@ -88,10 +97,12 @@ const FoldersPage = ({ folders, handleFolderClick, handlePhotoClick }) => {
                 color: "black",
                 cursor: "pointer",
               }}
-              onClick={() => handleClick(folder.id)}
+              onClick={() =>
+                handleClick(folder.id, () => setLightboxOpen(true))
+              }
             />
             <h2
-              onClick={() => handleClick(folder.id)}
+              onClick={() => handleClick(folder.id, setLightboxOpen(true))}
               style={{
                 cursor: "pointer",
                 fontFamily: "Lucida Handwriting",

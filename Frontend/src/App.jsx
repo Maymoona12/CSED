@@ -1,11 +1,10 @@
 //app.jsx:
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { useParams } from "react-router-dom";
 import FoldersPage from "./pages/photo-archive/foldersPage";
-import PhotosPage from "./pages/photo-archive/photospage";
+// import PhotosPage from "./pages/photo-archive/photospage";
 import PhotosPageContainer from "./pages/photo-archive/PhotosPageContainer";
-import PhotoArchivePage from "./pages/photo-archive/photoarchive";
+
 function App() {
   const [selectedFolder, setSelectedFolder] = useState("defaultFolder");
   const [selectedPhoto, setSelectedPhoto] = useState(null);
@@ -61,27 +60,19 @@ function App() {
         { id: 12, src: "image5.jpg", alt: "2022 2" },
         { id: 13, src: "image5.jpg", alt: "2022 2" },
         { id: 14, src: "image5.jpg", alt: "2022 2" },
+        { id: 16, src: "hamood1.jpg", alt: "Mohammad 1" },
       ],
+    },
+    {
+      id: 7,
+      name: "Mohammad",
+      photos: [{ id: 17, src: "hamood1.jpg", alt: "Mohammad 1" }],
     },
   ];
 
   const handleFolderClick = (folderId) => {
-    // Your logic for handling folder clicks:
-    // console.log(`Clicked on folder with ID: ${folderId}`);
     setSelectedPhoto(null);
     setSelectedFolder(folderId);
-  };
-
-  const handlePhotoClick = (photo, index, clickedFolder) => {
-    console.log("Clicked photo:", photo);
-    console.log(
-      `Clicked on photo ${photo.alt} ${index + 1} in folder ${
-        clickedFolder || "undefined"
-      }`
-    );
-    setSelectedFolder(clickedFolder);
-    setLightboxIndex(index);
-    setLightboxOpen(true);
   };
 
   return (
@@ -94,8 +85,8 @@ function App() {
               <FoldersPage
                 folders={foldersData}
                 handleFolderClick={handleFolderClick}
-                handlePhotoClick={handlePhotoClick}
                 setSelectedPhoto={setSelectedPhoto}
+                setLightboxOpen={setLightboxOpen}
               />
             }
           />
@@ -105,17 +96,15 @@ function App() {
             element={
               <PhotosPageContainer
                 folders={foldersData}
-                handlePhotoClick={handlePhotoClick}
+                setSelectedPhoto={setSelectedPhoto}
                 setLightboxOpen={setLightboxOpen}
                 lightboxIndex={lightboxIndex}
                 setLightboxIndex={setLightboxIndex}
-                setSelectedPhoto={setSelectedPhoto}
               />
             }
           />
         </Routes>
       </Router>
-      {/* <PhotoArchivePage /> */}
     </>
   );
 }

@@ -1,5 +1,7 @@
 // photospage.jsx
 import React, { useState, useEffect } from "react";
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
 import Modal from "react-responsive-modal";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -7,7 +9,6 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import FoldersPage from "./foldersPage";
 
 const PhotosPage = ({
   folders,
@@ -16,54 +17,31 @@ const PhotosPage = ({
   handlePhotoClick,
   lightboxOpen,
   lightboxIndex,
-  setLightboxIndex,
+  setLightboxOpen,
   setSelectedPhoto,
-  setLightboxOpen, // Make sure this prop is passed correctly
 }) => {
   useEffect(() => {
+    console.log("Selected Photo in PhotosPageContainer:", selectedPhoto);
     // This effect runs when lightboxOpen prop changes
     // If lightbox is closed, reset selectedPhoto to null
     if (!lightboxOpen) {
       setSelectedPhoto(null);
     }
-  }, [lightboxOpen]);
+  }, [lightboxOpen, selectedPhoto]);
 
-  const handleNextPhoto = () => {
-    console.log("Handling next photo");
-    if (selectedFolder) {
-      setLightboxIndex((prevIndex) => {
-        const currentFolder = folders.find(
-          (folder) => folder.id === selectedFolder
-        );
-        const newIndex = (prevIndex + 1) % currentFolder.photos.length;
-        console.log("New index:", newIndex);
-        setSelectedPhoto(currentFolder.photos[newIndex]);
-        return newIndex;
-      });
-    }
+  const [showControls, setShowControls] = useState(false);
+
+  const showLightboxControls = () => {
+    setShowControls(true);
   };
 
-  const handlePrevPhoto = () => {
-    console.log("Handling previous  photo");
-    if (selectedFolder) {
-      setLightboxIndex((prevIndex) => {
-        const currentFolder = folders.find(
-          (folder) => folder.id === selectedFolder
-        );
-        const newIndex =
-          (prevIndex - 1 + currentFolder.photos.length) %
-          currentFolder.photos.length;
-        console.log("New index:", newIndex);
-        setSelectedPhoto(currentFolder.photos[newIndex]);
-        return newIndex;
-      });
-    }
+  const hideLightboxControls = () => {
+    setShowControls(false);
   };
 
   const handleCloseLightbox = () => {
-    console.log("Closing lightbox");
-    setLightboxOpen(false); // Set lightboxOpen to false when closing the lightbox
-    setSelectedPhoto(null);
+    setLightboxOpen(false);
+    setSelectedPhoto(null); // Reset selected photo when closing the lightbox
   };
 
   const renderPhotos = () => {
@@ -76,21 +54,38 @@ const PhotosPage = ({
     }
 
     return (
-      <div style={{ display: "flex", flexWrap: "wrap" }}>
+      <ImageList
+        sx={{
+          width: "100%",
+          height: "100%",
+          marginTop: "50px",
+          paddingTop: "100px",
+        }}
+        variant="woven"
+        cols={3}
+        gap={8}
+      >
         {currentFolder.photos.map((photo, index) => (
-          <div
+          <ImageListItem
             key={photo.id}
-            style={{ margin: "8px", width: "150px", cursor: "pointer" }}
-            onClick={() => handlePhotoClick(photo, index)}
+            onClick={() =>
+              handlePhotoClick(photo, index, selectedFolder, selectedPhoto)
+            }
           >
             <img
               src={`/Images/${photo.src}`}
               alt={photo.alt}
-              style={{ width: "100%", height: "auto" }}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                // marginTop: "10px",
+                // paddingTop: "20px",
+              }}
             />
-          </div>
+          </ImageListItem>
         ))}
-      </div>
+      </ImageList>
     );
   };
 
@@ -128,21 +123,35 @@ const PhotosPage = ({
       {/* Lightbox Modal */}
       {lightboxOpen && (
         <Modal open={lightboxOpen} onClose={handleCloseLightbox} center>
-          <div style={{ textAlign: "center" }}>
+          <div
+            style={{
+              textAlign: "center",
+              position: "relative",
+            }}
+            onMouseEnter={showLightboxControls}
+            onMouseLeave={hideLightboxControls}
+          >
+            {showControls && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: "50%",
+                  left: 0,
+                  right: 0,
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <button title="Next" onClick={handleNextPhoto}>
+                  <NavigateNextIcon />
+                </button>
+                <button title="Next" onClick={handlePrevPhoto}>
+                  <NavigateBeforeIcon />
+                </button>
+              </div>
+            )}
             {selectedPhoto && (
               <div>
-                {/* Navigation buttons */}
-                <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <IconButton onClick={handlePrevPhoto}>
-                    <NavigateBeforeIcon />
-                  </IconButton>
-                  <IconButton onClick={handleNextPhoto}>
-                    <NavigateNextIcon />
-                  </IconButton>
-                </div>
-
                 {/* Enlarged Photo */}
                 {selectedPhoto && (
                   <img
@@ -164,5 +173,4 @@ const PhotosPage = ({
     </div>
   );
 };
-
 export default PhotosPage;
