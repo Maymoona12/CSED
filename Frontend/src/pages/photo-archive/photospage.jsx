@@ -1,152 +1,223 @@
-// PhotosPage :
-import React, { useState } from "react";
-import Modal from "react-responsive-modal";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import FoldersPage from "./foldersPage"; // Import the updated FoldersPage component
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import Button from "@mui/material/Button";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
-const PhotosPage = ({ folders, selectedFolder, handlePhotoClick }) => {
-  const [selectedPhoto, setSelectedPhoto] = useState(null);
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [lightboxIndex, setLightboxIndex] = useState(0);
+const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
+  const { folderId } = useParams();
+  const [selectedFolder, setSelectedFolder] = useState(folderId);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [dialogIndex, setDialogIndex] = useState(0);
+  const [imageDimensions, setImageDimensions] = useState({
+    width: 0,
+    height: 0,
+  });
+
+  const currentFolder = folders.find(
+    (folder) => folder.id === parseInt(selectedFolder)
+  );
+
+  // const isMdScreen = useMediaQuery("(min-width:600px)");
+
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     if (openDialog) {
+  //       setDialogSize();
+  //     }
+  //   };
+
+  //   window.addEventListener("resize", handleResize);
+
+  //   return () => {
+  //     window.removeEventListener("resize", handleResize);
+  //   };
+  // }, [openDialog]);
+
+  // const setDialogSize = () => {
+  //   // Set dialog size based on image width and screen size
+  //   const dialogElement = document.getElementById("dialog");
+  //   if (dialogElement) {
+  //     const maxWidth = isMdScreen ? "md" : "xs";
+  //     const maxDialogWidth = document.documentElement.clientWidth - 32; // Adjust 32 as needed for margin/padding
+  //     const imageWidth = Math.min(imageDimensions.width, maxDialogWidth);
+
+  //     dialogElement.style.width = `${imageWidth}px`;
+  //     dialogElement.style.maxWidth = maxWidth;
+  //   }
+  // };
+
+  const handlePhotoClick = (photo, index, clickedFolderId) => {
+    const clickedFolder =
+      clickedFolderId !== undefined ? clickedFolderId : selectedFolder;
+
+    setSelectedFolder(clickedFolder);
+    setSelectedPhoto(photo);
+    setDialogIndex(index);
+    setOpenDialog(true);
+  };
+
+  const handleDialogClose = () => {
+    setOpenDialog(false);
+  };
 
   const handleNextPhoto = () => {
-    if (selectedFolder) {
-      setLightboxIndex((prevIndex) => {
-        const currentFolder = folders.find(
-          (folder) => folder.id === selectedFolder
-        );
-        return (prevIndex + 1) % currentFolder.photos.length;
-      });
-    }
+    setDialogIndex(
+      (prevIndex) => (prevIndex + 1) % currentFolder.photos.length
+    );
   };
 
   const handlePrevPhoto = () => {
-    if (selectedFolder) {
-      setLightboxIndex((prevIndex) => {
-        const currentFolder = folders.find(
-          (folder) => folder.id === selectedFolder
-        );
-        return (
-          (prevIndex - 1 + currentFolder.photos.length) %
-          currentFolder.photos.length
-        );
-      });
-    }
+    setDialogIndex(
+      (prevIndex) =>
+        (prevIndex - 1 + currentFolder.photos.length) %
+        currentFolder.photos.length
+    );
   };
 
-  const handleCloseLightbox = () => {
-    setLightboxOpen(false);
-    setSelectedPhoto(null);
+  const handleImageLoad = (event) => {
+    setImageDimensions({
+      width: event.target.width,
+      height: event.target.height,
+    });
+
+    setDialogSize(event.target.width);
   };
 
   const renderPhotos = () => {
-    if (!selectedFolder) {
-      return null;
-    }
-
-    const currentFolder = folders.find(
-      (folder) => folder.id === selectedFolder
-    );
-
-    if (
-      !currentFolder ||
-      !currentFolder.photos ||
-      currentFolder.photos.length === 0
-    ) {
-      return <p>No photos available in this folder.</p>;
+    if (!currentFolder) {
+      return <div>No folder found</div>;
     }
 
     return (
-      <div style={{ display: "flex", flexWrap: "wrap" }}>
+      <ImageList
+        sx={{
+          width: "100%",
+          maxHeight: "710px",
+          height: "100%",
+          overflow: "hidden",
+          marginTop: "30px",
+          paddingTop: "80px",
+          cursor: "pointer",
+        }}
+        variant="woven"
+        cols={3}
+        gap={15}
+      >
         {currentFolder.photos.map((photo, index) => (
-          <div
+          <ImageListItem
             key={photo.id}
-            style={{ margin: "8px", width: "150px", cursor: "pointer" }}
-            onClick={() => handlePhotoClick(photo, index)}
+            onClick={() => {
+              handlePhotoClick(photo, index, selectedFolder);
+            }}
           >
             <img
-              src={photo.src}
+              src={`/Images/${photo.src}`}
               alt={photo.alt}
-              style={{ width: "100%", height: "auto" }}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
             />
-          </div>
+          </ImageListItem>
         ))}
-      </div>
+      </ImageList>
     );
   };
 
   return (
     <div>
-      {/* AppBar */}
-      <AppBar
-        position="static"
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 1000,
-        }}
-        sx={{ background: "black" }}
-      >
-        <Toolbar>
-          <Typography
-            variant="h5"
-            component="div"
-            sx={{
-              flexGrow: 1,
-              fontFamily: "Brush Script MT",
-            }}
-          >
-            CSED
-          </Typography>
-        </Toolbar>
-      </AppBar>
-
-      {/* Render photos */}
+      <div id="BarId">
+        <AppBar
+          position="static"
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            zIndex: 1000,
+          }}
+          sx={{ background: "black" }}
+        >
+          <Toolbar>
+            <Typography
+              variant="h5"
+              component="div"
+              sx={{
+                flexGrow: 1,
+                fontFamily: "Brush Script MT",
+              }}
+            >
+              CSED
+            </Typography>
+          </Toolbar>
+        </AppBar>
+      </div>
       {renderPhotos()}
 
-      {/* Lightbox Modal */}
-      {lightboxOpen && (
-        <Modal open={lightboxOpen} onClose={handleCloseLightbox} center>
-          <div style={{ textAlign: "center" }}>
-            {selectedPhoto && (
-              <div>
-                {/* Navigation buttons */}
-                <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <IconButton onClick={handlePrevPhoto}>
-                    <NavigateBeforeIcon />
-                  </IconButton>
-                  <IconButton onClick={handleNextPhoto}>
-                    <NavigateNextIcon />
-                  </IconButton>
-                </div>
-
-                {/* Enlarged Photo */}
-                {selectedPhoto && (
-                  <img
-                    src={selectedPhoto.src}
-                    alt={selectedPhoto.alt}
-                    style={{
-                      maxWidth: "100%",
-                      maxHeight: "70vh",
-                      margin: "auto",
-                      display: "block",
-                    }}
-                  />
-                )}
-              </div>
-            )}
-          </div>
-        </Modal>
-      )}
+      <Dialog
+        open={openDialog}
+        onClose={handleDialogClose}
+        fullWidth
+        maxWidth="xs"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "100%",
+          height: "100%",
+        }}
+        id="dialog"
+      >
+        <DialogTitle>
+          Photo {dialogIndex + 1} of {currentFolder.photos.length}
+        </DialogTitle>
+        <DialogContent style={{ overflow: "hidden" }}>
+          {currentFolder.photos[dialogIndex] && (
+            <img
+              src={`/Images/${currentFolder.photos[dialogIndex].src}`}
+              alt={currentFolder.photos[dialogIndex].alt}
+              style={{
+                width: "85%",
+                // maxHeight: "710px",
+                height: "auto",
+                border: "8px solid black",
+                boxSizing: "border-box",
+              }}
+              onLoad={handleImageLoad}
+            />
+          )}
+        </DialogContent>
+        <DialogActions>
+          <IconButton
+            onClick={handlePrevPhoto}
+            disabled={currentFolder.photos.length <= 1}
+          >
+            <NavigateBeforeIcon />
+          </IconButton>
+          <IconButton
+            onClick={handleNextPhoto}
+            disabled={currentFolder.photos.length <= 1}
+          >
+            <NavigateNextIcon />
+          </IconButton>
+          <Button onClick={handleDialogClose} style={{ color: "black" }}>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
