@@ -104,14 +104,16 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
       <ImageList
         sx={{
           width: "100%",
+          maxHeight: "710px",
           height: "100%",
-          marginTop: "50px",
-          paddingTop: "100px",
+          overflow: "hidden",
+          marginTop: "30px",
+          paddingTop: "80px",
           cursor: "pointer",
         }}
         variant="woven"
         cols={3}
-        gap={8}
+        gap={15}
       >
         {currentFolder.photos.map((photo, index) => (
           <ImageListItem
@@ -121,7 +123,7 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
             }}
           >
             <img
-              src={`/Images/${photo.src}?w=248&fit=crop&auto=format&dpr=2 2x`}
+              src={`/Images/${photo.src}`}
               alt={photo.alt}
               style={{
                 width: "100%",
@@ -175,7 +177,7 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
           alignItems: "center",
           justifyContent: "center",
           width: "100%",
-          height: "105%",
+          height: "100%",
         }}
         id="dialog"
       >
@@ -188,8 +190,11 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
               src={`/Images/${currentFolder.photos[dialogIndex].src}`}
               alt={currentFolder.photos[dialogIndex].alt}
               style={{
-                width: "100%",
+                width: "85%",
+                // maxHeight: "710px",
                 height: "auto",
+                border: "8px solid black",
+                boxSizing: "border-box",
               }}
               onLoad={handleImageLoad}
             />
