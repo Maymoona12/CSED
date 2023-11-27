@@ -2,13 +2,11 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import FoldersPage from "./pages/photo-archive/foldersPage";
-// import PhotosPage from "./pages/photo-archive/photospage";
-import PhotosPageContainer from "./pages/photo-archive/PhotosPageContainer";
+import PhotosPage from "./pages/photo-archive/photospage";
 
 function App() {
   const [selectedFolder, setSelectedFolder] = useState("defaultFolder");
   const [selectedPhoto, setSelectedPhoto] = useState(null);
-  const [lightboxIndex, setLightboxIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
   const foldersData = [
@@ -66,7 +64,12 @@ function App() {
     {
       id: 7,
       name: "Mohammad",
-      photos: [{ id: 17, src: "hamood1.jpg", alt: "Mohammad 1" }],
+      photos: [
+        { id: 17, src: "hamood1.jpg", alt: "Mohammad 1" },
+        { id: 18, src: "hmoody2.jpg", alt: "Mohammad 1" },
+        { id: 19, src: "hamood1.jpg", alt: "Mohammad 1" },
+        { id: 20, src: "fatima12.jpg", alt: "Mohammad 1" },
+      ],
     },
   ];
 
@@ -94,12 +97,10 @@ function App() {
           <Route
             path="/photospage/:folderId"
             element={
-              <PhotosPageContainer
+              <PhotosPage
                 folders={foldersData}
                 setSelectedPhoto={setSelectedPhoto}
                 setLightboxOpen={setLightboxOpen}
-                lightboxIndex={lightboxIndex}
-                setLightboxIndex={setLightboxIndex}
               />
             }
           />

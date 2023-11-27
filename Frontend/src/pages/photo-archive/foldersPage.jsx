@@ -68,7 +68,7 @@ const FoldersPage = ({
         <h1
           style={{
             color: "black",
-            fontFamily: "Brush Script MT",
+            fontFamily: "Garamond",
           }}
         >
           Photo Archive
@@ -83,13 +83,12 @@ const FoldersPage = ({
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              marginRight: "200px",
+              marginRight: "100px",
               marginBottom: "10px",
               textAlign: "center",
               color: "black",
             }}
           >
-            {/* Use the folder's ID as a key */}
             <FilterRoundedIcon
               style={{
                 marginBottom: "5px",
@@ -105,7 +104,7 @@ const FoldersPage = ({
               onClick={() => handleClick(folder.id, setLightboxOpen(true))}
               style={{
                 cursor: "pointer",
-                fontFamily: "Lucida Handwriting",
+                fontFamily: "Garamond",
               }}
             >
               {folder.name}
