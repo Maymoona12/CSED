@@ -6,25 +6,48 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
-import InputAdornment from "@mui/material/InputAdornment";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import AddLinkIcon from "@mui/icons-material/AddLink";
 import PersonAddOutlinedIcon from "@mui/icons-material/PersonAddOutlined";
+import FileViewer from "react-file-viewer";
+import DocViewer from "react-doc-viewer";
 
 const PostAnnouncementPage = () => {
-  const [documentFile, setDocumentFile] = useState(null);
-  const [photoFile, setPhotoFile] = useState(null);
+  const [documentFiles, setDocumentFiles] = useState([]);
+  const [photoFiles, setPhotoFiles] = useState([]);
+  const [documentPreview, setDocumentPreview] = useState(null);
+  const [photoPreview, setPhotoPreview] = useState(null);
   const documentInputRef = useRef(null);
   const photoInputRef = useRef(null);
 
   const handleDocumentChange = (e) => {
-    const file = e.target.files[0];
-    setDocumentFile(file);
+    const files = e.target.files;
+    setDocumentFiles([...documentFiles, ...files]);
+
+    // Assuming you want to preview only the first document file
+    if (files.length > 0) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setDocumentPreview(reader.result);
+      };
+      reader.readAsDataURL(files[0]);
+    }
+    // Create a preview URL for the document file (adjust for your specific file types)
+    // setDocumentPreview(URL.createObjectURL(file));
   };
 
   const handlePhotoChange = (e) => {
-    const file = e.target.files[0];
-    setPhotoFile(file);
+    const files = e.target.files;
+    setPhotoFiles([...photoFiles, ...files]);
+
+    // Assuming you want to preview only the first photo file
+    if (files.length > 0) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPhotoPreview(reader.result);
+      };
+      reader.readAsDataURL(files[0]);
+    }
   };
 
   const handleFolderIconClick = (inputRef) => {
@@ -33,8 +56,8 @@ const PostAnnouncementPage = () => {
 
   const handleSubmit = () => {
     // Handle the submission logic here
-    console.log("Document:", documentFile);
-    console.log("Photo:", photoFile);
+    console.log("Document:", documentFiles);
+    console.log("Photo:", photoFiles);
   };
 
   return (
@@ -46,7 +69,6 @@ const PostAnnouncementPage = () => {
         alignItems: "center",
       }}
     >
-      {/* AppBar */}
       <AppBar
         position="static"
         style={{
@@ -75,10 +97,11 @@ const PostAnnouncementPage = () => {
         <Box
           sx={{
             width: 490,
+            height: 2000,
             maxWidth: "100%",
-            border: "1px solid #ddd", // Border styling
-            padding: "10px", // Padding inside the box
-            borderRadius: "20px", // Border radius for rounded corners
+            border: "1px solid #ddd",
+            padding: "50px",
+            borderRadius: "20px",
             marginLeft: "350px",
             marginRight: "100px",
           }}
@@ -86,7 +109,7 @@ const PostAnnouncementPage = () => {
           <h2
             style={{
               color: "black",
-              fontFamily: "	Monaco",
+              fontFamily: "Monaco",
               marginBottom: "40px",
               marginLeft: "150px",
             }}
@@ -105,7 +128,6 @@ const PostAnnouncementPage = () => {
             Title
           </Typography>
 
-          {/* <TextField fullWidth label="Title" id="fullWidth" /> */}
           <TextField fullWidth id="fullWidth" />
 
           <Typography
@@ -124,7 +146,7 @@ const PostAnnouncementPage = () => {
             <TextareaAutosize
               aria-label="Announcement"
               minRows={3}
-              placeholder="Write your announcement here..."
+              placeholder="Write your announcement text here..."
               onChange={(e) => setAnnouncementText(e.target.value)}
               style={{
                 width: "100%",
@@ -134,13 +156,17 @@ const PostAnnouncementPage = () => {
                 border: "1px solid #ccc",
               }}
             />
-            <div
-              style={{
-                marginLeft: "50px",
-                marginRight: "20px",
-                marginTop: "30px",
-              }}
-            >
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "15px",
+              alignItems: "center",
+            }}
+          >
+            <div>
               <input
                 type="file"
                 id="documentInput"
@@ -148,6 +174,7 @@ const PostAnnouncementPage = () => {
                 style={{ display: "none" }}
                 onChange={handleDocumentChange}
                 ref={documentInputRef}
+                multiple
               />
               <Button
                 variant="contained"
@@ -155,11 +182,17 @@ const PostAnnouncementPage = () => {
                 onClick={() => handleFolderIconClick(documentInputRef)}
                 startIcon={<AddLinkIcon />}
                 style={{
+                  flex: "0 0 auto",
+                  width: "120px",
+                  height: "40px",
                   marginRight: "10px",
                   marginBottom: "5px",
                   background: "black",
                 }}
               ></Button>
+            </div>
+
+            <div>
               <input
                 type="file"
                 id="photoInput"
@@ -167,6 +200,7 @@ const PostAnnouncementPage = () => {
                 style={{ display: "none" }}
                 onChange={handlePhotoChange}
                 ref={photoInputRef}
+                multiple
               />
               <Button
                 variant="contained"
@@ -174,22 +208,73 @@ const PostAnnouncementPage = () => {
                 onClick={() => handleFolderIconClick(photoInputRef)}
                 startIcon={<AddPhotoAlternateIcon />}
                 style={{
+                  flex: "0 0 auto",
+                  width: "120px",
+                  height: "40px",
                   marginRight: "10px",
+                  marginLeft: "40px",
                   marginBottom: "5px",
                   background: "black",
                 }}
               ></Button>
-              <Button
-                variant="contained"
-                component="label"
-                startIcon={<PersonAddOutlinedIcon />}
-                style={{ background: "black" }}
-              ></Button>
             </div>
+
+            <Button
+              variant="contained"
+              component="label"
+              startIcon={<PersonAddOutlinedIcon />}
+              style={{
+                flex: "0 0 auto",
+                marginLeft: "40px",
+                width: "120px",
+                height: "40px",
+                background: "black",
+              }}
+            ></Button>
           </div>
+          <div>
+            {documentPreview && documentFiles.length > 0 ? (
+              <div>
+                {documentFiles.map((file, index) => (
+                  <div
+                    key={index}
+                    style={{ marginTop: "5px", marginLeft: "5px" }}
+                  >
+                    {file.name}
+                  </div>
+                ))}
+              </div>
+            ) : null}
+            {photoPreview && photoFiles.length > 0 ? (
+              <div>
+                {photoFiles.map((file, index) => (
+                  <div
+                    key={index}
+                    style={{ marginTop: "5px", marginLeft: "5px" }}
+                  >
+                    <img
+                      src={URL.createObjectURL(file)}
+                      alt="Photo Preview"
+                      style={{
+                        marginTop: "10px",
+                        marginLeft: "10px",
+                        maxWidth: "100%",
+                        maxHeight: "200px",
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            ) : null}
+          </div>
+
           <button
             onClick={handleSubmit}
-            style={{ marginLeft: "200px", background: "#e7e4e4" }}
+            style={{
+              marginTop: "50px",
+              marginLeft: "200px",
+              background: "#e7e4e4",
+            }}
           >
             Submit
           </button>
