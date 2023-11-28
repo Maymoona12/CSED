@@ -69,6 +69,7 @@ const FoldersPage = ({
           style={{
             color: "black",
             fontFamily: "Garamond",
+            marginLeft: "10px",
           }}
         >
           Photo Archive
@@ -85,6 +86,7 @@ const FoldersPage = ({
               alignItems: "center",
               marginRight: "100px",
               marginBottom: "10px",
+              marginLeft: "10px",
               textAlign: "center",
               color: "black",
             }}
