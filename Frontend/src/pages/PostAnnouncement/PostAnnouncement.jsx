@@ -96,13 +96,13 @@ const PostAnnouncementPage = () => {
       <div style={{ marginTop: "80px" }}>
         <Box
           sx={{
-            width: 490,
+            width: 600,
             height: 2000,
             maxWidth: "100%",
             border: "1px solid #ddd",
             padding: "50px",
             borderRadius: "20px",
-            marginLeft: "350px",
+            marginLeft: "270px",
             marginRight: "100px",
           }}
         >
@@ -232,47 +232,51 @@ const PostAnnouncementPage = () => {
               }}
             ></Button>
           </div>
-          <div>
-            {documentPreview && documentFiles.length > 0 ? (
-              <div>
-                {documentFiles.map((file, index) => (
-                  <div
-                    key={index}
-                    style={{ marginTop: "5px", marginLeft: "5px" }}
-                  >
-                    {file.name}
-                  </div>
-                ))}
-              </div>
-            ) : null}
-            {photoPreview && photoFiles.length > 0 ? (
-              <div>
-                {photoFiles.map((file, index) => (
-                  <div
-                    key={index}
-                    style={{ marginTop: "5px", marginLeft: "5px" }}
-                  >
-                    <img
-                      src={URL.createObjectURL(file)}
-                      alt="Photo Preview"
-                      style={{
-                        marginTop: "10px",
-                        marginLeft: "10px",
-                        maxWidth: "100%",
-                        maxHeight: "200px",
-                      }}
-                    />
-                  </div>
-                ))}
-              </div>
-            ) : null}
+          <div style={{ display: "flex" }}>
+            <div style={{ flex: 1, marginRight: "5px" }}>
+              {documentPreview && documentFiles.length > 0 ? (
+                <div>
+                  {documentFiles.map((file, index) => (
+                    <div
+                      key={index}
+                      style={{ marginTop: "5px", marginLeft: "70px" }}
+                    >
+                      {file.name}
+                    </div>
+                  ))}
+                </div>
+              ) : null}
+            </div>
+            <div style={{ flex: 1, marginRight: "200px" }}>
+              {photoPreview && photoFiles.length > 0 ? (
+                <div>
+                  {photoFiles.map((file, index) => (
+                    <div
+                      key={index}
+                      style={{ marginTop: "5px", marginLeft: "5px" }}
+                    >
+                      <img
+                        src={URL.createObjectURL(file)}
+                        alt="Photo Preview"
+                        style={{
+                          marginTop: "10px",
+                          marginLeft: "10px",
+                          maxWidth: "100%",
+                          maxHeight: "200px",
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              ) : null}
+            </div>
           </div>
 
           <button
             onClick={handleSubmit}
             style={{
               marginTop: "50px",
-              marginLeft: "200px",
+              marginLeft: "250px",
               background: "#e7e4e4",
             }}
           >
