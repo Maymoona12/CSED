@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -14,8 +14,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 
 const Appointment = () => {
-  const navigate = useNavigate();
-
+  const [editingAppointment, setEditingAppointment] = useState(null);
   const [schedule, setSchedule] = useState([
     { day: "Sun", appointments: [] },
     { day: "Mon", appointments: [] },
@@ -23,11 +22,11 @@ const Appointment = () => {
     { day: "Wed", appointments: [] },
     { day: "Thu", appointments: [] },
   ]);
-
-  const [editingAppointment, setEditingAppointment] = useState(null);
+  const navigate = useNavigate();
 
   const handleAddAppointment = (dayIndex, appointment, startTime, endTime) => {
     const updatedSchedule = [...schedule];
+
     if (editingAppointment !== null) {
       // If editing an existing appointment
       updatedSchedule[dayIndex].appointments[editingAppointment].name =
@@ -45,7 +44,57 @@ const Appointment = () => {
         endTime,
       });
     }
+    // // Save schedule data to localStorage whenever it changes
+    // localStorage.setItem("schedule", JSON.stringify(updatedSchedule));
+
+    // Update the state after saving to localStorage
     setSchedule(updatedSchedule);
+
+    // Clear input fields after adding/editing
+    document.getElementById(`appointment-${dayIndex}`).value = "";
+    document.getElementById(`startTime-${dayIndex}`).value = "";
+    document.getElementById(`endTime-${dayIndex}`).value = "";
+
+    // Log the data after setting the schedule state
+    console.log("Data saved to state:", updatedSchedule);
+  };
+
+  // useEffect(() => {
+  //   // Check localStorage for schedule data and apply it
+  //   const savedSchedule = JSON.parse(localStorage.getItem("schedule"));
+  //   console.log("Before setting schedule state:", savedSchedule); // Log the retrieved data
+  //   if (savedSchedule) {
+  //     setSchedule(savedSchedule);
+  //     console.log("After setting schedule state:", savedSchedule); // Log the updated state
+  //   } else {
+  //     // If no data found in localStorage, set schedule to an empty array
+  //     setSchedule([]);
+  //   }
+  // }, []);
+
+  // // The existing useEffect to save schedule data to localStorage whenever it changes
+  // useEffect(() => {
+  //   localStorage.setItem("schedule", JSON.stringify(schedule));
+
+  //   // Log the data after saving to localStorage
+  //   console.log("Data saved to localStorage:", schedule);
+  // }, [schedule]);
+
+  const handleViewButtonClick = (dayIndex) => {
+    const tableElement = document.getElementById(`table-${dayIndex}`);
+    const isVisible = tableElement.style.display === "table";
+
+    if (isVisible) {
+      tableElement.style.display = "none";
+    } else {
+      tableElement.style.display = "table";
+    }
+
+    // Log the appointments data when the "view" button is clicked
+    console.log(
+      "Appointments for view button:",
+      schedule[dayIndex].appointments
+    );
   };
 
   //👇🏻 Runs when a user signs out
@@ -70,6 +119,10 @@ const Appointment = () => {
     const updatedSchedule = [...schedule];
     updatedSchedule[dayIndex].appointments.splice(appIndex, 1);
     setSchedule(updatedSchedule);
+  };
+
+  const handleDialogClose = () => {
+    setOpenDialog(false);
   };
 
   return (
@@ -223,9 +276,19 @@ const Appointment = () => {
                           ).style.display = "table";
                         }
                       }}
-                      style={{ marginTop: "20px", marginLeft: "100px" }}
+                      style={{ marginTop: "20px", marginLeft: "40px" }}
                     >
                       Add/Edit
+                    </button>
+
+                    <button
+                      onClick={() => handleViewButtonClick(dayIndex)}
+                      style={{
+                        marginTop: "20px",
+                        marginLeft: "20px",
+                      }}
+                    >
+                      View
                     </button>
                   </div>
                 </CardContent>
@@ -278,10 +341,41 @@ const Appointment = () => {
                           >
                             Delete
                           </Button>
-                          <Button>Save</Button>
                         </TableCell>
                       </TableRow>
                     ))}
+                    <TableRow>
+                      <TableCell
+                        colSpan={4}
+                        align="center"
+                        style={{ borderBottom: "1px solid black" }}
+                      >
+                        <Button
+                          onClick={() => {
+                            const tableElement = document.getElementById(
+                              `table-${dayIndex}`
+                            );
+                            if (
+                              tableElement.style.display === "table" &&
+                              tableElement.style.visibility === "visible"
+                            ) {
+                              // Save logic:
+                              console.log(
+                                "Table saved:",
+                                schedule[dayIndex].appointments
+                              );
+                            }
+                          }}
+                          style={{
+                            color: "black",
+                            border: "1px solid black",
+                            padding: "2px",
+                          }}
+                        >
+                          Save
+                        </Button>
+                      </TableCell>
+                    </TableRow>
                   </TableBody>
                 </Table>
               </TableContainer>
