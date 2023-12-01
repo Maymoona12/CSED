@@ -16,6 +16,15 @@ import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
+import Link from '@mui/material/Link';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import ApartmentIcon from '@mui/icons-material/Apartment';
+import PhoneIcon from '@mui/icons-material/Phone';
+import EmailIcon from '@mui/icons-material/Email';
 
 function LecturersProfile() {
   const defaultTheme = createTheme();
@@ -76,10 +85,23 @@ function LecturersProfile() {
     if (event.key === 'Enter') {
       const query = event.target.value;
       setSearchQuery(query);
+
       const filtered = headings.filter((lecturer) =>
         lecturer.toLowerCase().includes(query.toLowerCase())
       );
+
       setFilteredLecturers(filtered);
+
+      const firstMatchingIndex = headings.findIndex((lecturer) =>
+        lecturer.toLowerCase().includes(query.toLowerCase())
+      );
+
+      if (firstMatchingIndex !== -1) {
+        const cardElement = document.getElementById(`lecturer-card-${firstMatchingIndex}`);
+        if (cardElement) {
+          cardElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
     }
   };
 
@@ -152,47 +174,68 @@ function LecturersProfile() {
           </Container>
         </Box>
         <Container sx={{ py: 8 }} maxWidth="ld">
-          <Grid container spacing={4}>
-            {filteredLecturers.map((lecturer, index) => (
-              <Grid item key={lecturer} xs={12} sm={6} md={3} lg={2}>
-                <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                >
-                  <CardMedia
-                    component="div"
-                    sx={{
-                      pt: '111%', // Adjust the height of the image here
-                      backgroundImage: `url(/${images[index]})`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                    }}
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h6" component="h2">
-                      {lecturer}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small" onClick={() => handleView(index)}>
-                      View
-                    </Button>
-                    <Button size="small">Add an Appointment</Button>
-                  </CardActions>
-                  {viewMode === index && (
-                    <CardContent>
-                      {/* Additional information goes here */}
-                      <Typography gutterBottom variant="body2">
-                        {views[index]}
+          {filteredLecturers.length === 0 ? (
+            <Typography variant="h2" align="center" color="text.primary"  sx={{ textAlign: "center", fontFamily: "heltivica", color :"red" }}>
+              No Result 
+            </Typography>
+          ) : (
+            <Grid container spacing={4}>
+              {filteredLecturers.map((lecturer, index) => (
+                <Grid item key={lecturer} xs={12} sm={6} md={3} lg={3}>
+                  <Card
+                    id={`lecturer-card-${index}`}
+                    sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                  >
+                    <CardMedia
+                      component="div"
+                      sx={{
+                        pt: '111%', // Adjust the height of the image here
+                        backgroundImage: `url(/${images[index]})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                      }}
+                    />
+                    <CardContent sx={{ flexGrow: 1 }}>
+                      <Typography gutterBottom variant="h6" component="h2">
+                        {lecturer}
                       </Typography>
-                      <IconButton onClick={handleCloseView} sx={{ marginRight: '160px' }}>
-                        <CloseIcon />
-                      </IconButton>
                     </CardContent>
-                  )}
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
+                    <CardActions>
+                      <Button size="small" onClick={() => handleView(index)}>
+                        View
+                      </Button>
+                      <Button size="small">Add an Appointment</Button>
+                    </CardActions>
+                    {viewMode === index && (
+                      <CardContent>
+                        {/* Additional information goes here */}
+                        <List>
+                          {views[index].split('\n').map((line, i) => (
+                            <ListItem key={i}>
+                              <ListItemIcon>
+                                {i === 0 && <AccountBalanceIcon />}
+                                {i === 1 && <ApartmentIcon />}
+                                {i === 2 && <PhoneIcon />}
+                                {i === 3 && <EmailIcon />}
+                              </ListItemIcon>
+                              <ListItemText
+                                primary={i === 3 ? <Link href={`mailto:${line}`}>{line}</Link> : line}
+                              />
+                            </ListItem>
+                          ))}
+                        </List>
+                        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                          <IconButton onClick={handleCloseView}>
+                            <CloseIcon />
+                          </IconButton>
+                        </Box>
+                      </CardContent>
+                    )}
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          )}
         </Container>
       </main>
     </ThemeProvider>
