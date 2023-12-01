@@ -13,7 +13,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
-import useMediaQuery from "@mui/material/useMediaQuery";
 
 const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
   const { folderId } = useParams();
@@ -28,35 +27,6 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
   const currentFolder = folders.find(
     (folder) => folder.id === parseInt(selectedFolder)
   );
-
-  // const isMdScreen = useMediaQuery("(min-width:600px)");
-
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     if (openDialog) {
-  //       setDialogSize();
-  //     }
-  //   };
-
-  //   window.addEventListener("resize", handleResize);
-
-  //   return () => {
-  //     window.removeEventListener("resize", handleResize);
-  //   };
-  // }, [openDialog]);
-
-  // const setDialogSize = () => {
-  //   // Set dialog size based on image width and screen size
-  //   const dialogElement = document.getElementById("dialog");
-  //   if (dialogElement) {
-  //     const maxWidth = isMdScreen ? "md" : "xs";
-  //     const maxDialogWidth = document.documentElement.clientWidth - 32; // Adjust 32 as needed for margin/padding
-  //     const imageWidth = Math.min(imageDimensions.width, maxDialogWidth);
-
-  //     dialogElement.style.width = `${imageWidth}px`;
-  //     dialogElement.style.maxWidth = maxWidth;
-  //   }
-  // };
 
   const handlePhotoClick = (photo, index, clickedFolderId) => {
     const clickedFolder =
