@@ -115,6 +115,7 @@
 //   );
 // }
 
+//GeneralPages:
 // import React from "react";
 // import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // import Coverpage from "./pages/general-pages/CoverPage/coverpage";
