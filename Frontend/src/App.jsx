@@ -146,17 +146,17 @@ import Appointment from "./pages/Appointment/Appointment";
 function App() {
   return (
     <>
-      {/* <Router>
+       <Router>
         <Routes>
           <Route path="/" element={<LecturerProfiles />} />
         </Routes>
-      </Router> */}
+      </Router> 
 
-      <Router>
+{/*<Router>
         <Routes>
           <Route path="/" element={<Appointment />} />
         </Routes>
-      </Router>
+      </Router>*/}
     </>
   );
 }
