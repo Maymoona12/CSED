@@ -153,38 +153,34 @@ function LecturersProfile() {
         </Toolbar>
       </AppBar>
       <main>
-        <Box
-          sx={{
-            bgcolor: 'background.paper',
-            pt: 8,
-            pb: 6,
-          }}
-        >
-          <Container maxWidth="sm">
+        <Box >
+          <Container >
             <Typography
               component="h1"
               variant="h2"
-              align="center"
-              marginTop="25px"
+              marginTop="66px"
               color="text.primary"
-              sx={{ textAlign: "center", fontFamily: "heltivica" }}
+              style={{ 
+              textAlign: "left", 
+              fontFamily: "Garamond",
+              }}
             >
-              Lecturers Profile
+             Lecturers Profile
             </Typography>
           </Container>
         </Box>
-        <Container sx={{ py: 8 }} maxWidth="ld">
+        <Container sx={{ py: 3 }} >
           {filteredLecturers.length === 0 ? (
-            <Typography variant="h2" align="center" color="text.primary"  sx={{ textAlign: "center", fontFamily: "heltivica", color :"red" }}>
+            <Typography variant="h2" align="center" color="text.primary"  style={{ textAlign: "center", fontFamily: "Garamond", color :"red" }}>
               No Result 
             </Typography>
           ) : (
-            <Grid container spacing={4}>
+            <Grid container spacing={6}>
               {filteredLecturers.map((lecturer, index) => (
                 <Grid item key={lecturer} xs={12} sm={6} md={3} lg={3}>
                   <Card
                     id={`lecturer-card-${index}`}
-                    sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                    sx={{ height: '100%',width: "111%", display: 'flex', flexDirection: 'column' }}
                   >
                     <CardMedia
                       component="div"
@@ -201,7 +197,7 @@ function LecturersProfile() {
                       </Typography>
                     </CardContent>
                     <CardActions>
-                      <Button size="small" onClick={() => handleView(index)}>
+                      <Button size="small" onClick={() => handleView(index)} style={{backgroundColor:" "}}>
                         View
                       </Button>
                       <Button size="small">Add an Appointment</Button>
