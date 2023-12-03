@@ -142,21 +142,23 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LecturerProfiles from "./pages/Lecturer-Profiles/lecturerprofile";
 import Appointment from "./pages/Appointment/Appointment";
+import CalendarPage from "./pages/Appointment/CalendarPage";
 
 function App() {
   return (
     <>
-       <Router>
+       {/* <Router>
         <Routes>
           <Route path="/" element={<LecturerProfiles />} />
         </Routes>
-      </Router> 
+      </Router>  */}
 
-{/*<Router>
+<Router>
         <Routes>
           <Route path="/" element={<Appointment />} />
+          <Route path="/calendarpage" element={<CalendarPage />} />
         </Routes>
-      </Router>*/}
+      </Router>
     </>
   );
 }
