@@ -1,48 +1,52 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import CssBaseline from '@mui/material/CssBaseline';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
-import SearchIcon from '@mui/icons-material/Search';
-import CloseIcon from '@mui/icons-material/Close';
-import IconButton from '@mui/material/IconButton';
-import Link from '@mui/material/Link';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-import ApartmentIcon from '@mui/icons-material/Apartment';
-import PhoneIcon from '@mui/icons-material/Phone';
-import EmailIcon from '@mui/icons-material/Email';
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import CssBaseline from "@mui/material/CssBaseline";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import InputBase from "@mui/material/InputBase";
+import SearchIcon from "@mui/icons-material/Search";
+import CloseIcon from "@mui/icons-material/Close";
+import IconButton from "@mui/material/IconButton";
+import Link from "@mui/material/Link";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import ApartmentIcon from "@mui/icons-material/Apartment";
+import PhoneIcon from "@mui/icons-material/Phone";
+import EmailIcon from "@mui/icons-material/Email";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
 
 function LecturersProfile() {
   const defaultTheme = createTheme();
 
   const images = [
-    'ProfileImages/thaer.PNG',
-    'ProfileImages/mohmad.PNG',
-    'ProfileImages/nael.PNG',
-    'ProfileImages/anas.PNG',
-    'ProfileImages/yousef.PNG',
-    'ProfileImages/yazeed.PNG',
-    'ProfileImages/rami.PNG',
-    'ProfileImages/osamah.PNG',
-    'ProfileImages/osamas.PNG',
-    'ProfileImages/nagham.PNG',
-    'ProfileImages/shatha.PNG',
-    'ProfileImages/maha.PNG',
-    'ProfileImages/deema.PNG'
+    "ProfileImages/thaer.PNG",
+    "ProfileImages/mohmad.PNG",
+    "ProfileImages/nael.PNG",
+    "ProfileImages/anas.PNG",
+    "ProfileImages/yousef.PNG",
+    "ProfileImages/yazeed.PNG",
+    "ProfileImages/rami.PNG",
+    "ProfileImages/osamah.PNG",
+    "ProfileImages/osamas.PNG",
+    "ProfileImages/nagham.PNG",
+    "ProfileImages/shatha.PNG",
+    "ProfileImages/maha.PNG",
+    "ProfileImages/deema.PNG",
   ];
 
   const headings = [
@@ -58,7 +62,7 @@ function LecturersProfile() {
     "Dr.Nagham Hamad",
     "Dr.Shada Abushanab",
     "Dr.May Zakarneh",
-    "Dr.Dema Sawalha"
+    "Dr.Dema Sawalha",
   ];
 
   const views = [
@@ -74,15 +78,15 @@ function LecturersProfile() {
     "Engineering Lecturer\nRoom Number:\n+970 9 2688199\nnagham.hamad@ptuk.edu.ps",
     "Assistant Professor\nRoom Number: H310\n+970 9 2688199\nshatha.abushanab@ptuk.edu.ps",
     "Lecturer\nRoom Number:\n+970 9 2688199\nm.zakarneh@ptuk.edu.ps",
-    "Lecturer\nRoom Number:\n+970 9 2688199\ndema.sawalha@ptuk.edu.ps"
+    "Lecturer\nRoom Number:\n+970 9 2688199\ndema.sawalha@ptuk.edu.ps",
   ];
-
-  const [searchQuery, setSearchQuery] = React.useState('');
+  const [searchQuery, setSearchQuery] = React.useState("");
   const [filteredLecturers, setFilteredLecturers] = React.useState(headings);
   const [viewMode, setViewMode] = React.useState(null);
+  const [openDialog, setOpenDialog] = React.useState(false);
 
   const handleSearch = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       const query = event.target.value;
       setSearchQuery(query);
 
@@ -97,25 +101,29 @@ function LecturersProfile() {
       );
 
       if (firstMatchingIndex !== -1) {
-        const cardElement = document.getElementById(`lecturer-card-${firstMatchingIndex}`);
+        const cardElement = document.getElementById(
+          `lecturer-card-${firstMatchingIndex}`
+        );
         if (cardElement) {
-          cardElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          cardElement.scrollIntoView({ behavior: "smooth", block: "start" });
         }
       }
     }
   };
 
   const handleClearSearch = () => {
-    setSearchQuery('');
+    setSearchQuery("");
     setFilteredLecturers(headings);
   };
 
   const handleView = (index) => {
     setViewMode(index);
+    setOpenDialog(true);
   };
 
-  const handleCloseView = () => {
+  const handleCloseDialog = () => {
     setViewMode(null);
+    setOpenDialog(false);
   };
 
   return (
@@ -134,18 +142,18 @@ function LecturersProfile() {
           >
             CSED
           </Typography>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ display: "flex", alignItems: "center" }}>
             {searchQuery && (
               <IconButton onClick={handleClearSearch}>
-                <CloseIcon sx={{ color: 'white' }} />
+                <CloseIcon sx={{ color: "white" }} />
               </IconButton>
             )}
-            <SearchIcon sx={{ color: 'white' }} />
+            <SearchIcon sx={{ color: "white" }} />
             <InputBase
               placeholder="Search..."
-              inputProps={{ 'aria-label': 'search' }}
-              sx={{ color: 'white', marginLeft: '8px' }}
-              onKeyPress={handleSearch}
+              inputProps={{ "aria-label": "search" }}
+              sx={{ color: "white", marginLeft: "8px" }}
+              onKeyDown={handleSearch}
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
             />
@@ -153,26 +161,35 @@ function LecturersProfile() {
         </Toolbar>
       </AppBar>
       <main>
-        <Box >
-          <Container >
+        <Box>
+          <Container>
             <Typography
               component="h1"
               variant="h2"
               marginTop="66px"
               color="text.primary"
-              style={{ 
-              textAlign: "left", 
-              fontFamily: "Garamond",
+              style={{
+                textAlign: "left",
+                fontFamily: "Garamond",
               }}
             >
-             Lecturers Profile
+              Lecturers Profile
             </Typography>
           </Container>
         </Box>
-        <Container sx={{ py: 3 }} >
+        <Container sx={{ py: 3 }}>
           {filteredLecturers.length === 0 ? (
-            <Typography variant="h2" align="center" color="text.primary"  style={{ textAlign: "center", fontFamily: "Garamond", color :"red" }}>
-              No Result 
+            <Typography
+              variant="h2"
+              align="center"
+              color="text.primary"
+              style={{
+                textAlign: "center",
+                fontFamily: "Garamond",
+                color: "red",
+              }}
+            >
+              No Result
             </Typography>
           ) : (
             <Grid container spacing={6}>
@@ -180,15 +197,20 @@ function LecturersProfile() {
                 <Grid item key={lecturer} xs={12} sm={6} md={3} lg={3}>
                   <Card
                     id={`lecturer-card-${index}`}
-                    sx={{ height: '100%',width: "111%", display: 'flex', flexDirection: 'column' }}
+                    sx={{
+                      height: "100%",
+                      width: "111%",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
                   >
                     <CardMedia
                       component="div"
                       sx={{
-                        pt: '111%', // Adjust the height of the image here
+                        pt: "111%", // Adjust the height of the image here
                         backgroundImage: `url(/${images[index]})`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
                       }}
                     />
                     <CardContent sx={{ flexGrow: 1 }}>
@@ -197,36 +219,52 @@ function LecturersProfile() {
                       </Typography>
                     </CardContent>
                     <CardActions>
-                      <Button size="small" onClick={() => handleView(index)} style={{backgroundColor:" "}}>
+                      <Button
+                        size="small"
+                        onClick={() => handleView(index)}
+                        // style={{ backgroundColor: " " }}
+                      >
                         View
                       </Button>
                       <Button size="small">Add an Appointment</Button>
                     </CardActions>
-                    {viewMode === index && (
-                      <CardContent>
-                        {/* Additional information goes here */}
-                        <List>
-                          {views[index].split('\n').map((line, i) => (
-                            <ListItem key={i}>
-                              <ListItemIcon>
-                                {i === 0 && <AccountBalanceIcon />}
-                                {i === 1 && <ApartmentIcon />}
-                                {i === 2 && <PhoneIcon />}
-                                {i === 3 && <EmailIcon />}
-                              </ListItemIcon>
-                              <ListItemText
-                                primary={i === 3 ? <Link href={`mailto:${line}`}>{line}</Link> : line}
-                              />
-                            </ListItem>
-                          ))}
-                        </List>
-                        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                          <IconButton onClick={handleCloseView}>
-                            <CloseIcon />
-                          </IconButton>
-                        </Box>
-                      </CardContent>
-                    )}
+                    <Dialog
+                      open={viewMode === index}
+                      onClose={handleCloseDialog}
+                    >
+                      <DialogTitle>{lecturer}</DialogTitle>
+                      <DialogContent>
+                        <CardContent>
+                          {/* Additional information goes here */}
+                          <List>
+                            {views[index].split("\n").map((line, i) => (
+                              <ListItem key={i}>
+                                <ListItemIcon>
+                                  {i === 0 && <AccountBalanceIcon />}
+                                  {i === 1 && <ApartmentIcon />}
+                                  {i === 2 && <PhoneIcon />}
+                                  {i === 3 && <EmailIcon />}
+                                </ListItemIcon>
+                                <ListItemText
+                                  primary={
+                                    i === 3 ? (
+                                      <Link href={`mailto:${line}`}>
+                                        {line}
+                                      </Link>
+                                    ) : (
+                                      line
+                                    )
+                                  }
+                                />
+                              </ListItem>
+                            ))}
+                          </List>
+                        </CardContent>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button onClick={handleCloseDialog}>Close</Button>
+                      </DialogActions>
+                    </Dialog>
                   </Card>
                 </Grid>
               ))}
