@@ -155,8 +155,8 @@ function App() {
 
 <Router>
         <Routes>
-          <Route path="/" element={<Appointment />} />
-          <Route path="/calendarpage" element={<CalendarPage />} />
+          {/* <Route path="/" element={<Appointment />} /> */}
+          <Route path="/" element={<CalendarPage />} />
         </Routes>
       </Router>
     </>
