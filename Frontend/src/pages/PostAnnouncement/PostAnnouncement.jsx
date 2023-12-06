@@ -9,22 +9,37 @@ import TextareaAutosize from "@mui/material/TextareaAutosize";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import AddLinkIcon from "@mui/icons-material/AddLink";
 import PersonAddOutlinedIcon from "@mui/icons-material/PersonAddOutlined";
-import FileViewer from "react-file-viewer";
-import DocViewer from "react-doc-viewer";
+import DeleteIcon from "@mui/icons-material/Delete";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
 
-const PostAnnouncementPage = () => {
+const PostAnnouncementPage = ({ onSubmit }) => {
   const [documentFiles, setDocumentFiles] = useState([]);
   const [photoFiles, setPhotoFiles] = useState([]);
   const [documentPreview, setDocumentPreview] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(null);
+  const [announcementText, setAnnouncementText] = useState("");
+  const [lecturerUsers, setLecturerUsers] = useState([]);
+  const [anchorEl, setAnchorEl] = useState(null);
   const documentInputRef = useRef(null);
   const photoInputRef = useRef(null);
+
+  const deleteDocumentFile = (index) => {
+    const updatedDocumentFiles = [...documentFiles];
+    updatedDocumentFiles.splice(index, 1);
+    setDocumentFiles(updatedDocumentFiles);
+  };
+
+  const deletePhotoFile = (index) => {
+    const updatedPhotoFiles = [...photoFiles];
+    updatedPhotoFiles.splice(index, 1);
+    setPhotoFiles(updatedPhotoFiles);
+  };
 
   const handleDocumentChange = (e) => {
     const files = e.target.files;
     setDocumentFiles([...documentFiles, ...files]);
 
-    // Assuming you want to preview only the first document file
     if (files.length > 0) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -32,15 +47,12 @@ const PostAnnouncementPage = () => {
       };
       reader.readAsDataURL(files[0]);
     }
-    // Create a preview URL for the document file (adjust for your specific file types)
-    // setDocumentPreview(URL.createObjectURL(file));
   };
 
   const handlePhotoChange = (e) => {
     const files = e.target.files;
     setPhotoFiles([...photoFiles, ...files]);
 
-    // Assuming you want to preview only the first photo file
     if (files.length > 0) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -54,10 +66,34 @@ const PostAnnouncementPage = () => {
     inputRef.current.click();
   };
 
+  const handleAddLecturer = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleLecturerMenuItemClick = (lecturer) => {
+    setLecturerUsers([...lecturerUsers, lecturer]);
+    setAnchorEl(null);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleDeleteLecturer = (index) => {
+    const updatedLecturerUsers = [...lecturerUsers];
+    updatedLecturerUsers.splice(index, 1);
+    setLecturerUsers(updatedLecturerUsers);
+  };
+
   const handleSubmit = () => {
-    // Handle the submission logic here
-    console.log("Document:", documentFiles);
-    console.log("Photo:", photoFiles);
+    const data = {
+      title: "Your Title Here",
+      announcementText,
+      documentFiles,
+      photoFiles,
+      lecturerUsers,
+    };
+    onSubmit(data);
   };
 
   return (
@@ -147,6 +183,7 @@ const PostAnnouncementPage = () => {
               aria-label="Announcement"
               minRows={3}
               placeholder="Write your announcement text here..."
+              value={announcementText}
               onChange={(e) => setAnnouncementText(e.target.value)}
               style={{
                 width: "100%",
@@ -223,6 +260,7 @@ const PostAnnouncementPage = () => {
               variant="contained"
               component="label"
               startIcon={<PersonAddOutlinedIcon />}
+              onClick={handleAddLecturer}
               style={{
                 flex: "0 0 auto",
                 marginLeft: "40px",
@@ -231,7 +269,36 @@ const PostAnnouncementPage = () => {
                 background: "black",
               }}
             ></Button>
+
+            {lecturerUsers.length > 0 && (
+              <div style={{ marginLeft: "10px", fontFamily: "Monaco" }}>
+                {lecturerUsers.map((user, index) => (
+                  <div key={index} style={{ display: "flex", alignItems: "center" }}>
+                    {user}
+                    <DeleteIcon
+                      style={{ marginLeft: "5px", cursor: "pointer" }}
+                      onClick={() => handleDeleteLecturer(index)}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={() => handleLecturerMenuItemClick("Lecturer1")}>
+                Lecturer1
+              </MenuItem>
+              <MenuItem onClick={() => handleLecturerMenuItemClick("Lecturer2")}>
+                Lecturer2
+              </MenuItem>
+              {/* Add more lecturers as needed */}
+            </Menu>
           </div>
+
           <div style={{ display: "flex" }}>
             <div style={{ flex: 1, marginRight: "5px" }}>
               {documentPreview && documentFiles.length > 0 ? (
@@ -242,6 +309,10 @@ const PostAnnouncementPage = () => {
                       style={{ marginTop: "5px", marginLeft: "70px" }}
                     >
                       {file.name}
+                      <DeleteIcon
+                        style={{ marginLeft: "10px", cursor: "pointer" }}
+                        onClick={() => deleteDocumentFile(index)}
+                      />
                     </div>
                   ))}
                 </div>
@@ -264,6 +335,10 @@ const PostAnnouncementPage = () => {
                           maxWidth: "100%",
                           maxHeight: "200px",
                         }}
+                      />
+                      <DeleteIcon
+                        style={{ marginLeft: "10px", cursor: "pointer" }}
+                        onClick={() => deletePhotoFile(index)}
                       />
                     </div>
                   ))}
