@@ -2,9 +2,9 @@
 
 // import React, { useState } from "react";
 // import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-// import FoldersPage from "./pages/photo-archive/foldersPage";
-// import PhotosPage from "./pages/photo-archive/photospage";
-// import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
+// // import FoldersPage from "./pages/photo-archive/foldersPage";
+// // import PhotosPage from "./pages/photo-archive/photospage";
+
 // function App() {
 //   const [selectedFolder, setSelectedFolder] = useState("defaultFolder");
 //   const [selectedPhoto, setSelectedPhoto] = useState(null);
@@ -138,13 +138,52 @@
 //   );
 // }
 
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import LecturerProfiles from "./pages/Lecturer-Profiles/lecturerprofile";
-import Appointment from "./pages/Appointment/Appointment";
-import CalendarPage from "./pages/Appointment/CalendarPage";
+// import React from "react";
+// import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+// import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
+// import AnnouncementDisplayPage from "./pages/PostAnnouncement/AnnouncementDisplayPage";
+// // import LecturerProfiles from "./pages/Lecturer-Profiles/lecturerprofile";
+// // import Appointment from "./pages/Appointment/Appointment";
+// // import CalendarPage from "./pages/Appointment/CalendarPage";
 
-function App() {
+// function App() {
+//   return (
+//     <>
+// //        {/* <Router>
+// //         <Routes>
+// //           <Route path="/" element={<LecturerProfiles />} />
+// //         </Routes>
+// //       </Router>  */}
+
+//    <Router>
+//         <Routes>
+//          {/* <Route path="/" element={<Appointment />} /> */}
+//           {/* <Route path="/" element={<CalendarPage />} /> */}
+//             {/* <Route path="/" element={<PostAnnouncementPage />} /> */}
+//             <Route path="/" element={<AnnouncementDisplayPage/>} />
+//                     </Routes>
+//        </Router>
+//           </>
+//   );
+// }
+
+// export default App;
+
+// App.js
+
+import React, { useState } from "react";
+import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
+import AnnouncementDisplayPage from "./pages/PostAnnouncement/AnnouncementDisplayPage";
+
+const App = () => {
+  const [displayAnnouncementPage, setDisplayAnnouncementPage] = useState(false);
+  const [announcementData, setAnnouncementData] = useState({});
+
+  const handleSubmit = (data) => {
+    setAnnouncementData(data);
+    setDisplayAnnouncementPage(true);
+  };
+
   return (
     <>
       {/* <Router>
@@ -161,6 +200,6 @@ function App() {
       </Router>
     </>
   );
-}
+};
 
 export default App;
