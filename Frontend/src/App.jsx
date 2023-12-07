@@ -147,13 +147,13 @@ import CalendarPage from "./pages/Appointment/CalendarPage";
 function App() {
   return (
     <>
-       {/* <Router>
+      {/* <Router>
         <Routes>
           <Route path="/" element={<LecturerProfiles />} />
         </Routes>
       </Router>  */}
 
-<Router>
+      <Router>
         <Routes>
           <Route path="/" element={<Appointment />} />
           <Route path="/calendarpage" element={<CalendarPage />} />
