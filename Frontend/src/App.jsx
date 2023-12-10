@@ -2,8 +2,8 @@
 
 // import React, { useState } from "react";
 // import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-// // import FoldersPage from "./pages/photo-archive/foldersPage";
-// // import PhotosPage from "./pages/photo-archive/photospage";
+// import FoldersPage from "./pages/photo-archive/foldersPage";
+// import PhotosPage from "./pages/photo-archive/photospage";
 
 // function App() {
 //   const [selectedFolder, setSelectedFolder] = useState("defaultFolder");
@@ -66,15 +66,6 @@
 //         { id: 5, src: "hamood1.jpg", alt: "Mohammad 1" },
 //       ],
 //     },
-//     {
-//       id: 7,
-//       name: "Mohammad",
-//       photos: [
-//         { id: 1, src: "hamood1.jpg", alt: "Mohammad 1" },
-//         { id: 2, src: "hamood2.jpg", alt: "Mohammad 1" },
-//         { id: 3, src: "hamood1.jpg", alt: "Mohammad 1" },
-//       ],
-//     },
 //   ];
 
 //   const handleFolderClick = (folderId) => {
@@ -83,39 +74,44 @@
 //   };
 
 //   return (
-//     <>
-//       {/* <Router>
-//         <Routes>
-//           <Route
-//             path="/"
-//             element={
-//               <FoldersPage
-//                 folders={foldersData}
-//                 handleFolderClick={handleFolderClick}
-//                 setSelectedPhoto={setSelectedPhoto}
-//                 setLightboxOpen={setLightboxOpen}
-//               />
-//             }
-//           />
+// <>
+{
+  /* <Router>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <FoldersPage
+                folders={foldersData}
+                handleFolderClick={handleFolderClick}
+                setSelectedPhoto={setSelectedPhoto}
+                setLightboxOpen={setLightboxOpen}
+              />
+            }
+          />
 
-//           <Route
-//             path="/photospage/:folderId"
-//             element={
-//               <PhotosPage
-//                 folders={foldersData}
-//                 setSelectedPhoto={setSelectedPhoto}
-//                 setLightboxOpen={setLightboxOpen}
-//               />
-//             }
-//           />
-//         </Routes>
-//       </Router> */}
-//       {/* <PostAnnouncementPage /> */}
+          <Route
+            path="/photospage/:folderId"
+            element={
+              <PhotosPage
+                folders={foldersData}
+                setSelectedPhoto={setSelectedPhoto}
+                setLightboxOpen={setLightboxOpen}
+              />
+            }
+          />
+        </Routes>
+      </Router> */
+}
+{
+  /* <PostAnnouncementPage /> */
+}
 //     </>
 //   );
 // }
 
-//GeneralPages:
+// GeneralPages:
+
 // import React from "react";
 // import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // import Coverpage from "./pages/general-pages/CoverPage/coverpage";
@@ -137,69 +133,94 @@
 //     </>
 //   );
 // }
+// export default App;
 
 // import React from "react";
 // import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
 // import AnnouncementDisplayPage from "./pages/PostAnnouncement/AnnouncementDisplayPage";
-// // import LecturerProfiles from "./pages/Lecturer-Profiles/lecturerprofile";
-// // import Appointment from "./pages/Appointment/Appointment";
-// // import CalendarPage from "./pages/Appointment/CalendarPage";
+// import LecturerProfiles from "./pages/Lecturer-Profiles/lecturerprofile";
+// import Appointment from "./pages/Appointment/Appointment";
+// import CalendarPage from "./pages/Appointment/CalendarPage";
 
 // function App() {
 //   return (
 //     <>
-// //        {/* <Router>
-// //         <Routes>
-// //           <Route path="/" element={<LecturerProfiles />} />
-// //         </Routes>
-// //       </Router>  */}
+//       <Router>
+// <Routes>
+{
+  /* <Route path="/" element={<Appointment />} /> */
+}
 
-//    <Router>
-//         <Routes>
-//          {/* <Route path="/" element={<Appointment />} /> */}
-//           {/* <Route path="/" element={<CalendarPage />} /> */}
-//             {/* <Route path="/" element={<PostAnnouncementPage />} /> */}
-//             <Route path="/" element={<AnnouncementDisplayPage/>} />
-//                     </Routes>
-//        </Router>
-//           </>
-//   );
-// }
+{
+  /* <Route path="/" element={<CalendarPage />} /> */
+}
+
+{
+  /* <Route path="/" element={<PostAnnouncementPage />} /> */
+}
+{
+  /* <Route path="/" element={<AnnouncementDisplayPage />} /> */
+}
+{
+  /* </Routes>
+      </Router>
+    </>
+  );
+} */
+}
 
 // export default App;
 
 // App.js
 
-import React, { useState } from "react";
-import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
-import AnnouncementDisplayPage from "./pages/PostAnnouncement/AnnouncementDisplayPage";
+// import React, { useState } from "react";
+// import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+// import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
+// import AnnouncementDisplayPage from "./pages/PostAnnouncement/AnnouncementDisplayPage";
+// import Appointment from "./pages/Appointment/Appointment";
+// import CalendarPage from "./pages/Appointment/CalendarPage";
+// import LecturerProfiles from "./pages/Lecturer-Profiles/lecturerprofile";
 
-const App = () => {
-  const [displayAnnouncementPage, setDisplayAnnouncementPage] = useState(false);
-  const [announcementData, setAnnouncementData] = useState({});
+// const App = () => {
+//   const [displayAnnouncementPage, setDisplayAnnouncementPage] = useState(false);
+//   const [announcementData, setAnnouncementData] = useState({});
 
-  const handleSubmit = (data) => {
-    setAnnouncementData(data);
-    setDisplayAnnouncementPage(true);
-  };
+//   const handleSubmit = (data) => {
+//     setAnnouncementData(data);
+//     setDisplayAnnouncementPage(true);
+//   };
 
-  return (
-    <>
-      {/* <Router>
+// return (
+// <>
+{
+  /* <Router>
         <Routes>
           <Route path="/" element={<LecturerProfiles />} />
         </Routes>
-      </Router>  */}
+      </Router> */
+}
 
-      <Router>
-        <Routes>
-          <Route path="/" element={<Appointment />} />
-          <Route path="/calendarpage" element={<CalendarPage />} />
-        </Routes>
-      </Router>
-    </>
-  );
-};
+// <Router>
+//   <Routes>
+//     {/* <Route path="/" element={<Appointment />} /> */}
+//     <Route path="/calendarpage" element={<CalendarPage />} />
+//   </Routes>
+// </Router>
 
-export default App;
+{
+  /* /* <div>
+        {!displayAnnouncementPage && (
+          <PostAnnouncementPage onSubmit={handleSubmit} />
+        )}
+
+        {displayAnnouncementPage && (
+          <AnnouncementDisplayPage announcementData={announcementData} />
+        )}
+      </div> */
+}
+//     </>
+//   );
+// };
+
+// export default App;
