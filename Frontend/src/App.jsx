@@ -148,31 +148,31 @@
 
 // // App.js
 
-// import React, { useState } from "react";
-// import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
-// import AnnouncementDisplayPage from "./pages/PostAnnouncement/AnnouncementDisplayPage";
+import React, { useState } from "react";
+import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
+import AnnouncementDisplayPage from "./pages/PostAnnouncement/AnnouncementDisplayPage";
 
-// const App = () => {
-//   const [displayAnnouncementPage, setDisplayAnnouncementPage] = useState(false);
-//   const [announcementData, setAnnouncementData] = useState({});
+const App = () => {
+  const [displayAnnouncementPage, setDisplayAnnouncementPage] = useState(false);
+  const [announcementData, setAnnouncementData] = useState({});
 
-//   const handleSubmit = (data) => {
-//     setAnnouncementData(data);
-//     setDisplayAnnouncementPage(true);
-//   };
+  const handleSubmit = (data) => {
+    setAnnouncementData(data);
+    setDisplayAnnouncementPage(true);
+  };
 
-//   return (
-//     <div>
-//       {!displayAnnouncementPage && (
-//         <PostAnnouncementPage onSubmit={handleSubmit} />
-//       )}
+  return (
+    <div>
+      {!displayAnnouncementPage && (
+        <PostAnnouncementPage onSubmit={handleSubmit} />
+      )}
 
-//       {displayAnnouncementPage && (
-//         <AnnouncementDisplayPage announcementData={announcementData} />
-//       )}
-//     </div>
-//   );
-// };
+      {displayAnnouncementPage && (
+        <AnnouncementDisplayPage announcementData={announcementData} />
+      )}
+    </div>
+  );
+};
 
 // export default App;
 
@@ -209,25 +209,26 @@
 // export default App;
 
 //GeneralPages:
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Coverpage from "./pages/general-pages/CoverPage/coverpage";
-import Signup from "./pages/general-pages/Signup/signup";
-import Login from "./pages/general-pages/Login/login";
-import Forgotpassword from "./pages/general-pages/PasswordPage/passwordpage";
 
-function App() {
-  return (
-    <>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Coverpage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/passwordpage" element={<Forgotpassword />} />
-        </Routes>
-      </Router>
-    </>
-  );
-}
+// import React from "react";
+// import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+// import Coverpage from "./pages/general-pages/CoverPage/coverpage";
+// import Signup from "./pages/general-pages/Signup/signup";
+// import Login from "./pages/general-pages/Login/login";
+// import Forgotpassword from "./pages/general-pages/PasswordPage/passwordpage";
+
+// function App() {
+//   return (
+//     <>
+//       <Router>
+//         <Routes>
+//           <Route path="/" element={<Coverpage />} />
+//           <Route path="/login" element={<Login />} />
+//           <Route path="/signup" element={<Signup />} />
+//           <Route path="/passwordpage" element={<Forgotpassword />} />
+//         </Routes>
+//       </Router>
+//     </>
+//   );
+// }
 export default App;
