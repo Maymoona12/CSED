@@ -18,7 +18,8 @@ const Alert = (props) => {
 
 const isStrongPassword = (password) => {
   // Customize the password strength criteria as needed
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   return passwordRegex.test(password);
 };
 
@@ -32,7 +33,7 @@ export default function Signup() {
     if (reason === "clickaway") {
       return;
     }
-  
+
     setOpen(false);
   };
 
@@ -43,6 +44,7 @@ export default function Signup() {
     const enteredEmail = data.get("email");
     const enteredPassword = data.get("password");
     const enteredConfirmPassword = data.get("confirm_password");
+    const studentNumber = data.get("student_number");
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(enteredEmail)) {
@@ -58,7 +60,9 @@ export default function Signup() {
     }
 
     if (!isStrongPassword(enteredPassword)) {
-      setAlertMessage("  Password must be strong (at least 8 characters including one uppercase letter one lowercase letter, one digit, and one special character) !");
+      setAlertMessage(
+        "  Password must be strong (at least 8 characters including one uppercase letter one lowercase letter, one digit, and one special character) !"
+      );
       setOpen(true);
       return;
     }
@@ -114,7 +118,7 @@ export default function Signup() {
               flexDirection: "column",
               alignItems: "center",
               padding: "40px",
-              margin: "auto"
+              margin: "auto",
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: "black" }}>
@@ -143,8 +147,17 @@ export default function Signup() {
                 margin="normal"
                 required
                 fullWidth
+                id="student_number"
+                label="Student Number"
+                name="student_number"
+                autoComplete="student_number"
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
                 id="email"
-                label="Email Address"
+                label="Your University Email Address"
                 name="email"
                 autoComplete="email"
                 type="email"
@@ -191,7 +204,12 @@ export default function Signup() {
       </Grid>
 
       {/* Snackbar outside the grid for global positioning */}
-      <Snackbar open={open} autoHideDuration={10000} onClose={handleClose} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
+      <Snackbar
+        open={open}
+        autoHideDuration={10000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
         <div>
           <Alert
             onClose={() => {
@@ -199,7 +217,7 @@ export default function Signup() {
               setAlertMessage("");
             }}
             severity="error"
-            sx={{ width: "110%"  }}
+            sx={{ width: "110%" }}
           >
             {alertMessage}
           </Alert>

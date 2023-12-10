@@ -115,29 +115,6 @@
 //   );
 // }
 
-//GeneralPages:
-// import React from "react";
-// import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-// import Coverpage from "./pages/general-pages/CoverPage/coverpage";
-// import Signup from "./pages/general-pages/Signup/signup";
-// import Login from "./pages/general-pages/Login/login";
-// import Forgotpassword from "./pages/general-pages/PasswordPage/passwordpage";
-
-// function App() {
-//   return (
-//     <>
-//       <Router>
-//         <Routes>
-//           <Route path="/" element={<Coverpage />} />
-//           <Route path="/login" element={<Login />} />
-//           <Route path="/signup" element={<Signup />} />
-//           <Route path="/passwordpage" element={<Forgotpassword />} />
-//         </Routes>
-//       </Router>
-//     </>
-//   );
-// }
-
 // import React from "react";
 // import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // // import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
@@ -155,7 +132,7 @@
 // //         </Routes>
 // //       </Router>  */}
 
-//    <Router>     
+//    <Router>
 //         <Routes>
 //          <Route path="/" element={<Appointment />} />
 //           <Route path="/calendarpage" element={<CalendarPage />} />
@@ -200,33 +177,57 @@
 // export default App;
 
 // App.jsx
-import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import Appointment from "./pages/Appointment/Appointment";
-import CalendarPage from "./pages/Appointment/CalendarPage";
+// import React, { useState } from "react";
+// import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+// import Appointment from "./pages/Appointment/Appointment";
+// import CalendarPage from "./pages/Appointment/CalendarPage";
 
-const App = () => {
-  // Sample initial schedule data
-  const initialSchedule = [
-    { day: "Sun", appointments: [] },
-    { day: "Mon", appointments: [] },
-    { day: "Tue", appointments: [] },
-    { day: "Wed", appointments: [] },
-    { day: "Thu", appointments: [] },
-  ];
+// const App = () => {
+//   // Sample initial schedule data
+//   const initialSchedule = [
+//     { day: "Sun", appointments: [] },
+//     { day: "Mon", appointments: [] },
+//     { day: "Tue", appointments: [] },
+//     { day: "Wed", appointments: [] },
+//     { day: "Thu", appointments: [] },
+//   ];
 
-  const [schedule, setSchedule] = useState(initialSchedule);
+//   const [schedule, setSchedule] = useState(initialSchedule);
 
+//   return (
+//     <Router>
+//       <Routes>
+//         <Route path="/appointment" element={<Appointment schedule={schedule} setSchedule={setSchedule} />} />
+//         <Route path="/calendarpage" element={<CalendarPage schedule={schedule} />} />
+//         {/* Add a default route or redirect to a specific route */}
+//         <Route path="*" element={<Navigate to="/appointment" />} />
+//       </Routes>
+//     </Router>
+//   );
+// };
+
+// export default App;
+
+//GeneralPages:
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Coverpage from "./pages/general-pages/CoverPage/coverpage";
+import Signup from "./pages/general-pages/Signup/signup";
+import Login from "./pages/general-pages/Login/login";
+import Forgotpassword from "./pages/general-pages/PasswordPage/passwordpage";
+
+function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/appointment" element={<Appointment schedule={schedule} setSchedule={setSchedule} />} />
-        <Route path="/calendarpage" element={<CalendarPage schedule={schedule} />} />
-        {/* Add a default route or redirect to a specific route */}
-        <Route path="*" element={<Navigate to="/appointment" />} />
-      </Routes>
-    </Router>
+    <>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Coverpage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/passwordpage" element={<Forgotpassword />} />
+        </Routes>
+      </Router>
+    </>
   );
-};
-
+}
 export default App;
