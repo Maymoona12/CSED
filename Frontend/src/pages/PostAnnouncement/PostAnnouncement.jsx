@@ -10,6 +10,7 @@ import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import AddLinkIcon from "@mui/icons-material/AddLink";
 import PersonAddOutlinedIcon from "@mui/icons-material/PersonAddOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 
@@ -20,6 +21,7 @@ const PostAnnouncementPage = ({ onSubmit }) => {
   const [photoPreview, setPhotoPreview] = useState(null);
   const [announcementText, setAnnouncementText] = useState("");
   const [lecturerUsers, setLecturerUsers] = useState([]);
+  const [editingIndex, setEditingIndex] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const documentInputRef = useRef(null);
   const photoInputRef = useRef(null);
@@ -83,6 +85,54 @@ const PostAnnouncementPage = ({ onSubmit }) => {
     const updatedLecturerUsers = [...lecturerUsers];
     updatedLecturerUsers.splice(index, 1);
     setLecturerUsers(updatedLecturerUsers);
+  };
+  const handleEditLecturer = (index) => {
+    setEditingIndex(index);
+  };
+
+  const editDocumentFile = (index) => {
+    // Create a new input element
+    const input = document.createElement("input");
+    input.type = "file";
+
+    // Attach an event listener to handle file selection
+    input.addEventListener("change", (event) => handleFileChange(event, index));
+
+    // Trigger a click on the input element to open the file selection dialog
+    input.click();
+  };
+  const handleFileChange = (event, index) => {
+    const selectedFile = event.target.files[0];
+
+    if (selectedFile) {
+      const updatedDocumentFiles = [...documentFiles];
+      updatedDocumentFiles[index] = selectedFile;
+      setDocumentFiles(updatedDocumentFiles);
+    }
+  };
+
+  const editPhotoFile = (index) => {
+    // Create a new input element
+    const input = document.createElement("input");
+    input.type = "file";
+
+    // Attach an event listener to handle file selection
+    input.addEventListener("change", (event) =>
+      handlePhotoFileChange(event, index)
+    );
+
+    // Trigger a click on the input element to open the file selection dialog
+    input.click();
+  };
+
+  const handlePhotoFileChange = (event, index) => {
+    const selectedFile = event.target.files[0];
+
+    if (selectedFile) {
+      const updatedPhotoFiles = [...photoFiles];
+      updatedPhotoFiles[index] = selectedFile;
+      setPhotoFiles(updatedPhotoFiles);
+    }
   };
 
   const handleSubmit = () => {
@@ -273,12 +323,36 @@ const PostAnnouncementPage = ({ onSubmit }) => {
             {lecturerUsers.length > 0 && (
               <div style={{ marginLeft: "10px", fontFamily: "Monaco" }}>
                 {lecturerUsers.map((user, index) => (
-                  <div key={index} style={{ display: "flex", alignItems: "center" }}>
-                    {user}
-                    <DeleteIcon
-                      style={{ marginLeft: "5px", cursor: "pointer" }}
-                      onClick={() => handleDeleteLecturer(index)}
-                    />
+                  <div
+                    key={index}
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
+                    {editingIndex === index ? (
+                      // Render your edit form or modal here
+                      // You can create a separate component for the edit form
+                      <div>
+                        Editing {user} - Add your edit form components here
+                        <button onClick={() => setEditingIndex(null)}>
+                          Cancel
+                        </button>
+                        <button onClick={() => handleSaveEdit(index)}>
+                          Save
+                        </button>
+                      </div>
+                    ) : (
+                      <>
+                        {user}
+
+                        <EditIcon
+                          style={{ marginLeft: "5px", cursor: "pointer" }}
+                          onClick={() => handleEditLecturer(index)}
+                        />
+                        <DeleteIcon
+                          style={{ marginLeft: "5px", cursor: "pointer" }}
+                          onClick={() => handleDeleteLecturer(index)}
+                        />
+                      </>
+                    )}
                   </div>
                 ))}
               </div>
@@ -289,10 +363,14 @@ const PostAnnouncementPage = ({ onSubmit }) => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={() => handleLecturerMenuItemClick("Lecturer1")}>
+              <MenuItem
+                onClick={() => handleLecturerMenuItemClick("Lecturer1")}
+              >
                 Lecturer1
               </MenuItem>
-              <MenuItem onClick={() => handleLecturerMenuItemClick("Lecturer2")}>
+              <MenuItem
+                onClick={() => handleLecturerMenuItemClick("Lecturer2")}
+              >
                 Lecturer2
               </MenuItem>
               {/* Add more lecturers as needed */}
@@ -309,6 +387,10 @@ const PostAnnouncementPage = ({ onSubmit }) => {
                       style={{ marginTop: "5px", marginLeft: "70px" }}
                     >
                       {file.name}
+                      <EditIcon
+                        style={{ marginLeft: "5px", cursor: "pointer" }}
+                        onClick={() => editDocumentFile(index)}
+                      />
                       <DeleteIcon
                         style={{ marginLeft: "10px", cursor: "pointer" }}
                         onClick={() => deleteDocumentFile(index)}
@@ -335,6 +417,10 @@ const PostAnnouncementPage = ({ onSubmit }) => {
                           maxWidth: "100%",
                           maxHeight: "200px",
                         }}
+                      />
+                      <EditIcon
+                        style={{ marginLeft: "5px", cursor: "pointer" }}
+                        onClick={() => editPhotoFile(index)}
                       />
                       <DeleteIcon
                         style={{ marginLeft: "10px", cursor: "pointer" }}
