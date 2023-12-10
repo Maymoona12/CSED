@@ -2,7 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { AppBar, Toolbar, Typography, Button, Card, CardContent, TextField } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Card,
+  CardContent,
+  TextField,
+} from "@mui/material";
 
 const localizer = momentLocalizer(moment);
 
@@ -15,40 +23,17 @@ const getRandomColor = () => {
   return color;
 };
 
-const CalendarPage = () => {
+const CalendarPage = ({ schedule }) => {
   const [selectedMeeting, setSelectedMeeting] = useState(null);
   const [bookingDetails, setBookingDetails] = useState({
     subject: "",
-    name: "",
-    course: "",
-    phoneNumber: "",
-    email: "",
   });
-
-  const [schedule, setSchedule] = useState([
-    {
-      day: "2023-12-01",
-      appointments: [
-        { name: "Meeting 1", startTime: "09:00", endTime: "10:30", color: getRandomColor() },
-        { name: "Meeting 2", startTime: "14:00", endTime: "15:30", color: getRandomColor() },
-        { name: "Meeting 1", startTime: "08:00", endTime: "9:30", color: getRandomColor() },
-        { name: "Meeting 2", startTime: "13:00", endTime: "13:30", color: getRandomColor() },
-      ],
-    },
-    {
-      day: "2023-12-02",
-      appointments: [
-        { name: "Meeting 3", startTime: "11:00", endTime: "12:30", color: getRandomColor() },
-        { name: "Meeting 4", startTime: "16:00", endTime: "17:30", color: getRandomColor() },
-      ],
-    },
-  ]);
 
   const events = schedule.reduce((acc, day) => {
     if (Array.isArray(day.appointments)) {
       day.appointments.forEach((appointment) => {
-        const startDateTime = moment(`${day.day} ${appointment.startTime}`, "YYYY-MM-DD HH:mm");
-        const endDateTime = moment(`${day.day} ${appointment.endTime}`, "YYYY-MM-DD HH:mm");
+        const startDateTime = moment(`${day.day} ${appointment.startTime}`, "ddd HH:mm");
+        const endDateTime = moment(`${day.day} ${appointment.endTime}`, "ddd HH:mm");
 
         const isDisabled = selectedMeeting && selectedMeeting.title === appointment.name;
 
@@ -56,7 +41,7 @@ const CalendarPage = () => {
           title: appointment.name,
           start: startDateTime.toDate(),
           end: endDateTime.toDate(),
-          color: appointment.color,
+          backgroundColor: getRandomColor(),
           isDisabled,
         });
       });
@@ -80,16 +65,12 @@ const CalendarPage = () => {
       setSelectedMeeting(event);
       setBookingDetails({
         subject: "",
-        name: "",
-        course: "",
-        phoneNumber: "",
-        email: "",
       });
     }
   };
 
   const handleConfirmBooking = () => {
-    if (selectedMeeting && !selectedMeeting.isDisabled) {
+    if (selectedMeeting && !selectedMeeting.isDisabled && bookingDetails.subject.trim() !== "") {
       console.log("Meeting confirmed:", selectedMeeting.title);
       console.log("Booking Details:", bookingDetails);
       setSelectedMeeting(null);
@@ -110,8 +91,14 @@ const CalendarPage = () => {
 
   return (
     <div style={{ display: "flex", marginBottom: "20px" }}>
+      {/* Left Section */}
       <div style={{ flex: 1 }}>
-        <AppBar position="static" style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000 }} sx={{ background: "black" }}>
+        {/* App Bar */}
+        <AppBar
+          position="static"
+          style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000 }}
+          sx={{ background: "black" }}
+        >
           <Toolbar>
             <Typography variant="h5" component="div" sx={{ flexGrow: 1, fontFamily: "Brush Script MT" }}>
               CSED
@@ -121,12 +108,16 @@ const CalendarPage = () => {
             </Button>
           </Toolbar>
         </AppBar>
+
+        {/* Header */}
         <div>
           <div style={{ display: "flex", flexWrap: "wrap", marginTop: "50px", marginLeft: "10px" }}>
             <h1 style={{ color: "black", fontFamily: "Garamond" }}>Calendar Page</h1>
           </div>
         </div>
-        <div style={{ padding: "15px"}}>
+
+        {/* Calendar */}
+        <div style={{ padding: "15px" }}>
           <Card style={{ width: "100%", height: "100%" }}>
             <CardContent>
               <Calendar
@@ -141,51 +132,39 @@ const CalendarPage = () => {
           </Card>
         </div>
       </div>
+
+      {/* Right Section */}
       {selectedMeeting && (
-        <Card style={{ marginLeft: "20px", width: "300px", height: "100%", marginTop: "195px"}}>
+        <Card style={{ marginLeft: "20px", width: "300px", height: "100%", marginTop: "195px" }}>
           <CardContent>
             <Typography variant="h6" gutterBottom style={{ color: "black", fontFamily: "Garamond" }}>
               Confirm Booking
             </Typography>
-            <TextField
-              label="Subject"
-              fullWidth
-              margin="normal"
-              value={bookingDetails.subject}
-              onChange={(e) => handleInputChange("subject", e.target.value)}
-            />
-            <TextField
-              label="Name"
-              fullWidth
-              margin="normal"
-              value={bookingDetails.name}
-              onChange={(e) => handleInputChange("name", e.target.value)}
-            />
-            <TextField
-              label="Course"
-              fullWidth
-              margin="normal"
-              value={bookingDetails.course}
-              onChange={(e) => handleInputChange("course", e.target.value)}
-            />
-            <TextField
-              label="Phone Number"
-              fullWidth
-              margin="normal"
-              value={bookingDetails.phoneNumber}
-              onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
-            />
-            <TextField
-              label="Email Address"
-              fullWidth
-              margin="normal"
-              value={bookingDetails.email}
-              onChange={(e) => handleInputChange("email", e.target.value)}
-            />
-            <Button onClick={handleConfirmBooking} color="primary" variant="contained" style={{marginTop: "25px", marginRight: "75px" }}>
+            <div style={{ display: "flex", marginBottom: "20px" }}>
+              <TextField
+                label="Subject"
+                multiline
+                minRows={3}
+                placeholder="Write the reason for your meeting here... with section and course"
+                value={bookingDetails.subject}
+                onChange={(e) => handleInputChange("subject", e.target.value)}
+                style={{
+                  width: "100%",
+                  marginTop: "8px",
+                }}
+                required
+              />
+            </div>
+            <Button
+              onClick={handleConfirmBooking}
+              color="primary"
+              variant="contained"
+              style={{ marginTop: "25px", marginRight: "75px" }}
+              disabled={!bookingDetails.subject.trim()}
+            >
               Confirm
             </Button>
-            <Button onClick={handleCancelBooking} color="grey" variant="contained" style={{marginTop: "25px"}}>
+            <Button onClick={handleCancelBooking} color="grey" variant="contained" style={{ marginTop: "25px" }}>
               Cancel
             </Button>
           </CardContent>

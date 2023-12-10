@@ -140,11 +140,11 @@
 
 // import React from "react";
 // import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-// import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
-// import AnnouncementDisplayPage from "./pages/PostAnnouncement/AnnouncementDisplayPage";
+// // import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
+// // import AnnouncementDisplayPage from "./pages/PostAnnouncement/AnnouncementDisplayPage";
 // // import LecturerProfiles from "./pages/Lecturer-Profiles/lecturerprofile";
-// // import Appointment from "./pages/Appointment/Appointment";
-// // import CalendarPage from "./pages/Appointment/CalendarPage";
+// import Appointment from "./pages/Appointment/Appointment";
+// import CalendarPage from "./pages/Appointment/CalendarPage";
 
 // function App() {
 //   return (
@@ -157,10 +157,10 @@
 
 //    <Router>     
 //         <Routes>
-//          {/* <Route path="/" element={<Appointment />} /> */}
-//           {/* <Route path="/" element={<CalendarPage />} /> */}
+//          <Route path="/" element={<Appointment />} />
+//           <Route path="/calendarpage" element={<CalendarPage />} />
 //             {/* <Route path="/" element={<PostAnnouncementPage />} /> */}
-//             <Route path="/" element={<AnnouncementDisplayPage/>} />
+//             {/* <Route path="/" element={<AnnouncementDisplayPage/>} /> */}
 //                     </Routes>
 //        </Router>
 //           </>
@@ -169,31 +169,63 @@
 
 // export default App;
 
-// App.js
+// // App.js
 
+// import React, { useState } from "react";
+// import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
+// import AnnouncementDisplayPage from "./pages/PostAnnouncement/AnnouncementDisplayPage";
+
+// const App = () => {
+//   const [displayAnnouncementPage, setDisplayAnnouncementPage] = useState(false);
+//   const [announcementData, setAnnouncementData] = useState({});
+
+//   const handleSubmit = (data) => {
+//     setAnnouncementData(data);
+//     setDisplayAnnouncementPage(true);
+//   };
+
+//   return (
+//     <div>
+//       {!displayAnnouncementPage && (
+//         <PostAnnouncementPage onSubmit={handleSubmit} />
+//       )}
+
+//       {displayAnnouncementPage && (
+//         <AnnouncementDisplayPage announcementData={announcementData} />
+//       )}
+//     </div>
+//   );
+// };
+
+// export default App;
+
+// App.jsx
 import React, { useState } from "react";
-import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
-import AnnouncementDisplayPage from "./pages/PostAnnouncement/AnnouncementDisplayPage";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import Appointment from "./pages/Appointment/Appointment";
+import CalendarPage from "./pages/Appointment/CalendarPage";
 
 const App = () => {
-  const [displayAnnouncementPage, setDisplayAnnouncementPage] = useState(false);
-  const [announcementData, setAnnouncementData] = useState({});
+  // Sample initial schedule data
+  const initialSchedule = [
+    { day: "Sun", appointments: [] },
+    { day: "Mon", appointments: [] },
+    { day: "Tue", appointments: [] },
+    { day: "Wed", appointments: [] },
+    { day: "Thu", appointments: [] },
+  ];
 
-  const handleSubmit = (data) => {
-    setAnnouncementData(data);
-    setDisplayAnnouncementPage(true);
-  };
+  const [schedule, setSchedule] = useState(initialSchedule);
 
   return (
-    <div>
-      {!displayAnnouncementPage && (
-        <PostAnnouncementPage onSubmit={handleSubmit} />
-      )}
-
-      {displayAnnouncementPage && (
-        <AnnouncementDisplayPage announcementData={announcementData} />
-      )}
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/appointment" element={<Appointment schedule={schedule} setSchedule={setSchedule} />} />
+        <Route path="/calendarpage" element={<CalendarPage schedule={schedule} />} />
+        {/* Add a default route or redirect to a specific route */}
+        <Route path="*" element={<Navigate to="/appointment" />} />
+      </Routes>
+    </Router>
   );
 };
 
