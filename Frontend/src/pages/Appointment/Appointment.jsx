@@ -151,7 +151,7 @@ const Appointment = () => {
           </Toolbar>
         </AppBar>
         <div style={{ display: "flex", flexWrap: "wrap", marginLeft: "10px" }}>
-          <h1 style={{ color: "black", fontFamily: "Garamond" }}>Book Appointment</h1>
+          <h1 style={{ color: "black", fontFamily: "Garamond" }}>Add Appointments</h1>
         </div>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", margin: "20px", minWidth: "200px", color: "black" }}>
           <Card style={{ display: "flex", flexDirection: "column", alignItems: "center", margin: "10px", padding: "10px", minWidth: "200px", height: "250px", border: "1px solid #ddd", borderRadius: "20px", color: "black" }}>

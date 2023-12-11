@@ -108,7 +108,7 @@ const CalendarPage = ({ schedule }) => {
         {/* Header */}
         <div>
           <div style={{ display: "flex", flexWrap: "wrap", marginTop: "50px", marginLeft: "10px" }}>
-            <h1 style={{ color: "black", fontFamily: "Garamond" }}>Calendar Page</h1>
+            <h1 style={{ color: "black", fontFamily: "Garamond" }}>Book Appointment</h1>
           </div>
         </div>
 
