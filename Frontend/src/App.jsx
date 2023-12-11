@@ -148,65 +148,65 @@
 
 // // App.js
 
-import React, { useState } from "react";
-import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
-import AnnouncementDisplayPage from "./pages/PostAnnouncement/AnnouncementDisplayPage";
-
-const App = () => {
-  const [displayAnnouncementPage, setDisplayAnnouncementPage] = useState(false);
-  const [announcementData, setAnnouncementData] = useState({});
-
-  const handleSubmit = (data) => {
-    setAnnouncementData(data);
-    setDisplayAnnouncementPage(true);
-  };
-
-  return (
-    <div>
-      {!displayAnnouncementPage && (
-        <PostAnnouncementPage onSubmit={handleSubmit} />
-      )}
-
-      {displayAnnouncementPage && (
-        <AnnouncementDisplayPage announcementData={announcementData} />
-      )}
-    </div>
-  );
-};
-
-// export default App;
-
-// App.jsx
 // import React, { useState } from "react";
-// import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-// import Appointment from "./pages/Appointment/Appointment";
-// import CalendarPage from "./pages/Appointment/CalendarPage";
+// import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
+// import AnnouncementDisplayPage from "./pages/PostAnnouncement/AnnouncementDisplayPage";
 
 // const App = () => {
-//   // Sample initial schedule data
-//   const initialSchedule = [
-//     { day: "Sun", appointments: [] },
-//     { day: "Mon", appointments: [] },
-//     { day: "Tue", appointments: [] },
-//     { day: "Wed", appointments: [] },
-//     { day: "Thu", appointments: [] },
-//   ];
+//   const [displayAnnouncementPage, setDisplayAnnouncementPage] = useState(false);
+//   const [announcementData, setAnnouncementData] = useState({});
 
-//   const [schedule, setSchedule] = useState(initialSchedule);
+//   const handleSubmit = (data) => {
+//     setAnnouncementData(data);
+//     setDisplayAnnouncementPage(true);
+//   };
 
 //   return (
-//     <Router>
-//       <Routes>
-//         <Route path="/appointment" element={<Appointment schedule={schedule} setSchedule={setSchedule} />} />
-//         <Route path="/calendarpage" element={<CalendarPage schedule={schedule} />} />
-//         {/* Add a default route or redirect to a specific route */}
-//         <Route path="*" element={<Navigate to="/appointment" />} />
-//       </Routes>
-//     </Router>
+//     <div>
+//       {!displayAnnouncementPage && (
+//         <PostAnnouncementPage onSubmit={handleSubmit} />
+//       )}
+
+//       {displayAnnouncementPage && (
+//         <AnnouncementDisplayPage announcementData={announcementData} />
+//       )}
+//     </div>
 //   );
 // };
 
 // export default App;
+
+
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import Appointment from "./pages/Appointment/Appointment";
+import CalendarPage from "./pages/Appointment/CalendarPage";
+
+const App = () => {
+  // Sample initial schedule data
+  const initialSchedule = [
+    { day: "Sun", appointments: [] },
+    { day: "Mon", appointments: [] },
+    { day: "Tue", appointments: [] },
+    { day: "Wed", appointments: [] },
+    { day: "Thu", appointments: [] },
+  ];
+
+  const [schedule, setSchedule] = useState(initialSchedule);
+
+  return (
+    <Router>
+      <Routes>
+        <Route path="/appointment" element={<Appointment schedule={schedule} setSchedule={setSchedule} />} />
+        <Route path="/calendarpage" element={<CalendarPage schedule={schedule} />} />
+        {/* Add a default route or redirect to a specific route */}
+        <Route path="*" element={<Navigate to="/appointment" />} />
+      </Routes>
+    </Router>
+  );
+};
+
+export default App;
 
 //GeneralPages:
 
@@ -231,4 +231,4 @@ const App = () => {
 //     </>
 //   );
 // }
-export default App;
+// export default App;

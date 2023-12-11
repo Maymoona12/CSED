@@ -12,6 +12,14 @@ const CalendarPage = ({ schedule }) => {
     console.error("Invalid schedule prop:", schedule);
     return null;
   }
+  const handleSaveButtonClick = (dayIndex) => {
+    const tableElement = document.getElementById(`table-${dayIndex}`);
+    if (tableElement.style.display === "table" && tableElement.style.visibility === "visible") {
+      console.log("Table saved:", schedule[dayIndex].appointments);
+      setShowCalendar(true);
+    }
+  };
+  
 
   const events = schedule.reduce((acc, day) => {
     if (Array.isArray(day.appointments)) {
@@ -143,7 +151,7 @@ const Appointment = () => {
           </Toolbar>
         </AppBar>
         <div style={{ display: "flex", flexWrap: "wrap", marginLeft: "10px" }}>
-          <h1 style={{ color: "black", fontFamily: "Garamond" }}>Book Appointment</h1>
+          <h1 style={{ color: "black", fontFamily: "Garamond" }}>Add Appointments</h1>
         </div>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", margin: "20px", minWidth: "200px", color: "black" }}>
           <Card style={{ display: "flex", flexDirection: "column", alignItems: "center", margin: "10px", padding: "10px", minWidth: "200px", height: "250px", border: "1px solid #ddd", borderRadius: "20px", color: "black" }}>

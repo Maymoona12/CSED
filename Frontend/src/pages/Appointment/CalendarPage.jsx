@@ -10,6 +10,7 @@ import {
   Card,
   CardContent,
   TextField,
+  Modal, // Import Modal from @mui/material
 } from "@mui/material";
 
 const localizer = momentLocalizer(moment);
@@ -28,6 +29,7 @@ const CalendarPage = ({ schedule }) => {
   const [bookingDetails, setBookingDetails] = useState({
     subject: "",
   });
+  const [confirmationModalOpen, setConfirmationModalOpen] = useState(false); // Added state for modal
 
   const events = schedule.reduce((acc, day) => {
     if (Array.isArray(day.appointments)) {
@@ -50,14 +52,9 @@ const CalendarPage = ({ schedule }) => {
     return acc;
   }, []);
 
-  useEffect(() => {
-    // Code to run when the component mounts or when selectedMeeting changes
-    // For example, you can fetch data here or perform other side effects
-  }, [selectedMeeting]);
-
   const handleLogout = () => {
-    // Define your logout logic here
     console.log("Logout clicked");
+    // Implement your logout logic here
   };
 
   const handleSelectEvent = (event) => {
@@ -66,6 +63,7 @@ const CalendarPage = ({ schedule }) => {
       setBookingDetails({
         subject: "",
       });
+      setConfirmationModalOpen(true); // Open the confirmation modal
     }
   };
 
@@ -74,12 +72,14 @@ const CalendarPage = ({ schedule }) => {
       console.log("Meeting confirmed:", selectedMeeting.title);
       console.log("Booking Details:", bookingDetails);
       setSelectedMeeting(null);
+      setConfirmationModalOpen(false); // Close the confirmation modal
     }
   };
 
   const handleCancelBooking = () => {
     console.log("Booking canceled");
     setSelectedMeeting(null);
+    setConfirmationModalOpen(false); // Close the confirmation modal
   };
 
   const handleInputChange = (field, value) => {
@@ -94,11 +94,7 @@ const CalendarPage = ({ schedule }) => {
       {/* Left Section */}
       <div style={{ flex: 1 }}>
         {/* App Bar */}
-        <AppBar
-          position="static"
-          style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000 }}
-          sx={{ background: "black" }}
-        >
+        <AppBar position="static" style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000 }} sx={{ background: "black" }}>
           <Toolbar>
             <Typography variant="h5" component="div" sx={{ flexGrow: 1, fontFamily: "Brush Script MT" }}>
               CSED
@@ -112,7 +108,7 @@ const CalendarPage = ({ schedule }) => {
         {/* Header */}
         <div>
           <div style={{ display: "flex", flexWrap: "wrap", marginTop: "50px", marginLeft: "10px" }}>
-            <h1 style={{ color: "black", fontFamily: "Garamond" }}>Calendar Page</h1>
+            <h1 style={{ color: "black", fontFamily: "Garamond" }}>Book Appointment</h1>
           </div>
         </div>
 
@@ -135,40 +131,42 @@ const CalendarPage = ({ schedule }) => {
 
       {/* Right Section */}
       {selectedMeeting && (
-        <Card style={{ marginLeft: "20px", width: "300px", height: "100%", marginTop: "195px" }}>
-          <CardContent>
-            <Typography variant="h6" gutterBottom style={{ color: "black", fontFamily: "Garamond" }}>
-              Confirm Booking
-            </Typography>
-            <div style={{ display: "flex", marginBottom: "20px" }}>
-              <TextField
-                label="Subject"
-                multiline
-                minRows={3}
-                placeholder="Write the reason for your meeting here... with section and course"
-                value={bookingDetails.subject}
-                onChange={(e) => handleInputChange("subject", e.target.value)}
-                style={{
-                  width: "100%",
-                  marginTop: "8px",
-                }}
-                required
-              />
-            </div>
-            <Button
-              onClick={handleConfirmBooking}
-              color="primary"
-              variant="contained"
-              style={{ marginTop: "25px", marginRight: "75px" }}
-              disabled={!bookingDetails.subject.trim()}
-            >
-              Confirm
-            </Button>
-            <Button onClick={handleCancelBooking} color="grey" variant="contained" style={{ marginTop: "25px" }}>
-              Cancel
-            </Button>
-          </CardContent>
-        </Card>
+        <Modal open={confirmationModalOpen} onClose={() => setConfirmationModalOpen(false)}>
+          <Card style={{ margin: "20px", width: "300px", height: "100%" }}>
+            <CardContent>
+              <Typography variant="h6" gutterBottom style={{ color: "black", fontFamily: "Garamond" }}>
+                Confirm Booking
+              </Typography>
+              <div style={{ display: "flex", marginBottom: "20px" }}>
+                <TextField
+                  label="Subject"
+                  multiline
+                  minRows={3}
+                  placeholder="Write the reason for your meeting here... with section and course"
+                  value={bookingDetails.subject}
+                  onChange={(e) => handleInputChange("subject", e.target.value)}
+                  style={{
+                    width: "100%",
+                    marginTop: "8px",
+                  }}
+                  required
+                />
+              </div>
+              <Button
+                onClick={handleConfirmBooking}
+                color="primary"
+                variant="contained"
+                style={{ marginTop: "25px", marginRight: "75px" }}
+                disabled={!bookingDetails.subject.trim()}
+              >
+                Confirm
+              </Button>
+              <Button onClick={handleCancelBooking} color="grey" variant="contained" style={{ marginTop: "25px" }}>
+                Cancel
+              </Button>
+            </CardContent>
+          </Card>
+        </Modal>
       )}
     </div>
   );
