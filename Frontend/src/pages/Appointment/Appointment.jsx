@@ -12,6 +12,14 @@ const CalendarPage = ({ schedule }) => {
     console.error("Invalid schedule prop:", schedule);
     return null;
   }
+  const handleSaveButtonClick = (dayIndex) => {
+    const tableElement = document.getElementById(`table-${dayIndex}`);
+    if (tableElement.style.display === "table" && tableElement.style.visibility === "visible") {
+      console.log("Table saved:", schedule[dayIndex].appointments);
+      setShowCalendar(true);
+    }
+  };
+  
 
   const events = schedule.reduce((acc, day) => {
     if (Array.isArray(day.appointments)) {
