@@ -3,8 +3,8 @@
 //Archive Page:)
 // import React, { useState } from "react";
 // import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-// // import FoldersPage from "./pages/photo-archive/foldersPage";
-// // import PhotosPage from "./pages/photo-archive/photospage";
+// import FoldersPage from "./pages/photo-archive/foldersPage";
+// import PhotosPage from "./pages/photo-archive/photospage";
 
 // function App() {
 //   const [selectedFolder, setSelectedFolder] = useState("defaultFolder");
@@ -85,7 +85,7 @@
 
 //   return (
 //     <>
-//       {/* <Router>
+//       <Router>
 //         <Routes>
 //           <Route
 //             path="/"
@@ -110,7 +110,7 @@
 //             }
 //           />
 //         </Routes>
-//       </Router> */}
+//       </Router>
 //     </>
 //   );
 // }
@@ -292,14 +292,24 @@
 //________________________________________________________________
 
 // import React from "react";
+// import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 // import LecturerPage from "./pages/Lecturer-Page/lecturerpage";
+// import LecturerProfiles from "./pages/Lecturer-Profiles/lecturerprofile";
+// import Appointment from "./pages/Appointment/Appointment";
+// import FoldersPage from "./pages/photo-archive/foldersPage";
+// import PhotosPage from "./pages/photo-archive/photospage";
 
 // const App = () => {
 //   return (
-//     <div>
-//       {/* Add any other components or layout as needed */}
-//       <LecturerPage />
-//     </div>
+//     <Router>
+//       <Routes>
+//         <Route path="/" element={<LecturerPage />} />
+//         <Route path="/LecturersProfile" element={<LecturerProfiles />} />
+//         <Route path="/AddAppointment" element={<Appointment />} />
+//         <Route path="/ArchivePage" element={<FoldersPage />} />
+//         <Route path="/PhotosPage/:folderId" element={<PhotosPage />} />
+//       </Routes>
+//     </Router>
 //   );
 // };
 
