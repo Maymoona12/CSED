@@ -148,6 +148,35 @@
 
 // // App.js
 
+import React, { useState } from "react";
+import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
+import AnnouncementDisplayPage from "./pages/PostAnnouncement/AnnouncementDisplayPage";
+
+const App = () => {
+  const [displayAnnouncementPage, setDisplayAnnouncementPage] = useState(false);
+  const [announcementData, setAnnouncementData] = useState({});
+
+  const handleSubmit = (data) => {
+    setAnnouncementData(data);
+    setDisplayAnnouncementPage(true);
+  };
+
+  return (
+    <div>
+      {!displayAnnouncementPage && (
+        <PostAnnouncementPage onSubmit={handleSubmit} />
+      )}
+
+      {displayAnnouncementPage && (
+        <AnnouncementDisplayPage announcementData={announcementData} />
+      )}
+    </div>
+  );
+};
+
+// export default App;
+
+// App.jsx
 // import React, { useState } from "react";
 // import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
 // import AnnouncementDisplayPage from "./pages/PostAnnouncement/AnnouncementDisplayPage";
@@ -231,4 +260,4 @@ export default App;
 //     </>
 //   );
 // }
-// export default App;
+export default App;
