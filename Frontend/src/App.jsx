@@ -191,34 +191,6 @@
 
 // export default App;
 
-// App.jsx
-// import React, { useState } from "react";
-// import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
-// import AnnouncementDisplayPage from "./pages/PostAnnouncement/AnnouncementDisplayPage";
-
-// const App = () => {
-//   const [displayAnnouncementPage, setDisplayAnnouncementPage] = useState(false);
-//   const [announcementData, setAnnouncementData] = useState({});
-
-//   const handleSubmit = (data) => {
-//     setAnnouncementData(data);
-//     setDisplayAnnouncementPage(true);
-//   };
-
-//   return (
-//     <div>
-//       {!displayAnnouncementPage && (
-//         <PostAnnouncementPage onSubmit={handleSubmit} />
-//       )}
-
-//       {displayAnnouncementPage && (
-//         <AnnouncementDisplayPage announcementData={announcementData} />
-//       )}
-//     </div>
-//   );
-// };
-
-// export default App;
 
 // import React, { useState } from "react";
 // import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
@@ -276,16 +248,21 @@
 // }
 // export default App;
 
-// import React from "react";
-// import LecturerPage from "./pages/Lecturer-Page/lecturerpage";
 
-// const App = () => {
-//   return (
-//     <div>
-//       {/* Add any other components or layout as needed */}
-//       <LecturerPage />
-//     </div>
-//   );
-// };
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import AdminPage from "./pages/UsersPage/AdminPage/AdminPage";
 
-// export default App;
+
+function App() {
+  return (
+    <>
+      <Router>
+        <Routes>
+          <Route path="/" element={<AdminPage />} />
+        </Routes>
+      </Router>
+    </>
+  );
+}
+export default App;
