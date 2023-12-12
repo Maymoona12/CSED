@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
@@ -16,6 +17,13 @@ import ApartmentIcon from "@mui/icons-material/Apartment";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import Stack from "@mui/material/Stack";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import Badge from "@mui/material/Badge";
+import Menu from "@mui/material/Menu";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import MenuItem from "@mui/material/MenuItem";
 
 const LecturerPage = () => {
   const initialData = {
@@ -27,6 +35,14 @@ const LecturerPage = () => {
 
   const [editMode, setEditMode] = useState(false);
   const [editedData, setEditedData] = useState(initialData);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const settings = [
+    "Profile",
+    "Lecturers Profile",
+    "Add Appointment",
+    "Archive Page",
+    "Logout",
+  ];
 
   const lecturers = [
     {
@@ -64,7 +80,13 @@ const LecturerPage = () => {
       [field]: value,
     }));
   };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
 
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
   return (
     <div
       style={{
@@ -74,7 +96,6 @@ const LecturerPage = () => {
         flexDirection: "row",
       }}
     >
-      {/* Left column for profile information */}
       <div>
         <AppBar
           position="static"
@@ -89,6 +110,50 @@ const LecturerPage = () => {
             >
               CSED
             </Typography>
+
+            <Stack
+              spacing={4}
+              direction="row"
+              sx={{ color: "white", marginRight: "20px" }}
+            >
+              <Badge color="secondary" badgeContent={0}>
+                <NotificationsIcon />
+              </Badge>
+            </Stack>
+
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Thaer" src="ProfileImages/thaer.PNG" />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <Link to={`/${setting.replace(/\s+/g, "")}`} key={setting}>
+                    <MenuItem onClick={handleCloseUserMenu}>
+                      <Typography textAlign="center" sx={{ color: "black" }}>
+                        {setting}
+                      </Typography>
+                    </MenuItem>
+                  </Link>
+                ))}
+              </Menu>
+            </Box>
           </Toolbar>
         </AppBar>
         <div
@@ -142,11 +207,7 @@ const LecturerPage = () => {
             >
               User Details
             </Typography>
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              style={{ color: "black", marginBottom: "20px" }} // Increased marginBottom
-            >
+            <div style={{ color: "black", marginBottom: "20px" }}>
               {lecturers[0].information.split("\n").map((line, i) => (
                 <div key={i}>
                   <div style={{ display: "flex", marginBottom: "20px" }}>
@@ -166,7 +227,8 @@ const LecturerPage = () => {
                   </div>
                 </div>
               ))}
-            </Typography>
+            </div>
+
             <div style={{ marginTop: "30px" }}>
               {/* Increased marginTop */}
               <button onClick={handleEditButtonClick}>
