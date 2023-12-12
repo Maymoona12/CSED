@@ -1,5 +1,6 @@
 //app.jsx:
 
+//Archive Page:)
 // import React, { useState } from "react";
 // import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // // import FoldersPage from "./pages/photo-archive/foldersPage";
@@ -110,10 +111,11 @@
 //           />
 //         </Routes>
 //       </Router> */}
-//       {/* <PostAnnouncementPage /> */}
 //     </>
 //   );
 // }
+// export default App;
+//________________________________________________________________
 
 // import React from "react";
 // import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -158,11 +160,10 @@
 //     </>
 //   );
 // }
-
 // export default App;
+//________________________________________________________________
 
-// // App.js
-
+//PostAnnouncementPage:)
 // import React, { useState } from "react";
 // import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
 // import AnnouncementDisplayPage from "./pages/PostAnnouncement/AnnouncementDisplayPage";
@@ -219,9 +220,16 @@
 // };
 
 // export default App;
+//________________________________________________________________
 
+//Appointment& CalendarPage:)
 // import React, { useState } from "react";
-// import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+// import {
+//   BrowserRouter as Router,
+//   Routes,
+//   Route,
+//   Navigate,
+// } from "react-router-dom";
 // import Appointment from "./pages/Appointment/Appointment";
 // import CalendarPage from "./pages/Appointment/CalendarPage";
 
@@ -240,19 +248,26 @@
 //   return (
 //     <Router>
 //       <Routes>
-//         <Route path="/appointment" element={<Appointment schedule={schedule} setSchedule={setSchedule} />} />
-//         <Route path="/calendarpage" element={<CalendarPage schedule={schedule} />} />
+//         <Route
+//           path="/appointment"
+//           element={
+//             <Appointment schedule={schedule} setSchedule={setSchedule} />
+//           }
+//         />
+//         <Route
+//           path="/calendarpage"
+//           element={<CalendarPage schedule={schedule} />}
+//         />
 //         {/* Add a default route or redirect to a specific route */}
 //         <Route path="*" element={<Navigate to="/appointment" />} />
 //       </Routes>
 //     </Router>
 //   );
 // };
-
 // export default App;
+//________________________________________________________________
 
-//GeneralPages:
-
+//***GeneralPages:
 // import React from "react";
 // import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // import Coverpage from "./pages/general-pages/CoverPage/coverpage";
@@ -275,7 +290,9 @@
 //   );
 // }
 // export default App;
+//________________________________________________________________
 
+//LecturerPage:)
 // import React from "react";
 // import LecturerPage from "./pages/Lecturer-Page/lecturerpage";
 
