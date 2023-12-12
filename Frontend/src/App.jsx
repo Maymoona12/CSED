@@ -220,7 +220,6 @@
 // };
 
 // export default App;
-//________________________________________________________________
 
 //Appointment& CalendarPage:)
 // import React, { useState } from "react";
@@ -292,7 +291,6 @@
 // export default App;
 //________________________________________________________________
 
-//LecturerPage:)
 // import React from "react";
 // import LecturerPage from "./pages/Lecturer-Page/lecturerpage";
 
