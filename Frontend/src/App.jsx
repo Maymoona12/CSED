@@ -276,16 +276,16 @@
 // }
 // export default App;
 
-import React from "react";
-import LecturerPage from "./pages/Lecturer-Page/lecturerpage";
+// import React from "react";
+// import LecturerPage from "./pages/Lecturer-Page/lecturerpage";
 
-const App = () => {
-  return (
-    <div>
-      {/* Add any other components or layout as needed */}
-      <LecturerPage />
-    </div>
-  );
-};
+// const App = () => {
+//   return (
+//     <div>
+//       {/* Add any other components or layout as needed */}
+//       <LecturerPage />
+//     </div>
+//   );
+// };
 
-export default App;
+// export default App;
