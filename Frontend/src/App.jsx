@@ -115,35 +115,51 @@
 //   );
 // }
 
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+// import React from "react";
+// import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // // import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
 // // import AnnouncementDisplayPage from "./pages/PostAnnouncement/AnnouncementDisplayPage";
-import LecturerProfiles from "./pages/Lecturer-Profiles/lecturerprofile";
+// import LecturerProfiles from "./pages/Lecturer-Profiles/lecturerprofile";
 // import Appointment from "./pages/Appointment/Appointment";
 // import CalendarPage from "./pages/Appointment/CalendarPage";
 
-function App() {
-  return (
-    <>
-      <Router>
-        <Routes>
-          <Route path="/" element={<LecturerProfiles />} />
-        </Routes>
-      </Router>
-      {/* <Router> */}
-      {/* <Routes> */}
-      {/*  <Route path="/" element={<Appointment />} /> */}
-      {/*  <Route path="/calendarpage" element={<CalendarPage />} /> */}
-      {/* <Route path="/" element={<PostAnnouncementPage />} /> */}
-      {/* <Route path="/" element={<AnnouncementDisplayPage/>} /> */}
-      {/* </Routes> */}
-      {/* </Router> */}
-    </>
-  );
+// function App() {
+//   return (
+//     <>
+//       <Router>
+//         <Routes>
+//           <Route path="/" element={<LecturerProfiles />} />
+//         </Routes>
+//       </Router>
+{
+  /* <Router> */
 }
+{
+  /* <Routes> */
+}
+{
+  /*  <Route path="/" element={<Appointment />} /> */
+}
+{
+  /*  <Route path="/calendarpage" element={<CalendarPage />} /> */
+}
+{
+  /* <Route path="/" element={<PostAnnouncementPage />} /> */
+}
+{
+  /* <Route path="/" element={<AnnouncementDisplayPage/>} /> */
+}
+{
+  /* </Routes> */
+}
+{
+  /* </Router> */
+}
+//     </>
+//   );
+// }
 
-export default App;
+// export default App;
 
 // // App.js
 
@@ -259,3 +275,17 @@ export default App;
 //   );
 // }
 // export default App;
+
+import React from "react";
+import LecturerPage from "./pages/Lecturer-Page/lecturerpage";
+
+const App = () => {
+  return (
+    <div>
+      {/* Add any other components or layout as needed */}
+      <LecturerPage />
+    </div>
+  );
+};
+
+export default App;
