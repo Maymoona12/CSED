@@ -119,28 +119,43 @@
 // import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // // import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
 // // import AnnouncementDisplayPage from "./pages/PostAnnouncement/AnnouncementDisplayPage";
-// // import LecturerProfiles from "./pages/Lecturer-Profiles/lecturerprofile";
+// import LecturerProfiles from "./pages/Lecturer-Profiles/lecturerprofile";
 // import Appointment from "./pages/Appointment/Appointment";
 // import CalendarPage from "./pages/Appointment/CalendarPage";
 
 // function App() {
 //   return (
 //     <>
-// //        {/* <Router>
-// //         <Routes>
-// //           <Route path="/" element={<LecturerProfiles />} />
-// //         </Routes>
-// //       </Router>  */}
-
-//    <Router>
+//       <Router>
 //         <Routes>
-//          <Route path="/" element={<Appointment />} />
-//           <Route path="/calendarpage" element={<CalendarPage />} />
-//             {/* <Route path="/" element={<PostAnnouncementPage />} /> */}
-//             {/* <Route path="/" element={<AnnouncementDisplayPage/>} /> */}
-//                     </Routes>
-//        </Router>
-//           </>
+//           <Route path="/" element={<LecturerProfiles />} />
+//         </Routes>
+//       </Router>
+{
+  /* <Router> */
+}
+{
+  /* <Routes> */
+}
+{
+  /*  <Route path="/" element={<Appointment />} /> */
+}
+{
+  /*  <Route path="/calendarpage" element={<CalendarPage />} /> */
+}
+{
+  /* <Route path="/" element={<PostAnnouncementPage />} /> */
+}
+{
+  /* <Route path="/" element={<AnnouncementDisplayPage/>} /> */
+}
+{
+  /* </Routes> */
+}
+{
+  /* </Router> */
+}
+//     </>
 //   );
 // }
 
@@ -210,24 +225,44 @@
 
 //GeneralPages:
 
+// import React from "react";
+// import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+// import Coverpage from "./pages/general-pages/CoverPage/coverpage";
+// import Signup from "./pages/general-pages/Signup/signup";
+// import Login from "./pages/general-pages/Login/login";
+// import Forgotpassword from "./pages/general-pages/PasswordPage/passwordpage";
+
+// function App() {
+//   return (
+//     <>
+//       <Router>
+//         <Routes>
+//           <Route path="/" element={<Coverpage />} />
+//           <Route path="/login" element={<Login />} />
+//           <Route path="/signup" element={<Signup />} />
+//           <Route path="/passwordpage" element={<Forgotpassword />} />
+//         </Routes>
+//       </Router>
+//     </>
+//   );
+// }
+// export default App;
+
+
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Coverpage from "./pages/general-pages/CoverPage/coverpage";
-import Signup from "./pages/general-pages/Signup/signup";
-import Login from "./pages/general-pages/Login/login";
-import Forgotpassword from "./pages/general-pages/PasswordPage/passwordpage";
+import AdminPage from "./pages/UsersPage/AdminPage/AdminPage";
+
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Coverpage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/passwordpage" element={<Forgotpassword />} />
-      </Routes>
-    </Router>
+    <>
+      <Router>
+        <Routes>
+          <Route path="/" element={<AdminPage />} />
+        </Routes>
+      </Router>
+    </>
   );
 }
-
 export default App;
