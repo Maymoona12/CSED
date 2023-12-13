@@ -191,7 +191,7 @@
 // };
 
 // export default App;
-
+//___________________________________________________________________
 // App.jsx
 // import React, { useState } from "react";
 // import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
@@ -233,28 +233,30 @@
 //   const [schedule, setSchedule] = useState(initialSchedule);
 
 //   return (
-//     <Router>
-//       <Routes>
-//         <Route
-//           path="/appointment"
-//           element={
-//             <Appointment schedule={schedule} setSchedule={setSchedule} />
-//           }
-//         />
-//         <Route
-//           path="/calendarpage"
-//           element={<CalendarPage schedule={schedule} />}
-//         />
-//         {/* Add a default route or redirect to a specific route */}
-//         <Route path="*" element={<Navigate to="/appointment" />} />
-//       </Routes>
-//     </Router>
+//     <>
+//       <Router>
+//         <Routes>
+//           <Route
+//             path="/appointment"
+//             element={
+//               <Appointment schedule={schedule} setSchedule={setSchedule} />
+//             }
+//           />
+//           <Route
+//             path="/calendarpage"
+//             element={<CalendarPage schedule={schedule} />}
+//           />
+//           {/* Add a default route or redirect to a specific route */}
+//           {/* <Route path="*" element={<Navigate to="/appointment" />} /> */}
+//         </Routes>
+//       </Router>
+//     </>
 //   );
 // };
 // export default App;
-//________________________________________________________________
+// ________________________________________________________________;
 
-//***GeneralPages:
+// ***GeneralPages:
 // import React from "react";
 // import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // import Coverpage from "./pages/general-pages/CoverPage/coverpage";
