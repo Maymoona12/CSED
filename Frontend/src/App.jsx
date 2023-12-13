@@ -281,6 +281,8 @@
 // export default App;
 //________________________________________________________________
 
+//Lecturer-Page:
+
 // import React from "react";
 // import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 // import LecturerPage from "./pages/UsersPage/Lecturer-Page/lecturerpage";
@@ -304,6 +306,35 @@
 //         <Route path="/PhotosPage/:folderId" element={<PhotosPage />} />
 //       </Routes>
 //     </Router>
+//   );
+// };
+
+// export default App;
+//_______________________________________________________________________
+
+//Student-Page:
+
+// import React, { useState, useEffect } from "react";
+// import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+// import StudentPage from "./pages/UsersPage/StudentPage/StudentPage";
+// import AnnouncementDisplayPage from "./pages/PostAnnouncement/AnnouncementDisplayPage";
+// import LecturerProfiles from "./pages/Lecturer-Profiles/lecturerprofile";
+// import FoldersPage from "./pages/photo-archive/foldersPage";
+// import PhotosPage from "./pages/photo-archive/photospage";
+
+// const App = () => {
+//   return (
+//     <>
+//       <Router>
+//         <Routes>
+//           <Route path="/" element={<StudentPage />} />
+//           <Route path="/Home" element={<AnnouncementDisplayPage />} />
+//           <Route path="/LecturersProfile" element={<LecturerProfiles />} />
+//           <Route path="/ArchivePage" element={<FoldersPage />} />
+//           <Route path="/PhotosPage/:folderId" element={<PhotosPage />} />
+//         </Routes>
+//       </Router>
+//     </>
 //   );
 // };
 
