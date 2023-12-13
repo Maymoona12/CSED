@@ -196,30 +196,18 @@
 // import React, { useState } from "react";
 // import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
 // import AnnouncementDisplayPage from "./pages/PostAnnouncement/AnnouncementDisplayPage";
+// import Callpages from "./pages/PostAnnouncement/callpages";
 
 // const App = () => {
-//   const [displayAnnouncementPage, setDisplayAnnouncementPage] = useState(false);
-//   const [announcementData, setAnnouncementData] = useState({});
-
-//   const handleSubmit = (data) => {
-//     setAnnouncementData(data);
-//     setDisplayAnnouncementPage(true);
-//   };
-
 //   return (
-//     <div>
-//       {!displayAnnouncementPage && (
-//         <PostAnnouncementPage onSubmit={handleSubmit} />
-//       )}
-
-//       {displayAnnouncementPage && (
-//         <AnnouncementDisplayPage announcementData={announcementData} />
-//       )}
-//     </div>
+//     <>
+//       <Callpages />
+//     </>
 //   );
 // };
 
 // export default App;
+//________________________________________________________________
 
 //Appointment& CalendarPage:)
 // import React, { useState } from "react";
@@ -293,7 +281,9 @@
 
 // import React from "react";
 // import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-// import LecturerPage from "./pages/Lecturer-Page/lecturerpage";
+// import LecturerPage from "./pages/UsersPage/Lecturer-Page/lecturerpage";
+// import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
+// import AnnouncementDisplayPage from "./pages/PostAnnouncement/AnnouncementDisplayPage";
 // import LecturerProfiles from "./pages/Lecturer-Profiles/lecturerprofile";
 // import Appointment from "./pages/Appointment/Appointment";
 // import FoldersPage from "./pages/photo-archive/foldersPage";
@@ -304,6 +294,8 @@
 //     <Router>
 //       <Routes>
 //         <Route path="/" element={<LecturerPage />} />
+//         <Route path="/Home" element={<AnnouncementDisplayPage />} />
+//         <Route path="/PostAnnouncement" element={<PostAnnouncementPage />} />
 //         <Route path="/LecturersProfile" element={<LecturerProfiles />} />
 //         <Route path="/AddAppointment" element={<Appointment />} />
 //         <Route path="/ArchivePage" element={<FoldersPage />} />

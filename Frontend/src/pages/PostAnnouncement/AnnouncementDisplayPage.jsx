@@ -11,13 +11,13 @@ import CardHeader from "@mui/material/CardHeader";
 import Button from "@mui/material/Button";
 
 const AnnouncementDisplayPage = ({ announcementData }) => {
-  const {
-    title,
-    announcementText,
-    documentFiles,
-    photoFiles,
-    lecturerUsers,
-  } = announcementData;
+  // Check if announcementData is defined
+  if (!announcementData) {
+    return <div>Loading...</div>; // or any other appropriate handling
+  }
+
+  const { title, announcementText, documentFiles, photoFiles, lecturerUsers } =
+    announcementData;
 
   return (
     <div>
@@ -59,7 +59,10 @@ const AnnouncementDisplayPage = ({ announcementData }) => {
         }}
       >
         <Card>
-          <CardHeader title={title} subheader={`Posted by ${lecturerUsers.join(", ")}`} />
+          <CardHeader
+            title={title}
+            subheader={`Posted by ${lecturerUsers.join(", ")}`}
+          />
           <CardContent>
             <Typography variant="body1" color="textSecondary" component="div">
               <p>{announcementText}</p>
@@ -67,7 +70,7 @@ const AnnouncementDisplayPage = ({ announcementData }) => {
 
             {documentFiles.length > 0 && (
               <div>
-                <Typography variant="h6" gutterBottom >
+                <Typography variant="h6" gutterBottom>
                   Attached Documents
                 </Typography>
                 {documentFiles.map((file, index) => (
@@ -86,7 +89,11 @@ const AnnouncementDisplayPage = ({ announcementData }) => {
                     <img
                       src={URL.createObjectURL(file)}
                       alt={`Photo ${index + 1}`}
-                      style={{ maxWidth: "100%", maxHeight: "200px", marginTop: "10px" }}
+                      style={{
+                        maxWidth: "100%",
+                        maxHeight: "200px",
+                        marginTop: "10px",
+                      }}
                     />
                   </div>
                 ))}
