@@ -70,13 +70,12 @@ const PostAnnouncementPage = ({ onSubmit }) => {
     inputRef.current.click();
   };
 
-
   const handleDeleteLecturer = (index) => {
     const updatedLecturerUsers = [...lecturerUsers];
     updatedLecturerUsers.splice(index, 1);
     setLecturerUsers(updatedLecturerUsers);
   };
-  
+
   const handleEditLecturer = (index) => {
     setEditingIndex(index);
   };
@@ -101,7 +100,9 @@ const PostAnnouncementPage = ({ onSubmit }) => {
   const editPhotoFile = (index) => {
     const input = document.createElement("input");
     input.type = "file";
-    input.addEventListener("change", (event) => handlePhotoFileChange(event, index));
+    input.addEventListener("change", (event) =>
+      handlePhotoFileChange(event, index)
+    );
     input.click();
   };
 
@@ -121,12 +122,11 @@ const PostAnnouncementPage = ({ onSubmit }) => {
     //   return;
     // }
     const data = {
-      title:"",
+      title: "",
       announcementText,
       documentFiles,
       photoFiles,
     };
-       };
     onSubmit(data);
     setAnnouncementText("");
     setDocumentFiles([]);
@@ -189,7 +189,7 @@ const PostAnnouncementPage = ({ onSubmit }) => {
           >
             Post Announcement
           </h2>
-          <Typography 
+          <Typography
             variant="h5"
             sx={{
               marginBottom: "5px",
