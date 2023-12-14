@@ -13,27 +13,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import AnnouncementDisplayPage from "./AnnouncementDisplayPage";
 import axios from "axios";
 
 const PostAnnouncementPage = ({ onSubmit }) => {
   const [announcementData, setAnnouncementData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("/api/announcement");
-        setAnnouncementData(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
   const [documentFiles, setDocumentFiles] = useState([]);
   const [photoFiles, setPhotoFiles] = useState([]);
   const [documentPreview, setDocumentPreview] = useState(null);
@@ -464,9 +449,6 @@ const PostAnnouncementPage = ({ onSubmit }) => {
           </button>
         </Box>
       </div>
-      {!loading && announcementData && (
-        <AnnouncementDisplayPage announcementData={announcementData} />
-      )}
     </div>
   );
 };

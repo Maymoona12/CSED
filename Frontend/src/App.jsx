@@ -339,3 +339,24 @@
 // };
 
 // export default App;
+//__________________________________________________________________________
+
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
+import Home from "./pages/PostAnnouncement/Home";
+
+const App = () => {
+  return (
+    <>
+      <Router>
+        <Routes>
+          <Route path="/" element={<PostAnnouncementPage />} />
+          <Route path="/Home" element={<Home />} />
+        </Routes>
+      </Router>
+    </>
+  );
+};
+
+export default App;

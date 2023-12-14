@@ -1,3 +1,4 @@
+// Home.jsx
 import React, { useState, useEffect } from "react";
 import PostAnnouncementPage from "./PostAnnouncement";
 import axios from "axios";
@@ -21,12 +22,17 @@ const Home = () => {
     fetchData();
   }, []);
 
-  const handleAnnouncementSubmit = (data) => {
-    // Handle the submission logic if needed
-    console.log("Announcement submitted:", data);
+  const handleAnnouncementSubmit = async (data) => {
+    try {
+      // Assume there's an API endpoint to submit the announcement
+      await axios.post("/api/announcement", data);
 
-    // You may want to update the announcementData state here
-    setAnnouncementData([...announcementData, data]);
+      // Fetch the updated announcement list after submission
+      const response = await axios.get("/api/announcement");
+      setAnnouncementData(response.data);
+    } catch (error) {
+      console.error("Error submitting announcement:", error);
+    }
   };
 
   return (
