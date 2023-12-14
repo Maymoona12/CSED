@@ -37,7 +37,7 @@ const LecturerPage = () => {
   const [editedData, setEditedData] = useState(initialData);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const settings = [
-    "Home",
+    // "Home",
     "Profile",
     "Post Announcement",
     "Lecturers Profile",

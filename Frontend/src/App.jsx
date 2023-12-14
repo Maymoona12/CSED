@@ -354,7 +354,6 @@
 // import React, { useState, useEffect } from "react";
 // import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 // import LecturerPage from "./pages/UsersPage/Lecturer-Page/lecturerpage";
-// import Home from "./pages/PostAnnouncement/Home";
 // import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
 // import LecturerProfiles from "./pages/Lecturer-Profiles/lecturerprofile";
 // import Appointment from "./pages/Appointment/Appointment";
@@ -367,7 +366,6 @@
 //       <Router>
 //         <Routes>
 //           <Route path="/" element={<LecturerPage />} />
-//           <Route path="/Home" element={<Home />} />
 //           <Route path="/PostAnnouncement" element={<PostAnnouncementPage />} />
 //           <Route path="/LecturersProfile" element={<LecturerProfiles />} />
 //           <Route path="/Add Appointment" element={<Appointment />} />
