@@ -8,7 +8,6 @@ import TextField from "@mui/material/TextField";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import AddLinkIcon from "@mui/icons-material/AddLink";
-import PersonAddOutlinedIcon from "@mui/icons-material/PersonAddOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import MenuItem from "@mui/material/MenuItem";
@@ -71,17 +70,24 @@ const PostAnnouncementPage = ({ onSubmit }) => {
     inputRef.current.click();
   };
 
+
+  const handleDeleteLecturer = (index) => {
+    const updatedLecturerUsers = [...lecturerUsers];
+    updatedLecturerUsers.splice(index, 1);
+    setLecturerUsers(updatedLecturerUsers);
+  };
+  
+  const handleEditLecturer = (index) => {
+    setEditingIndex(index);
+  };
+
   const editDocumentFile = (index) => {
-    // Create a new input element
     const input = document.createElement("input");
     input.type = "file";
-
-    // Attach an event listener to handle file selection
     input.addEventListener("change", (event) => handleFileChange(event, index));
-
-    // Trigger a click on the input element to open the file selection dialog
     input.click();
   };
+
   const handleFileChange = (event, index) => {
     const selectedFile = event.target.files[0];
 
@@ -93,16 +99,9 @@ const PostAnnouncementPage = ({ onSubmit }) => {
   };
 
   const editPhotoFile = (index) => {
-    // Create a new input element
     const input = document.createElement("input");
     input.type = "file";
-
-    // Attach an event listener to handle file selection
-    input.addEventListener("change", (event) =>
-      handlePhotoFileChange(event, index)
-    );
-
-    // Trigger a click on the input element to open the file selection dialog
+    input.addEventListener("change", (event) => handlePhotoFileChange(event, index));
     input.click();
   };
 
@@ -122,11 +121,12 @@ const PostAnnouncementPage = ({ onSubmit }) => {
     //   return;
     // }
     const data = {
-      title: "Your Title Here",
+      title:"",
       announcementText,
       documentFiles,
       photoFiles,
     };
+       };
     onSubmit(data);
     setAnnouncementText("");
     setDocumentFiles([]);
@@ -189,7 +189,7 @@ const PostAnnouncementPage = ({ onSubmit }) => {
           >
             Post Announcement
           </h2>
-          <Typography
+          <Typography 
             variant="h5"
             sx={{
               marginBottom: "5px",
@@ -200,9 +200,7 @@ const PostAnnouncementPage = ({ onSubmit }) => {
           >
             Title
           </Typography>
-
           <TextField fullWidth id="fullWidth" />
-
           <Typography
             variant="h5"
             sx={{
@@ -259,7 +257,7 @@ const PostAnnouncementPage = ({ onSubmit }) => {
                   flex: "0 0 auto",
                   width: "120px",
                   height: "40px",
-                  marginRight: "10px",
+                  marginRight: "180px",
                   marginBottom: "5px",
                   background: "black",
                 }}
@@ -317,20 +315,20 @@ const PostAnnouncementPage = ({ onSubmit }) => {
                 </div>
               ) : null}
             </div>
-            <div style={{ flex: 1, marginRight: "200px" }}>
+            <div style={{ flex: 1, marginRight: "180px" }}>
               {photoPreview && photoFiles.length > 0 ? (
                 <div>
                   {photoFiles.map((file, index) => (
                     <div
                       key={index}
-                      style={{ marginTop: "5px", marginLeft: "5px" }}
+                      style={{ marginTop: "5px", marginLeft: "10px" }}
                     >
                       <img
                         src={URL.createObjectURL(file)}
                         alt="Photo Preview"
                         style={{
                           marginTop: "10px",
-                          marginLeft: "10px",
+                          marginLeft: "170px",
                           maxWidth: "100%",
                           maxHeight: "200px",
                         }}
