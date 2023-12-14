@@ -15,15 +15,14 @@ import Menu from "@mui/material/Menu";
 import axios from "axios";
 
 const PostAnnouncementPage = ({ onSubmit }) => {
+  console.log("Type of onSubmit:", typeof onSubmit);
   const [announcementData, setAnnouncementData] = useState(null);
   const [loading, setLoading] = useState(true);
-
   const [documentFiles, setDocumentFiles] = useState([]);
   const [photoFiles, setPhotoFiles] = useState([]);
   const [documentPreview, setDocumentPreview] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(null);
   const [announcementText, setAnnouncementText] = useState("");
-  const [lecturerUsers, setLecturerUsers] = useState([]);
   const [editingIndex, setEditingIndex] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const documentInputRef = useRef(null);
@@ -71,6 +70,7 @@ const PostAnnouncementPage = ({ onSubmit }) => {
     inputRef.current.click();
   };
 
+
   const handleDeleteLecturer = (index) => {
     const updatedLecturerUsers = [...lecturerUsers];
     updatedLecturerUsers.splice(index, 1);
@@ -116,13 +116,21 @@ const PostAnnouncementPage = ({ onSubmit }) => {
   };
 
   const handleSubmit = () => {
+    // if (typeof onSubmit !== "function") {
+    //   console.error("onSubmit is not a function!");
+    //   return;
+    // }
     const data = {
       title:"",
       announcementText,
       documentFiles,
       photoFiles,
+    };
        };
     onSubmit(data);
+    setAnnouncementText("");
+    setDocumentFiles([]);
+    setPhotoFiles([]);
   };
 
   return (
