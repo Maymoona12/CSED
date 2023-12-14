@@ -61,7 +61,7 @@ const AnnouncementDisplayPage = ({ announcementData }) => {
         <Card>
           <CardHeader
             title={title}
-            subheader={`Posted by ${lecturerUsers.join(", ")}`}
+            subheader={`Posted on ${new Date().toLocaleDateString()}`}
           />
           <CardContent>
             <Typography variant="body1" color="textSecondary" component="div">

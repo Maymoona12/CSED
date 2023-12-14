@@ -192,7 +192,7 @@
 
 // export default App;
 //___________________________________________________________________
-// App.jsx
+// // App.jsx
 // import React, { useState } from "react";
 // import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
 // import AnnouncementDisplayPage from "./pages/PostAnnouncement/AnnouncementDisplayPage";
@@ -281,20 +281,20 @@
 // export default App;
 
 
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import AdminPage from "./pages/UsersPage/AdminPage/AdminPage";
+// import React from "react";
+// import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+// import AdminPage from "./pages/UsersPage/AdminPage/AdminPage";
 
 
-function App() {
-  return (
-    <>
-      <Router>
-        <Routes>
-          <Route path="/" element={<AdminPage />} />
-        </Routes>
-      </Router>
-    </>
-  );
-}
-export default App;
+// function App() {
+//   return (
+//     <>
+//       <Router>
+//         <Routes>
+//           <Route path="/" element={<AdminPage />} />
+//         </Routes>
+//       </Router>
+//     </>
+//   );
+// }
+// export default App;
