@@ -249,20 +249,18 @@
 // export default App;
 
 
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import AdminPage from "./pages/UsersPage/AdminPage/AdminPage";
-
-
-function App() {
-  return (
-    <>
-      <Router>
-        <Routes>
-          <Route path="/" element={<AdminPage />} />
-        </Routes>
-      </Router>
-    </>
-  );
-}
-export default App;
+// import React from "react";
+// import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+// import Dashboard from "./pages/UsersPage/AdminPage/Dashboard";
+// function App() {
+//   return (
+//     <>
+//       <Router>
+//         <Routes>
+//           <Route path="/" element={<Dashboard />} />
+//         </Routes>
+//         </Router>
+//     </>
+//   );
+// }
+// export default App;
