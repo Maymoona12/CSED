@@ -29,6 +29,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
+import { useNavigate } from "react-router-dom";
 
 function LecturersProfile() {
   const defaultTheme = createTheme();
@@ -126,6 +127,12 @@ function LecturersProfile() {
     setOpenDialog(false);
   };
 
+  const navigate = useNavigate(); // Use useNavigate instead of useHistory
+
+  const handleAddAppointmentClick = () => {
+    navigate("/AddAppointment"); // Use navigate instead of push
+  };
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
@@ -219,14 +226,12 @@ function LecturersProfile() {
                       </Typography>
                     </CardContent>
                     <CardActions>
-                      <Button
-                        size="small"
-                        onClick={() => handleView(index)}
-                        // style={{ backgroundColor: " " }}
-                      >
+                      <Button size="small" onClick={() => handleView(index)}>
                         View
                       </Button>
-                      <Button size="small">Add an Appointment</Button>
+                      <Button size="small" onClick={handleAddAppointmentClick}>
+                        Add an Appointment
+                      </Button>
                     </CardActions>
                     <Dialog
                       open={viewMode === index}

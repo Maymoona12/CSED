@@ -1,9 +1,10 @@
 //app.jsx:
 
+//Archive Page:)
 // import React, { useState } from "react";
 // import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-// // import FoldersPage from "./pages/photo-archive/foldersPage";
-// // import PhotosPage from "./pages/photo-archive/photospage";
+// import FoldersPage from "./pages/photo-archive/foldersPage";
+// import PhotosPage from "./pages/photo-archive/photospage";
 
 // function App() {
 //   const [selectedFolder, setSelectedFolder] = useState("defaultFolder");
@@ -84,7 +85,7 @@
 
 //   return (
 //     <>
-//       {/* <Router>
+//       <Router>
 //         <Routes>
 //           <Route
 //             path="/"
@@ -109,11 +110,12 @@
 //             }
 //           />
 //         </Routes>
-//       </Router> */}
-//       {/* <PostAnnouncementPage /> */}
+//       </Router>
 //     </>
 //   );
 // }
+// export default App;
+//________________________________________________________________
 
 // import React from "react";
 // import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -158,11 +160,10 @@
 //     </>
 //   );
 // }
-
 // export default App;
+//________________________________________________________________
 
-// // App.js
-
+//PostAnnouncementPage:)
 // import React, { useState } from "react";
 // import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
 // import AnnouncementDisplayPage from "./pages/PostAnnouncement/AnnouncementDisplayPage";
@@ -190,10 +191,32 @@
 // };
 
 // export default App;
-
-
+//___________________________________________________________________
+// App.jsx
 // import React, { useState } from "react";
-// import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+// import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
+// import AnnouncementDisplayPage from "./pages/PostAnnouncement/AnnouncementDisplayPage";
+// import Callpages from "./pages/PostAnnouncement/callpages";
+
+// const App = () => {
+//   return (
+//     <>
+//       <Callpages />
+//     </>
+//   );
+// };
+
+// export default App;
+//________________________________________________________________
+
+//Appointment& CalendarPage:)
+// import React, { useState } from "react";
+// import {
+//   BrowserRouter as Router,
+//   Routes,
+//   Route,
+//   Navigate,
+// } from "react-router-dom";
 // import Appointment from "./pages/Appointment/Appointment";
 // import CalendarPage from "./pages/Appointment/CalendarPage";
 
@@ -210,21 +233,30 @@
 //   const [schedule, setSchedule] = useState(initialSchedule);
 
 //   return (
-//     <Router>
-//       <Routes>
-//         <Route path="/appointment" element={<Appointment schedule={schedule} setSchedule={setSchedule} />} />
-//         <Route path="/calendarpage" element={<CalendarPage schedule={schedule} />} />
-//         {/* Add a default route or redirect to a specific route */}
-//         <Route path="*" element={<Navigate to="/appointment" />} />
-//       </Routes>
-//     </Router>
+//     <>
+//       <Router>
+//         <Routes>
+//           <Route
+//             path="/appointment"
+//             element={
+//               <Appointment schedule={schedule} setSchedule={setSchedule} />
+//             }
+//           />
+//           <Route
+//             path="/calendarpage"
+//             element={<CalendarPage schedule={schedule} />}
+//           />
+//           {/* Add a default route or redirect to a specific route */}
+//           {/* <Route path="*" element={<Navigate to="/appointment" />} /> */}
+//         </Routes>
+//       </Router>
+//     </>
 //   );
 // };
-
 // export default App;
+// ________________________________________________________________;
 
-//GeneralPages:
-
+// ***GeneralPages:
 // import React from "react";
 // import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // import Coverpage from "./pages/general-pages/CoverPage/coverpage";
@@ -249,18 +281,20 @@
 // export default App;
 
 
-// import React from "react";
-// import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-// import Dashboard from "./pages/UsersPage/AdminPage/Dashboard";
-// function App() {
-//   return (
-//     <>
-//       <Router>
-//         <Routes>
-//           <Route path="/" element={<Dashboard />} />
-//         </Routes>
-//         </Router>
-//     </>
-//   );
-// }
-// export default App;
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import AdminPage from "./pages/UsersPage/AdminPage/AdminPage";
+
+
+function App() {
+  return (
+    <>
+      <Router>
+        <Routes>
+          <Route path="/" element={<AdminPage />} />
+        </Routes>
+      </Router>
+    </>
+  );
+}
+export default App;

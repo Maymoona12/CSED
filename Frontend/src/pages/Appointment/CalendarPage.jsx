@@ -1,3 +1,4 @@
+//CalendarPage:
 import React, { useState, useEffect } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
@@ -34,10 +35,17 @@ const CalendarPage = ({ schedule }) => {
   const events = schedule.reduce((acc, day) => {
     if (Array.isArray(day.appointments)) {
       day.appointments.forEach((appointment) => {
-        const startDateTime = moment(`${day.day} ${appointment.startTime}`, "ddd HH:mm");
-        const endDateTime = moment(`${day.day} ${appointment.endTime}`, "ddd HH:mm");
+        const startDateTime = moment(
+          `${day.day} ${appointment.startTime}`,
+          "ddd HH:mm"
+        );
+        const endDateTime = moment(
+          `${day.day} ${appointment.endTime}`,
+          "ddd HH:mm"
+        );
 
-        const isDisabled = selectedMeeting && selectedMeeting.title === appointment.name;
+        const isDisabled =
+          selectedMeeting && selectedMeeting.title === appointment.name;
 
         acc.push({
           title: appointment.name,
@@ -48,6 +56,7 @@ const CalendarPage = ({ schedule }) => {
         });
       });
     }
+    console.log("Schedule in CalendarPage:", schedule);
 
     return acc;
   }, []);
@@ -68,7 +77,11 @@ const CalendarPage = ({ schedule }) => {
   };
 
   const handleConfirmBooking = () => {
-    if (selectedMeeting && !selectedMeeting.isDisabled && bookingDetails.subject.trim() !== "") {
+    if (
+      selectedMeeting &&
+      !selectedMeeting.isDisabled &&
+      bookingDetails.subject.trim() !== ""
+    ) {
       console.log("Meeting confirmed:", selectedMeeting.title);
       console.log("Booking Details:", bookingDetails);
       setSelectedMeeting(null);
@@ -94,12 +107,25 @@ const CalendarPage = ({ schedule }) => {
       {/* Left Section */}
       <div style={{ flex: 1 }}>
         {/* App Bar */}
-        <AppBar position="static" style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000 }} sx={{ background: "black" }}>
+        <AppBar
+          position="static"
+          style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000 }}
+          sx={{ background: "black" }}
+        >
           <Toolbar>
-            <Typography variant="h5" component="div" sx={{ flexGrow: 1, fontFamily: "Brush Script MT" }}>
+            <Typography
+              variant="h5"
+              component="div"
+              sx={{ flexGrow: 1, fontFamily: "Brush Script MT" }}
+            >
               CSED
             </Typography>
-            <Button onClick={handleLogout} className="logout__btn" color="inherit" sx={{ color: "white" }}>
+            <Button
+              onClick={handleLogout}
+              className="logout__btn"
+              color="inherit"
+              sx={{ color: "white" }}
+            >
               Log out
             </Button>
           </Toolbar>
@@ -107,8 +133,17 @@ const CalendarPage = ({ schedule }) => {
 
         {/* Header */}
         <div>
-          <div style={{ display: "flex", flexWrap: "wrap", marginTop: "50px", marginLeft: "10px" }}>
-            <h1 style={{ color: "black", fontFamily: "Garamond" }}>Book Appointment</h1>
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              marginTop: "50px",
+              marginLeft: "10px",
+            }}
+          >
+            <h1 style={{ color: "black", fontFamily: "Garamond" }}>
+              Book Appointment
+            </h1>
           </div>
         </div>
 
@@ -131,10 +166,17 @@ const CalendarPage = ({ schedule }) => {
 
       {/* Right Section */}
       {selectedMeeting && (
-        <Modal open={confirmationModalOpen} onClose={() => setConfirmationModalOpen(false)}>
+        <Modal
+          open={confirmationModalOpen}
+          onClose={() => setConfirmationModalOpen(false)}
+        >
           <Card style={{ margin: "20px", width: "300px", height: "100%" }}>
             <CardContent>
-              <Typography variant="h6" gutterBottom style={{ color: "black", fontFamily: "Garamond" }}>
+              <Typography
+                variant="h6"
+                gutterBottom
+                style={{ color: "black", fontFamily: "Garamond" }}
+              >
                 Confirm Booking
               </Typography>
               <div style={{ display: "flex", marginBottom: "20px" }}>
@@ -161,7 +203,12 @@ const CalendarPage = ({ schedule }) => {
               >
                 Confirm
               </Button>
-              <Button onClick={handleCancelBooking} color="grey" variant="contained" style={{ marginTop: "25px" }}>
+              <Button
+                onClick={handleCancelBooking}
+                color="grey"
+                variant="contained"
+                style={{ marginTop: "25px" }}
+              >
                 Cancel
               </Button>
             </CardContent>
