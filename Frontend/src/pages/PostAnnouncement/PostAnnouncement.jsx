@@ -127,7 +127,6 @@ const PostAnnouncementPage = ({ onSubmit }) => {
       documentFiles,
       photoFiles,
     };
-
     onSubmit(data);
     setAnnouncementText("");
     setDocumentFiles([]);
