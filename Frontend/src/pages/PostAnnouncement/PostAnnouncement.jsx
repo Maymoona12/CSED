@@ -16,15 +16,14 @@ import Menu from "@mui/material/Menu";
 import axios from "axios";
 
 const PostAnnouncementPage = ({ onSubmit }) => {
+  console.log("Type of onSubmit:", typeof onSubmit);
   const [announcementData, setAnnouncementData] = useState(null);
   const [loading, setLoading] = useState(true);
-
   const [documentFiles, setDocumentFiles] = useState([]);
   const [photoFiles, setPhotoFiles] = useState([]);
   const [documentPreview, setDocumentPreview] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(null);
   const [announcementText, setAnnouncementText] = useState("");
-  const [lecturerUsers, setLecturerUsers] = useState([]);
   const [editingIndex, setEditingIndex] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const documentInputRef = useRef(null);
@@ -70,28 +69,6 @@ const PostAnnouncementPage = ({ onSubmit }) => {
 
   const handleFolderIconClick = (inputRef) => {
     inputRef.current.click();
-  };
-
-  const handleAddLecturer = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleLecturerMenuItemClick = (lecturer) => {
-    setLecturerUsers([...lecturerUsers, lecturer]);
-    setAnchorEl(null);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleDeleteLecturer = (index) => {
-    const updatedLecturerUsers = [...lecturerUsers];
-    updatedLecturerUsers.splice(index, 1);
-    setLecturerUsers(updatedLecturerUsers);
-  };
-  const handleEditLecturer = (index) => {
-    setEditingIndex(index);
   };
 
   const editDocumentFile = (index) => {
@@ -140,14 +117,20 @@ const PostAnnouncementPage = ({ onSubmit }) => {
   };
 
   const handleSubmit = () => {
+    // if (typeof onSubmit !== "function") {
+    //   console.error("onSubmit is not a function!");
+    //   return;
+    // }
     const data = {
       title: "Your Title Here",
       announcementText,
       documentFiles,
       photoFiles,
-      lecturerUsers,
     };
     onSubmit(data);
+    setAnnouncementText("");
+    setDocumentFiles([]);
+    setPhotoFiles([]);
   };
 
   return (
@@ -309,76 +292,6 @@ const PostAnnouncementPage = ({ onSubmit }) => {
                 }}
               ></Button>
             </div>
-
-            <Button
-              variant="contained"
-              component="label"
-              startIcon={<PersonAddOutlinedIcon />}
-              onClick={handleAddLecturer}
-              style={{
-                flex: "0 0 auto",
-                marginLeft: "40px",
-                width: "120px",
-                height: "40px",
-                background: "black",
-              }}
-            ></Button>
-
-            {lecturerUsers.length > 0 && (
-              <div style={{ marginLeft: "10px", fontFamily: "Monaco" }}>
-                {lecturerUsers.map((user, index) => (
-                  <div
-                    key={index}
-                    style={{ display: "flex", alignItems: "center" }}
-                  >
-                    {editingIndex === index ? (
-                      // Render your edit form or modal here
-                      // You can create a separate component for the edit form
-                      <div>
-                        Editing {user} - Add your edit form components here
-                        <button onClick={() => setEditingIndex(null)}>
-                          Cancel
-                        </button>
-                        <button onClick={() => handleSaveEdit(index)}>
-                          Save
-                        </button>
-                      </div>
-                    ) : (
-                      <>
-                        {user}
-
-                        <EditIcon
-                          style={{ marginLeft: "5px", cursor: "pointer" }}
-                          onClick={() => handleEditLecturer(index)}
-                        />
-                        <DeleteIcon
-                          style={{ marginLeft: "5px", cursor: "pointer" }}
-                          onClick={() => handleDeleteLecturer(index)}
-                        />
-                      </>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
-
-            <Menu
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            >
-              <MenuItem
-                onClick={() => handleLecturerMenuItemClick("Lecturer1")}
-              >
-                Lecturer1
-              </MenuItem>
-              <MenuItem
-                onClick={() => handleLecturerMenuItemClick("Lecturer2")}
-              >
-                Lecturer2
-              </MenuItem>
-              {/* Add more lecturers as needed */}
-            </Menu>
           </div>
 
           <div style={{ display: "flex" }}>

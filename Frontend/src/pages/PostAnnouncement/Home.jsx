@@ -24,19 +24,20 @@ const Home = () => {
 
   const handleAnnouncementSubmit = async (data) => {
     try {
-      // Assume there's an API endpoint to submit the announcement
+      setLoading(true);
       await axios.post("/api/announcement", data);
-
-      // Fetch the updated announcement list after submission
       const response = await axios.get("/api/announcement");
       setAnnouncementData(response.data);
     } catch (error) {
       console.error("Error submitting announcement:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div>
+      {/* Make sure onSubmit is passed correctly */}
       <PostAnnouncementPage onSubmit={handleAnnouncementSubmit} />
       {!loading && announcementData.length > 0 && (
         <div>
