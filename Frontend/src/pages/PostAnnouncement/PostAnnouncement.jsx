@@ -15,15 +15,14 @@ import Menu from "@mui/material/Menu";
 import axios from "axios";
 
 const PostAnnouncementPage = ({ onSubmit }) => {
+  console.log("Type of onSubmit:", typeof onSubmit);
   const [announcementData, setAnnouncementData] = useState(null);
   const [loading, setLoading] = useState(true);
-
   const [documentFiles, setDocumentFiles] = useState([]);
   const [photoFiles, setPhotoFiles] = useState([]);
   const [documentPreview, setDocumentPreview] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(null);
   const [announcementText, setAnnouncementText] = useState("");
-  const [lecturerUsers, setLecturerUsers] = useState([]);
   const [editingIndex, setEditingIndex] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const documentInputRef = useRef(null);
@@ -76,7 +75,7 @@ const PostAnnouncementPage = ({ onSubmit }) => {
     updatedLecturerUsers.splice(index, 1);
     setLecturerUsers(updatedLecturerUsers);
   };
-  
+
   const handleEditLecturer = (index) => {
     setEditingIndex(index);
   };
@@ -101,7 +100,9 @@ const PostAnnouncementPage = ({ onSubmit }) => {
   const editPhotoFile = (index) => {
     const input = document.createElement("input");
     input.type = "file";
-    input.addEventListener("change", (event) => handlePhotoFileChange(event, index));
+    input.addEventListener("change", (event) =>
+      handlePhotoFileChange(event, index)
+    );
     input.click();
   };
 
@@ -116,13 +117,21 @@ const PostAnnouncementPage = ({ onSubmit }) => {
   };
 
   const handleSubmit = () => {
+    // if (typeof onSubmit !== "function") {
+    //   console.error("onSubmit is not a function!");
+    //   return;
+    // }
     const data = {
-      title:"",
+      title: "",
       announcementText,
       documentFiles,
       photoFiles,
-       };
+    };
+
     onSubmit(data);
+    setAnnouncementText("");
+    setDocumentFiles([]);
+    setPhotoFiles([]);
   };
 
   return (
@@ -181,7 +190,7 @@ const PostAnnouncementPage = ({ onSubmit }) => {
           >
             Post Announcement
           </h2>
-          <Typography 
+          <Typography
             variant="h5"
             sx={{
               marginBottom: "5px",
