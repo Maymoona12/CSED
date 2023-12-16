@@ -34,7 +34,8 @@ const StudentPage = () => {
     "Profile",
     "Lecturers Profile",
     "Archive Page",
-    "Logout",
+    "Change Password", 
+    "Logout"
   ];
 
   const lecturers = [
