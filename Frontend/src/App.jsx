@@ -281,7 +281,6 @@
 // export default App;
 //___________________________________________________
 
-
 // import React from "react";
 // import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // import AdminPage from "./pages/UsersPage/AdminPage/AdminPage";
@@ -302,14 +301,12 @@
 
 // Student-Page:
 
-// import React, { useState, useEffect } from "react";
+// import React from "react";
 // import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 // import StudentPage from "./pages/UsersPage/StudentPage/StudentPage";
-// import Home from "./pages/PostAnnouncement/Home";
 // import LecturerProfiles from "./pages/Lecturer-Profiles/lecturerprofile";
 // import FoldersPage from "./pages/photo-archive/foldersPage";
 // import PhotosPage from "./pages/photo-archive/photospage";
-// import ChangePassword from "./pages/UsersPage/StudentPage/ChangePassword";
 
 // const App = () => {
 //   return (
@@ -317,13 +314,14 @@
 //       <Router>
 //         <Routes>
 //           <Route path="/" element={<StudentPage />} />
-//           <Route path="/Home" element={<Home />} />
+//           <Route path="/EditPassword" element={<EditPassword />} />
 //           <Route path="/LecturersProfile" element={<LecturerProfiles />} />
 //           <Route path="/ArchivePage" element={<FoldersPage />} />
 //           <Route path="/PhotosPage/:folderId" element={<PhotosPage />} />
 //           <Route path="/ChangePassword" element={<ChangePassword />} />
 //         </Routes>
 //       </Router>
+//       {/* <EditProfile /> */}
 //     </>
 //   );
 // };
@@ -381,5 +379,3 @@
 // };
 
 // export default App;
-
-

@@ -30,8 +30,8 @@ const StudentPage = () => {
   //   const [editMode, setEditMode] = useState(false);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const settings = [
-    "Home",
     "Profile",
+    "Edit Password",
     "Lecturers Profile",
     "Archive Page",
     "Change Password", 
