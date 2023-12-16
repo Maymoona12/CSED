@@ -142,7 +142,7 @@ const CalendarPage = ({ schedule }) => {
             }}
           >
             <h1 style={{ color: "black", fontFamily: "Garamond" }}>
-              Book Appointment
+              Book An Appointment
             </h1>
           </div>
         </div>
