@@ -1,6 +1,6 @@
 //app.jsx:
 
-//Archive Page:)
+// Archive Page:)
 // import React, { useState } from "react";
 // import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // import FoldersPage from "./pages/photo-archive/foldersPage";
@@ -115,55 +115,9 @@
 //   );
 // }
 // export default App;
-//________________________________________________________________
+// ________________________________________________________________
 
-// import React from "react";
-// import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-// // import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
-// // import AnnouncementDisplayPage from "./pages/PostAnnouncement/AnnouncementDisplayPage";
-// import LecturerProfiles from "./pages/Lecturer-Profiles/lecturerprofile";
-// import Appointment from "./pages/Appointment/Appointment";
-// import CalendarPage from "./pages/Appointment/CalendarPage";
-
-// function App() {
-//   return (
-//     <>
-//       <Router>
-//         <Routes>
-//           <Route path="/" element={<LecturerProfiles />} />
-//         </Routes>
-//       </Router>
-{
-  /* <Router> */
-}
-{
-  /* <Routes> */
-}
-{
-  /*  <Route path="/" element={<Appointment />} /> */
-}
-{
-  /*  <Route path="/calendarpage" element={<CalendarPage />} /> */
-}
-{
-  /* <Route path="/" element={<PostAnnouncementPage />} /> */
-}
-{
-  /* <Route path="/" element={<AnnouncementDisplayPage/>} /> */
-}
-{
-  /* </Routes> */
-}
-{
-  /* </Router> */
-}
-//     </>
-//   );
-// }
-// export default App;
-//________________________________________________________________
-
-//PostAnnouncementPage:)
+// PostAnnouncementPage:)
 // import React, { useState } from "react";
 // import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
 // import AnnouncementDisplayPage from "./pages/PostAnnouncement/AnnouncementDisplayPage";
@@ -210,50 +164,50 @@
 //________________________________________________________________
 
 //Appointment& CalendarPage:)
-// import React, { useState } from "react";
-// import {
-//   BrowserRouter as Router,
-//   Routes,
-//   Route,
-//   Navigate,
-// } from "react-router-dom";
-// import Appointment from "./pages/Appointment/Appointment";
-// import CalendarPage from "./pages/Appointment/CalendarPage";
+import React, { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import Appointment from "./pages/Appointment/Appointment";
+import CalendarPage from "./pages/Appointment/CalendarPage";
 
-// const App = () => {
-//   // Sample initial schedule data
-//   const initialSchedule = [
-//     { day: "Sun", appointments: [] },
-//     { day: "Mon", appointments: [] },
-//     { day: "Tue", appointments: [] },
-//     { day: "Wed", appointments: [] },
-//     { day: "Thu", appointments: [] },
-//   ];
+const App = () => {
+  // Sample initial schedule data
+  const initialSchedule = [
+    { day: "Sun", appointments: [] },
+    { day: "Mon", appointments: [] },
+    { day: "Tue", appointments: [] },
+    { day: "Wed", appointments: [] },
+    { day: "Thu", appointments: [] },
+  ];
 
-//   const [schedule, setSchedule] = useState(initialSchedule);
+  const [schedule, setSchedule] = useState(initialSchedule);
 
-//   return (
-//     <>
-//       <Router>
-//         <Routes>
-//           <Route
-//             path="/appointment"
-//             element={
-//               <Appointment schedule={schedule} setSchedule={setSchedule} />
-//             }
-//           />
-//           <Route
-//             path="/calendarpage"
-//             element={<CalendarPage schedule={schedule} />}
-//           />
-//           {/* Add a default route or redirect to a specific route */}
-//           {/* <Route path="*" element={<Navigate to="/appointment" />} /> */}
-//         </Routes>
-//       </Router>
-//     </>
-//   );
-// };
-// export default App;
+  return (
+    <>
+      <Router>
+        <Routes>
+          <Route
+            path="/appointment"
+            element={
+              <Appointment schedule={schedule} setSchedule={setSchedule} />
+            }
+          />
+          <Route
+            path="/calendarpage"
+            element={<CalendarPage schedule={schedule} />}
+          />
+          {/* Add a default route or redirect to a specific route */}
+          <Route path="*" element={<Navigate to="/appointment" />} />
+        </Routes>
+      </Router>
+    </>
+  );
+};
+export default App;
 // ________________________________________________________________;
 
 // ***GeneralPages:
@@ -301,33 +255,33 @@
 
 // Student-Page:
 
-import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import StudentPage from "./pages/UsersPage/StudentPage/StudentPage";
-import Home from "./pages/PostAnnouncement/Home";
-import LecturerProfiles from "./pages/Lecturer-Profiles/lecturerprofile";
-import FoldersPage from "./pages/photo-archive/foldersPage";
-import PhotosPage from "./pages/photo-archive/photospage";
-import ChangePassword from "./pages/UsersPage/StudentPage/ChangePassword";
+// import React, { useState, useEffect } from "react";
+// import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+// import StudentPage from "./pages/UsersPage/StudentPage/StudentPage";
+// import Home from "./pages/PostAnnouncement/Home";
+// import LecturerProfiles from "./pages/Lecturer-Profiles/lecturerprofile";
+// import FoldersPage from "./pages/photo-archive/foldersPage";
+// import PhotosPage from "./pages/photo-archive/photospage";
+// import ChangePassword from "./pages/UsersPage/StudentPage/ChangePassword";
 
-const App = () => {
-  return (
-    <>
-      <Router>
-        <Routes>
-          <Route path="/" element={<StudentPage />} />
-          <Route path="/Home" element={<Home />} />
-          <Route path="/LecturersProfile" element={<LecturerProfiles />} />
-          <Route path="/ArchivePage" element={<FoldersPage />} />
-          <Route path="/PhotosPage/:folderId" element={<PhotosPage />} />
-          <Route path="/ChangePassword" element={<ChangePassword />} />
-        </Routes>
-      </Router>
-    </>
-  );
-};
+// const App = () => {
+//   return (
+//     <>
+//       <Router>
+//         <Routes>
+//           <Route path="/" element={<StudentPage />} />
+//           <Route path="/Home" element={<Home />} />
+//           <Route path="/LecturersProfile" element={<LecturerProfiles />} />
+//           <Route path="/ArchivePage" element={<FoldersPage />} />
+//           <Route path="/PhotosPage/:folderId" element={<PhotosPage />} />
+//           <Route path="/ChangePassword" element={<ChangePassword />} />
+//         </Routes>
+//       </Router>
+//     </>
+//   );
+// };
 
-export default App;
+// export default App;
 
 //__________________________________________________________________________
 

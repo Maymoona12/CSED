@@ -70,7 +70,7 @@ const LecturerPage = () => {
   };
 
   const setInitialData = (data) => {
-    // Logic to update your initial data, e.g., save to database
+    // Logic to update your initial data, e.g., save to the database
     // For now, we just log it
     console.log("Saved changes:", data);
   };
@@ -82,6 +82,7 @@ const LecturerPage = () => {
       [field]: value,
     }));
   };
+  
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -89,6 +90,7 @@ const LecturerPage = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
   return (
     <div
       style={{
@@ -146,7 +148,11 @@ const LecturerPage = () => {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map((setting) => (
-                  <Link to={`/${setting.replace(/\s+/g, "")}`} key={setting}>
+                  <Link
+                    to={`/${setting.replace(/\s+/g, "")}`}
+                    key={setting}
+                    style={{ textDecoration: "none" }}
+                  >
                     <MenuItem onClick={handleCloseUserMenu}>
                       <Typography textAlign="center" sx={{ color: "black" }}>
                         {setting}
@@ -204,8 +210,8 @@ const LecturerPage = () => {
             }}
           >
             <Typography
-              variant="h6"
-              style={{ marginBottom: "20px", color: "black" }} // Increased marginBottom
+              variant="h5"
+              style={{ marginBottom: "20px", color: "black",fontFamily:"serif" }}
             >
               User Details
             </Typography>
@@ -231,116 +237,133 @@ const LecturerPage = () => {
               ))}
             </div>
 
-            <div style={{ marginTop: "30px" }}>
-              {/* Increased marginTop */}
-              <button onClick={handleEditButtonClick}>
+            <div style={{ marginTop: "30px", display: "flex", gap: "10px" }}>
+              <button
+                onClick={handleEditButtonClick}
+                style={{
+                  padding: "10px",
+                  backgroundColor: "#2196F3",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "5px",
+                  cursor: "pointer",
+                }}
+              >
                 {editMode ? "Save Changes" : "Edit Profile"}
               </button>
               {editMode && (
                 <button
                   onClick={() => setEditMode(false)}
-                  style={{ marginLeft: "20px" }}
+                  style={{
+                    padding: "10px",
+                    backgroundColor: "grey",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                  }}
                 >
                   Cancel
                 </button>
               )}
             </div>
           </Box>
+
+          {editMode && (
+            <Box
+              style={{
+                border: "1px solid #ddd",
+                padding: "30px",
+                borderRadius: "20px",
+                marginLeft: "20px",
+                marginTop: "0",
+                width: "350px",
+                height: "auto",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <Typography
+                variant="h5"
+                style={{ marginBottom: "8px", color: "black" ,fontFamily:"serif"}}
+              >
+                Edit Profile
+              </Typography>
+              <TableContainer style={{ marginTop: "20px" }}>
+                <Table style={{ border: "1px solid black" }}>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell style={{ borderBottom: "1px solid black" }}>
+                        Assistant
+                      </TableCell>
+                      <TableCell style={{ borderBottom: "1px solid black" }}>
+                        <input
+                          type="text"
+                          placeholder="Assistant"
+                          value={editedData.assistant}
+                          onChange={(e) =>
+                            handleChange("assistant", e.target.value)
+                          }
+                          style={{ color: "grey" }}
+                        />
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell style={{ borderBottom: "1px solid black" }}>
+                        Room Number
+                      </TableCell>
+                      <TableCell style={{ borderBottom: "1px solid black" }}>
+                        <input
+                          type="text"
+                          placeholder="Room Number"
+                          value={editedData.roomNumber}
+                          onChange={(e) =>
+                            handleChange("roomNumber", e.target.value)
+                          }
+                          style={{ color: "grey" }}
+                        />
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell style={{ borderBottom: "1px solid black" }}>
+                        Phone
+                      </TableCell>
+                      <TableCell style={{ borderBottom: "1px solid black" }}>
+                        <input
+                          type="text"
+                          placeholder="Phone"
+                          value={editedData.phone}
+                          onChange={(e) =>
+                            handleChange("phone", e.target.value)
+                          }
+                          style={{ color: "grey" }}
+                        />
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell style={{ borderBottom: "1px solid black" }}>
+                        Email
+                      </TableCell>
+                      <TableCell style={{ borderBottom: "1px solid black" }}>
+                        <input
+                          type="text"
+                          placeholder="Email"
+                          value={editedData.email}
+                          onChange={(e) =>
+                            handleChange("email", e.target.value)
+                          }
+                          style={{ color: "grey" }}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Box>
+          )}
         </div>
       </div>
-
-      {/* Additional content (new box) */}
-      {editMode && (
-        <Box
-          style={{
-            border: "1px solid #ddd",
-            padding: "30px",
-            borderRadius: "20px",
-            marginLeft: "20px",
-            marginTop: "200px",
-            width: "300px",
-            height: "300px",
-          }}
-        >
-          <Typography
-            variant="h6"
-            style={{ marginBottom: "8px", color: "black" }}
-          >
-            Edit Profile
-          </Typography>
-          <TableContainer style={{ marginTop: "20px" }}>
-            <Table style={{ border: "1px solid black" }}>
-              <TableBody>
-                <TableRow>
-                  <TableCell style={{ borderBottom: "1px solid black" }}>
-                    Assistant:
-                  </TableCell>
-                  <TableCell style={{ borderBottom: "1px solid black" }}>
-                    <input
-                      type="text"
-                      placeholder="Assistant"
-                      value={editedData.assistant}
-                      onChange={(e) =>
-                        handleChange("assistant", e.target.value)
-                      }
-                    />
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell style={{ borderBottom: "1px solid black" }}>
-                    Room Number:
-                  </TableCell>
-                  <TableCell style={{ borderBottom: "1px solid black" }}>
-                    <input
-                      type="text"
-                      placeholder="Room Number"
-                      value={editedData.roomNumber}
-                      onChange={(e) =>
-                        handleChange("roomNumber", e.target.value)
-                      }
-                    />
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell style={{ borderBottom: "1px solid black" }}>
-                    Phone:
-                  </TableCell>
-                  <TableCell style={{ borderBottom: "1px solid black" }}>
-                    <input
-                      type="text"
-                      placeholder="Phone"
-                      value={editedData.phone}
-                      onChange={(e) => handleChange("phone", e.target.value)}
-                    />
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell style={{ borderBottom: "1px solid black" }}>
-                    Email:
-                  </TableCell>
-                  <TableCell style={{ borderBottom: "1px solid black" }}>
-                    <input
-                      type="text"
-                      placeholder="Email"
-                      value={editedData.email}
-                      onChange={(e) => handleChange("email", e.target.value)}
-                    />
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-          {/* <div style={{ marginTop: "20px" }}>
-            <button onClick={handleEditButtonClick}>Save Changes</button>
-            <button
-              onClick={() => setEditMode(false)}
-              style={{ marginLeft: "20px" }}
-            >
-              Cancel
-            </button>
-          </div> */}
-        </Box>
-      )}
     </div>
   );
 };
