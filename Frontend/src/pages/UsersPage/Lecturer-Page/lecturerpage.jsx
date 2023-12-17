@@ -301,11 +301,10 @@ const LecturerPage = () => {
                         <input
                           type="text"
                           placeholder="Assistant"
-                          value={editedData.assistant}
                           onChange={(e) =>
                             handleChange("assistant", e.target.value)
                           }
-                          style={{ color: "grey" }}
+                          
                         />
                       </TableCell>
                     </TableRow>
@@ -317,11 +316,10 @@ const LecturerPage = () => {
                         <input
                           type="text"
                           placeholder="Room Number"
-                          value={editedData.roomNumber}
                           onChange={(e) =>
                             handleChange("roomNumber", e.target.value)
                           }
-                          style={{ color: "grey" }}
+                          
                         />
                       </TableCell>
                     </TableRow>
@@ -333,11 +331,10 @@ const LecturerPage = () => {
                         <input
                           type="text"
                           placeholder="Phone"
-                          value={editedData.phone}
                           onChange={(e) =>
                             handleChange("phone", e.target.value)
                           }
-                          style={{ color: "grey" }}
+                          
                         />
                       </TableCell>
                     </TableRow>
@@ -349,11 +346,11 @@ const LecturerPage = () => {
                         <input
                           type="text"
                           placeholder="Email"
-                          value={editedData.email}
+                          
                           onChange={(e) =>
                             handleChange("email", e.target.value)
                           }
-                          style={{ color: "grey" }}
+                          
                         />
                       </TableCell>
                     </TableRow>

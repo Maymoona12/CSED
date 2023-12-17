@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -13,55 +13,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { Calendar, momentLocalizer } from "react-big-calendar";
-import moment from "moment";
-import "react-big-calendar/lib/css/react-big-calendar.css";
-import { Link, useNavigate } from "react-router-dom";
-
-const localizer = momentLocalizer(moment);
-
-const CalendarPage = ({ schedule }) => {
-  if (!schedule || !Array.isArray(schedule)) {
-    console.error("Invalid schedule prop:", schedule);
-    return null;
-  }
-
-  const events = schedule.reduce((acc, day) => {
-    if (Array.isArray(day.appointments)) {
-      day.appointments.forEach((appointment) => {
-        const startDateTime = moment(
-          `${day.day} ${appointment.startTime}`,
-          "ddd HH:mm"
-        );
-        const endDateTime = moment(
-          `${day.day} ${appointment.endTime}`,
-          "ddd HH:mm"
-        );
-
-        acc.push({
-          title: appointment.name,
-          start: startDateTime.toDate(),
-          end: endDateTime.toDate(),
-        });
-      });
-    }
-
-    return acc;
-  }, []);
-
-  return (
-    <div style={{ padding: "20px" }}>
-      <h1>Calendar Page</h1>
-      <Calendar
-        localizer={localizer}
-        events={events}
-        startAccessor="start"
-        endAccessor="end"
-        style={{ height: 500 }}
-      />
-    </div>
-  );
-};
+import { useNavigate } from "react-router-dom";
 
 const Appointment = () => {
   const [editingAppointment, setEditingAppointment] = useState(null);
@@ -72,7 +24,7 @@ const Appointment = () => {
     { day: "Wed", appointments: [] },
     { day: "Thu", appointments: [] },
   ]);
-  const [showCalendar, setShowCalendar] = useState(false);
+  const [blockedRows, setBlockedRows] = useState(Array(schedule.length).fill(false));
   const navigate = useNavigate();
 
   const handleAddAppointment = (
@@ -105,9 +57,9 @@ const Appointment = () => {
 
     setSchedule(updatedSchedule);
 
-    document.getElementById(`appointment-${dayIndex}`).value = "";
-    document.getElementById(`startTime-${dayIndex}`).value = "";
-    document.getElementById(`endTime-${dayIndex}`).value = "";
+    document.getElementById(`appointment-0`).value = "";
+    document.getElementById(`startTime-0`).value = "";
+    document.getElementById(`endTime-0`).value = "";
 
     console.log("Data saved to state:", updatedSchedule);
   };
@@ -149,6 +101,18 @@ const Appointment = () => {
     setSchedule(updatedSchedule);
   };
 
+  const handleBlockAppointment = (dayIndex, appIndex) => {
+    const updatedBlockedRows = [...blockedRows];
+    updatedBlockedRows[dayIndex] = true;
+    setBlockedRows(updatedBlockedRows);
+  };
+
+  const handleUnblockAppointment = (dayIndex, appIndex) => {
+    const updatedBlockedRows = [...blockedRows];
+    updatedBlockedRows[dayIndex] = false;
+    setBlockedRows(updatedBlockedRows);
+  };
+
   const handleSaveButtonClick = (dayIndex) => {
     const tableElement = document.getElementById(`table-${dayIndex}`);
     if (
@@ -158,14 +122,9 @@ const Appointment = () => {
       console.log("Table saved:", schedule[dayIndex].appointments);
     }
 
-    setShowCalendar(true);
 
     console.log("mySchedule:", schedule);
   };
-
-  useEffect(() => {
-    console.log("showCalendar:", showCalendar);
-  }, [showCalendar]);
 
   return (
     <div
@@ -178,7 +137,13 @@ const Appointment = () => {
       <div>
         <AppBar
           position="static"
-          style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000 }}
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            zIndex: 1000,
+          }}
           sx={{ background: "black" }}
         >
           <Toolbar>
@@ -199,7 +164,14 @@ const Appointment = () => {
             </Button>
           </Toolbar>
         </AppBar>
-        <div style={{ display: "flex", flexWrap: "wrap", marginLeft: "30px", marginTop: "60px" }}>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            marginLeft: "30px",
+            marginTop: "60px",
+          }}
+        >
           <h1 style={{ color: "black", fontFamily: "Garamond" }}>
             Add Office Hours
           </h1>
@@ -222,8 +194,8 @@ const Appointment = () => {
               marginLeft: "6px",
               marginRight: "5px",
               padding: "10px",
-              minWidth: "390px",
-              height: "210px",
+              minWidth: "395px",
+              height: "230px",
               border: "1px solid #ddd",
               borderRadius: "20px",
               color: "black",
@@ -252,7 +224,10 @@ const Appointment = () => {
                 </label>
                 <input type="text" id={`appointment-0`} />
 
-                <div className="select__wrapper" style={{ marginTop: "10px" }}>
+                <div
+                  className="select__wrapper"
+                  style={{ marginTop: "10px" }}
+                >
                   <label
                     htmlFor={`startTime-0`}
                     style={{ marginRight: "33px" }}
@@ -262,27 +237,47 @@ const Appointment = () => {
                   <input type="time" id={`startTime-0`} />
                 </div>
 
-                <div className="select__wrapper" style={{ marginTop: "10px" }}>
-                  <label htmlFor={`endTime-0`} style={{ marginRight: "37px" }}>
+                <div
+                  className="select__wrapper"
+                  style={{ marginTop: "10px" }}
+                >
+                  <label
+                    htmlFor={`endTime-0`}
+                    style={{ marginRight: "37px" }}
+                  >
                     Add/Edit End Time
                   </label>
                   <input type="time" id={`endTime-0`} />
                 </div>
                 <button
                   onClick={() => {
-                    const selectedDay = document.getElementById(`day-0`).value;
-                    const appointmentName = document.getElementById(`appointment-0`).value;
-                    const startTime = document.getElementById(`startTime-0`).value;
-                    const endTime = document.getElementById(`endTime-0`).value;
-                    if (appointmentName && startTime && endTime) {
+                    const selectedDay = document.getElementById(`day-0`)
+                      .value;
+                    const appointmentName = document.getElementById(
+                      `appointment-0`
+                    ).value;
+                    const startTime = document.getElementById(`startTime-0`)
+                      .value;
+                    const endTime = document.getElementById(`endTime-0`)
+                      .value;
+                    const dayIndex = schedule.findIndex(
+                      (day) => day.day === selectedDay
+                    );
+
+                    if (
+                      dayIndex !== -1 &&
+                      appointmentName &&
+                      startTime &&
+                      endTime
+                    ) {
                       handleAddAppointment(
-                        0,
+                        dayIndex,
                         appointmentName,
                         startTime,
                         endTime,
                         selectedDay
                       );
-                      document.getElementById(`table-0`).style.display =
+                      document.getElementById(`table-${dayIndex}`).style.display =
                         "table";
                     }
                   }}
@@ -308,8 +303,8 @@ const Appointment = () => {
             border: "1px solid #ddd",
             padding: "25px",
             borderRadius: "10px",
-            margin: "155px", // You can adjust this margin as needed
-            width: "600px",
+            margin: "152px", // You can adjust this margin as needed
+            width: "650px",
             height: "auto",
             display: "none",
             flexDirection: "column",
@@ -333,28 +328,26 @@ const Appointment = () => {
                   End Time
                 </TableCell>
                 <TableCell style={{ borderBottom: "1px solid black" }}>
-                  <Link to="/calendarpage">
-                    <Button
-                      onClick={() => {
-                        handleSaveButtonClick(0);
-                        navigate("/calendarpage");
-                      }}
-                      style={{
-                        color: "black",
-                        border: "1px solid black",
-                        padding: "2px",
-                      }}
-                    >
-                      Save
-                    </Button>
-                  </Link>
+                  <Button
+                    onClick={() => {
+                      handleSaveButtonClick(0);
+                      navigate("/calendarpage");
+                    }}
+                    style={{
+                      color: "black",
+                      border: "1px solid black",
+                      padding: "2px",
+                    }}
+                  >
+                    Save
+                  </Button>
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {schedule.map((day, dayIndex) => (
+              {schedule.map((day, dayIndex) =>
                 day.appointments.map((appointment, appIndex) => (
-                  <TableRow key={appIndex}>
+                  <TableRow key={appIndex} style={{ opacity: blockedRows[dayIndex] ? 0.5 : 1 }}>
                     <TableCell style={{ borderBottom: "1px solid black" }}>
                       {day.day}
                     </TableCell>
@@ -376,16 +369,23 @@ const Appointment = () => {
                       >
                         Delete
                       </Button>
+                      {blockedRows[dayIndex] ? (
+                        <Button onClick={() => handleUnblockAppointment(dayIndex, appIndex)}>
+                          Unblock
+                        </Button>
+                      ) : (
+                        <Button onClick={() => handleBlockAppointment(dayIndex, appIndex)}>
+                          Block
+                        </Button>
+                      )}
                     </TableCell>
                   </TableRow>
                 ))
-              ))}
+              )}
             </TableBody>
           </Table>
         </TableContainer>
       </div>
-
-      {showCalendar && <CalendarPage schedule={schedule} />}
     </div>
   );
 };
