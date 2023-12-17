@@ -25,17 +25,6 @@ const CalendarPage = ({ schedule }) => {
     console.error("Invalid schedule prop:", schedule);
     return null;
   }
-  const handleSaveButtonClick = (dayIndex) => {
-    const tableElement = document.getElementById(`table-${dayIndex}`);
-    if (
-      tableElement.style.display === "table" &&
-      tableElement.style.visibility === "visible"
-    ) {
-      console.log("Table saved:", schedule[dayIndex].appointments);
-    }
-    console.log("mySchedule:", schedule);
-    setShowCalendar(true);
-  };
 
   const events = schedule.reduce((acc, day) => {
     if (Array.isArray(day.appointments)) {
@@ -77,11 +66,11 @@ const CalendarPage = ({ schedule }) => {
 const Appointment = () => {
   const [editingAppointment, setEditingAppointment] = useState(null);
   const [schedule, setSchedule] = useState([
-    { day: "Sun", date: "", appointments: [] },
-    { day: "Mon", date: "", appointments: [] },
-    { day: "Tue", date: "", appointments: [] },
-    { day: "Wed", date: "", appointments: [] },
-    { day: "Thu", date: "", appointments: [] },
+    { day: "Sun", appointments: [] },
+    { day: "Mon", appointments: [] },
+    { day: "Tue", appointments: [] },
+    { day: "Wed", appointments: [] },
+    { day: "Thu", appointments: [] },
   ]);
   const [showCalendar, setShowCalendar] = useState(false);
   const navigate = useNavigate();
@@ -91,29 +80,27 @@ const Appointment = () => {
     appointment,
     startTime,
     endTime,
-    selectedDay,
-    selectedDate
+    selectedDay
   ) => {
     const updatedSchedule = [...schedule];
 
     if (editingAppointment !== null) {
+      updatedSchedule[dayIndex].appointments[editingAppointment].day =
+        selectedDay;
       updatedSchedule[dayIndex].appointments[editingAppointment].name =
         appointment;
       updatedSchedule[dayIndex].appointments[editingAppointment].startTime =
         startTime;
       updatedSchedule[dayIndex].appointments[editingAppointment].endTime =
         endTime;
-      updatedSchedule[dayIndex].day = selectedDay;
-      updatedSchedule[dayIndex].date = selectedDate;
       setEditingAppointment(null);
     } else {
       updatedSchedule[dayIndex].appointments.push({
+        day: selectedDay,
         name: appointment,
         startTime,
         endTime,
       });
-      updatedSchedule[dayIndex].day = selectedDay;
-      updatedSchedule[dayIndex].date = selectedDate;
     }
 
     setSchedule(updatedSchedule);
@@ -121,7 +108,6 @@ const Appointment = () => {
     document.getElementById(`appointment-${dayIndex}`).value = "";
     document.getElementById(`startTime-${dayIndex}`).value = "";
     document.getElementById(`endTime-${dayIndex}`).value = "";
-    document.getElementById(`date-${dayIndex}`).value = "";
 
     console.log("Data saved to state:", updatedSchedule);
   };
@@ -150,13 +136,10 @@ const Appointment = () => {
 
   const handleEditAppointment = (dayIndex, appIndex) => {
     const appointmentToEdit = schedule[dayIndex].appointments[appIndex];
-    document.getElementById(`appointment-${dayIndex}`).value =
-      appointmentToEdit.name;
-    document.getElementById(`startTime-${dayIndex}`).value =
-      appointmentToEdit.startTime;
-    document.getElementById(`endTime-${dayIndex}`).value =
-      appointmentToEdit.endTime;
-    document.getElementById(`date-${dayIndex}`).value = schedule[dayIndex].date;
+    document.getElementById(`day-0`).value = appointmentToEdit.day;
+    document.getElementById(`appointment-0`).value = appointmentToEdit.name;
+    document.getElementById(`startTime-0`).value = appointmentToEdit.startTime;
+    document.getElementById(`endTime-0`).value = appointmentToEdit.endTime;
     setEditingAppointment(appIndex);
   };
 
@@ -175,7 +158,7 @@ const Appointment = () => {
       console.log("Table saved:", schedule[dayIndex].appointments);
     }
 
-    setShowCalendar(true); // Move this line to after logging the saved appointments
+    setShowCalendar(true);
 
     console.log("mySchedule:", schedule);
   };
@@ -216,9 +199,9 @@ const Appointment = () => {
             </Button>
           </Toolbar>
         </AppBar>
-        <div style={{ display: "flex", flexWrap: "wrap", marginLeft: "10px" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", marginLeft: "30px", marginTop: "60px" }}>
           <h1 style={{ color: "black", fontFamily: "Garamond" }}>
-            Add Appointments
+            Add Office Hours
           </h1>
         </div>
         <div
@@ -236,10 +219,11 @@ const Appointment = () => {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              margin: "10px",
+              marginLeft: "6px",
+              marginRight: "5px",
               padding: "10px",
-              minWidth: "200px",
-              height: "250px",
+              minWidth: "390px",
+              height: "210px",
               border: "1px solid #ddd",
               borderRadius: "20px",
               color: "black",
@@ -247,7 +231,7 @@ const Appointment = () => {
           >
             <CardContent>
               <Typography gutterBottom>
-                <label htmlFor={`day-0`} style={{ marginRight: "140px" }}>
+                <label htmlFor={`day-0`} style={{ marginRight: "136px" }}>
                   {" "}
                   Day
                 </label>
@@ -259,17 +243,10 @@ const Appointment = () => {
                   <option value="Thu">Thursday</option>
                 </select>
               </Typography>
-              <Typography gutterBottom>
-                <label htmlFor={`date-0`} style={{ marginRight: "135px" }}>
-                  {" "}
-                  Date
-                </label>
-                <input type="date" id={`date-0`} />
-              </Typography>
               <div className="select__wrapper">
                 <label
                   htmlFor={`appointment-0`}
-                  style={{ marginRight: "10px" }}
+                  style={{ marginRight: "18px" }}
                 >
                   Add/Edit Appointment
                 </label>
@@ -278,7 +255,7 @@ const Appointment = () => {
                 <div className="select__wrapper" style={{ marginTop: "10px" }}>
                   <label
                     htmlFor={`startTime-0`}
-                    style={{ marginRight: "30px" }}
+                    style={{ marginRight: "33px" }}
                   >
                     Add/Edit Start Time
                   </label>
@@ -286,7 +263,7 @@ const Appointment = () => {
                 </div>
 
                 <div className="select__wrapper" style={{ marginTop: "10px" }}>
-                  <label htmlFor={`endTime-0`} style={{ marginRight: "35px" }}>
+                  <label htmlFor={`endTime-0`} style={{ marginRight: "37px" }}>
                     Add/Edit End Time
                   </label>
                   <input type="time" id={`endTime-0`} />
@@ -294,32 +271,22 @@ const Appointment = () => {
                 <button
                   onClick={() => {
                     const selectedDay = document.getElementById(`day-0`).value;
-                    const selectedDate =
-                      document.getElementById(`date-0`).value;
-                    const appointmentName =
-                      document.getElementById(`appointment-0`).value;
-                    const startTime =
-                      document.getElementById(`startTime-0`).value;
+                    const appointmentName = document.getElementById(`appointment-0`).value;
+                    const startTime = document.getElementById(`startTime-0`).value;
                     const endTime = document.getElementById(`endTime-0`).value;
-                    if (
-                      appointmentName &&
-                      startTime &&
-                      endTime &&
-                      selectedDate
-                    ) {
+                    if (appointmentName && startTime && endTime) {
                       handleAddAppointment(
                         0,
                         appointmentName,
                         startTime,
                         endTime,
-                        selectedDay,
-                        selectedDate
+                        selectedDay
                       );
                       document.getElementById(`table-0`).style.display =
                         "table";
                     }
                   }}
-                  style={{ marginTop: "20px", marginLeft: "40px" }}
+                  style={{ marginTop: "20px", marginLeft: "160px" }}
                 >
                   Add/Edit
                 </button>
@@ -337,7 +304,17 @@ const Appointment = () => {
       </div>
       <div>
         <TableContainer
-          style={{ display: "none", marginTop: "160px" }}
+          style={{
+            border: "1px solid #ddd",
+            padding: "25px",
+            borderRadius: "10px",
+            margin: "155px", // You can adjust this margin as needed
+            width: "600px",
+            height: "auto",
+            display: "none",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
           id={`table-0`}
         >
           <Table style={{ border: "1px solid black" }}>
@@ -345,9 +322,6 @@ const Appointment = () => {
               <TableRow>
                 <TableCell style={{ borderBottom: "1px solid black" }}>
                   Day
-                </TableCell>
-                <TableCell style={{ borderBottom: "1px solid black" }}>
-                  Date
                 </TableCell>
                 <TableCell style={{ borderBottom: "1px solid black" }}>
                   Appointment
@@ -378,34 +352,33 @@ const Appointment = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {schedule[0].appointments.map((appointment, appIndex) => (
-                <TableRow key={appIndex}>
-                  <TableCell style={{ borderBottom: "1px solid black" }}>
-                    {schedule[0].day}
-                  </TableCell>
-                  <TableCell style={{ borderBottom: "1px solid black" }}>
-                    {schedule[0].date}
-                  </TableCell>
-                  <TableCell style={{ borderBottom: "1px solid black" }}>
-                    {appointment.name}
-                  </TableCell>
-                  <TableCell style={{ borderBottom: "1px solid black" }}>
-                    {appointment.startTime}
-                  </TableCell>
-                  <TableCell style={{ borderBottom: "1px solid black" }}>
-                    {appointment.endTime}
-                  </TableCell>
-                  <TableCell style={{ borderBottom: "1px solid black" }}>
-                    <Button onClick={() => handleEditAppointment(0, appIndex)}>
-                      Edit
-                    </Button>
-                    <Button
-                      onClick={() => handleDeleteAppointment(0, appIndex)}
-                    >
-                      Delete
-                    </Button>
-                  </TableCell>
-                </TableRow>
+              {schedule.map((day, dayIndex) => (
+                day.appointments.map((appointment, appIndex) => (
+                  <TableRow key={appIndex}>
+                    <TableCell style={{ borderBottom: "1px solid black" }}>
+                      {day.day}
+                    </TableCell>
+                    <TableCell style={{ borderBottom: "1px solid black" }}>
+                      {appointment.name}
+                    </TableCell>
+                    <TableCell style={{ borderBottom: "1px solid black" }}>
+                      {appointment.startTime}
+                    </TableCell>
+                    <TableCell style={{ borderBottom: "1px solid black" }}>
+                      {appointment.endTime}
+                    </TableCell>
+                    <TableCell style={{ borderBottom: "1px solid black" }}>
+                      <Button onClick={() => handleEditAppointment(dayIndex, appIndex)}>
+                        Edit
+                      </Button>
+                      <Button
+                        onClick={() => handleDeleteAppointment(dayIndex, appIndex)}
+                      >
+                        Delete
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))
               ))}
             </TableBody>
           </Table>
