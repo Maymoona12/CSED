@@ -16,15 +16,6 @@ const Alert = (props) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 };
 
-const generateRandomVerificationCode = () => {
-  return Math.floor(1000 + Math.random() * 9000).toString();
-};
-
-const sendVerificationEmail = async (email, verificationCode) => {
-  console.log(`Sending verification email to ${email} with code ${verificationCode}`);
-  // Example: Use a service like Nodemailer or an API to send the email
-};
-
 const isStrongPassword = (password) => {
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   return passwordRegex.test(password);
@@ -32,10 +23,9 @@ const isStrongPassword = (password) => {
 
 const defaultTheme = createTheme();
 
-export default function Forgotpassword() {
+export default function Changepassword() {
   const [open, setOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
-  const [generatedVerificationCode, setGeneratedVerificationCode] = useState("");
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -45,55 +35,19 @@ export default function Forgotpassword() {
     setOpen(false);
   };
 
-  const handleSendVerificationCode = async (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-
-    const enteredEmail = data.get("email");
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(enteredEmail)) {
-      setAlertMessage("Invalid email format!");
-      setOpen(true);
-      return;
-    }
-
-    const verificationCode = generateRandomVerificationCode();
-    setGeneratedVerificationCode(verificationCode);
-
-    try {
-      await sendVerificationEmail(enteredEmail, verificationCode);
-      setAlertMessage("Verification code sent successfully!");
-      setOpen(true);
-    } catch (error) {
-      console.error("Error sending verification email:", error);
-      setAlertMessage("Error sending verification code. Please try again.");
-      setOpen(true);
-    }
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    const enteredEmail = data.get("email");
-    const enteredVerificationCode = data.get("verification_code");
     const enteredCurrentPassword = data.get("current_password");
     const enteredNewPassword = data.get("new_password");
     const enteredConfirmPassword = data.get("confirm_password");
 
-    // Check if the enteredCurrentPassword matches the actual current password for the user
     // You need to replace this with your authentication logic
-    const isCurrentPasswordCorrect = await checkCurrentPassword(enteredEmail, enteredCurrentPassword);
+    const isCurrentPasswordCorrect = await checkCurrentPassword(enteredCurrentPassword);
 
     if (!isCurrentPasswordCorrect) {
       setAlertMessage("Incorrect current password!");
-      setOpen(true);
-      return;
-    }
-
-    if (enteredVerificationCode !== generatedVerificationCode) {
-      setAlertMessage("Invalid verification code!");
       setOpen(true);
       return;
     }
@@ -112,7 +66,7 @@ export default function Forgotpassword() {
 
     try {
       // Replace the following with your actual logic to update the password
-      console.log(`Updating password for ${enteredEmail} to ${enteredNewPassword}`);
+      console.log(`Updating password to ${enteredNewPassword}`);
 
       setAlertMessage("Password updated successfully!");
       setOpen(true);
@@ -126,8 +80,8 @@ export default function Forgotpassword() {
   };
 
   // Example function to check if the entered current password is correct
-  const checkCurrentPassword = async (email, currentPassword) => {
-    console.log(`Checking if the entered current password is correct for ${email}`);
+  const checkCurrentPassword = async (currentPassword) => {
+    console.log("Checking if the entered current password is correct");
     // Replace this with your authentication logic
     // For example, you might use Firebase Authentication or an API call
     // to verify the current password
@@ -151,7 +105,7 @@ export default function Forgotpassword() {
               margin: "16px",
             }}
           >
-            <img
+                    <img
               src="./CoverImages/Logo.png"
               alt="Logo"
               style={{ width: "500px", height: "auto" }}
@@ -190,51 +144,9 @@ export default function Forgotpassword() {
             <Box
               component="form"
               noValidate
-              onSubmit={handleSendVerificationCode}
-              sx={{ mt: 1 }}
-            >
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                type="email"
-              />
-              <Button
-                className="recover_email"
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{
-                  mt: 3,
-                  mb: 2,
-                  background: "black",
-                  "&:hover": {
-                    background: "black",
-                  },
-                }}
-              >
-                Send Verification Code
-              </Button>
-            </Box>
-            <Box
-              component="form"
-              noValidate
               onSubmit={handleSubmit}
               sx={{ mt: 1 }}
             >
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="verification_code"
-                label="Verification Code"
-                type="text"
-                id="verification_code"
-              />
               <TextField
                 margin="normal"
                 required
@@ -266,7 +178,6 @@ export default function Forgotpassword() {
                 autoComplete="new-password"
               />
               <Button
-                className="signup"
                 type="submit"
                 fullWidth
                 variant="contained"

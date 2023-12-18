@@ -25,6 +25,7 @@ const Appointment = () => {
     { day: "Thu", appointments: [] },
   ]);
   const [blockedRows, setBlockedRows] = useState(Array(schedule.length).fill(false));
+  const [timeDivision, setTimeDivision] = useState(10); // New state for time division
   const navigate = useNavigate();
 
   const handleAddAppointment = (
@@ -34,29 +35,56 @@ const Appointment = () => {
     endTime,
     selectedDay
   ) => {
+    const division = timeDivision;
+    const start = new Date(`2023-01-01T${startTime}`);
+    const end = new Date(`2023-01-01T${endTime}`);
+    const interval = division * 60 * 1000; // Convert division to milliseconds
+
+    const appointments = [];
+    let previousEndTime = start; // Initialize with the start time of the first interval
+
+    for (
+      let current = start;
+      current < end;
+      current.setTime(current.getTime() + interval)
+    ) {
+      const formattedTime = current.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+
+      const nextEndTime = new Date(current.getTime() + interval);
+      const formattedEndTime = nextEndTime.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    
+      appointments.push({
+        day: selectedDay,
+        name: appointment,
+        startTime: formattedTime,
+        endTime: formattedEndTime,
+      });
+    
+      previousEndTime = new Date(current); 
+    }
+
     const updatedSchedule = [...schedule];
 
     if (editingAppointment !== null) {
-      updatedSchedule[dayIndex].appointments[editingAppointment].day =
-        selectedDay;
-      updatedSchedule[dayIndex].appointments[editingAppointment].name =
-        appointment;
-      updatedSchedule[dayIndex].appointments[editingAppointment].startTime =
-        startTime;
-      updatedSchedule[dayIndex].appointments[editingAppointment].endTime =
-        endTime;
+      updatedSchedule[dayIndex].appointments.splice(
+        editingAppointment,
+        1,
+        ...appointments
+      );
       setEditingAppointment(null);
     } else {
-      updatedSchedule[dayIndex].appointments.push({
-        day: selectedDay,
-        name: appointment,
-        startTime,
-        endTime,
-      });
+      updatedSchedule[dayIndex].appointments.push(...appointments);
     }
 
     setSchedule(updatedSchedule);
 
+    // Clear input fields
     document.getElementById(`appointment-0`).value = "";
     document.getElementById(`startTime-0`).value = "";
     document.getElementById(`endTime-0`).value = "";
@@ -86,14 +114,15 @@ const Appointment = () => {
     navigate("/");
   };
 
-  const handleEditAppointment = (dayIndex, appIndex) => {
-    const appointmentToEdit = schedule[dayIndex].appointments[appIndex];
-    document.getElementById(`day-0`).value = appointmentToEdit.day;
-    document.getElementById(`appointment-0`).value = appointmentToEdit.name;
-    document.getElementById(`startTime-0`).value = appointmentToEdit.startTime;
-    document.getElementById(`endTime-0`).value = appointmentToEdit.endTime;
-    setEditingAppointment(appIndex);
-  };
+     const handleEditAppointment = (dayIndex, appIndex) => {
+      const appointmentToEdit = schedule[dayIndex].appointments[appIndex];
+      document.getElementById(`day-0`).value = appointmentToEdit.day;
+      document.getElementById(`appointment-0`).value = appointmentToEdit.name;
+      document.getElementById(`startTime-0`).value = appointmentToEdit.startTime;
+      document.getElementById(`endTime-0`).value = appointmentToEdit.endTime;
+      setEditingAppointment({ dayIndex, appIndex });
+    };
+    
 
   const handleDeleteAppointment = (dayIndex, appIndex) => {
     const updatedSchedule = [...schedule];
@@ -106,12 +135,13 @@ const Appointment = () => {
     updatedBlockedRows[dayIndex] = true;
     setBlockedRows(updatedBlockedRows);
   };
-
+  
   const handleUnblockAppointment = (dayIndex, appIndex) => {
     const updatedBlockedRows = [...blockedRows];
     updatedBlockedRows[dayIndex] = false;
     setBlockedRows(updatedBlockedRows);
   };
+  
 
   const handleSaveButtonClick = (dayIndex) => {
     const tableElement = document.getElementById(`table-${dayIndex}`);
@@ -121,7 +151,6 @@ const Appointment = () => {
     ) {
       console.log("Table saved:", schedule[dayIndex].appointments);
     }
-
 
     console.log("mySchedule:", schedule);
   };
@@ -249,6 +278,29 @@ const Appointment = () => {
                   </label>
                   <input type="time" id={`endTime-0`} />
                 </div>
+
+                <div
+                  className="select__wrapper"
+                  style={{ marginTop: "10px" }}
+                >
+                  <label
+                    htmlFor={`timeDivision`}
+                    style={{ marginRight: "70px" }}
+                  >
+                    Time Division
+                  </label>
+                  <select
+                    id={`timeDivision`}
+                    value={timeDivision}
+                    onChange={(e) => setTimeDivision(Number(e.target.value))}
+                  >
+                    <option value={10}>10 minutes</option>
+                    <option value={15}>15 minutes</option>
+                    <option value={20}>20 minutes</option>
+                    <option value={30}>30 minutes</option>
+                  </select>
+                </div>
+
                 <button
                   onClick={() => {
                     const selectedDay = document.getElementById(`day-0`)
@@ -303,7 +355,7 @@ const Appointment = () => {
             border: "1px solid #ddd",
             padding: "25px",
             borderRadius: "10px",
-            margin: "152px", // You can adjust this margin as needed
+            margin: "152px",
             width: "650px",
             height: "auto",
             display: "none",
@@ -331,8 +383,7 @@ const Appointment = () => {
                   <Button
                     onClick={() => {
                       handleSaveButtonClick(0);
-                      navigate("/calendarpage");
-                    }}
+                      }}
                     style={{
                       color: "black",
                       border: "1px solid black",
@@ -347,7 +398,10 @@ const Appointment = () => {
             <TableBody>
               {schedule.map((day, dayIndex) =>
                 day.appointments.map((appointment, appIndex) => (
-                  <TableRow key={appIndex} style={{ opacity: blockedRows[dayIndex] ? 0.5 : 1 }}>
+                  <TableRow
+                    key={appIndex}
+                    style={{ opacity: blockedRows[dayIndex] ? 0.5 : 1 }}
+                  >
                     <TableCell style={{ borderBottom: "1px solid black" }}>
                       {day.day}
                     </TableCell>
@@ -361,24 +415,22 @@ const Appointment = () => {
                       {appointment.endTime}
                     </TableCell>
                     <TableCell style={{ borderBottom: "1px solid black" }}>
-                      <Button onClick={() => handleEditAppointment(dayIndex, appIndex)}>
-                        Edit
-                      </Button>
-                      <Button
-                        onClick={() => handleDeleteAppointment(dayIndex, appIndex)}
-                      >
-                        Delete
-                      </Button>
-                      {blockedRows[dayIndex] ? (
-                        <Button onClick={() => handleUnblockAppointment(dayIndex, appIndex)}>
-                          Unblock
-                        </Button>
-                      ) : (
-                        <Button onClick={() => handleBlockAppointment(dayIndex, appIndex)}>
-                          Block
-                        </Button>
-                      )}
-                    </TableCell>
+                    <Button onClick={() => handleEditAppointment(dayIndex, appIndex)}>
+                    Edit
+                    </Button>
+                    <Button onClick={() => handleDeleteAppointment(dayIndex, appIndex)}>
+                    Delete
+                    </Button>
+                  {blockedRows[dayIndex] ? (
+                  <Button onClick={() => handleUnblockAppointment(dayIndex, appIndex)}>
+                  Unblock
+                  </Button>
+                  ) : (
+                  <Button onClick={() => handleBlockAppointment(dayIndex, appIndex)}>
+                  Block
+                  </Button>
+                  )}
+                  </TableCell>
                   </TableRow>
                 ))
               )}
@@ -389,5 +441,4 @@ const Appointment = () => {
     </div>
   );
 };
-
 export default Appointment;

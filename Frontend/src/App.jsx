@@ -164,28 +164,17 @@
 // //________________________________________________________________
 
 // //Appointment& CalendarPage:)
-// import React, { useState } from "react";
 // import {
 //   BrowserRouter as Router,
 //   Routes,
 //   Route,
-//   Navigate,
 // } from "react-router-dom";
 // import Appointment from "./pages/Appointment/Appointment";
 
 // const App = () => {
-//   // Sample initial schedule data
-//   const initialSchedule = [
-//     { day: "Sun", appointments: [] },
-//     { day: "Mon", appointments: [] },
-//     { day: "Tue", appointments: [] },
-//     { day: "Wed", appointments: [] },
-//     { day: "Thu", appointments: [] },
-//   ];
+  
 
-//   const [schedule, setSchedule] = useState(initialSchedule);
-
-//   return (
+//    return (
 //     <>
 //       <Router>
 //         <Routes>
@@ -193,13 +182,10 @@
 //             path="/appointment"
 //             element={
 //               <Appointment
-//                 schedule={schedule}
-//                 setSchedule={setSchedule}
 //               />
 //             }
 //           />
-//           {/* Add a default route or redirect to a specific route */}
-//           <Route path="*" element={<Navigate to="/appointment" />} />
+         
 //         </Routes>
 //       </Router>
 //     </>
