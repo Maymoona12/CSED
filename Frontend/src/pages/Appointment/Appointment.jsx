@@ -25,7 +25,7 @@ const Appointment = () => {
     { day: "Thu", appointments: [] },
   ]);
   const [blockedRows, setBlockedRows] = useState(Array(schedule.length).fill(false));
-  const [timeDivision, setTimeDivision] = useState(10); // New state for time division
+  const [timeDivision, setTimeDivision] = useState(10);
   const navigate = useNavigate();
 
   const handleAddAppointment = (
@@ -38,10 +38,10 @@ const Appointment = () => {
     const division = timeDivision;
     const start = new Date(`2023-01-01T${startTime}`);
     const end = new Date(`2023-01-01T${endTime}`);
-    const interval = division * 60 * 1000; // Convert division to milliseconds
+    const interval = division * 60 * 1000;
 
     const appointments = [];
-    let previousEndTime = start; // Initialize with the start time of the first interval
+    let previousEndTime = start;
 
     for (
       let current = start;
@@ -58,15 +58,16 @@ const Appointment = () => {
         hour: "2-digit",
         minute: "2-digit",
       });
-    
+
       appointments.push({
         day: selectedDay,
         name: appointment,
         startTime: formattedTime,
         endTime: formattedEndTime,
+        blocked: false, // New property for blocking
       });
-    
-      previousEndTime = new Date(current); 
+
+      previousEndTime = new Date(current);
     }
 
     const updatedSchedule = [...schedule];
@@ -114,16 +115,6 @@ const Appointment = () => {
     navigate("/");
   };
 
-     const handleEditAppointment = (dayIndex, appIndex) => {
-      const appointmentToEdit = schedule[dayIndex].appointments[appIndex];
-      document.getElementById(`day-0`).value = appointmentToEdit.day;
-      document.getElementById(`appointment-0`).value = appointmentToEdit.name;
-      document.getElementById(`startTime-0`).value = appointmentToEdit.startTime;
-      document.getElementById(`endTime-0`).value = appointmentToEdit.endTime;
-      setEditingAppointment({ dayIndex, appIndex });
-    };
-    
-
   const handleDeleteAppointment = (dayIndex, appIndex) => {
     const updatedSchedule = [...schedule];
     updatedSchedule[dayIndex].appointments.splice(appIndex, 1);
@@ -134,14 +125,21 @@ const Appointment = () => {
     const updatedBlockedRows = [...blockedRows];
     updatedBlockedRows[dayIndex] = true;
     setBlockedRows(updatedBlockedRows);
+
+    const updatedSchedule = [...schedule];
+    updatedSchedule[dayIndex].appointments[appIndex].blocked = true;
+    setSchedule(updatedSchedule);
   };
-  
+
   const handleUnblockAppointment = (dayIndex, appIndex) => {
     const updatedBlockedRows = [...blockedRows];
     updatedBlockedRows[dayIndex] = false;
     setBlockedRows(updatedBlockedRows);
+
+    const updatedSchedule = [...schedule];
+    updatedSchedule[dayIndex].appointments[appIndex].blocked = false;
+    setSchedule(updatedSchedule);
   };
-  
 
   const handleSaveButtonClick = (dayIndex) => {
     const tableElement = document.getElementById(`table-${dayIndex}`);
@@ -150,6 +148,11 @@ const Appointment = () => {
       tableElement.style.visibility === "visible"
     ) {
       console.log("Table saved:", schedule[dayIndex].appointments);
+       // Save the information to localStorage or any other preferred storage method
+       localStorage.setItem("BookAppointments", JSON.stringify(schedule[dayIndex].appointments));
+
+       // Navigate to the BookAppointment page
+       navigate("/appointment");
     }
 
     console.log("mySchedule:", schedule);
@@ -232,7 +235,7 @@ const Appointment = () => {
           >
             <CardContent>
               <Typography gutterBottom>
-                <label htmlFor={`day-0`} style={{ marginRight: "136px" }}>
+                <label htmlFor={`day-0`} style={{ marginRight: "105px",fontFamily:"sarfi" }}>
                   {" "}
                   Day
                 </label>
@@ -249,10 +252,9 @@ const Appointment = () => {
                   htmlFor={`appointment-0`}
                   style={{ marginRight: "18px" }}
                 >
-                  Add/Edit Appointment
+                  Add Appointment
                 </label>
                 <input type="text" id={`appointment-0`} />
-
                 <div
                   className="select__wrapper"
                   style={{ marginTop: "10px" }}
@@ -261,11 +263,10 @@ const Appointment = () => {
                     htmlFor={`startTime-0`}
                     style={{ marginRight: "33px" }}
                   >
-                    Add/Edit Start Time
+                    Add Start Time
                   </label>
                   <input type="time" id={`startTime-0`} />
                 </div>
-
                 <div
                   className="select__wrapper"
                   style={{ marginTop: "10px" }}
@@ -274,18 +275,17 @@ const Appointment = () => {
                     htmlFor={`endTime-0`}
                     style={{ marginRight: "37px" }}
                   >
-                    Add/Edit End Time
+                    Add End Time
                   </label>
                   <input type="time" id={`endTime-0`} />
                 </div>
-
                 <div
                   className="select__wrapper"
                   style={{ marginTop: "10px" }}
                 >
                   <label
                     htmlFor={`timeDivision`}
-                    style={{ marginRight: "70px" }}
+                    style={{ marginRight: "38px" }}
                   >
                     Time Division
                   </label>
@@ -300,9 +300,8 @@ const Appointment = () => {
                     <option value={30}>30 minutes</option>
                   </select>
                 </div>
-
                 <button
-                  onClick={() => {
+                 onClick={() => {
                     const selectedDay = document.getElementById(`day-0`)
                       .value;
                     const appointmentName = document.getElementById(
@@ -333,11 +332,10 @@ const Appointment = () => {
                         "table";
                     }
                   }}
-                  style={{ marginTop: "20px", marginLeft: "160px" }}
+                  style={{ marginTop: "20px", marginLeft: "128px" }}
                 >
-                  Add/Edit
+                  Add
                 </button>
-
                 <button
                   onClick={() => handleViewButtonClick(0)}
                   style={{ marginTop: "20px", marginLeft: "20px" }}
@@ -383,7 +381,7 @@ const Appointment = () => {
                   <Button
                     onClick={() => {
                       handleSaveButtonClick(0);
-                      }}
+                    }}
                     style={{
                       color: "black",
                       border: "1px solid black",
@@ -392,7 +390,7 @@ const Appointment = () => {
                   >
                     Save
                   </Button>
-                </TableCell>
+                  </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -400,7 +398,10 @@ const Appointment = () => {
                 day.appointments.map((appointment, appIndex) => (
                   <TableRow
                     key={appIndex}
-                    style={{ opacity: blockedRows[dayIndex] ? 0.5 : 1 }}
+                    style={{
+                      opacity: appointment.blocked ? 0.5 : 1,
+                      backgroundColor: appointment.blocked ? "#ffcccc" : "inherit",
+                    }}
                   >
                     <TableCell style={{ borderBottom: "1px solid black" }}>
                       {day.day}
@@ -415,22 +416,19 @@ const Appointment = () => {
                       {appointment.endTime}
                     </TableCell>
                     <TableCell style={{ borderBottom: "1px solid black" }}>
-                    <Button onClick={() => handleEditAppointment(dayIndex, appIndex)}>
-                    Edit
-                    </Button>
-                    <Button onClick={() => handleDeleteAppointment(dayIndex, appIndex)}>
-                    Delete
-                    </Button>
-                  {blockedRows[dayIndex] ? (
-                  <Button onClick={() => handleUnblockAppointment(dayIndex, appIndex)}>
-                  Unblock
-                  </Button>
-                  ) : (
-                  <Button onClick={() => handleBlockAppointment(dayIndex, appIndex)}>
-                  Block
-                  </Button>
-                  )}
-                  </TableCell>
+                      <Button onClick={() => handleDeleteAppointment(dayIndex, appIndex)}>
+                        Delete
+                      </Button>
+                      {appointment.blocked ? (
+                        <Button onClick={() => handleUnblockAppointment(dayIndex, appIndex)}>
+                          Unblock
+                        </Button>
+                      ) : (
+                        <Button onClick={() => handleBlockAppointment(dayIndex, appIndex)}>
+                          Block
+                        </Button>
+                      )}
+                    </TableCell>
                   </TableRow>
                 ))
               )}
@@ -441,4 +439,5 @@ const Appointment = () => {
     </div>
   );
 };
+
 export default Appointment;

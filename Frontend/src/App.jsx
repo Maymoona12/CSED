@@ -117,36 +117,6 @@
 // export default App;
 // // ________________________________________________________________
 
-// // PostAnnouncementPage:)
-// // import React, { useState } from "react";
-// // import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
-// // import AnnouncementDisplayPage from "./pages/PostAnnouncement/AnnouncementDisplayPage";
-
-// // const App = () => {
-// //   const [displayAnnouncementPage, setDisplayAnnouncementPage] = useState(false);
-// //   const [announcementData, setAnnouncementData] = useState({});
-
-// //   const handleSubmit = (data) => {
-// //     setAnnouncementData(data);
-// //     setDisplayAnnouncementPage(true);
-// //   };
-
-// //   return (
-// //     <div>
-// //       {!displayAnnouncementPage && (
-// //         <PostAnnouncementPage onSubmit={handleSubmit} />
-// //       )}
-
-// //       {displayAnnouncementPage && (
-// //         <AnnouncementDisplayPage announcementData={announcementData} />
-// //       )}
-// //     </div>
-// //   );
-// // };
-
-// // export default App;
-// //___________________________________________________________________
-// // // App.jsx
 // import React, { useState } from "react";
 // import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
 // import AnnouncementDisplayPage from "./pages/PostAnnouncement/AnnouncementDisplayPage";
@@ -163,37 +133,6 @@
 // export default App;
 // //________________________________________________________________
 
-// //Appointment& CalendarPage:)
-// import {
-//   BrowserRouter as Router,
-//   Routes,
-//   Route,
-// } from "react-router-dom";
-// import Appointment from "./pages/Appointment/Appointment";
-
-// const App = () => {
-  
-
-//    return (
-//     <>
-//       <Router>
-//         <Routes>
-//           <Route
-//             path="/appointment"
-//             element={
-//               <Appointment
-//               />
-//             }
-//           />
-         
-//         </Routes>
-//       </Router>
-//     </>
-//   );
-// };
-
-// export default App;
-// // // ________________________________________________________________;
 
 // // ***GeneralPages:
 // import React from "react";
@@ -248,6 +187,7 @@
 // import FoldersPage from "./pages/photo-archive/foldersPage";
 // import PhotosPage from "./pages/photo-archive/photospage";
 // import ChangePassword from "./pages/UsersPage/StudentPage/ChangePassword";
+// import BookAppointment from "./pages/Appointment/BookAppointment";
 
 // const App = () => {
 //   return (
@@ -259,7 +199,9 @@
 //           <Route path="/LecturersProfile" element={<LecturerProfiles />} />
 //           <Route path="/ArchivePage" element={<FoldersPage />} />
 //           <Route path="/PhotosPage/:folderId" element={<PhotosPage />} />
+//           <Route path="/PhotosPage/:folderId" element={<PhotosPage />} />
 //           <Route path="/ChangePassword" element={<ChangePassword />} />
+//           <Route path="/AddAppointment" element={<BookAppointment />} />
 //         </Routes>
 //       </Router>
 //     </>
