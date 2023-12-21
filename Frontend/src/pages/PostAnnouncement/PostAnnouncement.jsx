@@ -9,9 +9,6 @@ import TextareaAutosize from "@mui/material/TextareaAutosize";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import AddLinkIcon from "@mui/icons-material/AddLink"; // Add this import
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
-import axios from "axios";
 
 const PostAnnouncementPage = ({ onSubmit }) => {
   const [announcementData, setAnnouncementData] = useState(null);
