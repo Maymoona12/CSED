@@ -217,7 +217,7 @@ export default function Signup() {
               setAlertMessage("");
             }}
             severity="error"
-            sx={{ width: "110%" }}
+            sx={{ width: "100%" }}
           >
             {alertMessage}
           </Alert>
