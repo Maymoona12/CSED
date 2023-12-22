@@ -162,90 +162,27 @@
 
 // Student-Page:
 
-// import React, { useState, useEffect } from "react";
-// import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-// import StudentPage from "./pages/UsersPage/StudentPage/StudentPage";
-// import Home from "./pages/PostAnnouncement/Home";
-// import LecturerProfiles from "./pages/Lecturer-Profiles/lecturerprofile";
-// import FoldersPage from "./pages/photo-archive/foldersPage";
-// import PhotosPage from "./pages/photo-archive/photospage";
-// import ChangePassword from "./pages/UsersPage/StudentPage/ChangePassword";
-// import BookAppointment from "./pages/Appointment/BookAppointment";
-
-// const App = () => {
-//   return (
-//     <>
-//       <Router>
-//         <Routes>
-//           <Route path="/" element={<StudentPage />} />
-//           <Route path="/Home" element={<Home />} />
-//           <Route path="/LecturersProfile" element={<LecturerProfiles />} />
-//           <Route path="/ArchivePage" element={<FoldersPage />} />
-//           <Route path="/PhotosPage/:folderId" element={<PhotosPage />} />
-//           <Route path="/PhotosPage/:folderId" element={<PhotosPage />} />
-//           <Route path="/ChangePassword" element={<ChangePassword />} />
-//           <Route path="/AddAppointment" element={<BookAppointment />} />
-//         </Routes>
-//       </Router>
-//     </>
-//   );
-// };
-
-// export default App;
-
-// //__________________________________________________________________________
-
-// import React, { useState, useEffect } from "react";
-// // import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-// import Home from "./pages/PostAnnouncement/Home";
-
-// const App = () => {
-//   const announcementData = {
-//     title: "Important Announcement",
-//     text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac turpis eu eros imperdiet commodo.",
-//     photos: ["CoverImages/image1.jpg", "CoverImages/image2.jpg"],
-//     files: [{ name: "Document.pdf", url: "CoverImages/Assignment 2.pdf" }],
-//   };
-//   return (
-//     <>
-//       {/* <Router>
-//         <Routes>
-//           <Route path="/" element={<PostAnnouncementPage />} />
-//           <Route path="/Home" element={<Home />} />
-//         </Routes>
-//       </Router> */}
-//       <Home {...announcementData} />
-//     </>
-//   );
-// };
-
-// export default App;
-// //___________________________________________________________
-
-// // Lecturer-Page:
-
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import LecturerProfile from "./pages/UsersPage/Lecturer-Page/LecturerProfile";
-import EditProfile from "./pages/UsersPage/Lecturer-Page/EditProfile";
-import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
+import StudentPage from "./pages/UsersPage/StudentPage/StudentPage";
 import LecturerProfiles from "./pages/Lecturer-Profiles/lecturerprofile";
-import Appointment from "./pages/Appointment/Appointment";
 import FoldersPage from "./pages/photo-archive/foldersPage";
 import PhotosPage from "./pages/photo-archive/photospage";
+import ChangePassword from "./pages/UsersPage/StudentPage/ChangePassword";
+import BookAppointment from "./pages/Appointment/BookAppointment";
 
 const App = () => {
   return (
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<LecturerProfile />} />
-          <Route path="/EditProfile" element={<EditProfile />} />
-          <Route path="/PostAnnouncement" element={<PostAnnouncementPage />} />
+          <Route path="/" element={<StudentPage />} />
           <Route path="/LecturersProfile" element={<LecturerProfiles />} />
-          <Route path="/AddAppointment" element={<Appointment />} />
           <Route path="/ArchivePage" element={<FoldersPage />} />
           <Route path="/PhotosPage/:folderId" element={<PhotosPage />} />
+          <Route path="/PhotosPage/:folderId" element={<PhotosPage />} />
+          <Route path="/ChangePassword" element={<ChangePassword />} />
+          <Route path="/AddAppointment" element={<BookAppointment />} />
         </Routes>
       </Router>
     </>
@@ -253,3 +190,37 @@ const App = () => {
 };
 
 export default App;
+
+// //__________________________________________________________________________
+
+// // Lecturer-Page:
+
+// import React, { useState, useEffect } from "react";
+// import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+// import LecturerHome from "./pages/UsersPage/Lecturer-Page/LecturerHome";
+// import EditProfile from "./pages/UsersPage/Lecturer-Page/EditProfile";
+// import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
+// import LecturerProfiles from "./pages/Lecturer-Profiles/lecturerprofile";
+// import Appointment from "./pages/Appointment/Appointment";
+// import FoldersPage from "./pages/photo-archive/foldersPage";
+// import PhotosPage from "./pages/photo-archive/photospage";
+
+// const App = () => {
+//   return (
+//     <>
+//       <Router>
+//         <Routes>
+//           <Route path="/" element={<LecturerHome />} />
+//           <Route path="/EditProfile" element={<EditProfile />} />
+//           <Route path="/PostAnnouncement" element={<PostAnnouncementPage />} />
+//           <Route path="/LecturersProfile" element={<LecturerProfiles />} />
+//           <Route path="/AddAppointment" element={<Appointment />} />
+//           <Route path="/ArchivePage" element={<FoldersPage />} />
+//           <Route path="/PhotosPage/:folderId" element={<PhotosPage />} />
+//         </Routes>
+//       </Router>
+//     </>
+//   );
+// };
+
+// export default App;

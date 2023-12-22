@@ -6,17 +6,8 @@ import {
   Avatar,
   Typography,
   Box,
-  Table,
-  TableContainer,
-  TableBody,
-  TableCell,
-  TableRow,
+  Button,
 } from "@mui/material";
-import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
-import ApartmentIcon from "@mui/icons-material/Apartment";
-import PhoneIcon from "@mui/icons-material/Phone";
-import EmailIcon from "@mui/icons-material/Email";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import Stack from "@mui/material/Stack";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Badge from "@mui/material/Badge";
@@ -25,8 +16,12 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 
-const LecturerProfile = () => {
+const LecturerHome = () => {
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElAnnouncement, setAnchorElAnnouncement] = useState(null);
+  const [announcementClicked, setAnnouncementClicked] = useState(false);
+
   const settings = [
     "Profile",
     "Edit Profile",
@@ -36,6 +31,9 @@ const LecturerProfile = () => {
     "Archive Page",
     "Logout",
   ];
+  const pages = ["Announcement"];
+
+  const announcements = ["Title1", "Title2", "Title3"];
 
   const lecturers = [
     {
@@ -44,12 +42,34 @@ const LecturerProfile = () => {
     },
   ];
 
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleOpenAnnouncementMenu = (event) => {
+    if (!announcementClicked) {
+      setAnchorElAnnouncement(event.currentTarget);
+    } else {
+      setAnchorElAnnouncement(null);
+    }
+    setAnnouncementClicked(!announcementClicked);
+  };
+
+  const handleCloseAnnouncementMenu = () => {
+    setAnchorElAnnouncement(null);
+    setAnnouncementClicked(false);
   };
 
   return (
@@ -76,6 +96,53 @@ const LecturerProfile = () => {
               CSED
             </Typography>
 
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: "none", md: "flex" },
+                marginLeft: "900px",
+              }}
+            >
+              {pages.map((page) => (
+                <div key={page}>
+                  <Button
+                    onClick={handleOpenAnnouncementMenu}
+                    sx={{
+                      my: 2,
+                      color: "white",
+                      display: "block",
+                      cursor: announcementClicked ? "pointer" : "default",
+                    }}
+                  >
+                    {page}
+                  </Button>
+                  <Menu
+                    id="menu-announcement"
+                    anchorEl={anchorElAnnouncement}
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "left",
+                    }}
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "left",
+                    }}
+                    open={Boolean(anchorElAnnouncement)}
+                    onClose={handleCloseAnnouncementMenu}
+                  >
+                    {announcements.map((announcement) => (
+                      <MenuItem
+                        key={announcement}
+                        onClick={handleCloseAnnouncementMenu}
+                      >
+                        {announcement}
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                </div>
+              ))}
+            </Box>
+
             <Stack
               spacing={4}
               direction="row"
@@ -87,7 +154,7 @@ const LecturerProfile = () => {
             </Stack>
 
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
+              <Tooltip>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar alt="Thaer" src="ProfileImages/thaer.PNG" />
                 </IconButton>
@@ -144,4 +211,4 @@ const LecturerProfile = () => {
   );
 };
 
-export default LecturerProfile;
+export default LecturerHome;
