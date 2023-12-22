@@ -25,7 +25,7 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 
-const LecturerPage = () => {
+const EditProfile = () => {
   const initialData = {
     assistant: "Initial Assistant",
     roomNumber: "Initial Room Number",
@@ -37,8 +37,8 @@ const LecturerPage = () => {
   const [editedData, setEditedData] = useState(initialData);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const settings = [
-    // "Home",
     "Profile",
+    "Edit Profile",
     "Post Announcement",
     "Lecturers Profile",
     "Add Appointment",
@@ -82,7 +82,7 @@ const LecturerPage = () => {
       [field]: value,
     }));
   };
-  
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -211,7 +211,11 @@ const LecturerPage = () => {
           >
             <Typography
               variant="h5"
-              style={{ marginBottom: "20px", color: "black",fontFamily:"serif" }}
+              style={{
+                marginBottom: "20px",
+                color: "black",
+                fontFamily: "serif",
+              }}
             >
               User Details
             </Typography>
@@ -286,7 +290,11 @@ const LecturerPage = () => {
             >
               <Typography
                 variant="h5"
-                style={{ marginBottom: "8px", color: "black" ,fontFamily:"serif"}}
+                style={{
+                  marginBottom: "8px",
+                  color: "black",
+                  fontFamily: "serif",
+                }}
               >
                 Edit Profile
               </Typography>
@@ -304,7 +312,6 @@ const LecturerPage = () => {
                           onChange={(e) =>
                             handleChange("assistant", e.target.value)
                           }
-                          
                         />
                       </TableCell>
                     </TableRow>
@@ -319,7 +326,6 @@ const LecturerPage = () => {
                           onChange={(e) =>
                             handleChange("roomNumber", e.target.value)
                           }
-                          
                         />
                       </TableCell>
                     </TableRow>
@@ -334,7 +340,6 @@ const LecturerPage = () => {
                           onChange={(e) =>
                             handleChange("phone", e.target.value)
                           }
-                          
                         />
                       </TableCell>
                     </TableRow>
@@ -346,11 +351,9 @@ const LecturerPage = () => {
                         <input
                           type="text"
                           placeholder="Email"
-                          
                           onChange={(e) =>
                             handleChange("email", e.target.value)
                           }
-                          
                         />
                       </TableCell>
                     </TableRow>
@@ -365,4 +368,4 @@ const LecturerPage = () => {
   );
 };
 
-export default LecturerPage;
+export default EditProfile;
