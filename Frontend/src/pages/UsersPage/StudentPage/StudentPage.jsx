@@ -21,7 +21,6 @@ import {
 } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import CampaignIcon from "@mui/icons-material/Campaign";
-import AnnouncementIcon from "@mui/icons-material/Announcement";
 import { styled } from "@mui/system";
 
 const StyledButton = styled(Button)({
