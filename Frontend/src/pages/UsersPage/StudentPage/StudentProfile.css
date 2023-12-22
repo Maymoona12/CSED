@@ -1,0 +1,75 @@
+.upc {
+  position: relative;
+  width: auto;
+  /* height: auto; */
+  border: 1px solid #ccc;
+  margin: 20px;
+  border-radius: 4px;
+  padding-bottom: 20px;
+  background: white;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.gradiant {
+  background-image: linear-gradient(to bottom, #04183b, #18306e);
+  height: 125px;
+  border-radius: 4px 4px 0px 0px;
+}
+
+.profile-down {
+  padding: 20px;
+  position: relative;
+}
+
+.add-photo-container {
+  position: absolute;
+  top: 60px;
+  left: 30px;
+  width: 40px;
+  height: 40px;
+  background: #04183b;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+.add-photo-icon {
+  color: white;
+  font-size: 24px;
+}
+
+.profile-down img {
+  height: 150px;
+  border-radius: 50%;
+  margin-top: -75px;
+  padding: 5px;
+  background: white;
+}
+
+.profile-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.profile-description {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.profile-button {
+  margin-top: 15px;
+}
+
+.profile-button a {
+  text-decoration: none;
+  background-color: #247de3;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  display: inline-block;
+}
