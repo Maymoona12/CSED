@@ -142,7 +142,6 @@ const AdminPage = () => {
                     </TableBody>
                   </Table>
                 </TableContainer>
-
                 {isLecturerFormVisible && (
                   <>
                     <TextField
