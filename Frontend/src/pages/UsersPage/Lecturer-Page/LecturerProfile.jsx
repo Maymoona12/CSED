@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./LecturerStyle.css";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
+import EditNoteIcon from "@mui/icons-material/EditNote";
+import CampaignIcon from "@mui/icons-material/Campaign";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import EditCalendarIcon from "@mui/icons-material/EditCalendar";
+import PermMediaIcon from "@mui/icons-material/PermMedia";
 
 const LectureProfile = () => {
   const [imageSrc, setImageSrc] = useState("ProfileImages/thaer.PNG");
@@ -24,7 +29,6 @@ const LectureProfile = () => {
           <label htmlFor="imageInput">
             <AddAPhotoIcon className="add-photo-icon" />
           </label>
-          {/* Hidden file input triggered by the label */}
           <input
             type="file"
             id="imageInput"
@@ -33,18 +37,38 @@ const LectureProfile = () => {
             onChange={handleImageChange}
           />
         </div>
-        {/* <img src="ProfileImages/thaer.PNG" alt="Thaer2" /> */}
         <img src={imageSrc} alt="Profile" />
 
         <div className="profile-title">Thaer Samar</div>
-        <div className="profile-description">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex numquam
-          asperiores dolorum eligendi eius. Iure ut similique est nesciunt at
-          beatae hic inventore accusantium dolor ea aperiam id, molestias
-          soluta?
-        </div>
+
         <div className="profile-button">
-          <Link to="/EditProfile">Edit Profile</Link>
+          <div style={{ marginTop: "10px", marginRight: "100px" }}>
+            <Link to="/EditProfile" style={{ marginLeft: "30px" }}>
+              <EditNoteIcon />
+            </Link>
+            <h2 style={{ fontFamily: "Garamond" }}>Edit Profile</h2>
+          </div>
+
+          <div style={{ marginTop: "10px", marginRight: "100px" }}>
+            <Link to="/PostAnnouncement" style={{ marginLeft: "70px" }}>
+              <CampaignIcon />
+            </Link>
+            <h2 style={{ fontFamily: "Garamond" }}>Post Announcement</h2>
+          </div>
+
+          <div style={{ marginTop: "10px", marginRight: "100px" }}>
+            <Link to="/AddAppointment" style={{ marginLeft: "50px" }}>
+              <EditCalendarIcon />
+            </Link>
+            <h2 style={{ fontFamily: "Garamond" }}>Add Appointment</h2>
+          </div>
+
+          <div style={{ marginTop: "10px", marginRight: "100px" }}>
+            <Link to="/ArchivePage" style={{ marginLeft: "30px" }}>
+              <PermMediaIcon />
+            </Link>
+            <h2 style={{ fontFamily: "Garamond" }}>Archive Page</h2>
+          </div>
         </div>
       </div>
     </div>
