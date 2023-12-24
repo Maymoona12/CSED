@@ -33,7 +33,7 @@ const StyledStack = styled(Stack)({
   color: "white",
 });
 
-const StudentPage = () => {
+const StudentHome = () => {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElAnnouncement, setAnchorElAnnouncement] = useState(null);
@@ -47,6 +47,7 @@ const StudentPage = () => {
     "Change Password",
     "Logout",
   ];
+
   const pages = ["Announcement"];
 
   const announcements = [
@@ -274,4 +275,4 @@ const StudentPage = () => {
   );
 };
 
-export default StudentPage;
+export default StudentHome;

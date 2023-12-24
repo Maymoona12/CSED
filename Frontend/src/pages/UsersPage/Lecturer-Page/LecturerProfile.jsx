@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./StudentProfile.css";
+import "./LecturerStyle.css";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 
-const StudentProfile = () => {
+const LectureProfile = () => {
   return (
     <div className="upc">
       <div className="gradiant"></div>
@@ -11,8 +11,9 @@ const StudentProfile = () => {
         <div className="add-photo-container">
           <AddAPhotoIcon className="add-photo-icon" />
         </div>
-        <img src="Images/hamood1.jpg" alt="USER" />
-        <div className="profile-title">Fatima Omar</div>
+        <img src="ProfileImages/thaer.PNG" alt="Thaer2" />
+
+        <div className="profile-title">Thaer Samar</div>
         <div className="profile-description">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex numquam
           asperiores dolorum eligendi eius. Iure ut similique est nesciunt at
@@ -20,11 +21,11 @@ const StudentProfile = () => {
           soluta?
         </div>
         <div className="profile-button">
-          <Link to="/ChangePassword">Change Password</Link>
+          <Link to="/EditProfile">Edit Profile</Link>
         </div>
       </div>
     </div>
   );
 };
 
-export default StudentProfile;
+export default LectureProfile;

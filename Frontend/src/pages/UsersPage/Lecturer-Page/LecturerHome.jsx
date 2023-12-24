@@ -6,21 +6,39 @@ import {
   Avatar,
   Typography,
   Box,
+  Stack,
+  Badge,
+  Menu,
+  IconButton,
+  Tooltip,
+  MenuItem,
   Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Paper,
 } from "@mui/material";
-import Stack from "@mui/material/Stack";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import Badge from "@mui/material/Badge";
-import Menu from "@mui/material/Menu";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
+import CampaignIcon from "@mui/icons-material/Campaign";
+import { styled } from "@mui/system";
+
+const StyledButton = styled(Button)({
+  my: 2,
+  color: "white",
+  display: "block",
+});
+
+const StyledStack = styled(Stack)({
+  color: "white",
+});
 
 const LecturerHome = () => {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElAnnouncement, setAnchorElAnnouncement] = useState(null);
-  const [announcementClicked, setAnnouncementClicked] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
 
   const settings = [
     "Profile",
@@ -31,9 +49,27 @@ const LecturerHome = () => {
     "Archive Page",
     "Logout",
   ];
+
   const pages = ["Announcement"];
 
-  const announcements = ["Title1", "Title2", "Title3"];
+  const announcements = [
+    {
+      title: "Title 1",
+      text: "Announcement text 1",
+      photo: "CoverImages/image1.jpg",
+      document: "Assignment 2.pdf",
+    },
+    {
+      title: "Title 2",
+      text: "Announcement text 2",
+      photo: "CoverImages/image2.jpg",
+    },
+    {
+      title: "Title 3",
+      text: "Announcement text 3,Announcement text 3Announcement text 3Announcement text 3Announcement text 3Announcement text 3Announcement text 3Announcement text 3 ",
+      document: "Assignment 2.pdf",
+    },
+  ];
 
   const lecturers = [
     {
@@ -59,17 +95,25 @@ const LecturerHome = () => {
   };
 
   const handleOpenAnnouncementMenu = (event) => {
-    if (!announcementClicked) {
-      setAnchorElAnnouncement(event.currentTarget);
-    } else {
-      setAnchorElAnnouncement(null);
-    }
-    setAnnouncementClicked(!announcementClicked);
+    setAnchorElAnnouncement(event.currentTarget);
   };
 
   const handleCloseAnnouncementMenu = () => {
     setAnchorElAnnouncement(null);
-    setAnnouncementClicked(false);
+  };
+
+  const handleOpenDialogFromTitle = (index) => {
+    setSelectedAnnouncement(announcements[index]);
+    setDialogOpen(true);
+    setAnchorElAnnouncement(null);
+  };
+
+  const handleOpenDialog = () => {
+    setDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
   };
 
   return (
@@ -96,62 +140,52 @@ const LecturerHome = () => {
               CSED
             </Typography>
 
-            <Box
-              sx={{
-                flexGrow: 1,
-                display: { xs: "none", md: "flex" },
-                marginLeft: "900px",
-              }}
-            >
-              {pages.map((page) => (
-                <div key={page}>
-                  <Button
-                    onClick={handleOpenAnnouncementMenu}
-                    sx={{
-                      my: 2,
-                      color: "white",
-                      display: "block",
-                      cursor: announcementClicked ? "pointer" : "default",
-                    }}
-                  >
-                    {page}
-                  </Button>
-                  <Menu
-                    id="menu-announcement"
-                    anchorEl={anchorElAnnouncement}
-                    anchorOrigin={{
-                      vertical: "bottom",
-                      horizontal: "left",
-                    }}
-                    transformOrigin={{
-                      vertical: "top",
-                      horizontal: "left",
-                    }}
-                    open={Boolean(anchorElAnnouncement)}
-                    onClose={handleCloseAnnouncementMenu}
-                  >
-                    {announcements.map((announcement) => (
-                      <MenuItem
-                        key={announcement}
-                        onClick={handleCloseAnnouncementMenu}
-                      >
-                        {announcement}
-                      </MenuItem>
-                    ))}
-                  </Menu>
-                </div>
-              ))}
-            </Box>
-
-            <Stack
-              spacing={4}
-              direction="row"
-              sx={{ color: "white", marginRight: "20px" }}
-            >
+            <StyledStack spacing={2} direction="row" sx={{ color: "white" }}>
               <Badge color="secondary" badgeContent={0}>
                 <NotificationsIcon />
               </Badge>
-            </Stack>
+            </StyledStack>
+
+            <Box
+              sx={{
+                flexGrow: 0,
+                display: { xs: "none", md: "flex" },
+              }}
+            >
+              <StyledStack
+                spacing={2}
+                direction="row"
+                sx={{ color: "white", marginTop: "10px" }}
+              >
+                <StyledButton onClick={handleOpenAnnouncementMenu}>
+                  <CampaignIcon />
+                </StyledButton>
+              </StyledStack>
+
+              <Menu
+                id="menu-announcement"
+                anchorEl={anchorElAnnouncement}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                open={Boolean(anchorElAnnouncement)}
+                onClose={handleCloseAnnouncementMenu}
+              >
+                {announcements.map((announcement, index) => (
+                  <MenuItem
+                    key={announcement.title}
+                    onClick={() => handleOpenDialogFromTitle(index)}
+                  >
+                    {announcement.title}
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
 
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip>
@@ -207,6 +241,45 @@ const LecturerHome = () => {
         <div style={{ marginBottom: "8px" }}>Hello,</div>
         <div style={{ marginBottom: "8px" }}>{lecturers[0].name}</div>
       </div>
+      {/* Dialog for displaying announcement details */}
+      <Dialog open={dialogOpen} onClose={handleCloseDialog}>
+        <DialogTitle>
+          {selectedAnnouncement && selectedAnnouncement.title}
+        </DialogTitle>
+        <DialogContent>
+          {selectedAnnouncement && selectedAnnouncement.text && (
+            <Typography>{selectedAnnouncement.text}</Typography>
+          )}
+          {selectedAnnouncement && selectedAnnouncement.photo && (
+            <img
+              src={selectedAnnouncement.photo}
+              alt="Announcement"
+              style={{
+                maxWidth: "80%",
+                border: "1px solid #ccc",
+                marginTop: "10px",
+              }}
+            />
+          )}
+          {selectedAnnouncement && selectedAnnouncement.document && (
+            <Paper elevation={3} style={{ padding: "10px", marginTop: "20px" }}>
+              <Typography>
+                Attachment:{" "}
+                <a
+                  href={selectedAnnouncement.document}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {selectedAnnouncement.document}
+                </a>
+              </Typography>
+            </Paper>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog}>Close</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

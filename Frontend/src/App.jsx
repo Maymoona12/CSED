@@ -164,7 +164,7 @@
 
 // import React, { useState, useEffect } from "react";
 // import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-// import StudentPage from "./pages/UsersPage/StudentPage/StudentPage";
+// import StudentHome from "./pages/UsersPage/StudentPage/StudentHome";
 // import StudentProfile from "./pages/UsersPage/StudentPage/StudentProfile";
 // import LecturerProfiles from "./pages/Lecturer-Profiles/lecturerprofile";
 // import FoldersPage from "./pages/photo-archive/foldersPage";
@@ -177,7 +177,7 @@
 //     <>
 //       <Router>
 //         <Routes>
-//           <Route path="/" element={<StudentPage />} />
+//           <Route path="/" element={<StudentHome />} />
 //           <Route path="/Profile" element={<StudentProfile />} />
 //           <Route path="/LecturersProfile" element={<LecturerProfiles />} />
 //           <Route path="/ArchivePage" element={<FoldersPage />} />
@@ -195,11 +195,12 @@
 
 // //__________________________________________________________________________
 
-// // Lecturer-Page:
+// Lecturer-Page:
 
 // import React, { useState, useEffect } from "react";
 // import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 // import LecturerHome from "./pages/UsersPage/Lecturer-Page/LecturerHome";
+// import LectureProfile from "./pages/UsersPage/Lecturer-Page/LecturerProfile";
 // import EditProfile from "./pages/UsersPage/Lecturer-Page/EditProfile";
 // import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
 // import LecturerProfiles from "./pages/Lecturer-Profiles/lecturerprofile";
@@ -213,6 +214,7 @@
 //       <Router>
 //         <Routes>
 //           <Route path="/" element={<LecturerHome />} />
+//           <Route path="/Profile" element={<LectureProfile />} />
 //           <Route path="/EditProfile" element={<EditProfile />} />
 //           <Route path="/PostAnnouncement" element={<PostAnnouncementPage />} />
 //           <Route path="/LecturersProfile" element={<LecturerProfiles />} />
