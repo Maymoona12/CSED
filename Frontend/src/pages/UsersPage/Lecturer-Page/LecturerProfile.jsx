@@ -60,136 +60,136 @@ const LectureProfile = () => {
           />
         </div>
         <img src={imageSrc} alt="Profile" />
+      </div>
 
-        <div className="profile-title">Thaer Samar</div>
+      <div className="profile-title">Thaer Samar</div>
 
-        <div className="profile-button">
-          <div style={{ marginTop: "10px", marginRight: "100px" }}>
-            <Button
-              onMouseEnter={(event) =>
-                handleButtonHover(event, setEditProfilePopover)
-              }
-              onMouseLeave={() => handleButtonLeave(setEditProfilePopover)}
-              style={{ cursor: "pointer" }}
-            >
-              <Link to="/EditProfile" style={{ marginLeft: "30px" }}>
-                <EditNoteIcon />
-              </Link>
-            </Button>
-            <Popover
-              open={Boolean(editProfilePopover)}
-              anchorEl={editProfilePopover}
-              onClose={() => handleButtonLeave(setEditProfilePopover)}
-              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-              transformOrigin={{ vertical: "top", horizontal: "center" }}
-              PaperProps={{
-                style: {
-                  background: "rgba(10, 10, 10, 0.8)",
-                  color: "white",
-                  padding: "10px",
-                  fontFamily: "Garamond",
-                },
-              }}
-            >
-              <Typography style={{ padding: "10px", fontFamily: "Garamond" }}>
-                Edit Profile
-              </Typography>
-            </Popover>
-          </div>
+      <div className="profile-button">
+        <div style={{ marginTop: "10px", marginRight: "100px" }}>
+          <Button
+            onMouseEnter={(event) =>
+              handleButtonHover(event, setEditProfilePopover)
+            }
+            onMouseLeave={() => handleButtonLeave(setEditProfilePopover)}
+            style={{ cursor: "pointer" }}
+          >
+            <Link to="/EditProfile" style={{ marginLeft: "30px" }}>
+              <EditNoteIcon />
+            </Link>
+          </Button>
+          <Popover
+            open={Boolean(editProfilePopover)}
+            anchorEl={editProfilePopover}
+            onClose={() => handleButtonLeave(setEditProfilePopover)}
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            transformOrigin={{ vertical: "top", horizontal: "center" }}
+            PaperProps={{
+              style: {
+                background: "rgba(10, 10, 10, 0.8)",
+                color: "white",
+                padding: "10px",
+                fontFamily: "Garamond",
+              },
+            }}
+          >
+            <Typography style={{ padding: "10px", fontFamily: "Garamond" }}>
+              Edit Profile
+            </Typography>
+          </Popover>
+        </div>
 
-          <div style={{ marginTop: "10px", marginRight: "100px" }}>
-            <Button
-              onMouseEnter={(event) =>
-                handleButtonHover(event, setPostAnnouncementPopover)
-              }
-              onMouseLeave={() => handleButtonLeave(setPostAnnouncementPopover)}
-            >
-              <Link to="/PostAnnouncement" style={{ marginLeft: "70px" }}>
-                <CampaignIcon />
-              </Link>
-            </Button>
-            <Popover
-              open={Boolean(postAnnouncementPopover)}
-              anchorEl={postAnnouncementPopover}
-              onClose={() => handleButtonLeave(setPostAnnouncementPopover)}
-              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-              transformOrigin={{ vertical: "top", horizontal: "center" }}
-              PaperProps={{
-                style: {
-                  background: "rgba(10, 10, 10, 0.8)",
-                  color: "white",
-                  padding: "10px",
-                  fontFamily: "Garamond",
-                },
-              }}
-            >
-              <Typography style={{ padding: "10px", fontFamily: "Garamond" }}>
-                Post Announcement
-              </Typography>
-            </Popover>
-          </div>
-          <div style={{ marginTop: "10px", marginRight: "100px" }}>
-            <Button
-              onMouseEnter={(event) =>
-                handleButtonHover(event, setAddAppointmentPopover)
-              }
-              onMouseLeave={() => handleButtonLeave(setAddAppointmentPopover)}
-            >
-              <Link to="/AddAppointment" style={{ marginLeft: "50px" }}>
-                <EditCalendarIcon />
-              </Link>
-            </Button>
-            <Popover
-              open={Boolean(addAppointmentPopover)}
-              anchorEl={addAppointmentPopover}
-              onClose={() => handleButtonLeave(setAddAppointmentPopover)}
-              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-              transformOrigin={{ vertical: "top", horizontal: "center" }}
-              PaperProps={{
-                style: {
-                  background: "rgba(10, 10, 10, 0.8)",
-                  color: "white",
-                  padding: "10px",
-                  fontFamily: "Garamond",
-                },
-              }}
-            >
-              <Typography style={{ padding: "10px", fontFamily: "Garamond" }}>
-                Add Appointment
-              </Typography>
-            </Popover>
-          </div>
-          <div style={{ marginTop: "10px", marginRight: "100px" }}>
-            <Button
-              onMouseEnter={(event) =>
-                handleButtonHover(event, setArchivePagePopover)
-              }
-              onMouseLeave={() => handleButtonLeave(setArchivePagePopover)}
-            >
-              <Link to="/ArchivePage" style={{ marginLeft: "30px" }}>
-                <PermMediaIcon />
-              </Link>
-            </Button>
-            <Popover
-              open={Boolean(archivePagePopover)}
-              anchorEl={archivePagePopover}
-              onClose={() => handleButtonLeave(setArchivePagePopover)}
-              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-              transformOrigin={{ vertical: "top", horizontal: "center" }}
-              PaperProps={{
-                style: {
-                  background: "rgba(10, 10, 10, 0.8)",
-                  color: "white",
-                  padding: "10px",
-                  fontFamily: "Garamond",
-                },
-              }}
-            >
-              <Typography style={{ padding: "10px", fontFamily: "Garamond" }}>
-                Archive Page
-              </Typography>
-            </Popover>
-          </div>
+        <div style={{ marginTop: "10px", marginRight: "100px" }}>
+          <Button
+            onMouseEnter={(event) =>
+              handleButtonHover(event, setPostAnnouncementPopover)
+            }
+            onMouseLeave={() => handleButtonLeave(setPostAnnouncementPopover)}
+          >
+            <Link to="/PostAnnouncement" style={{ marginLeft: "70px" }}>
+              <CampaignIcon />
+            </Link>
+          </Button>
+          <Popover
+            open={Boolean(postAnnouncementPopover)}
+            anchorEl={postAnnouncementPopover}
+            onClose={() => handleButtonLeave(setPostAnnouncementPopover)}
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            transformOrigin={{ vertical: "top", horizontal: "center" }}
+            PaperProps={{
+              style: {
+                background: "rgba(10, 10, 10, 0.8)",
+                color: "white",
+                padding: "10px",
+                fontFamily: "Garamond",
+              },
+            }}
+          >
+            <Typography style={{ padding: "10px", fontFamily: "Garamond" }}>
+              Post Announcement
+            </Typography>
+          </Popover>
+        </div>
+        <div style={{ marginTop: "10px", marginRight: "100px" }}>
+          <Button
+            onMouseEnter={(event) =>
+              handleButtonHover(event, setAddAppointmentPopover)
+            }
+            onMouseLeave={() => handleButtonLeave(setAddAppointmentPopover)}
+          >
+            <Link to="/AddAppointment" style={{ marginLeft: "50px" }}>
+              <EditCalendarIcon />
+            </Link>
+          </Button>
+          <Popover
+            open={Boolean(addAppointmentPopover)}
+            anchorEl={addAppointmentPopover}
+            onClose={() => handleButtonLeave(setAddAppointmentPopover)}
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            transformOrigin={{ vertical: "top", horizontal: "center" }}
+            PaperProps={{
+              style: {
+                background: "rgba(10, 10, 10, 0.8)",
+                color: "white",
+                padding: "10px",
+                fontFamily: "Garamond",
+              },
+            }}
+          >
+            <Typography style={{ padding: "10px", fontFamily: "Garamond" }}>
+              Add Appointment
+            </Typography>
+          </Popover>
+        </div>
+        <div style={{ marginTop: "10px", marginRight: "100px" }}>
+          <Button
+            onMouseEnter={(event) =>
+              handleButtonHover(event, setArchivePagePopover)
+            }
+            onMouseLeave={() => handleButtonLeave(setArchivePagePopover)}
+          >
+            <Link to="/ArchivePage" style={{ marginLeft: "30px" }}>
+              <PermMediaIcon />
+            </Link>
+          </Button>
+          <Popover
+            open={Boolean(archivePagePopover)}
+            anchorEl={archivePagePopover}
+            onClose={() => handleButtonLeave(setArchivePagePopover)}
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            transformOrigin={{ vertical: "top", horizontal: "center" }}
+            PaperProps={{
+              style: {
+                background: "rgba(10, 10, 10, 0.8)",
+                color: "white",
+                padding: "10px",
+                fontFamily: "Garamond",
+              },
+            }}
+          >
+            <Typography style={{ padding: "10px", fontFamily: "Garamond" }}>
+              Archive Page
+            </Typography>
+          </Popover>
         </div>
       </div>
     </div>
