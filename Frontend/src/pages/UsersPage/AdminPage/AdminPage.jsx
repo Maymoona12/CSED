@@ -4,11 +4,7 @@ import {
   Toolbar,
   Typography,
   Button,
-  TextField,
   Container,
-  Card,
-  CardContent,
-  CardActions,
   Table,
   TableBody,
   TableCell,
@@ -17,44 +13,55 @@ import {
   TableRow,
   Paper,
   IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+  InputAdornment,
 } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
+import ClearIcon from '@mui/icons-material/Clear';
+import SearchIcon from '@mui/icons-material/Search';
+import './style.css'; // Import the external stylesheet
 
 const AdminPage = () => {
   const [lectures, setLectures] = useState([
-    { email: 'Thear@example.com', password: 'TH@1235' },
-    { email: 'Yazeed@example.com', password: 'YA@9875' },
+    { id: 1, name: 'Thear sammar', assistant: 'PROF', phone: '123-456-7890' },
+    { id: 2, name: 'Yazeed Sleet', assistant: 'Lecturer', phone: '987-654-3210' },
+    { id: 3, name: 'Anas Melhem', assistant: 'PROF', phone: '123-456-7890' },
+    { id: 4, name: 'Nagham Hammad', assistant: 'Lecturer', phone: '987-654-3210' },
   ]);
-  const [newLecture, setNewLecture] = useState({ email: '', password: '' });
-  const [isStudentFormVisible, setStudentFormVisible] = useState(false);
-  const [isLecturerFormVisible, setLecturerFormVisible] = useState(false);
+  const [isAddDialogOpen, setAddDialogOpen] = useState(false);
+  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleLogout = () => {
     // Add your logout logic here
   };
 
-  const handleStudentFileUpload = (e) => {
-    // Add logic for student file upload
+  const handleAddNewLecturers = () => {
+    setAddDialogOpen(true);
   };
 
-  const handleAddLecture = () => {
-    setLectures([...lectures, newLecture]);
-    setNewLecture({ email: '', password: '' });
+  const handleDeleteLecture = (lectureId) => {
+    // Placeholder for delete logic
+    console.log(`Deleting lecture with ID: ${lectureId}`);
   };
 
-  const handleDeleteLecture = (index) => {
-    const updatedLectures = [...lectures];
-    updatedLectures.splice(index, 1);
-    setLectures(updatedLectures);
+  const handleCloseAddDialog = () => {
+    setAddDialogOpen(false);
   };
 
-  const toggleStudentForm = () => {
-    setStudentFormVisible(!isStudentFormVisible);
+  const handleCloseDeleteDialog = () => {
+    setDeleteDialogOpen(false);
   };
 
-  const toggleLecturerForm = () => {
-    setLecturerFormVisible(!isLecturerFormVisible);
-  };
+  // Function to filter lectures by name
+  const filteredLectures = lectures.filter((lecture) =>
+    lecture.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div>
@@ -87,90 +94,110 @@ const AdminPage = () => {
           </Button>
         </Toolbar>
       </AppBar>
-      <Container sx={{ marginTop: 12, display: 'flex', gap: '20px' }}>
-        <Card sx={{ flex: 1, minWidth: '300px' }} onClick={toggleStudentForm}>
-          <CardContent>
-            <Typography variant="h6">STUDENT</Typography>
-            {/* Form for uploading Excel file for students */}
-            {isStudentFormVisible && (
-              <form encType="multipart/form-data" onSubmit={handleStudentFileUpload}>
-                <Typography variant="h6" gutterBottom>
-                  Upload Excel File for Students
-                </Typography>
-                <input type="file" name="studentFile" accept=".xlsx, .xls" />
-                <Button type="submit" variant="contained" color="primary">
-                  Upload
-                </Button>
-              </form>
-            )}
-          </CardContent>
-        </Card>
+      <Container sx={{ marginTop: 12, display: 'flex', flexDirection: 'column', alignItems: 'left' }}>
+        <div>
+          <Button
+            variant="outlined"
+            color="primary"
+            startIcon={<AddIcon />}
+            onClick={handleAddNewLecturers}
+          >
+            Add New Lecturers
+          </Button>
+          <Button
+            variant="outlined"
+            color="primary"
+            startIcon={<DeleteIcon />}
+            onClick={() => setDeleteDialogOpen(true)}
+            sx={{ marginLeft: 2 }}
+          >
+            Delete Lecturers
+          </Button>
+        </div>
 
-        <Card sx={{ flex: 1, minWidth: '300px' }} onClick={toggleLecturerForm}>
-          <CardContent>
-            <Typography variant="h6">LECTURERS</Typography>
-            {/* Form for managing lectures */}
-            {isLecturerFormVisible && (
-              <form>
-                <Typography variant="h6" gutterBottom>
-                  Manage Lectures
-                </Typography>
-                <TableContainer component={Paper}>
-                  <Table>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Email</TableCell>
-                        <TableCell>Password</TableCell>
-                        <TableCell>Action</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {lectures.map((lecture, index) => (
-                        <TableRow key={index}>
-                          <TableCell>{lecture.email}</TableCell>
-                          <TableCell>{lecture.password}</TableCell>
-                          <TableCell>
-                            <IconButton
-                              color="priamery"
-                              onClick={() => handleDeleteLecture(index)}
-                            >
-                              <DeleteIcon />
-                            </IconButton>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-                {isLecturerFormVisible && (
-                  <>
-                    <TextField
-                      label="Email"
-                      variant="outlined"
-                      margin="normal"
-                      fullWidth
-                      value={newLecture.email}
-                      onChange={(e) => setNewLecture({ ...newLecture, email: e.target.value })}
-                    />
-                    <TextField
-                      label="Password"
-                      variant="outlined"
-                      margin="normal"
-                      fullWidth
-                      value={newLecture.password}
-                      onChange={(e) =>
-                        setNewLecture({ ...newLecture, password: e.target.value })
-                      }
-                    />
-                    <Button variant="contained" color="primary" onClick={handleAddLecture}>
-                      Add New Lecture
-                    </Button>
-                  </>
-                )}
-              </form>
-            )}
-          </CardContent>
-        </Card>
+        {/* Dialog for adding new lecturers */}
+        <Dialog open={isAddDialogOpen} onClose={handleCloseAddDialog}>
+          <DialogTitle>Add New Lecturers</DialogTitle>
+          <DialogContent>
+            {/* Add your form for uploading Excel file for new lecturers here */}
+            {/* Example input for file upload */}
+            <TextField
+              type="file"
+              variant="outlined"
+              fullWidth
+              margin="dense"
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseAddDialog} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleCloseAddDialog} color="primary">
+              Add
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Dialog for deleting lecturers */}
+        <Dialog open={isDeleteDialogOpen} onClose={handleCloseDeleteDialog}>
+          <DialogTitle>
+            Delete Lecturers
+            <TextField
+            sx={{ marginLeft: 10 }}
+              variant="outlined"
+              size="small"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Enter lecturer's name"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </DialogTitle>
+          <DialogContent>
+            {/* Add your form with a table for displaying and deleting lecturers here */}
+            <TableContainer component={Paper}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>ID</TableCell>
+                    <TableCell>Name</TableCell>
+                    <TableCell>Assistant</TableCell>
+                    <TableCell>Phone</TableCell>
+                    <TableCell>Action</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {filteredLectures.map((lecture) => (
+                    <TableRow key={lecture.id}>
+                      <TableCell>{lecture.id}</TableCell>
+                      <TableCell>{lecture.name}</TableCell>
+                      <TableCell>{lecture.assistant}</TableCell>
+                      <TableCell>{lecture.phone}</TableCell>
+                      <TableCell>
+                        <IconButton
+                          color="primary"
+                          onClick={() => handleDeleteLecture(lecture.id)}
+                        >
+                          <ClearIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseDeleteDialog} color="primary">
+              Cancel
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Container>
     </div>
   );
