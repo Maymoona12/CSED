@@ -56,19 +56,14 @@
   margin-top: 10px;
 }
 
-.profile-description {
-  margin-top: 10px;
-  font-size: 0.9rem;
-  color: #555;
-}
-
 .profile-button {
   margin-top: 15px;
+  display: flex;
 }
 
 .profile-button a {
   text-decoration: none;
-  background-color: #247de3;
+  background-color: #18306e;
   color: white;
   padding: 10px 15px;
   border-radius: 5px;

@@ -64,6 +64,7 @@
 
 .profile-button {
   margin-top: 15px;
+  display: flex;
 }
 
 .profile-button a {

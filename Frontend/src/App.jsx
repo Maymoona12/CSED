@@ -183,7 +183,6 @@
 //           <Route path="/LecturersProfile" element={<LecturerProfiles />} />
 //           <Route path="/ArchivePage" element={<FoldersPage />} />
 //           <Route path="/PhotosPage/:folderId" element={<PhotosPage />} />
-//           <Route path="/PhotosPage/:folderId" element={<PhotosPage />} />
 //           <Route path="/ChangePassword" element={<ChangePassword />} />
 //           <Route path="/AddAppointment" element={<BookAppointment />} />
 //         </Routes>
@@ -204,7 +203,6 @@
 // import LectureProfile from "./pages/UsersPage/Lecturer-Page/LecturerProfile";
 // import EditProfile from "./pages/UsersPage/Lecturer-Page/EditProfile";
 // import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
-// import LecturerProfiles from "./pages/Lecturer-Profiles/lecturerprofile";
 // import Appointment from "./pages/Appointment/Appointment";
 // import FoldersPage from "./pages/photo-archive/foldersPage";
 // import PhotosPage from "./pages/photo-archive/photospage";
@@ -218,7 +216,6 @@
 //           <Route path="/Profile" element={<LectureProfile />} />
 //           <Route path="/EditProfile" element={<EditProfile />} />
 //           <Route path="/PostAnnouncement" element={<PostAnnouncementPage />} />
-//           <Route path="/LecturersProfile" element={<LecturerProfiles />} />
 //           <Route path="/AddAppointment" element={<Appointment />} />
 //           <Route path="/ArchivePage" element={<FoldersPage />} />
 //           <Route path="/PhotosPage/:folderId" element={<PhotosPage />} />

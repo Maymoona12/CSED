@@ -44,7 +44,6 @@ const LecturerHome = () => {
     "Profile",
     "Edit Profile",
     "Post Announcement",
-    "Lecturers Profile",
     "Add Appointment",
     "Archive Page",
     "Logout",
