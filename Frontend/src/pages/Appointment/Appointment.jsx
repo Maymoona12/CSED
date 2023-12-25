@@ -26,6 +26,7 @@ const Appointment = () => {
   ]);
   const [blockedRows, setBlockedRows] = useState(Array(schedule.length).fill(false));
   const [timeDivision, setTimeDivision] = useState(10);
+  const [allFieldsFilled, setAllFieldsFilled] = useState(false);
   const navigate = useNavigate();
 
   const handleAddAppointment = (
@@ -64,7 +65,7 @@ const Appointment = () => {
         name: appointment,
         startTime: formattedTime,
         endTime: formattedEndTime,
-        blocked: false, // New property for blocking
+        blocked: false,
       });
 
       previousEndTime = new Date(current);
@@ -85,11 +86,11 @@ const Appointment = () => {
 
     setSchedule(updatedSchedule);
 
-    // Clear input fields
     document.getElementById(`appointment-0`).value = "";
     document.getElementById(`startTime-0`).value = "";
     document.getElementById(`endTime-0`).value = "";
 
+    setAllFieldsFilled(false); // Reset the state
     console.log("Data saved to state:", updatedSchedule);
   };
 
@@ -148,14 +149,21 @@ const Appointment = () => {
       tableElement.style.visibility === "visible"
     ) {
       console.log("Table saved:", schedule[dayIndex].appointments);
-       // Save the information to localStorage or any other preferred storage method
-       localStorage.setItem("BookAppointments", JSON.stringify(schedule[dayIndex].appointments));
-
-       // Navigate to the BookAppointment page
-       navigate("/appointment");
+      localStorage.setItem("BookAppointments", JSON.stringify(schedule[dayIndex].appointments));
+      navigate("/appointment");
     }
 
     console.log("mySchedule:", schedule);
+  };
+
+  const handleInputChange = () => {
+    const selectedDay = document.getElementById(`day-0`).value;
+    const appointmentName = document.getElementById(`appointment-0`).value;
+    const startTime = document.getElementById(`startTime-0`).value;
+    const endTime = document.getElementById(`endTime-0`).value;
+
+    const areLastFieldsFilled = selectedDay && appointmentName && startTime && endTime;
+    setAllFieldsFilled(areLastFieldsFilled);
   };
 
   return (
@@ -235,11 +243,11 @@ const Appointment = () => {
           >
             <CardContent>
               <Typography gutterBottom>
-                <label htmlFor={`day-0`} style={{ marginRight: "105px",fontFamily:"sarfi" }}>
+                <label htmlFor={`day-0`} style={{ marginRight: "105px", fontFamily: "sarfi" }}>
                   {" "}
                   Day
                 </label>
-                <select id={`day-0`}>
+                <select id={`day-0`} onChange={handleInputChange}>
                   <option value="Sun">Sunday</option>
                   <option value="Mon">Monday</option>
                   <option value="Tue">Tuesday</option>
@@ -254,7 +262,7 @@ const Appointment = () => {
                 >
                   Add Appointment
                 </label>
-                <input type="text" id={`appointment-0`} />
+                <input type="text" id={`appointment-0`} onChange={handleInputChange} />
                 <div
                   className="select__wrapper"
                   style={{ marginTop: "10px" }}
@@ -265,7 +273,7 @@ const Appointment = () => {
                   >
                     Add Start Time
                   </label>
-                  <input type="time" id={`startTime-0`} />
+                  <input type="time" id={`startTime-0`} onChange={handleInputChange} />
                 </div>
                 <div
                   className="select__wrapper"
@@ -277,7 +285,7 @@ const Appointment = () => {
                   >
                     Add End Time
                   </label>
-                  <input type="time" id={`endTime-0`} />
+                  <input type="time" id={`endTime-0`} onChange={handleInputChange} />
                 </div>
                 <div
                   className="select__wrapper"
@@ -319,7 +327,8 @@ const Appointment = () => {
                       dayIndex !== -1 &&
                       appointmentName &&
                       startTime &&
-                      endTime
+                      endTime &&
+                      allFieldsFilled
                     ) {
                       handleAddAppointment(
                         dayIndex,
@@ -333,6 +342,7 @@ const Appointment = () => {
                     }
                   }}
                   style={{ marginTop: "20px", marginLeft: "128px" }}
+                  disabled={!allFieldsFilled}
                 >
                   Add
                 </button>
@@ -390,7 +400,7 @@ const Appointment = () => {
                   >
                     Save
                   </Button>
-                  </TableCell>
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
