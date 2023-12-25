@@ -4,10 +4,10 @@ import "./LecturerStyle.css";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import CampaignIcon from "@mui/icons-material/Campaign";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import PermMediaIcon from "@mui/icons-material/PermMedia";
 import { Button, Popover, Typography } from "@mui/material";
+
 
 const LectureProfile = () => {
   const [imageSrc, setImageSrc] = useState("ProfileImages/thaer.PNG");
@@ -35,7 +35,7 @@ const LectureProfile = () => {
   const handleButtonLeave = (setPopover) => {
     setTimeout(() => {
       setPopover(null);
-    }, 1000);
+    }, 1600);
   };
   // const handleButtonHover = () => {
   //   setPopoverOpen(true);
@@ -62,21 +62,20 @@ const LectureProfile = () => {
         <img src={imageSrc} alt="Profile" />
       </div>
 
-      <div className="profile-title">Thaer Samar</div>
+      <div className="profile-title" style={{marginLeft:"22px"}}> Thaer Samar</div>
 
       <div className="profile-button">
         <div style={{ marginTop: "10px", marginRight: "100px" }}>
-          <Button
+        <Link to="/EditProfile" style={{ marginLeft: "20px"  }}>
+        <EditNoteIcon style={{ marginInline:"20px"}}/>
+          <Button style={{width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}
             onMouseEnter={(event) =>
               handleButtonHover(event, setEditProfilePopover)
             }
             onMouseLeave={() => handleButtonLeave(setEditProfilePopover)}
-            style={{ cursor: "pointer" }}
           >
-            <Link to="/EditProfile" style={{ marginLeft: "30px" }}>
-              <EditNoteIcon />
-            </Link>
           </Button>
+          </Link>
           <Popover
             open={Boolean(editProfilePopover)}
             anchorEl={editProfilePopover}
@@ -97,18 +96,17 @@ const LectureProfile = () => {
             </Typography>
           </Popover>
         </div>
-
         <div style={{ marginTop: "10px", marginRight: "100px" }}>
-          <Button
+        <Link to="/PostAnnouncement"  style={{ marginLeft: "20px"}}>
+        <CampaignIcon style={{ marginInline:"20px"}}/>
+        <Button style={{width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}
             onMouseEnter={(event) =>
               handleButtonHover(event, setPostAnnouncementPopover)
             }
             onMouseLeave={() => handleButtonLeave(setPostAnnouncementPopover)}
           >
-            <Link to="/PostAnnouncement" style={{ marginLeft: "70px" }}>
-              <CampaignIcon />
-            </Link>
           </Button>
+          </Link>
           <Popover
             open={Boolean(postAnnouncementPopover)}
             anchorEl={postAnnouncementPopover}
@@ -130,16 +128,17 @@ const LectureProfile = () => {
           </Popover>
         </div>
         <div style={{ marginTop: "10px", marginRight: "100px" }}>
-          <Button
+        <Link to="/AddAppointment" style={{ marginLeft: "0px" }}>
+        <EditCalendarIcon style={{ marginInline:"20px"}}/>
+        <Button style={{width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}
             onMouseEnter={(event) =>
               handleButtonHover(event, setAddAppointmentPopover)
             }
             onMouseLeave={() => handleButtonLeave(setAddAppointmentPopover)}
           >
-            <Link to="/AddAppointment" style={{ marginLeft: "50px" }}>
-              <EditCalendarIcon />
-            </Link>
+          
           </Button>
+          </Link>
           <Popover
             open={Boolean(addAppointmentPopover)}
             anchorEl={addAppointmentPopover}
@@ -161,16 +160,16 @@ const LectureProfile = () => {
           </Popover>
         </div>
         <div style={{ marginTop: "10px", marginRight: "100px" }}>
-          <Button
+        <Link to="/ArchivePage" style={{ marginLeft: "20px"}}>
+        <PermMediaIcon style={{ marginInline:"20px"}}/>
+        <Button style={{width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}
             onMouseEnter={(event) =>
               handleButtonHover(event, setArchivePagePopover)
             }
             onMouseLeave={() => handleButtonLeave(setArchivePagePopover)}
           >
-            <Link to="/ArchivePage" style={{ marginLeft: "30px" }}>
-              <PermMediaIcon />
-            </Link>
           </Button>
+          </Link>
           <Popover
             open={Boolean(archivePagePopover)}
             anchorEl={archivePagePopover}
