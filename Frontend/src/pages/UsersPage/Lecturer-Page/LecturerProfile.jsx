@@ -66,15 +66,11 @@ const LectureProfile = () => {
 
       <div className="profile-button">
         <div style={{ marginTop: "10px", marginRight: "100px" }}>
-          <Link to="/EditProfile" style={{ marginLeft: "20px" }}>
-            <EditNoteIcon style={{ marginInline: "20px" }} />
+          <Link to="/EditProfile" style={{ marginLeft: "50px" }}>
+            <EditNoteIcon
+              style={{ marginInline: "15px", marginTop: "10px", fontSize: 25 }}
+            />
             <Button
-              style={{
-                width: "100%",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
               onMouseEnter={(event) =>
                 handleButtonHover(event, setEditProfilePopover)
               }
@@ -102,15 +98,11 @@ const LectureProfile = () => {
           </Popover>
         </div>
         <div style={{ marginTop: "10px", marginRight: "100px" }}>
-          <Link to="/PostAnnouncement" style={{ marginLeft: "20px" }}>
-            <CampaignIcon style={{ marginInline: "20px" }} />
+          <Link to="/PostAnnouncement" style={{ marginLeft: "50px" }}>
+            <CampaignIcon
+              style={{ marginInline: "15px", marginTop: "10px", fontSize: 25 }}
+            />
             <Button
-              style={{
-                width: "100%",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
               onMouseEnter={(event) =>
                 handleButtonHover(event, setPostAnnouncementPopover)
               }
@@ -138,15 +130,11 @@ const LectureProfile = () => {
           </Popover>
         </div>
         <div style={{ marginTop: "10px", marginRight: "100px" }}>
-          <Link to="/AddAppointment" style={{ marginLeft: "0px" }}>
-            <EditCalendarIcon style={{ marginInline: "20px" }} />
+          <Link to="/AddAppointment" style={{ marginLeft: "50px" }}>
+            <EditCalendarIcon
+              style={{ marginInline: "12px", marginTop: "10px", fontSize: 25 }}
+            />
             <Button
-              style={{
-                width: "100%",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
               onMouseEnter={(event) =>
                 handleButtonHover(event, setAddAppointmentPopover)
               }
@@ -174,15 +162,11 @@ const LectureProfile = () => {
           </Popover>
         </div>
         <div style={{ marginTop: "10px", marginRight: "100px" }}>
-          <Link to="/ArchivePage" style={{ marginLeft: "20px" }}>
-            <PermMediaIcon style={{ marginInline: "20px" }} />
+          <Link to="/ArchivePage" style={{ marginLeft: "50px" }}>
+            <PermMediaIcon
+              style={{ marginInline: "15px", marginTop: "10px", fontSize: 25 }}
+            />
             <Button
-              style={{
-                width: "100%",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
               onMouseEnter={(event) =>
                 handleButtonHover(event, setArchivePagePopover)
               }

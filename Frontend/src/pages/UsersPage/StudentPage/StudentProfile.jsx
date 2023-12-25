@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./StudentProfile.css";
@@ -63,16 +62,21 @@ const StudentProfile = () => {
 
         <div className="profile-button">
           <div style={{ marginTop: "10px", marginRight: "100px" }}>
-          <Link to="/LecturersProfile" style={{ marginLeft: "50px" }}>
-                <PeopleAltIcon />
-              </Link>
-            <Button style={{width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}
+            <Link to="/LecturersProfile" style={{ marginRight: "50px" }}>
+              <PeopleAltIcon
+                style={{
+                  marginInline: "10px",
+                  marginTop: "10px",
+                  fontSize: 25,
+                }}
+              />
+            </Link>
+            <Button
               onMouseEnter={(event) =>
                 handleButtonHover(event, setLecturerProfilePopover)
               }
               onMouseLeave={() => handleButtonLeave(setLecturerProfilePopover)}
-            >
-            </Button>
+            ></Button>
             <Popover
               open={Boolean(lecturerProfilePopover)}
               anchorEl={lecturerProfilePopover}
@@ -95,16 +99,21 @@ const StudentProfile = () => {
           </div>
 
           <div style={{ marginTop: "10px", marginRight: "100px" }}>
-          <Link to="/ArchivePage" style={{ marginLeft: "40px" }}>
-                <PermMediaIcon />
-              </Link>
-            <Button style={{width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}
+            <Link to="/ArchivePage" style={{ marginRight: "50px" }}>
+              <PermMediaIcon
+                style={{
+                  marginInline: "10px",
+                  marginTop: "10px",
+                  fontSize: 25,
+                }}
+              />
+            </Link>
+            <Button
               onMouseEnter={(event) =>
                 handleButtonHover(event, setArchivePagePopover)
               }
               onMouseLeave={() => handleButtonLeave(setArchivePagePopover)}
-            >
-            </Button>
+            ></Button>
             <Popover
               open={Boolean(archivePagePopover)}
               anchorEl={archivePagePopover}
@@ -127,16 +136,21 @@ const StudentProfile = () => {
           </div>
 
           <div style={{ marginTop: "10px", marginRight: "100px" }}>
-          <Link to="/ChangePassword" style={{ marginLeft: "50px" }}>
-                <EditNoteIcon />
-              </Link>
-            <Button style={{width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}
+            <Link to="/ChangePassword" style={{ marginRight: "50px" }}>
+              <EditNoteIcon
+                style={{
+                  marginInline: "15px",
+                  marginTop: "10px",
+                  fontSize: 25,
+                }}
+              />
+            </Link>
+            <Button
               onMouseEnter={(event) =>
                 handleButtonHover(event, setChangePasswordPopover)
               }
               onMouseLeave={() => handleButtonLeave(setChangePasswordPopover)}
-            >
-            </Button>
+            ></Button>
             <Popover
               open={Boolean(changePasswordPopover)}
               anchorEl={changePasswordPopover}
@@ -159,18 +173,23 @@ const StudentProfile = () => {
           </div>
 
           <div style={{ marginTop: "10px", marginRight: "100px" }}>
-          <Link to="/AddAppointment" style={{ marginLeft: "70px" }}>
-                <CalendarMonthIcon />
-              </Link>
-            <Button style={{width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}
+            <Link to="/AddAppointment" style={{ marginRight: "50px" }}>
+              <CalendarMonthIcon
+                style={{
+                  marginInline: "10px",
+                  marginTop: "10px",
+                  fontSize: 25,
+                }}
+              />
+            </Link>
+            <Button
               onMouseEnter={(event) =>
                 handleButtonHover(event, setBookAnAppointmentPopover)
               }
               onMouseLeave={() =>
                 handleButtonLeave(setBookAnAppointmentPopover)
               }
-            >
-            </Button>
+            ></Button>
             <Popover
               open={Boolean(bookAnAppointmentPopover)}
               anchorEl={bookAnAppointmentPopover}
