@@ -199,14 +199,14 @@ function LecturersProfile() {
               No Result
             </Typography>
           ) : (
-            <Grid container spacing={6}>
+            <Grid container spacing={3}>
               {filteredLecturers.map((lecturer, index) => (
-                <Grid item key={lecturer} xs={12} sm={6} md={3} lg={3}>
+                <Grid item key={lecturer} xs={2} sm={6} md={3} lg={2}>
                   <Card
                     id={`lecturer-card-${index}`}
                     sx={{
                       height: "100%",
-                      width: "111%",
+                      width: "100%",
                       display: "flex",
                       flexDirection: "column",
                     }}
@@ -214,14 +214,14 @@ function LecturersProfile() {
                     <CardMedia
                       component="div"
                       sx={{
-                        pt: "111%", // Adjust the height of the image here
+                        pt: "100%", // Adjust the height of the image here
                         backgroundImage: `url(/${images[index]})`,
-                        backgroundSize: "cover",
+                        backgroundSize:"cover",
                         backgroundPosition: "center",
                       }}
                     />
                     <CardContent sx={{ flexGrow: 1 }}>
-                      <Typography gutterBottom variant="h6" component="h2">
+                      <Typography gutterBottom variant="h6" component="h2" style={{fontFamily:"Sarfi"}}>
                         {lecturer}
                       </Typography>
                     </CardContent>
@@ -230,7 +230,7 @@ function LecturersProfile() {
                         View
                       </Button>
                       <Button size="small" onClick={handleAddAppointmentClick}>
-                        Add an Appointment
+                        Book Now
                       </Button>
                     </CardActions>
                     <Dialog
