@@ -35,7 +35,7 @@ const StudentProfile = () => {
   const handleButtonLeave = (setPopover) => {
     setTimeout(() => {
       setPopover(null);
-    }, 1000);
+    }, 1600);
   };
 
   const open = Boolean(popoverAnchor);
@@ -63,15 +63,15 @@ const StudentProfile = () => {
 
         <div className="profile-button">
           <div style={{ marginTop: "10px", marginRight: "100px" }}>
-            <Button
+          <Link to="/LecturersProfile" style={{ marginLeft: "50px" }}>
+                <PeopleAltIcon />
+              </Link>
+            <Button style={{width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}
               onMouseEnter={(event) =>
                 handleButtonHover(event, setLecturerProfilePopover)
               }
               onMouseLeave={() => handleButtonLeave(setLecturerProfilePopover)}
             >
-              <Link to="/LecturersProfile" style={{ marginLeft: "50px" }}>
-                <PeopleAltIcon />
-              </Link>
             </Button>
             <Popover
               open={Boolean(lecturerProfilePopover)}
@@ -95,15 +95,15 @@ const StudentProfile = () => {
           </div>
 
           <div style={{ marginTop: "10px", marginRight: "100px" }}>
-            <Button
+          <Link to="/ArchivePage" style={{ marginLeft: "40px" }}>
+                <PermMediaIcon />
+              </Link>
+            <Button style={{width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}
               onMouseEnter={(event) =>
                 handleButtonHover(event, setArchivePagePopover)
               }
               onMouseLeave={() => handleButtonLeave(setArchivePagePopover)}
             >
-              <Link to="/ArchivePage" style={{ marginLeft: "40px" }}>
-                <PermMediaIcon />
-              </Link>
             </Button>
             <Popover
               open={Boolean(archivePagePopover)}
@@ -127,15 +127,15 @@ const StudentProfile = () => {
           </div>
 
           <div style={{ marginTop: "10px", marginRight: "100px" }}>
-            <Button
+          <Link to="/ChangePassword" style={{ marginLeft: "50px" }}>
+                <EditNoteIcon />
+              </Link>
+            <Button style={{width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}
               onMouseEnter={(event) =>
                 handleButtonHover(event, setChangePasswordPopover)
               }
               onMouseLeave={() => handleButtonLeave(setChangePasswordPopover)}
             >
-              <Link to="/ChangePassword" style={{ marginLeft: "50px" }}>
-                <EditNoteIcon />
-              </Link>
             </Button>
             <Popover
               open={Boolean(changePasswordPopover)}
@@ -159,7 +159,10 @@ const StudentProfile = () => {
           </div>
 
           <div style={{ marginTop: "10px", marginRight: "100px" }}>
-            <Button
+          <Link to="/AddAppointment" style={{ marginLeft: "70px" }}>
+                <CalendarMonthIcon />
+              </Link>
+            <Button style={{width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}
               onMouseEnter={(event) =>
                 handleButtonHover(event, setBookAnAppointmentPopover)
               }
@@ -167,9 +170,6 @@ const StudentProfile = () => {
                 handleButtonLeave(setBookAnAppointmentPopover)
               }
             >
-              <Link to="/AddAppointment" style={{ marginLeft: "70px" }}>
-                <CalendarMonthIcon />
-              </Link>
             </Button>
             <Popover
               open={Boolean(bookAnAppointmentPopover)}
