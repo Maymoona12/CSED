@@ -46,8 +46,8 @@ const AdminPage = () => {
   };
 
   const handleDeleteLecture = (lectureId) => {
-    // Placeholder for delete logic
-    console.log(`Deleting lecture with ID: ${lectureId}`);
+    // Remove the selected lecture from the state
+    setLectures((prevLectures) => prevLectures.filter((lecture) => lecture.id !== lectureId));
   };
 
   const handleCloseAddDialog = () => {
@@ -119,13 +119,11 @@ const AdminPage = () => {
         <Dialog open={isAddDialogOpen} onClose={handleCloseAddDialog}>
           <DialogTitle>Add New Lecturers</DialogTitle>
           <DialogContent>
-            {/* Add your form for uploading Excel file for new lecturers here */}
             {/* Example input for file upload */}
-            <TextField
+            <input
               type="file"
-              variant="outlined"
-              fullWidth
-              margin="dense"
+              accept=".xls, .xlsx" // Specify accepted file types
+              onChange={(e) => console.log(e.target.files[0])}
             />
           </DialogContent>
           <DialogActions>
@@ -143,7 +141,7 @@ const AdminPage = () => {
           <DialogTitle>
             Delete Lecturers
             <TextField
-            sx={{ marginLeft: 10 }}
+              sx={{ marginLeft: 10 }}
               variant="outlined"
               size="small"
               value={searchQuery}
