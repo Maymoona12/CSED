@@ -172,7 +172,7 @@ const StudentProfile = () => {
             </Popover>
           </div>
 
-          <div style={{ marginTop: "10px", marginRight: "100px" }}>
+          {/* <div style={{ marginTop: "10px", marginRight: "100px" }}>
             <Link to="/AddAppointment" style={{ marginRight: "50px" }}>
               <CalendarMonthIcon
                 style={{
@@ -209,7 +209,7 @@ const StudentProfile = () => {
                 Book An Appointment
               </Typography>
             </Popover>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
