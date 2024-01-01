@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use App\Models\BookAppointment;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -67,5 +68,10 @@ class AppointmentController extends Controller
         return response($appointment,200);
         
     
+    }
+
+    public function getOfficeHour($id){
+        $appointments=Appointment::where('doctor_id',$id)->get();
+        return response($appointments,200);        
     }
 }

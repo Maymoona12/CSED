@@ -19,7 +19,7 @@ return new class extends Migration
             $table->datetime("finish_time");
             $table->string("day");
             $table->string("app_name");
-            $table->integer('time_period');
+            // $table->integer('time_period');
             $table->timestamps();
         });
     }

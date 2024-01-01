@@ -40,6 +40,6 @@ Route::post('/add_appointment',[AppointmentController::class,'add_appointment'])
 Route::post('/edit_appointment/{id}',[AppointmentController::class,'edit_appointment']);
 Route::post('/book_app',[AppointmentController::class,'bookAppointment']);
 Route::post('/AcceptOrRegict/{id}/{status}',[AppointmentController::class,'AcceptOrRejectAppointment']);
+Route::get('/officehour/{id}',[AppointmentController::class,'getOfficeHour']);
 
 Route::post('/createAnnouncement',[AnnouncementController::class,'createAnnouncement']);
-Route::post('');
