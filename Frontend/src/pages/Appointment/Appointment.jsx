@@ -24,7 +24,9 @@ const Appointment = () => {
     { day: "Wed", appointments: [] },
     { day: "Thu", appointments: [] },
   ]);
-  const [blockedRows, setBlockedRows] = useState(Array(schedule.length).fill(false));
+  const [blockedRows, setBlockedRows] = useState(
+    Array(schedule.length).fill(false)
+  );
   const [timeDivision, setTimeDivision] = useState(10);
   const [allFieldsFilled, setAllFieldsFilled] = useState(false);
   const navigate = useNavigate();
@@ -149,7 +151,10 @@ const Appointment = () => {
       tableElement.style.visibility === "visible"
     ) {
       console.log("Table saved:", schedule[dayIndex].appointments);
-      localStorage.setItem("BookAppointments", JSON.stringify(schedule[dayIndex].appointments));
+      localStorage.setItem(
+        "BookAppointments",
+        JSON.stringify(schedule[dayIndex].appointments)
+      );
       navigate("/appointment");
     }
 
@@ -162,7 +167,8 @@ const Appointment = () => {
     const startTime = document.getElementById(`startTime-0`).value;
     const endTime = document.getElementById(`endTime-0`).value;
 
-    const areLastFieldsFilled = selectedDay && appointmentName && startTime && endTime;
+    const areLastFieldsFilled =
+      selectedDay && appointmentName && startTime && endTime;
     setAllFieldsFilled(areLastFieldsFilled);
   };
 
@@ -175,35 +181,6 @@ const Appointment = () => {
       }}
     >
       <div>
-        <AppBar
-          position="static"
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            right: 0,
-            zIndex: 1000,
-          }}
-          sx={{ background: "black" }}
-        >
-          <Toolbar>
-            <Typography
-              variant="h5"
-              component="div"
-              sx={{ flexGrow: 1, fontFamily: "Brush Script MT" }}
-            >
-              CSED
-            </Typography>
-            <Button
-              onClick={handleLogout}
-              className="logout__btn"
-              color="inherit"
-              sx={{ color: "white" }}
-            >
-              Log out
-            </Button>
-          </Toolbar>
-        </AppBar>
         <div
           style={{
             display: "flex",
@@ -243,7 +220,10 @@ const Appointment = () => {
           >
             <CardContent>
               <Typography gutterBottom>
-                <label htmlFor={`day-0`} style={{ marginRight: "105px", fontFamily: "sarfi" }}>
+                <label
+                  htmlFor={`day-0`}
+                  style={{ marginRight: "105px", fontFamily: "sarfi" }}
+                >
                   {" "}
                   Day
                 </label>
@@ -262,35 +242,35 @@ const Appointment = () => {
                 >
                   Add Appointment
                 </label>
-                <input type="text" id={`appointment-0`} onChange={handleInputChange} />
-                <div
-                  className="select__wrapper"
-                  style={{ marginTop: "10px" }}
-                >
+                <input
+                  type="text"
+                  id={`appointment-0`}
+                  onChange={handleInputChange}
+                />
+                <div className="select__wrapper" style={{ marginTop: "10px" }}>
                   <label
                     htmlFor={`startTime-0`}
                     style={{ marginRight: "33px" }}
                   >
                     Add Start Time
                   </label>
-                  <input type="time" id={`startTime-0`} onChange={handleInputChange} />
+                  <input
+                    type="time"
+                    id={`startTime-0`}
+                    onChange={handleInputChange}
+                  />
                 </div>
-                <div
-                  className="select__wrapper"
-                  style={{ marginTop: "10px" }}
-                >
-                  <label
-                    htmlFor={`endTime-0`}
-                    style={{ marginRight: "37px" }}
-                  >
+                <div className="select__wrapper" style={{ marginTop: "10px" }}>
+                  <label htmlFor={`endTime-0`} style={{ marginRight: "37px" }}>
                     Add End Time
                   </label>
-                  <input type="time" id={`endTime-0`} onChange={handleInputChange} />
+                  <input
+                    type="time"
+                    id={`endTime-0`}
+                    onChange={handleInputChange}
+                  />
                 </div>
-                <div
-                  className="select__wrapper"
-                  style={{ marginTop: "10px" }}
-                >
+                <div className="select__wrapper" style={{ marginTop: "10px" }}>
                   <label
                     htmlFor={`timeDivision`}
                     style={{ marginRight: "38px" }}
@@ -309,16 +289,13 @@ const Appointment = () => {
                   </select>
                 </div>
                 <button
-                 onClick={() => {
-                    const selectedDay = document.getElementById(`day-0`)
-                      .value;
-                    const appointmentName = document.getElementById(
-                      `appointment-0`
-                    ).value;
-                    const startTime = document.getElementById(`startTime-0`)
-                      .value;
-                    const endTime = document.getElementById(`endTime-0`)
-                      .value;
+                  onClick={() => {
+                    const selectedDay = document.getElementById(`day-0`).value;
+                    const appointmentName =
+                      document.getElementById(`appointment-0`).value;
+                    const startTime =
+                      document.getElementById(`startTime-0`).value;
+                    const endTime = document.getElementById(`endTime-0`).value;
                     const dayIndex = schedule.findIndex(
                       (day) => day.day === selectedDay
                     );
@@ -337,8 +314,9 @@ const Appointment = () => {
                         endTime,
                         selectedDay
                       );
-                      document.getElementById(`table-${dayIndex}`).style.display =
-                        "table";
+                      document.getElementById(
+                        `table-${dayIndex}`
+                      ).style.display = "table";
                     }
                   }}
                   style={{ marginTop: "20px", marginLeft: "128px" }}
@@ -410,7 +388,9 @@ const Appointment = () => {
                     key={appIndex}
                     style={{
                       opacity: appointment.blocked ? 0.5 : 1,
-                      backgroundColor: appointment.blocked ? "#ffcccc" : "inherit",
+                      backgroundColor: appointment.blocked
+                        ? "#ffcccc"
+                        : "inherit",
                     }}
                   >
                     <TableCell style={{ borderBottom: "1px solid black" }}>
@@ -426,15 +406,27 @@ const Appointment = () => {
                       {appointment.endTime}
                     </TableCell>
                     <TableCell style={{ borderBottom: "1px solid black" }}>
-                      <Button onClick={() => handleDeleteAppointment(dayIndex, appIndex)}>
+                      <Button
+                        onClick={() =>
+                          handleDeleteAppointment(dayIndex, appIndex)
+                        }
+                      >
                         Delete
                       </Button>
                       {appointment.blocked ? (
-                        <Button onClick={() => handleUnblockAppointment(dayIndex, appIndex)}>
+                        <Button
+                          onClick={() =>
+                            handleUnblockAppointment(dayIndex, appIndex)
+                          }
+                        >
                           Unblock
                         </Button>
                       ) : (
-                        <Button onClick={() => handleBlockAppointment(dayIndex, appIndex)}>
+                        <Button
+                          onClick={() =>
+                            handleBlockAppointment(dayIndex, appIndex)
+                          }
+                        >
                           Block
                         </Button>
                       )}

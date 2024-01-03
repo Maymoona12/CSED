@@ -41,11 +41,36 @@ const BookAppointment = () => {
   const addSampleData = () => {
     // Replace this with your actual data or logic
     const sampleData = [
-      { day: "Monday", name: "office hours", startTime: "09:30 AM", endTime: "10:00 AM" },
-      { day: "Monday", name: "office hours", startTime: "10:00 AM", endTime: "10:30 AM" },
-      { day: "Tuesday", name: "office hours", startTime: "02:00 PM", endTime: "02:20 PM" },
-      { day: "Tuesday", name: "office hours", startTime: "02:20 PM", endTime: "02:40 PM" },
-      { day: "Tuesday", name: "office hours", startTime: "02:40 PM", endTime: "03:00 PM" },
+      {
+        day: "Monday",
+        name: "office hours",
+        startTime: "09:30 AM",
+        endTime: "10:00 AM",
+      },
+      {
+        day: "Monday",
+        name: "office hours",
+        startTime: "10:00 AM",
+        endTime: "10:30 AM",
+      },
+      {
+        day: "Tuesday",
+        name: "office hours",
+        startTime: "02:00 PM",
+        endTime: "02:20 PM",
+      },
+      {
+        day: "Tuesday",
+        name: "office hours",
+        startTime: "02:20 PM",
+        endTime: "02:40 PM",
+      },
+      {
+        day: "Tuesday",
+        name: "office hours",
+        startTime: "02:40 PM",
+        endTime: "03:00 PM",
+      },
       // Add more sample data as needed
     ];
 
@@ -89,31 +114,21 @@ const BookAppointment = () => {
 
   return (
     <div>
-      <AppBar
-        position="static"
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 1000,
-        }}
-        sx={{ background: "black" }}
-      >
-        <Toolbar>
-          <Typography variant="h5" component="div" sx={{ flexGrow: 1, fontFamily: "Brush Script MT" }}>
-            CSED
-          </Typography>
-          <Button onClick={() => navigate("/")} color="inherit" sx={{ color: "white" }}>
-            Back
-          </Button>
-        </Toolbar>
-      </AppBar>
       <div style={{ marginTop: "80px", padding: "20px" }}>
-        <Typography variant="h4" component="div" gutterBottom style={{ fontFamily: "Garamond" }}>
+        <Typography
+          variant="h4"
+          component="div"
+          gutterBottom
+          style={{ fontFamily: "Garamond" }}
+        >
           Book An Appointments
         </Typography>
-        <Button variant="contained" color="primary" onClick={addSampleData} style={{ marginBottom: "10px" }}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={addSampleData}
+          style={{ marginBottom: "10px" }}
+        >
           Add Sample Data
         </Button>
         <TableContainer
@@ -146,7 +161,10 @@ const BookAppointment = () => {
                   <TableCell>{appointment.startTime}</TableCell>
                   <TableCell>{appointment.endTime}</TableCell>
                   <TableCell>
-                    <IconButton onClick={() => handleBookNow(appointment)} color="primary">
+                    <IconButton
+                      onClick={() => handleBookNow(appointment)}
+                      color="primary"
+                    >
                       <AddCircleIcon />
                     </IconButton>
                   </TableCell>
@@ -177,7 +195,11 @@ const BookAppointment = () => {
           <Button onClick={handleDialogClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleConfirmBooking} color="primary" variant="contained">
+          <Button
+            onClick={handleConfirmBooking}
+            color="primary"
+            variant="contained"
+          >
             Confirm Booking
           </Button>
         </DialogActions>
@@ -190,7 +212,11 @@ const BookAppointment = () => {
         onClose={handleSnackbarClose}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
-        <Alert onClose={handleSnackbarClose} severity="error" sx={{ width: "100%" }}>
+        <Alert
+          onClose={handleSnackbarClose}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
           {alertMessage}
         </Alert>
       </Snackbar>
