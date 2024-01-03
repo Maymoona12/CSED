@@ -30,7 +30,7 @@ const Menu = () => {
   const [anchorElUser, setAnchorElUser] = useState(null);
 
   const settings1 = [
-    "L-Profile",
+    "Profile",
     "Edit Profile",
     "Post Announcement",
     "Add Appointment",
