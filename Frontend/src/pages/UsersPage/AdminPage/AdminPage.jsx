@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -19,23 +19,33 @@ import {
   DialogActions,
   TextField,
   InputAdornment,
-} from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
-import ClearIcon from '@mui/icons-material/Clear';
-import SearchIcon from '@mui/icons-material/Search';
-import './style.css'; // Import the external stylesheet
+} from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ClearIcon from "@mui/icons-material/Clear";
+import SearchIcon from "@mui/icons-material/Search";
+import "./style.css"; // Import the external stylesheet
 
 const AdminPage = () => {
   const [lectures, setLectures] = useState([
-    { id: 1, name: 'Thear sammar', assistant: 'PROF', phone: '123-456-7890' },
-    { id: 2, name: 'Yazeed Sleet', assistant: 'Lecturer', phone: '987-654-3210' },
-    { id: 3, name: 'Anas Melhem', assistant: 'PROF', phone: '123-456-7890' },
-    { id: 4, name: 'Nagham Hammad', assistant: 'Lecturer', phone: '987-654-3210' },
+    { id: 1, name: "Thear sammar", assistant: "PROF", phone: "123-456-7890" },
+    {
+      id: 2,
+      name: "Yazeed Sleet",
+      assistant: "Lecturer",
+      phone: "987-654-3210",
+    },
+    { id: 3, name: "Anas Melhem", assistant: "PROF", phone: "123-456-7890" },
+    {
+      id: 4,
+      name: "Nagham Hammad",
+      assistant: "Lecturer",
+      phone: "987-654-3210",
+    },
   ]);
   const [isAddDialogOpen, setAddDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleLogout = () => {
     // Add your logout logic here
@@ -47,7 +57,9 @@ const AdminPage = () => {
 
   const handleDeleteLecture = (lectureId) => {
     // Remove the selected lecture from the state
-    setLectures((prevLectures) => prevLectures.filter((lecture) => lecture.id !== lectureId));
+    setLectures((prevLectures) =>
+      prevLectures.filter((lecture) => lecture.id !== lectureId)
+    );
   };
 
   const handleCloseAddDialog = () => {
@@ -65,36 +77,14 @@ const AdminPage = () => {
 
   return (
     <div>
-      <AppBar
-        position="static"
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 1000,
+      <Container
+        sx={{
+          marginTop: 12,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "left",
         }}
-        sx={{ background: 'black' }}
       >
-        <Toolbar>
-          <Typography
-            variant="h5"
-            component="div"
-            sx={{ flexGrow: 1, fontFamily: 'Brush Script MT' }}
-          >
-            CSED
-          </Typography>
-          <Button
-            onClick={handleLogout}
-            className="logout__btn"
-            color="inherit"
-            sx={{ color: 'white' }}
-          >
-            Log out
-          </Button>
-        </Toolbar>
-      </AppBar>
-      <Container sx={{ marginTop: 12, display: 'flex', flexDirection: 'column', alignItems: 'left' }}>
         <div>
           <Button
             variant="outlined"

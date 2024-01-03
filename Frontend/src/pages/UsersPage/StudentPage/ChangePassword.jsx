@@ -17,7 +17,8 @@ const Alert = (props) => {
 };
 
 const isStrongPassword = (password) => {
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   return passwordRegex.test(password);
 };
 
@@ -44,7 +45,9 @@ export default function Changepassword() {
     const enteredConfirmPassword = data.get("confirm_password");
 
     // You need to replace this with your authentication logic
-    const isCurrentPasswordCorrect = await checkCurrentPassword(enteredCurrentPassword);
+    const isCurrentPasswordCorrect = await checkCurrentPassword(
+      enteredCurrentPassword
+    );
 
     if (!isCurrentPasswordCorrect) {
       setAlertMessage("Incorrect current password!");
@@ -79,7 +82,6 @@ export default function Changepassword() {
     }
   };
 
-  // Example function to check if the entered current password is correct
   const checkCurrentPassword = async (currentPassword) => {
     console.log("Checking if the entered current password is correct");
     // Replace this with your authentication logic
@@ -105,7 +107,7 @@ export default function Changepassword() {
               margin: "16px",
             }}
           >
-                    <img
+            <img
               src="./CoverImages/Logo.png"
               alt="Logo"
               style={{ width: "500px", height: "auto" }}

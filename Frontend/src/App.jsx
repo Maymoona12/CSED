@@ -192,21 +192,21 @@
 // //___________________________________________________
 
 //Admin page ;)
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import AppBarLayout from "./pages/Component/AppBarLayout";
-function App() {
-  return (
-    <>
-      <Router>
-        <Routes>
-          <Route path="/" element={<AppBarLayout />} />
-        </Routes>
-      </Router>
-    </>
-  );
-}
-export default App;
+// import React from "react";
+// import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+// import AppBarLayout from "./pages/Component/AppBarLayout";
+// function App() {
+//   return (
+//     <>
+//       <Router>
+//         <Routes>
+//           <Route path="/" element={<AppBarLayout />} />
+//         </Routes>
+//       </Router>
+//     </>
+//   );
+// }
+// export default App;
 
 // //_______________________________________________________________________
 

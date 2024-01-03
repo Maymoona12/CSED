@@ -73,13 +73,6 @@ const PostAnnouncementPage = ({ onSubmit }) => {
 
   return (
     <div className="post-announcement-page">
-      {/* <AppBar position="static" style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000 }} sx={{ background: "black" }}>
-        <Toolbar>
-          <Typography variant="h5" component="div" sx={{ flexGrow: 1, fontFamily: "Brush Script MT" }}>
-            CSED
-          </Typography>
-        </Toolbar>
-      </AppBar> */}
       <div style={{ marginTop: "80px" }}>
         <Box
           sx={{

@@ -101,69 +101,6 @@ const EditProfile = () => {
       }}
     >
       <div>
-        {/* <AppBar
-          position="static"
-          style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000 }}
-          sx={{ background: "black" }}
-        >
-          <Toolbar>
-            <Typography
-              variant="h5"
-              component="div"
-              sx={{ flexGrow: 1, fontFamily: "Brush Script MT" }}
-            >
-              CSED
-            </Typography>
-
-            <Stack
-              spacing={4}
-              direction="row"
-              sx={{ color: "white", marginRight: "20px" }}
-            >
-              <Badge color="secondary" badgeContent={0}>
-                <NotificationsIcon />
-              </Badge>
-            </Stack>
-
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Thaer" src="ProfileImages/thaer.PNG" />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) => (
-                  <Link
-                    to={`/${setting.replace(/\s+/g, "")}`}
-                    key={setting}
-                    style={{ textDecoration: "none" }}
-                  >
-                    <MenuItem onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center" sx={{ color: "black" }}>
-                        {setting}
-                      </Typography>
-                    </MenuItem>
-                  </Link>
-                ))}
-              </Menu>
-            </Box>
-          </Toolbar>
-        </AppBar> */}
         <div
           style={{
             display: "flex",
