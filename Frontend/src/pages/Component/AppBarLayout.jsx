@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
@@ -33,77 +32,61 @@ const StyledStack = styled(Stack)({
   color: "white",
 });
 
-const LecturerHome = () => {
+const AppBarLayout = () => {
   const [anchorElUser, setAnchorElUser] = useState(null);
-  // const [anchorElNav, setAnchorElNav] = useState(null);
-  // const [anchorElAnnouncement, setAnchorElAnnouncement] = useState(null);
-  // const [dialogOpen, setDialogOpen] = useState(false);
-  // const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElAnnouncement, setAnchorElAnnouncement] = useState(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
 
-  // const settings = [
-  //   "Profile",
-  //   "Edit Profile",
-  //   "Post Announcement",
-  //   "Add Appointment",
-  //   "Archive Page",
-  //   "Logout",
-  // ];
+  const announcements = [
+    {
+      title: "Title 1",
+      text: "Announcement text 1",
+      photo: "CoverImages/image1.jpg",
+      document: "Assignment 2.pdf",
+    },
+    {
+      title: "Title 2",
+      text: "Announcement text 2",
+      photo: "CoverImages/image2.jpg",
+    },
+    {
+      title: "Title 3",
+      text: "Announcement text 3,Announcement text 3Announcement text 3Announcement text 3Announcement text 3Announcement text 3Announcement text 3Announcement text 3 ",
+      document: "Assignment 2.pdf",
+    },
+  ];
 
-  // const announcements = [
-  //   {
-  //     title: "Title 1",
-  //     text: "Announcement text 1",
-  //     photo: "CoverImages/image1.jpg",
-  //     document: "Assignment 2.pdf",
-  //   },
-  //   {
-  //     title: "Title 2",
-  //     text: "Announcement text 2",
-  //     photo: "CoverImages/image2.jpg",
-  //   },
-  //   {
-  //     title: "Title 3",
-  //     text: "Announcement text 3,Announcement text 3Announcement text 3Announcement text 3Announcement text 3Announcement text 3Announcement text 3Announcement text 3 ",
-  //     document: "Assignment 2.pdf",
-  //   },
-  // ];
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
 
-  // const lecturers = [
-  //   {
-  //     name: "Dr.Thaer Samar",
-  //     photoUrl: "ProfileImages/thaer.PNG",
-  //   },
-  // ];
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
 
-  // const handleOpenUserMenu = (event) => {
-  //   setAnchorElUser(event.currentTarget);
-  // };
+  const handleOpenAnnouncementMenu = (event) => {
+    setAnchorElAnnouncement(event.currentTarget);
+  };
 
-  // const handleCloseUserMenu = () => {
-  //   setAnchorElUser(null);
-  // };
+  const handleCloseAnnouncementMenu = () => {
+    setAnchorElAnnouncement(null);
+  };
 
-  // const handleOpenAnnouncementMenu = (event) => {
-  //   setAnchorElAnnouncement(event.currentTarget);
-  // };
+  const handleOpenDialogFromTitle = (index) => {
+    setSelectedAnnouncement(announcements[index]);
+    setDialogOpen(true);
+    setAnchorElAnnouncement(null);
+  };
 
-  // const handleCloseAnnouncementMenu = () => {
-  //   setAnchorElAnnouncement(null);
-  // };
+  const handleOpenDialog = () => {
+    setDialogOpen(true);
+  };
 
-  // const handleOpenDialogFromTitle = (index) => {
-  //   setSelectedAnnouncement(announcements[index]);
-  //   setDialogOpen(true);
-  //   setAnchorElAnnouncement(null);
-  // };
-
-  // const handleOpenDialog = () => {
-  //   setDialogOpen(true);
-  // };
-
-  // const handleCloseDialog = () => {
-  //   setDialogOpen(false);
-  // };
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
+  };
 
   return (
     <div
@@ -114,7 +97,7 @@ const LecturerHome = () => {
         flexDirection: "row",
       }}
     >
-      {/* <div>
+      <div>
         <AppBar
           position="static"
           style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000 }}
@@ -182,7 +165,7 @@ const LecturerHome = () => {
                   <Avatar alt="Thaer" src="ProfileImages/thaer.PNG" />
                 </IconButton>
               </Tooltip>
-              <Menu
+              {/* <Menu
                 sx={{ mt: "45px" }}
                 id="menu-appbar"
                 anchorEl={anchorElUser}
@@ -198,7 +181,7 @@ const LecturerHome = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
+                {settings1.map((setting) => (
                   <Link
                     to={`/${setting.replace(/\s+/g, "")}`}
                     key={setting}
@@ -211,27 +194,13 @@ const LecturerHome = () => {
                     </MenuItem>
                   </Link>
                 ))}
-              </Menu>
+              </Menu> */}
             </Box>
           </Toolbar>
         </AppBar>
-      </div> */}
-      <div
-        style={{
-          font: "60px  black  solid",
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
-          marginTop: "320px",
-          fontFamily: "Georgia",
-        }}
-      >
-        <div style={{ marginBottom: "8px" }}>Hello,</div>
-        <div style={{ marginBottom: "8px" }}>{lecturers[0].name}</div>
       </div>
       {/* Dialog for displaying announcement details */}
-      {/* <Dialog open={dialogOpen} onClose={handleCloseDialog}>
+      <Dialog open={dialogOpen} onClose={handleCloseDialog}>
         <DialogTitle>
           {selectedAnnouncement && selectedAnnouncement.title}
         </DialogTitle>
@@ -268,9 +237,9 @@ const LecturerHome = () => {
         <DialogActions>
           <Button onClick={handleCloseDialog}>Close</Button>
         </DialogActions>
-      </Dialog> */}
+      </Dialog>
     </div>
   );
 };
 
-export default LecturerHome;
+export default AppBarLayout;
