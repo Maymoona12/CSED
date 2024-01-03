@@ -101,7 +101,7 @@ const EditProfile = () => {
       }}
     >
       <div>
-        <AppBar
+        {/* <AppBar
           position="static"
           style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000 }}
           sx={{ background: "black" }}
@@ -163,7 +163,7 @@ const EditProfile = () => {
               </Menu>
             </Box>
           </Toolbar>
-        </AppBar>
+        </AppBar> */}
         <div
           style={{
             display: "flex",

@@ -73,23 +73,57 @@ const PostAnnouncementPage = ({ onSubmit }) => {
 
   return (
     <div className="post-announcement-page">
-      <AppBar position="static" style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000 }} sx={{ background: "black" }}>
+      {/* <AppBar position="static" style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000 }} sx={{ background: "black" }}>
         <Toolbar>
           <Typography variant="h5" component="div" sx={{ flexGrow: 1, fontFamily: "Brush Script MT" }}>
             CSED
           </Typography>
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
       <div style={{ marginTop: "80px" }}>
-        <Box sx={{ width: 600, height: "auto", maxWidth: "100%", border: "1px solid #ddd", padding: "50px", borderRadius: "20px", marginLeft: "270px", marginRight: "100px" }}>
-          <h2 style={{ color: "black", fontFamily: "Monaco", marginBottom: "40px", marginLeft: "150px" }}>
+        <Box
+          sx={{
+            width: 600,
+            height: "auto",
+            maxWidth: "100%",
+            border: "1px solid #ddd",
+            padding: "50px",
+            borderRadius: "20px",
+            marginLeft: "270px",
+            marginRight: "100px",
+          }}
+        >
+          <h2
+            style={{
+              color: "black",
+              fontFamily: "Monaco",
+              marginBottom: "40px",
+              marginLeft: "150px",
+            }}
+          >
             Post Announcement
           </h2>
-          <Typography variant="h5" sx={{ marginBottom: "5px", marginLeft: "8px", fontFamily: "Monaco", color: "black" }}>
+          <Typography
+            variant="h5"
+            sx={{
+              marginBottom: "5px",
+              marginLeft: "8px",
+              fontFamily: "Monaco",
+              color: "black",
+            }}
+          >
             Title
           </Typography>
           <TextField fullWidth id="fullWidth" />
-          <Typography variant="h5" sx={{ marginTop: "10px", marginLeft: "8px", fontFamily: "Monaco", color: "black" }}>
+          <Typography
+            variant="h5"
+            sx={{
+              marginTop: "10px",
+              marginLeft: "8px",
+              fontFamily: "Monaco",
+              color: "black",
+            }}
+          >
             Announcement
           </Typography>
           <div style={{ display: "flex", marginBottom: "20px" }}>
@@ -108,9 +142,23 @@ const PostAnnouncementPage = ({ onSubmit }) => {
               }}
             />
           </div>
-          <div style={{ display: "flex", justifyContent: "center", marginTop: "15px", alignItems: "center" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "15px",
+              alignItems: "center",
+            }}
+          >
             <div>
-              <input type="file" id="documentInput" style={{ display: "none" }} onChange={handleDocumentChange} ref={documentInputRef} multiple />
+              <input
+                type="file"
+                id="documentInput"
+                style={{ display: "none" }}
+                onChange={handleDocumentChange}
+                ref={documentInputRef}
+                multiple
+              />
               <Button
                 variant="contained"
                 component="label"
@@ -121,18 +169,18 @@ const PostAnnouncementPage = ({ onSubmit }) => {
                   width: "120px",
                   height: "40px",
                   marginTop: "10px",
-                  marginRight: "10px", 
+                  marginRight: "10px",
                   marginBottom: "5px",
                   background: "black",
                 }}
               ></Button>
             </div>
-            
+
             <button
               onClick={handleSubmit}
               style={{
                 marginTop: "10px",
-                marginLeft: "330px", 
+                marginLeft: "330px",
                 padding: "10px 20px",
                 background: "#2196F3",
                 color: "white",
@@ -153,10 +201,19 @@ const PostAnnouncementPage = ({ onSubmit }) => {
               {documentPreview && documentFiles.length > 0 ? (
                 <div>
                   {documentFiles.map((file, index) => (
-                    <div key={index} style={{ marginTop: "5px", marginLeft: "20px" }}>
+                    <div
+                      key={index}
+                      style={{ marginTop: "5px", marginLeft: "20px" }}
+                    >
                       {file.name}
-                      <EditIcon style={{ marginLeft: "5px", cursor: "pointer" }} onClick={() => editDocumentFile(index)} />
-                      <DeleteIcon style={{ marginLeft: "10px", cursor: "pointer" }} onClick={() => deleteDocumentFile(index)} />
+                      <EditIcon
+                        style={{ marginLeft: "5px", cursor: "pointer" }}
+                        onClick={() => editDocumentFile(index)}
+                      />
+                      <DeleteIcon
+                        style={{ marginLeft: "10px", cursor: "pointer" }}
+                        onClick={() => deleteDocumentFile(index)}
+                      />
                     </div>
                   ))}
                 </div>
