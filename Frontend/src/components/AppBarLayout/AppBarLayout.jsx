@@ -21,6 +21,7 @@ import {
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import { styled } from "@mui/system";
+import Menu1 from "../Account Menu/Menu1";
 
 const StyledButton = styled(Button)({
   my: 2,
@@ -38,6 +39,7 @@ const AppBarLayout = () => {
   const [anchorElAnnouncement, setAnchorElAnnouncement] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
+  const [openMenu, setOpenMenu] = useState(false);
 
   const announcements = [
     {
@@ -59,11 +61,8 @@ const AppBarLayout = () => {
   ];
 
   const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+    // setAnchorElUser(event.currentTarget);
+    setOpenMenu(true);
   };
 
   const handleOpenAnnouncementMenu = (event) => {
@@ -165,37 +164,10 @@ const AppBarLayout = () => {
                   <Avatar alt="Thaer" src="ProfileImages/thaer.PNG" />
                 </IconButton>
               </Tooltip>
-              {/* <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings1.map((setting) => (
-                  <Link
-                    to={`/${setting.replace(/\s+/g, "")}`}
-                    key={setting}
-                    style={{ textDecoration: "none" }}
-                  >
-                    <MenuItem onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center" sx={{ color: "black" }}>
-                        {setting}
-                      </Typography>
-                    </MenuItem>
-                  </Link>
-                ))}
-              </Menu> */}
             </Box>
+            <Stack direction="row">
+              <Menu1 openMenu={openMenu} />
+            </Stack>
           </Toolbar>
         </AppBar>
       </div>
