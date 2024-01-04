@@ -145,46 +145,45 @@ import StudentProfile from "./pages/UsersPage/StudentPage/StudentProfile";
 import LecturerProfiles from "./pages/Lecturer-Profiles/lecturerprofile";
 import ChangePassword from "./pages/UsersPage/StudentPage/ChangePassword";
 import BookAppointment from "./pages/Appointment/BookAppointment";
-import Layout from "./components/Layout";
 import ProtectedRoutes from "./utils/ProtectedRoutes ";
+import AppLayout from "./components/AppLayout";
 
 function App() {
   return (
     <>
-      {/* <Router> */}
       <Routes>
+        <Route path="/" element={<Coverpage />} />
+        <Route path="login" element={<Login />} />
+        <Route path="signup" element={<Signup />} />
+        <Route path="passwordpage" element={<Forgotpassword />} />
+        <Route path="me" element={<AppLayout />} />
+
         <Route element={ProtectedRoutes}>
-          <Route path="/" element={<Coverpage />} />
-          <Route path="login" element={<Login />} />
-          <Route path="signup" element={<Signup />} />
-          <Route path="passwordpage" element={<Forgotpassword />} />
+          <Route path="Home" element={<LecturerHome />} />
+          <Route path="StudentHome" element={<StudentHome />} />
+        </Route>
 
-          <Route>
-            <Route path="LecturerHome" element={<LecturerHome />} />
-            <Route path="LectureProfile" element={<LectureProfile />} />
-            <Route path="EditProfile" element={<EditProfile />} />
-            <Route path="PostAnnouncement" element={<PostAnnouncementPage />} />
-            <Route path="AddAppointment" element={<Appointment />} />
-            {/* <Route path="/ArchivePage" element={<FoldersPage />} />
+        <Route element={ProtectedRoutes}>
+          <Route path="LectureProfile" element={<LectureProfile />} />
+          <Route path="EditProfile" element={<EditProfile />} />
+          <Route path="PostAnnouncement" element={<PostAnnouncementPage />} />
+          <Route path="AddAppointment" element={<Appointment />} />
+          {/* <Route path="/ArchivePage" element={<FoldersPage />} />
             <Route path="/PhotosPage/:folderId" element={<PhotosPage />} /> */}
-          </Route>
+        </Route>
+        <Route element={ProtectedRoutes}>
+          <Route path="StudentProfile" element={<StudentProfile />} />
+          <Route path="LecturersProfile" element={<LecturerProfiles />} />
+          <Route path="ArchivePage" element={<FoldersPage />} />
+          <Route path="PhotosPage/:folderId" element={<PhotosPage />} />
+          <Route path="ChangePassword" element={<ChangePassword />} />
+          <Route path="AddAppointment" element={<BookAppointment />} />
+        </Route>
 
-          <Route>
-            <Route path="StudentHome" element={<StudentHome />} />
-            <Route path="StudentProfile" element={<StudentProfile />} />
-            <Route path="LecturersProfile" element={<LecturerProfiles />} />
-            <Route path="ArchivePage" element={<FoldersPage />} />
-            <Route path="PhotosPage/:folderId" element={<PhotosPage />} />
-            <Route path="ChangePassword" element={<ChangePassword />} />
-            <Route path="AddAppointment" element={<BookAppointment />} />
-          </Route>
-
-          <Route>
-            <Route path="AdminPage" element={<AdminPage />} />
-          </Route>
+        <Route element={ProtectedRoutes}>
+          <Route path="AdminPage" element={<AdminPage />} />
         </Route>
       </Routes>
-      {/* </Router> */}
     </>
   );
 }
