@@ -129,8 +129,8 @@ import Coverpage from "./pages/general-pages/CoverPage/coverpage";
 import Signup from "./pages/general-pages/Signup/signup";
 import Login from "./pages/general-pages/Login/login";
 import Forgotpassword from "./pages/general-pages/PasswordPage/passwordpage";
+import Home from "./pages/Home";
 
-import LecturerHome from "./pages/UsersPage/Lecturer-Page/LecturerHome";
 import LectureProfile from "./pages/UsersPage/Lecturer-Page/LecturerProfile";
 import EditProfile from "./pages/UsersPage/Lecturer-Page/EditProfile";
 import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
@@ -140,7 +140,6 @@ import PhotosPage from "./pages/photo-archive/photospage";
 
 import AdminPage from "./pages/UsersPage/AdminPage/AdminPage";
 
-import StudentHome from "./pages/UsersPage/StudentPage/StudentHome";
 import StudentProfile from "./pages/UsersPage/StudentPage/StudentProfile";
 import LecturerProfiles from "./pages/Lecturer-Profiles/lecturerprofile";
 import ChangePassword from "./pages/UsersPage/StudentPage/ChangePassword";
@@ -159,8 +158,7 @@ function App() {
         <Route path="me" element={<AppLayout />} />
 
         <Route element={ProtectedRoutes}>
-          <Route path="Home" element={<LecturerHome />} />
-          <Route path="StudentHome" element={<StudentHome />} />
+          <Route path="Home" element={<Home />} />
         </Route>
 
         <Route element={ProtectedRoutes}>
