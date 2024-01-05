@@ -26,7 +26,7 @@ import { styled } from "@mui/system";
 //   color: "white",
 // });
 
-const Menu1 = ({ openMenu }) => {
+const Menu1 = ({ openMenu, anchor }) => {
   const [anchorElUser, setAnchorElUser] = useState(null);
 
   const settings1 = [
@@ -50,7 +50,7 @@ const Menu1 = ({ openMenu }) => {
   };
 
   const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+    console.log("...");
   };
   console.log(openMenu);
   return (
@@ -67,7 +67,7 @@ const Menu1 = ({ openMenu }) => {
           <Menu
             sx={{ mt: "45px" }}
             id="menu-appbar"
-            anchorEl={anchorElUser}
+            anchor={anchor}
             anchorOrigin={{
               vertical: "top",
               horizontal: "right",
@@ -86,7 +86,7 @@ const Menu1 = ({ openMenu }) => {
                 key={setting}
                 style={{ textDecoration: "none" }}
               >
-                <MenuItem onClick={handleCloseUserMenu}>
+                <MenuItem>
                   <Typography textAlign="center" sx={{ color: "black" }}>
                     {setting}
                   </Typography>

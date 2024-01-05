@@ -166,7 +166,7 @@ const AppBarLayout = () => {
               </Tooltip>
             </Box>
             <Stack direction="row">
-              <Menu1 openMenu={openMenu} />
+              <Menu1 openMenu={openMenu} anchor={anchorElUser} />
             </Stack>
           </Toolbar>
         </AppBar>
