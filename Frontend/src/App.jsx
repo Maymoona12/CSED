@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
+// import AddPhoto from "./pages/photo-archive/add-photo.jsx";
 import Coverpage from "./pages/general-pages/CoverPage/coverpage";
 import Signup from "./pages/general-pages/Signup/signup";
 import Login from "./pages/general-pages/Login/login";
@@ -27,7 +28,8 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Coverpage />} />
+      {/* <Route path="/" element={<AddPhoto />} /> */}
+      <Route path="/" element={<Coverpage />} />
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
         <Route path="passwordpage" element={<Forgotpassword />} />
@@ -62,3 +64,4 @@ function App() {
   );
 }
 export default App;
+
