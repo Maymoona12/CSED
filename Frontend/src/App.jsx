@@ -21,6 +21,7 @@ import ChangePassword from "./pages/UsersPage/StudentPage/ChangePassword";
 import BookAppointment from "./pages/Appointment/BookAppointment";
 import ProtectedRoutes from "./utils/ProtectedRoutes ";
 import AppLayout from "./components/AppLayout";
+import Unauthorized from "./components/Unauthorized";
 
 function App() {
   return (
