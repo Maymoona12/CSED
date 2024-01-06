@@ -28,25 +28,25 @@ function App() {
   return (
     <>
       <Routes>
-      {/* <Route path="/" element={<AddPhoto />} /> */}
-      <Route path="/" element={<Coverpage />} />
+        {/* <Route path="/" element={<AddPhoto />} /> */}
+        <Route path="/" element={<Coverpage />} />
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
         <Route path="passwordpage" element={<Forgotpassword />} />
-        <Route path="me" element={<AppLayout />} />
+        <Route path="/me" element={<AppLayout />} />
 
         <Route element={ProtectedRoutes}>
           <Route path="Home" element={<Home />} />
         </Route>
 
-        <Route element={ProtectedRoutes}>
-          <Route path="LectureProfile" element={<LectureProfile />} />
-          <Route path="EditProfile" element={<EditProfile />} />
-          <Route path="PostAnnouncement" element={<PostAnnouncementPage />} />
-          <Route path="AddAppointment" element={<Appointment />} />
-          {/* <Route path="/ArchivePage" element={<FoldersPage />} />
+        {/* <Route element={ProtectedRoutes}> */}
+        <Route path="/me/LectureProfile" element={<LectureProfile />} />
+        <Route path="/me/EditProfile" element={<EditProfile />} />
+        <Route path="/me/PostAnnouncement" element={<PostAnnouncementPage />} />
+        <Route path="/me/AddAppointment" element={<Appointment />} />
+        {/* <Route path="/ArchivePage" element={<FoldersPage />} />
             <Route path="/PhotosPage/:folderId" element={<PhotosPage />} /> */}
-        </Route>
+        {/* </Route> */}
         <Route element={ProtectedRoutes}>
           <Route path="StudentProfile" element={<StudentProfile />} />
           <Route path="LecturersProfile" element={<LecturerProfiles />} />
@@ -64,4 +64,3 @@ function App() {
   );
 }
 export default App;
-
