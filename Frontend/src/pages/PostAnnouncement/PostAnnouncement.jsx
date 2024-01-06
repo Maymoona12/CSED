@@ -8,7 +8,7 @@ import TextField from "@mui/material/TextField";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import AddLinkIcon from "@mui/icons-material/AddLink"; // Add this import
+import AddLinkIcon from "@mui/icons-material/AddLink";
 
 const PostAnnouncementPage = ({ onSubmit }) => {
   const [announcementData, setAnnouncementData] = useState(null);
@@ -62,7 +62,7 @@ const PostAnnouncementPage = ({ onSubmit }) => {
 
   const handleSubmit = () => {
     const data = {
-      title: "",
+      title: "", // You might want to add a title here
       announcementText,
       documentFiles,
     };
@@ -159,7 +159,7 @@ const PostAnnouncementPage = ({ onSubmit }) => {
                 startIcon={<AddLinkIcon />}
                 style={{
                   flex: "0 0 auto",
-                  width: "120px",
+                  width: "180px",
                   height: "40px",
                   marginTop: "10px",
                   marginRight: "10px",
@@ -198,7 +198,16 @@ const PostAnnouncementPage = ({ onSubmit }) => {
                       key={index}
                       style={{ marginTop: "5px", marginLeft: "20px" }}
                     >
-                      {file.name}
+                      {file.type.startsWith("image/") ? (
+                        <img
+                          src={URL.createObjectURL(file)}
+                          alt={`Image ${index + 1}`}
+                          style={{ maxWidth: "180px", maxHeight: "180px" }}
+                        />
+                      ) : (
+                        <span>{file.name}</span>
+                      )}
+
                       <EditIcon
                         style={{ marginLeft: "5px", cursor: "pointer" }}
                         onClick={() => editDocumentFile(index)}
