@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
-import { Typography } from "@mui/material/styles/createTypography";
+import Typography from "@mui/material/Typography";
+import { Button } from "@mui/material";
 
 const Unauthorized = () => {
   const navigate = useNavigate();
@@ -9,22 +10,42 @@ const Unauthorized = () => {
   const goBack = () => navigate(-1);
 
   return (
-    <>
-      <Box sx={{ display: "flex" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          marginBottom: "40px",
+        }}
+      >
         <Typography
-          variant="h2"
+          variant="h4"
           component="div"
-          sx={{ flexGrow: 1, fontFamily: "Times New Roman" }}
+          sx={{
+            flexGrow: 1,
+            fontFamily: "Times New Roman",
+            marginBottom: "40px",
+            color: "#1976d2",
+          }}
         >
           You do not have access to the requested page!
         </Typography>
 
         <CircularProgress disableShrink />
       </Box>
-      <div className="flexGrow">
-        <button onClick={goBack}>Go Back</button>
+      <div>
+        <Button onClick={goBack}>Go Back</Button>
       </div>
-    </>
+    </div>
   );
 };
 
