@@ -1,102 +1,53 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import {
-  Toolbar,
-  Avatar,
-  Typography,
-  Box,
-  Stack,
-  Badge,
-  Menu,
-  IconButton,
-  Tooltip,
-  MenuItem,
-  Button,
-} from "@mui/material";
+import { Typography, Menu, MenuItem } from "@mui/material";
 
-import { styled } from "@mui/system";
-
-// const StyledButton = styled(Button)({
-//   my: 2,
-//   color: "white",
-//   display: "block",
-// });
-
-// const StyledStack = styled(Stack)({
-//   color: "white",
-// });
-
-const Menu1 = ({ openMenu, anchor }) => {
-  const [anchorElUser, setAnchorElUser] = useState(null);
-
+const Menu1 = ({ openMenu, anchor, onSetAnchorElUser }) => {
   const settings1 = [
-    "Lecture Profile",
-    "Edit Profile",
-    "Post Announcement",
-    "Add Appointment",
-    "Archive Page",
-    "Logout",
+    "LectureProfile",
+    "EditProfile",
+    "PostAnnouncement",
+    "AddAppointment",
+    // "ArchivePage",
+    // "Logout",
   ];
-  const settings2 = [
-    "Profile",
-    "Lecturers Profile",
-    "Archive Page",
-    "Change Password",
-    "Logout",
-  ];
-
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
 
   const handleCloseUserMenu = () => {
-    console.log("...");
+    onSetAnchorElUser(false);
   };
-  console.log(openMenu);
+
   return (
     openMenu && (
-      <div
-        style={{
-          marginBottom: "20px",
-          display: "flex",
-          justifyContent: "center",
-          flexDirection: "row",
-        }}
-      >
-        <div>
-          <Menu
-            sx={{ mt: "45px" }}
-            id="menu-appbar"
-            anchor={anchor}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            open={openMenu}
-            onClose={handleCloseUserMenu}
-          >
-            {settings1.map((setting) => (
+      <div>
+        <Menu
+          id="menu-appbar"
+          anchorEl={anchor}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          open={openMenu}
+          onClose={handleCloseUserMenu}
+        >
+          {settings1.map((setting) => (
+            <MenuItem key={setting}>
               <Link
-                to={`/me/{setting}`}
-                key={setting}
-                style={{ textDecoration: "none" }}
+                to={`/me/${setting}`}
+                style={{ textDecoration: "none", color: "black" }}
               >
-                <MenuItem>
-                  <Typography textAlign="center" sx={{ color: "black" }}>
-                    {setting}
-                  </Typography>
-                </MenuItem>
+                <Typography>{setting}</Typography>
               </Link>
-            ))}
-          </Menu>
-        </div>
+            </MenuItem>
+          ))}
+        </Menu>
       </div>
     )
   );
 };
+
 export default Menu1;
