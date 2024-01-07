@@ -1,10 +1,10 @@
 import React from "react";
 
-const StudentHome = () => {
-  const Students = [
+const Home = () => {
+  const Users = [
     {
-      name: "Student",
-      photoUrl: "CoverImages/image1.jpg",
+      name: "User",
+      //   photoUrl: "ProfileImages/thaer.PNG",
     },
   ];
 
@@ -22,10 +22,10 @@ const StudentHome = () => {
         }}
       >
         <div style={{ marginBottom: "8px", marginRight: "8px" }}>Hello,</div>
-        <div style={{ marginBottom: "8px" }}>{Students[0].name}</div>
+        <div style={{ marginBottom: "8px" }}>{Users[0].name}</div>
       </div>
     </div>
   );
 };
 
-export default StudentHome;
+export default Home;
