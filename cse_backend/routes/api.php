@@ -43,3 +43,4 @@ Route::post('/AcceptOrRegict/{id}/{status}',[AppointmentController::class,'Accep
 Route::get('/officehour/{id}',[AppointmentController::class,'getOfficeHour']);
 
 Route::post('/createAnnouncement',[AnnouncementController::class,'createAnnouncement']);
+Route::get('/all_announcement',[AnnouncementController::class,'allAnnouncement']);

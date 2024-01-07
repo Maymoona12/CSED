@@ -7,16 +7,20 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class book_appointment extends Notification
+class shareAnnouncment extends Notification
 {
     use Queueable;
-
+    private $doctor_id;
+    private $created_at;
+   
+    private $text_ann;
+    private $file;
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct($doctor_id,$created_at,$text_ann,$file)
     {
-        //
+        // this->
     }
 
     /**
@@ -29,14 +33,7 @@ class book_appointment extends Notification
         return ['database'];
     }
 
-    
-    
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @return array<string, mixed>
-     */
+   
     public function toArray(object $notifiable): array
     {
         return [
