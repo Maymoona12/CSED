@@ -7,6 +7,7 @@ import CampaignIcon from "@mui/icons-material/Campaign";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import PermMediaIcon from "@mui/icons-material/PermMedia";
 import { Button, Popover, Typography } from "@mui/material";
+import thaer from "../../../../ProfileImages/thaer.png";
 
 const LectureProfile = () => {
   const [imageSrc, setImageSrc] = useState("ProfileImages/thaer.PNG");
@@ -56,11 +57,10 @@ const LectureProfile = () => {
             onChange={handleImageChange}
           />
         </div>
-        <img src={imageSrc} alt="Profile" />
+        <img src={thaer} alt="Profile" />
       </div>
 
       <div className="profile-title" style={{ marginLeft: "22px" }}>
-        {" "}
         Thaer Samar
       </div>
 

@@ -17,13 +17,7 @@ import ApartmentIcon from "@mui/icons-material/Apartment";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import Stack from "@mui/material/Stack";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import Badge from "@mui/material/Badge";
-import Menu from "@mui/material/Menu";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
+import thaer from "../../../../ProfileImages/thaer.png";
 
 const EditProfile = () => {
   const initialData = {
@@ -49,7 +43,7 @@ const EditProfile = () => {
   const lecturers = [
     {
       name: "Dr.Thaer Samar",
-      photoUrl: "ProfileImages/thaer.PNG",
+      photoUrl: "ProfileImages/thaer.png",
       information:
         "Assistant Professor\nRoom Number: H313\n+970 9 2688199\nthaer.sammar@ptuk.edu.ps",
     },
@@ -111,7 +105,7 @@ const EditProfile = () => {
         >
           <Avatar
             alt={lecturers[0].name}
-            src={lecturers[0].photoUrl}
+            src={thaer}
             sx={{
               width: 100,
               height: 100,
