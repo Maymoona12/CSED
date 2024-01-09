@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('announcements', function (Blueprint $table) {
             $table->id();
             $table->foreignId('doctor_id')->references('id')->on('users');
+            $table->string('title');
             $table->string('text_ann');
             $table->string('file')->nullable();
             // $table->string('img')->nullable();
