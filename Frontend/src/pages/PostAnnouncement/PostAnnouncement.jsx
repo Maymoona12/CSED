@@ -73,7 +73,7 @@ const PostAnnouncementPage = ({ onSubmit }) => {
 
   return (
     <div className="post-announcement-page">
-      <div style={{ marginTop: "80px" }}>
+      <div>
         <Box
           sx={{
             width: 600,
@@ -82,8 +82,8 @@ const PostAnnouncementPage = ({ onSubmit }) => {
             border: "1px solid #ddd",
             padding: "50px",
             borderRadius: "20px",
-            marginLeft: "270px",
-            marginRight: "100px",
+            marginLeft: "50%",
+            marginRight: "50%",
           }}
         >
           <h2

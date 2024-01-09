@@ -68,7 +68,7 @@ const NewAlbum = ({ onSubmit }) => {
 
   return (
     <div className="New-Album">
-      <div style={{ marginTop: "80px" }}>
+      <div>
         <Box
           sx={{
             width: 600,
@@ -77,8 +77,10 @@ const NewAlbum = ({ onSubmit }) => {
             border: "1px solid #ddd",
             padding: "50px",
             borderRadius: "20px",
-            marginLeft: "270px",
-            marginRight: "100px",
+            marginLeft: "50%",
+            marginRight: "50%",
+            justifyContent:"center",
+            alignItems:"center"
           }}
         >
           <h2
