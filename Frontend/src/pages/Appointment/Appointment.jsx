@@ -186,7 +186,6 @@ const Appointment = () => {
             display: "flex",
             flexWrap: "wrap",
             marginLeft: "30px",
-            marginTop: "60px",
           }}
         >
           <h1 style={{ color: "black", fontFamily: "Garamond" }}>

@@ -1,9 +1,10 @@
 .upc {
   position: relative;
   width: auto;
-  /* height: auto; */
+  height: auto;
   border: 1px solid #ccc;
   margin: 20px;
+  margin-top: 64;
   border-radius: 4px;
   padding-bottom: 20px;
   background: white;

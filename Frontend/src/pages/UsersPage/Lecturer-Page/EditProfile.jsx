@@ -100,7 +100,6 @@ const EditProfile = () => {
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
-            marginTop: "100px",
           }}
         >
           <Avatar
