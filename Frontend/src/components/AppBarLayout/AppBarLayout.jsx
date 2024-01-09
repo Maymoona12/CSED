@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
@@ -41,6 +42,7 @@ const AppBarLayout = () => {
   const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
   const [openMenu, setOpenMenu] = useState(false);
   const onSetAnchorElUser = (closedAnchor) => setAnchorElUser(closedAnchor);
+  const open = Boolean(anchorElUser);
 
   const announcements = [
     {
@@ -61,9 +63,23 @@ const AppBarLayout = () => {
     },
   ];
 
+  const settings1 = [
+    "LectureProfile",
+    "EditProfile",
+    "PostAnnouncement",
+    "AddAppointment",
+    "ArchivePage",
+    "AddPhoto",
+    "Logout",
+  ];
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
-    setOpenMenu(true);
+    // setOpenMenu(true);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(false);
   };
 
   const handleOpenAnnouncementMenu = (event) => {
@@ -168,17 +184,46 @@ const AppBarLayout = () => {
 
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip>
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <IconButton
+                    onClick={handleOpenUserMenu}
+                    sx={{ p: 0 }}
+                    aria-controls={open ? "menu-appbar" : undefined}
+                    aria-expanded={open ? "true" : undefined}
+                    aria-haspopup="true"
+                  >
                     <Avatar alt="Thaer" src="ProfileImages/thaer.PNG" />
                   </IconButton>
                 </Tooltip>
               </Box>
               <Stack direction="row">
-                <Menu1
-                  openMenu={openMenu}
-                  anchor={anchorElUser}
-                  onSetAnchorElUser={onSetAnchorElUser}
-                />
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={open}
+                  onClose={handleCloseUserMenu}
+                  onClick={handleCloseUserMenu}
+                  sx={{ mt: 5 }}
+                >
+                  {settings1.map((setting) => (
+                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                      <Link
+                        to={`/me/${setting}`}
+                        style={{ textDecoration: "none", color: "black" }}
+                      >
+                        <Typography>{setting}</Typography>
+                      </Link>
+                    </MenuItem>
+                  ))}
+                </Menu>
               </Stack>
             </Toolbar>
           </AppBar>

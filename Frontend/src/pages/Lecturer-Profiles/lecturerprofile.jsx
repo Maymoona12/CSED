@@ -35,19 +35,19 @@ function LecturersProfile() {
   const defaultTheme = createTheme();
 
   const images = [
-    "ProfileImages/thaer.PNG",
-    "ProfileImages/mohmad.PNG",
-    "ProfileImages/nael.PNG",
-    "ProfileImages/anas.PNG",
-    "ProfileImages/yousef.PNG",
-    "ProfileImages/yazeed.PNG",
-    "ProfileImages/rami.PNG",
-    "ProfileImages/osamah.PNG",
-    "ProfileImages/osamas.PNG",
-    "ProfileImages/nagham.PNG",
-    "ProfileImages/shatha.PNG",
-    "ProfileImages/maha.PNG",
-    "ProfileImages/deema.PNG",
+    "ProfileImages/thaer.png",
+    "ProfileImages/mohmad.png",
+    "ProfileImages/nael.png",
+    "ProfileImages/anas.png",
+    "ProfileImages/yousef.png",
+    "ProfileImages/yazeed.png",
+    "ProfileImages/rami.png",
+    "ProfileImages/osamah.png",
+    "ProfileImages/osamas.png",
+    "ProfileImages/nagham.png",
+    "ProfileImages/shatha.png",
+    "ProfileImages/maha.png",
+    "ProfileImages/deema.png",
   ];
 
   const headings = [
@@ -216,12 +216,17 @@ function LecturersProfile() {
                       sx={{
                         pt: "100%", // Adjust the height of the image here
                         backgroundImage: `url(/${images[index]})`,
-                        backgroundSize:"cover",
+                        backgroundSize: "cover",
                         backgroundPosition: "center",
                       }}
                     />
                     <CardContent sx={{ flexGrow: 1 }}>
-                      <Typography gutterBottom variant="h6" component="h2" style={{fontFamily:"Sarfi"}}>
+                      <Typography
+                        gutterBottom
+                        variant="h6"
+                        component="h2"
+                        style={{ fontFamily: "Sarfi" }}
+                      >
                         {lecturer}
                       </Typography>
                     </CardContent>
