@@ -6,6 +6,7 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import PermMediaIcon from "@mui/icons-material/PermMedia";
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { Button, Popover, Typography } from "@mui/material";
 import thaer from "../../../../ProfileImages/thaer.png";
 
@@ -16,6 +17,7 @@ const LectureProfile = () => {
   const [postAnnouncementPopover, setPostAnnouncementPopover] = useState(null);
   const [addAppointmentPopover, setAddAppointmentPopover] = useState(null);
   const [archivePagePopover, setArchivePagePopover] = useState(null);
+  const [AddPhotoPopover, setAddPhotoPopover] = useState(null);
   const [popoverOpen, setPopoverOpen] = useState(false);
 
   const handleImageChange = (event) => {
@@ -66,7 +68,7 @@ const LectureProfile = () => {
 
       <div className="profile-button">
         <div style={{ marginTop: "10px", marginRight: "100px" }}>
-          <Link to="/EditProfile" style={{ marginLeft: "50px" }}>
+          <Link to="/me/EditProfile" style={{ marginLeft: "50px" }}>
             <EditNoteIcon
               style={{ marginInline: "15px", marginTop: "10px", fontSize: 25 }}
             />
@@ -98,7 +100,7 @@ const LectureProfile = () => {
           </Popover>
         </div>
         <div style={{ marginTop: "10px", marginRight: "100px" }}>
-          <Link to="/PostAnnouncement" style={{ marginLeft: "50px" }}>
+          <Link to="/me/PostAnnouncement" style={{ marginLeft: "50px" }}>
             <CampaignIcon
               style={{ marginInline: "15px", marginTop: "10px", fontSize: 25 }}
             />
@@ -130,7 +132,7 @@ const LectureProfile = () => {
           </Popover>
         </div>
         <div style={{ marginTop: "10px", marginRight: "100px" }}>
-          <Link to="/AddAppointment" style={{ marginLeft: "50px" }}>
+          <Link to="/me/AddAppointment" style={{ marginLeft: "50px" }}>
             <EditCalendarIcon
               style={{ marginInline: "12px", marginTop: "10px", fontSize: 25 }}
             />
@@ -162,7 +164,7 @@ const LectureProfile = () => {
           </Popover>
         </div>
         <div style={{ marginTop: "10px", marginRight: "100px" }}>
-          <Link to="/ArchivePage" style={{ marginLeft: "50px" }}>
+          <Link to="/-me/ArchivePage" style={{ marginLeft: "50px" }}>
             <PermMediaIcon
               style={{ marginInline: "15px", marginTop: "10px", fontSize: 25 }}
             />
@@ -190,6 +192,38 @@ const LectureProfile = () => {
           >
             <Typography style={{ padding: "10px", fontFamily: "Garamond" }}>
               Archive Page
+            </Typography>
+          </Popover>
+        </div>
+        <div style={{ marginTop: "10px", marginRight: "100px" }}>
+          <Link to="/me/AddPhoto" style={{ marginLeft: "50px" }}>
+            <AddPhotoAlternateIcon
+              style={{ marginInline: "15px", marginTop: "10px", fontSize: 25 }}
+            />
+            <Button
+              onMouseEnter={(event) =>
+                handleButtonHover(event, setAddPhotoPopover)
+              }
+              onMouseLeave={() => handleButtonLeave(setAddPhotoPopover)}
+            ></Button>
+          </Link>
+          <Popover
+            open={Boolean(AddPhotoPopover)}
+            anchorEl={AddPhotoPopover}
+            onClose={() => handleButtonLeave(setAddPhotoPopover)}
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            transformOrigin={{ vertical: "top", horizontal: "center" }}
+            PaperProps={{
+              style: {
+                background: "rgba(10, 10, 10, 0.8)",
+                color: "white",
+                padding: "10px",
+                fontFamily: "Garamond",
+              },
+            }}
+          >
+            <Typography style={{ padding: "10px", fontFamily: "Garamond" }}>
+             Create Album
             </Typography>
           </Popover>
         </div>
