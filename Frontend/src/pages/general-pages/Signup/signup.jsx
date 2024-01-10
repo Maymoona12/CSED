@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import useSignup from "../../SiginupApi/useSiginup";
 
 const Alert = (props) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -28,6 +29,7 @@ const defaultTheme = createTheme();
 export default function Signup() {
   const [open, setOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
+  const { mutate } = useSignup();
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -40,11 +42,16 @@ export default function Signup() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    const username = data.get("user_name");
+    const email = data.get("email");
+    const password = data.get("password");
+    const confrimpassword = data.get("confirm_password");
+    const studentNumber = data.get("student_number");
+    mutate({ username, email, password, confrimpassword, studentNumber });
 
     const enteredEmail = data.get("email");
     const enteredPassword = data.get("password");
     const enteredConfirmPassword = data.get("confirm_password");
-    const studentNumber = data.get("student_number");
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(enteredEmail)) {
