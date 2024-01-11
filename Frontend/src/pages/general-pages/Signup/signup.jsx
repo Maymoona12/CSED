@@ -43,11 +43,12 @@ export default function Signup() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const username = data.get("user_name");
+    const studentNumber = data.get("student_number");
     const email = data.get("email");
     const password = data.get("password");
     const confrimpassword = data.get("confirm_password");
-    const studentNumber = data.get("student_number");
-    mutate({ username, email, password, confrimpassword, studentNumber });
+
+    mutate({ username, studentNumber, email, password, confrimpassword });
 
     const enteredEmail = data.get("email");
     const enteredPassword = data.get("password");
