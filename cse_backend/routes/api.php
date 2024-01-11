@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\AppointmentController;
@@ -30,6 +31,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('refresh', 'refresh');
 });
 
+Route::post('/edit_profile',[AccountController::class,'EditAccount']);
 Route::post('/change_password',[PasswordController::class,'changePassword']);
 
 Route::get('/all_doctors',[getDoctorController::class,'getAllDoctors']);
