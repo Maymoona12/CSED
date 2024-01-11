@@ -12,10 +12,8 @@ const useLogin = () => {
       localStorage.setItem("access-token", data);
       localStorage.setItem("user", JSON.stringify(data.data));
       onLogin(data?.data, { shouldNavigate: true });
-      //Snackbar
     },
     onError: (error) => {
-      //Snackbar
       console.log(error.message);
     },
   });

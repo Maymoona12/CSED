@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -13,18 +13,38 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link as RouterLink } from "react-router-dom";
 import useLogin from "../../LoginApi/useLogin";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 const defaultTheme = createTheme();
 
 export default function Login() {
   const { mutate } = useLogin();
+  const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
+
+  const handleCloseSnackbar = () => {
+    setSnackbar({ ...snackbar, open: false });
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const email = data.get("email");
     const password = data.get("password");
-    mutate({ email, password });
+
+    mutate(
+      { email, password },
+      {
+        onSuccess: () => {
+          // Show success Snackbar
+          setSnackbar({ open: true, message: "Login Successful", severity: "success" });
+        },
+        onError: () => {
+          // Show error Snackbar
+          setSnackbar({ open: true, message: "Login Failed", severity: "error" });
+        },
+      }
+    );
 
     console.log({
       email: data.get("email"),
@@ -158,6 +178,16 @@ export default function Login() {
                 </Grid>
               </Grid>
             </Box>
+            <Snackbar
+  open={snackbar.open}
+  autoHideDuration={6000}
+  onClose={handleCloseSnackbar}
+  anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+>
+  <MuiAlert elevation={6} variant="filled" onClose={handleCloseSnackbar} severity={snackbar.severity}>
+    {snackbar.message}
+  </MuiAlert>
+</Snackbar>
           </Box>
         </Grid>
       </Grid>
