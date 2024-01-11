@@ -9,8 +9,8 @@ const useLogin = () => {
     onSuccess: (data) => {
       console.log(data);
       console.log(data.data);
-      localStorage.setItem("access-token", data);
-      localStorage.setItem("user", JSON.stringify(data.data));
+      localStorage.setItem("access-token", data.authorization.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
       onLogin(data?.data, { shouldNavigate: true });
     },
     onError: (error) => {
