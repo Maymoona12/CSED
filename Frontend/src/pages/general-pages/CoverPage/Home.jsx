@@ -12,6 +12,7 @@ const images = [
   "CoverImages/image3.jpg",
   "CoverImages/image5.jpg",
 
+  // Add more image paths as needed
 ];
 
 export default function Coverpage() {

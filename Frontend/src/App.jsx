@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import AddPhoto from "./pages/photo-archive/add-photo";
-import Coverpage from "./pages/general-pages/CoverPage/Homepage";
+import Coverpage from "./pages/general-pages/CoverPage/Home";
 import Signup from "./pages/general-pages/Signup/signup";
 import Login from "./pages/general-pages/Login/login";
 import Forgotpassword from "./pages/general-pages/PasswordPage/passwordpage";
