@@ -20,7 +20,11 @@ const defaultTheme = createTheme();
 
 export default function Login() {
   const { mutate } = useLogin();
-  const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
 
   const handleCloseSnackbar = () => {
     setSnackbar({ ...snackbar, open: false });
@@ -37,11 +41,19 @@ export default function Login() {
       {
         onSuccess: () => {
           // Show success Snackbar
-          setSnackbar({ open: true, message: "Login Successful", severity: "success" });
+          setSnackbar({
+            open: true,
+            message: "Login Successful",
+            severity: "success",
+          });
         },
         onError: () => {
           // Show error Snackbar
-          setSnackbar({ open: true, message: "Login Failed", severity: "error" });
+          setSnackbar({
+            open: true,
+            message: "Login Failed",
+            severity: "error",
+          });
         },
       }
     );
@@ -179,15 +191,20 @@ export default function Login() {
               </Grid>
             </Box>
             <Snackbar
-  open={snackbar.open}
-  autoHideDuration={6000}
-  onClose={handleCloseSnackbar}
-  anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
->
-  <MuiAlert elevation={6} variant="filled" onClose={handleCloseSnackbar} severity={snackbar.severity}>
-    {snackbar.message}
-  </MuiAlert>
-</Snackbar>
+              open={snackbar.open}
+              autoHideDuration={6000}
+              onClose={handleCloseSnackbar}
+              anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            >
+              <MuiAlert
+                elevation={6}
+                variant="filled"
+                onClose={handleCloseSnackbar}
+                severity={snackbar.severity}
+              >
+                {snackbar.message}
+              </MuiAlert>
+            </Snackbar>
           </Box>
         </Grid>
       </Grid>
