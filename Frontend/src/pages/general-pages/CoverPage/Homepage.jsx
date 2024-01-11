@@ -1,35 +1,103 @@
-import React from "react";
-import BannerBackground from "../Assets/home-banner-background.png";
-import BannerImage from "../Assets/home-banner-image.png";
-import Navbar from "./NAVBAR.jsx";
-import { FiArrowRight } from "react-icons/fi";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
-const Home = () => {
+const images = [
+  "CoverImages/image1.jpg",
+  "CoverImages/image2.jpg",
+  "CoverImages/image3.jpg",
+  "CoverImages/image5.jpg",
+
+  // Add more image paths as needed
+];
+
+export default function Coverpage() {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    // Change the image every 5 seconds
+    const intervalId = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 5000);
+
+    return () => clearInterval(intervalId); // Cleanup interval on component unmount
+  }, []);
+
+  const currentImage = images[currentImageIndex];
+
   return (
-    <div className="home-container">
-      <Navbar />
-      <div className="home-banner-container">
-        <div className="home-bannerImage-container">
-          <img src={BannerBackground} alt="" />
-        </div>
-        <div className="home-text-section">
-          <h1 className="primary-heading">
-            Your Favourite Food Delivered Hot & Fresh
-          </h1>
-          <p className="primary-text">
-            Healthy switcher chefs do all the prep work, like peeling, chopping
-            & marinating, so you can cook a fresh food.
-          </p>
-          <button className="secondary-button">
-            Order Now <FiArrowRight />{" "}
-          </button>
-        </div>
-        <div className="home-image-section">
-          <img src={BannerImage} alt="" />
-        </div>
-      </div>
-    </div>
+    <Box
+      sx={{
+        flexGrow: 1,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <AppBar
+        position="static"
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 1000,
+        }}
+        sx={{ background: "black" }}
+      >
+        <Toolbar>
+          <Typography
+            variant="h5"
+            component="div"
+            sx={{
+              flexGrow: 1,
+              fontFamily: "Brush Script MT",
+            }}
+          >
+            CSED
+          </Typography>
+          <Link to="/login">
+            <Button color="inherit" sx={{ color: "white" }}>
+              Login
+            </Button>
+          </Link>
+          <Link to="/signup">
+            <Button color="inherit" sx={{ color: "white" }}>
+              Signup
+            </Button>
+          </Link>
+        </Toolbar>
+      </AppBar>
+      <Box sx={{ flex: 1, textAlign: "center", marginTop: "80px" }}>
+        <img
+          src={currentImage}
+          alt="Slideshow"
+          style={{
+            width: "400px", // Adjust the width as needed
+            height: "auto",
+            display: "block",
+            margin: "0 auto",
+            // marginTop: "10px",
+          }}
+        />
+        <Typography
+          variant="h1"
+          component="div"
+          sx={{
+            fontFamily: "Brush Script MT",
+            color: "black",
+            margin: "90px",
+            marginTop: "0px",
+            marginBottom: "0px",
+          }}
+        >
+          Welcome to the CSED Community
+        </Typography>
+      </Box>
+    </Box>
   );
-};
-
-export default Home;
+}
