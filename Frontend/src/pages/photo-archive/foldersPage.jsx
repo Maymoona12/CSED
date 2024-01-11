@@ -1,8 +1,5 @@
 //folderspage:
 import React, { useState } from "react";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import FilterRoundedIcon from "@mui/icons-material/FilterRounded";
 import { useNavigate } from "react-router-dom";
 
