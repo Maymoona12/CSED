@@ -36,6 +36,7 @@ function App() {
         <Route path="/passwordpage" element={<Forgotpassword />} />
 
         <Route path="/me" element={<AppLayout />}>
+          <Route path="unauthorized" element={<Unauthorized />} />
           <Route element={<ProtectedRoutes />}>
             <Route path="Home" element={<Home />} />
           </Route>

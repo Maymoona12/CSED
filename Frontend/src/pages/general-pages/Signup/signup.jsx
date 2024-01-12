@@ -42,17 +42,17 @@ export default function Signup() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const username = data.get("user_name");
-    const studentNumber = data.get("student_number");
+    const name = data.get("name");
+    const reg_no = data.get("reg_no");
     const email = data.get("email");
     const password = data.get("password");
-    const confrimpassword = data.get("confirm_password");
+    const password_confirmation = data.get("password_confirmation");
 
-    mutate({ username, studentNumber, email, password, confrimpassword });
+    mutate({ name, reg_no, email, password, password_confirmation });
 
     const enteredEmail = data.get("email");
     const enteredPassword = data.get("password");
-    const enteredConfirmPassword = data.get("confirm_password");
+    const enteredConfirmPassword = data.get("password_confirmation");
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(enteredEmail)) {
@@ -145,9 +145,9 @@ export default function Signup() {
                 margin="normal"
                 required
                 fullWidth
-                id="user_name"
+                id="name"
                 label="User Name"
-                name="user_name"
+                name="name"
                 autoComplete="user_name"
                 autoFocus
               />
@@ -155,9 +155,9 @@ export default function Signup() {
                 margin="normal"
                 required
                 fullWidth
-                id="student_number"
+                id="reg_no"
                 label="Student Number"
-                name="student_number"
+                name="reg_no"
                 autoComplete="student_number"
               />
               <TextField
@@ -184,10 +184,10 @@ export default function Signup() {
                 margin="normal"
                 required
                 fullWidth
-                name="confirm_password"
+                name="password_confirmation"
                 label="Confirm Password"
                 type="password"
-                id="confirm_password"
+                id="password_confirmation"
                 autoComplete="current-password"
               />
               <Button

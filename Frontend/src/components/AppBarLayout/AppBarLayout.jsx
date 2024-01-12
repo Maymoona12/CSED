@@ -23,6 +23,8 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import { styled } from "@mui/system";
 import useAuth from "../../hooks/useAuth";
+import useLogout from "../../api/Logout/useLogout";
+import { useNavigate } from "react-router-dom";
 
 const StyledButton = styled(Button)({
   my: 2,
@@ -43,7 +45,8 @@ const AppBarLayout = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const onSetAnchorElUser = (closedAnchor) => setAnchorElUser(closedAnchor);
   const open = Boolean(anchorElUser);
-
+  const { logoutOperation } = useLogout();
+  const navigate = useNavigate();
   const { getUser } = useAuth();
   const user = getUser();
 
@@ -73,7 +76,6 @@ const AppBarLayout = () => {
     "AddAppointment",
     "ArchivePage",
     "AddPhoto",
-    "Logout",
   ];
 
   const settings2 = [
@@ -82,10 +84,9 @@ const AppBarLayout = () => {
     "ChangePassword",
     "AddAppointment",
     "ArchivePage",
-    "Logout",
   ];
 
-  const settings3 = ["AdminPage", "Logout"];
+  const settings3 = ["AdminPage"];
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -116,6 +117,16 @@ const AppBarLayout = () => {
 
   const handleCloseDialog = () => {
     setDialogOpen(false);
+  };
+
+  const handleLogout = () => {
+    logoutOperation();
+    handleCloseUserMenu();
+  };
+
+  const onClick = (path) => {
+    navigate(`/me/${path}`);
+    handleCloseUserMenu();
   };
 
   return (
@@ -260,6 +271,7 @@ const AppBarLayout = () => {
                         </Link>
                       </MenuItem>
                     ))}
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </Menu>
               </Stack>
             </Toolbar>
