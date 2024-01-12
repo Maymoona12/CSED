@@ -11,7 +11,7 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Link as RouterLink } from "react-router-dom";
+import { Navigate, Link as RouterLink } from "react-router-dom";
 import useLogin from "../../LoginApi/useLogin";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
@@ -63,6 +63,13 @@ export default function Login() {
       password: data.get("password"),
     });
   };
+  const accessToken = localStorage.getItem("access-token");
+  const isEmptyToken = (token) => {
+    return !token || token === "";
+  };
+  const isLogin = !isEmptyToken(accessToken);
+  if (isLogin)
+    return <Navigate to="/me" replace state={{ from: location.pathname }} />;
 
   return (
     <ThemeProvider theme={defaultTheme}>
