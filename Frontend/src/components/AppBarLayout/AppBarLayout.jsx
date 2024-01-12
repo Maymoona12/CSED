@@ -75,6 +75,7 @@ const AppBarLayout = () => {
     "AddPhoto",
     "Logout",
   ];
+
   const settings2 = [
     "StudentProfile",
     "LecturersProfile",
@@ -83,6 +84,8 @@ const AppBarLayout = () => {
     "ArchivePage",
     "Logout",
   ];
+
+  const settings3 = ["Logout"];
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -237,6 +240,17 @@ const AppBarLayout = () => {
                     ))}
                   {user?.role == "student" &&
                     settings2.map((setting) => (
+                      <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                        <Link
+                          to={`/me/${setting}`}
+                          style={{ textDecoration: "none", color: "black" }}
+                        >
+                          <Typography>{setting}</Typography>
+                        </Link>
+                      </MenuItem>
+                    ))}
+                  {user?.role == "admin" &&
+                    settings3.map((setting) => (
                       <MenuItem key={setting} onClick={handleCloseUserMenu}>
                         <Link
                           to={`/me/${setting}`}
