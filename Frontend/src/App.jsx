@@ -40,7 +40,7 @@ function App() {
             <Route path="Home" element={<Home />} />
           </Route>
 
-          <Route element={<ProtectedRoutes allowedRoles={doctor} />}>
+          <Route element={<ProtectedRoutes allowedRoles={[doctor]} />}>
             <Route path="/me/LectureProfile" element={<LectureProfile />} />
             <Route path="/me/EditProfile" element={<EditProfile />} />
             <Route
@@ -51,19 +51,19 @@ function App() {
             <Route path="/me/AddPhoto" element={<AddPhoto />} />
           </Route>
 
-          <Route element={<ProtectedRoutes allowedRoles={student} />}>
+          <Route element={<ProtectedRoutes allowedRoles={[student]} />}>
             <Route path="/me/StudentProfile" element={<StudentProfile />} />
             <Route path="/me/LecturersProfile" element={<LecturerProfiles />} />
             <Route path="/me/ChangePassword" element={<ChangePassword />} />
             <Route path="/me/AddAppointment" element={<BookAppointment />} />
           </Route>
 
-          <Route element={<ProtectedRoutes allowedRoles={(doctor, student)} />}>
+          <Route element={<ProtectedRoutes allowedRoles={[doctor, student]} />}>
             <Route path="/me/ArchivePage" element={<FoldersPage />} />
             <Route path="PhotosPage/:folderId" element={<PhotosPage />} />
           </Route>
 
-          <Route element={<ProtectedRoutes allowedRoles={admin} />}>
+          <Route element={<ProtectedRoutes allowedRoles={[admin]} />}>
             <Route path="/me/AdminPage" element={<AdminPage />} />
           </Route>
         </Route>
