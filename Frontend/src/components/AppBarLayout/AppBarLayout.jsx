@@ -22,7 +22,7 @@ import {
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import { styled } from "@mui/system";
-import Menu1 from "../Account Menu/Menu1";
+import useAuth from "../../hooks/useAuth";
 
 const StyledButton = styled(Button)({
   my: 2,
@@ -43,6 +43,9 @@ const AppBarLayout = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const onSetAnchorElUser = (closedAnchor) => setAnchorElUser(closedAnchor);
   const open = Boolean(anchorElUser);
+
+  const { getUser } = useAuth();
+  const user = getUser();
 
   const announcements = [
     {
@@ -70,6 +73,14 @@ const AppBarLayout = () => {
     "AddAppointment",
     "ArchivePage",
     "AddPhoto",
+    "Logout",
+  ];
+  const settings2 = [
+    "StudentProfile",
+    "LecturersProfile",
+    "ChangePassword",
+    "AddAppointment",
+    "ArchivePage",
     "Logout",
   ];
 
@@ -213,16 +224,28 @@ const AppBarLayout = () => {
                   onClick={handleCloseUserMenu}
                   sx={{ mt: 5 }}
                 >
-                  {settings1.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                      <Link
-                        to={`/me/${setting}`}
-                        style={{ textDecoration: "none", color: "black" }}
-                      >
-                        <Typography>{setting}</Typography>
-                      </Link>
-                    </MenuItem>
-                  ))}
+                  {user?.role == "doctor" &&
+                    settings1.map((setting) => (
+                      <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                        <Link
+                          to={`/me/${setting}`}
+                          style={{ textDecoration: "none", color: "black" }}
+                        >
+                          <Typography>{setting}</Typography>
+                        </Link>
+                      </MenuItem>
+                    ))}
+                  {user?.role == "student" &&
+                    settings2.map((setting) => (
+                      <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                        <Link
+                          to={`/me/${setting}`}
+                          style={{ textDecoration: "none", color: "black" }}
+                        >
+                          <Typography>{setting}</Typography>
+                        </Link>
+                      </MenuItem>
+                    ))}
                 </Menu>
               </Stack>
             </Toolbar>

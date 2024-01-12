@@ -23,9 +23,10 @@ import BookAppointment from "./pages/Appointment/BookAppointment";
 import ProtectedRoutes from "./utils/ProtectedRoutes ";
 import AppLayout from "./components/AppLayout";
 import Unauthorized from "./components/Unauthorized";
-import AddAPhoto from "@mui/icons-material/AddAPhoto";
+import { userRole } from "./role";
 
 function App() {
+  const { admin, doctor, student } = userRole;
   return (
     <>
       <Routes>
@@ -35,22 +36,30 @@ function App() {
         <Route path="/passwordpage" element={<Forgotpassword />} />
 
         <Route path="/me" element={<AppLayout />}>
-          <Route element={ProtectedRoutes}>
+          <Route element={<ProtectedRoutes />}>
             <Route path="Home" element={<Home />} />
-            <Route path="/me/LectureProfile" element={<LectureProfile />} />
-            <Route path="/me/EditProfile" element={<EditProfile />} />
-            <Route
-              path="/me/PostAnnouncement"
-              element={<PostAnnouncementPage />}
-            />
-            <Route path="/me/AddAppointment" element={<Appointment />} />
-            <Route path="/me/AddPhoto" element={<AddPhoto />} />
+          </Route>
+
+          {/* <Route element={ProtectedRoutes}> */}
+          <Route path="/me/LectureProfile" element={<LectureProfile />} />
+          <Route path="/me/EditProfile" element={<EditProfile />} />
+          <Route
+            path="/me/PostAnnouncement"
+            element={<PostAnnouncementPage />}
+          />
+          <Route path="/me/AddAppointment" element={<Appointment />} />
+          <Route path="/me/AddPhoto" element={<AddPhoto />} />
+          {/* <Route path="/ArchivePage" element={<FoldersPage />} />
+            <Route path="/PhotosPage/:folderId" element={<PhotosPage />} /> */}
+          {/* </Route> */}
+          <Route element={ProtectedRoutes}>
             <Route path="/me/StudentProfile" element={<StudentProfile />} />
             <Route path="/me/LecturersProfile" element={<LecturerProfiles />} />
-            <Route path="/me/ArchivePage" element={<FoldersPage />} />
-            <Route path="/me/PhotosPage/:folderId" element={<PhotosPage />} />
             <Route path="/me/ChangePassword" element={<ChangePassword />} />
             <Route path="/me/AddAppointment" element={<BookAppointment />} />
+          </Route>
+
+          <Route element={ProtectedRoutes}>
             <Route path="/me/AdminPage" element={<AdminPage />} />
           </Route>
         </Route>
