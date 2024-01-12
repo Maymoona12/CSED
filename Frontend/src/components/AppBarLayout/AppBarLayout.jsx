@@ -85,7 +85,7 @@ const AppBarLayout = () => {
     "Logout",
   ];
 
-  const settings3 = ["Logout"];
+  const settings3 = ["AdminPage", "Logout"];
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
