@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import AddPhoto from "./pages/photo-archive/add-photo";
-import Coverpage from "./pages/general-pages/CoverPage/Home";
+import Landingpage from"./pages/general-pages/CoverPage/Landingpage";
 import Signup from "./pages/general-pages/Signup/signup";
 import Login from "./pages/general-pages/Login/login";
 import Forgotpassword from "./pages/general-pages/PasswordPage/passwordpage";
@@ -30,40 +30,36 @@ function App() {
   return (
     <>
       <Routes>
-        {/* <Route path="/" element={<AddPhoto />} /> */}
-        <Route path="/" element={<Coverpage />} />
-        <Route path="login" element={<Login />} />
-        <Route path="signup" element={<Signup />} />
-        <Route path="passwordpage" element={<Forgotpassword />} />
+        <Route path="/*" element={<Landingpage/>} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/passwordpage" element={<Forgotpassword />} />
+
         <Route path="/me" element={<AppLayout />}>
           <Route element={<ProtectedRoutes />}>
             <Route path="Home" element={<Home />} />
           </Route>
 
-          <Route element={<ProtectedRoutes allowedRoles={[doctor]} />}>
-            <Route path="/me/LectureProfile" element={<LectureProfile />} />
-            <Route path="/me/EditProfile" element={<EditProfile />} />
-            <Route
-              path="/me/PostAnnouncement"
-              element={<PostAnnouncementPage />}
-            />
-            <Route path="/me/AddAppointment" element={<Appointment />} />
-            <Route path="/me/AddPhoto" element={<AddPhoto />} />
-          </Route>
-
-          <Route element={<ProtectedRoutes allowedRoles={[student]} />}>
+          {/* <Route element={ProtectedRoutes}> */}
+          <Route path="/me/LectureProfile" element={<LectureProfile />} />
+          <Route path="/me/EditProfile" element={<EditProfile />} />
+          <Route
+            path="/me/PostAnnouncement"
+            element={<PostAnnouncementPage />}
+          />
+          <Route path="/me/AddAppointment" element={<Appointment />} />
+          <Route path="/me/AddPhoto" element={<AddPhoto />} />
+          {/* <Route path="/ArchivePage" element={<FoldersPage />} />
+            <Route path="/PhotosPage/:folderId" element={<PhotosPage />} /> */}
+          {/* </Route> */}
+          <Route element={ProtectedRoutes}>
             <Route path="/me/StudentProfile" element={<StudentProfile />} />
             <Route path="/me/LecturersProfile" element={<LecturerProfiles />} />
             <Route path="/me/ChangePassword" element={<ChangePassword />} />
             <Route path="/me/AddAppointment" element={<BookAppointment />} />
           </Route>
 
-          <Route element={<ProtectedRoutes allowedRoles={[doctor, student]} />}>
-            <Route path="/me/ArchivePage" element={<FoldersPage />} />
-            <Route path="/me/PhotosPage/:folderId" element={<PhotosPage />} />
-          </Route>
-
-          <Route element={<ProtectedRoutes allowedRoles={[admin]} />}>
+          <Route element={ProtectedRoutes}>
             <Route path="/me/AdminPage" element={<AdminPage />} />
           </Route>
         </Route>
@@ -71,4 +67,6 @@ function App() {
     </>
   );
 }
+
 export default App;
+
