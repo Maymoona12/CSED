@@ -1,9 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
 import { signup } from "./index";
 import useAuth from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const useSignup = () => {
   const { onLogin } = useAuth();
+  const navigate = useNavigate();
   const { mutate } = useMutation({
     mutationFn: signup,
     onSuccess: (data) => {
@@ -13,6 +15,7 @@ const useSignup = () => {
       localStorage.setItem("user", JSON.stringify(data.user));
       onLogin(data?.data, { shouldNavigate: true });
       //Snackbar
+      navigate("/login");
     },
     onError: (error) => {
       //Snackbar
