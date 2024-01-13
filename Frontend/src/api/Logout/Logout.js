@@ -1,6 +1,6 @@
 import axiosInstance from "../index";
 
-const Logout = async () => {
+const Logout = async (data) => {
   const url = "/logout";
   return axiosInstance
     .post(url, {

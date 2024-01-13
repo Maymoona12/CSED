@@ -13,7 +13,7 @@ const images = [
   // Add more image paths as needed
 ];
 
-export default function Coverpage() {
+export default function Homepage() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
@@ -88,7 +88,7 @@ export default function Coverpage() {
               sx={{
                 color: "white",
                 marginRight: "25px",
-                "&:hover": { color: "lightblue", },
+                "&:hover": { color: "lightblue" },
               }}
             >
               Feature
@@ -106,7 +106,8 @@ export default function Coverpage() {
               Contact
             </Button>
           </Link>
-          <Box sx={{ minWidth: "190px" }} /> {/* Add a big space between buttons */}
+          <Box sx={{ minWidth: "190px" }} />{" "}
+          {/* Add a big space between buttons */}
           <Link to="/login">
             <Button
               color="inherit"
@@ -132,7 +133,15 @@ export default function Coverpage() {
           </Link>
         </Toolbar>
       </AppBar>
-      <Box sx={{ flex: 1, textAlign: "center", marginTop: "80px", display: "flex", justifyContent: "space-between" }}>
+      <Box
+        sx={{
+          flex: 1,
+          textAlign: "center",
+          marginTop: "80px",
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
         <div style={{ flex: 1, textAlign: "center" }}>
           <Typography
             variant="h3"
@@ -144,7 +153,9 @@ export default function Coverpage() {
               marginBottom: "0px",
             }}
           >
-           “Coding, it's an endless process of trial and error, of trying to get the right command in the right place, with sometimes just a semicolon making the difference between success and failure."
+            “Coding, it's an endless process of trial and error, of trying to
+            get the right command in the right place, with sometimes just a
+            semicolon making the difference between success and failure."
           </Typography>
         </div>
         <div>
@@ -155,7 +166,6 @@ export default function Coverpage() {
               width: "500px", // Adjust the width as needed
               height: "auto",
               display: "block",
-             
             }}
           />
         </div>
