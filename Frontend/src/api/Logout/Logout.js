@@ -5,7 +5,7 @@ const Logout = async (data) => {
   return axiosInstance
     .post(url, {
       headers: {
-        "access-token": localStorage.getItem("access-token") ?? "",
+        Authorization: "Bearer " + localStorage.getItem("access_token")
       },
     })
     .then((res) => res.data);
