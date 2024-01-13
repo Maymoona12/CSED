@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Routes, Route, Link } from "react-router-dom";
-import Coverpage from "./../../../pages/general-pages/CoverPage/Homepage";
-import About from "./../../../pages/general-pages/CoverPage/About";
-import Feature from "./../../../pages/general-pages/CoverPage/Feature";
-import Contact from "./../../../pages/general-pages/CoverPage/Contact";
-import Footer from "./../../../pages/general-pages/CoverPage/Footer";
+import HomePage from "./Homepage";
+import About from "./About";
+import Feature from "./Feature";
+import Contact from "./Contact";
+import Footer from "./Footer";
 
 const LandingPage = () => {
   const scrollToSection = (section) => {
@@ -18,7 +18,7 @@ const LandingPage = () => {
     <div>
       <nav>
         {/* Add navigation links with onClick to trigger smooth scroll */}
-        <Link to="/" onClick={() => scrollToSection("coverpage")}>
+        <Link to="/" onClick={() => scrollToSection("homePage")}>
           Home
         </Link>
         <Link to="/about" onClick={() => scrollToSection("about")}>
@@ -37,11 +37,11 @@ const LandingPage = () => {
           path="/"
           element={
             <div>
-              <div id="coverpage">
-                <Coverpage />
+              <div id="homePage">
+                <HomePage />
               </div>
               <div id="about">
-                <About/>
+                <About />
               </div>
               <div id="feature">
                 <Feature />
