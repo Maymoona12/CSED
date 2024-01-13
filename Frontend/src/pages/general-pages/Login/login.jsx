@@ -15,6 +15,10 @@ import { Navigate, Link as RouterLink } from "react-router-dom";
 import useLogin from "../../LoginApi/useLogin";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const defaultTheme = createTheme();
 
@@ -25,9 +29,14 @@ export default function Login() {
     message: "",
     severity: "success",
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleCloseSnackbar = () => {
     setSnackbar({ ...snackbar, open: false });
+  };
+
+  const handleTogglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
   };
 
   const handleSubmit = (event) => {
@@ -38,24 +47,6 @@ export default function Login() {
 
     mutate(
       { email, password },
-      {
-        onSuccess: () => {
-          // Show success Snackbar
-          setSnackbar({
-            open: true,
-            message: "Login Successful",
-            severity: "success",
-          });
-        },
-        onError: () => {
-          // Show error Snackbar
-          setSnackbar({
-            open: true,
-            message: "Login Failed",
-            severity: "error",
-          });
-        },
-      }
     );
 
     console.log({
@@ -63,6 +54,7 @@ export default function Login() {
       password: data.get("password"),
     });
   };
+
   const accessToken = localStorage.getItem("access-token");
   const isEmptyToken = (token) => {
     return !token || token === "";
@@ -124,9 +116,21 @@ export default function Login() {
                 fullWidth
                 name="password"
                 label="Password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 id="password"
                 autoComplete="current-password"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        edge="end"
+                        onClick={handleTogglePasswordVisibility}
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
