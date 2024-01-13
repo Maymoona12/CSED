@@ -76,36 +76,13 @@ export default function Login() {
       <Grid
         container
         component="main"
-        sx={{ height: "100%", alignItems: "flex-start" }}
+        sx={{
+          height: "100vh",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
         <CssBaseline />
-        <Grid item xs={12} sm={4} md={7}>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              margin: "16px",
-            }}
-          >
-            <img
-              src="./CoverImages/Logo.png"
-              alt="Logo"
-              style={{ width: "500px", height: "auto" }}
-            />
-            <Typography
-              variant="h1"
-              sx={{
-                mt: 2,
-                color: "black",
-                textAlign: "center",
-                fontFamily: "Brush script MT",
-              }}
-            >
-              Welcome Back
-            </Typography>
-          </Box>
-        </Grid>
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
