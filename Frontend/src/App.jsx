@@ -44,7 +44,7 @@ function App() {
             <Route path="Home" element={<Home />} />
           </Route>
 
-          <Route element={<ProtectedRoutes allowedRoles={[doctor]} />}>
+          <Route element={<ProtectedRoutes allowedRoles={[doctor, admin]} />}>
             <Route path="/me/LectureProfile" element={<LectureProfile />} />
             <Route path="/me/EditProfile" element={<EditProfile />} />
             <Route
@@ -53,12 +53,14 @@ function App() {
             />
             <Route path="/me/AddAppointment" element={<Appointment />} />
             <Route path="/me/AddPhoto" element={<AddPhoto />} />
+            <Route path="/me/AdminPage" element={<AdminPage />} />
           </Route>
 
           <Route element={<ProtectedRoutes allowedRoles={[student]} />}>
             <Route path="/me/StudentProfile" element={<StudentProfile />} />
             <Route path="/me/LecturersProfile" element={<LecturerProfiles />} />
             <Route path="/me/ChangePassword" element={<ChangePassword />} />
+            <Route path="/me/BookAppointment" element={<BookAppointment />} />
           </Route>
 
           <Route element={<ProtectedRoutes allowedRoles={[doctor, student]} />}>
@@ -66,9 +68,9 @@ function App() {
             <Route path="PhotosPage/:folderId" element={<PhotosPage />} />
           </Route>
 
-          <Route element={<ProtectedRoutes allowedRoles={[admin]} />}>
+          {/* <Route element={<ProtectedRoutes allowedRoles={[admin]} />}>
             <Route path="/me/AdminPage" element={<AdminPage />} />
-          </Route>
+          </Route> */}
         </Route>
       </Routes>
       <Snackbar />
