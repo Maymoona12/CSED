@@ -120,8 +120,10 @@ const AppBarLayout = () => {
   };
 
   const handleLogout = () => {
+    
     logoutOperation();
     handleCloseUserMenu();
+
   };
 
   const onClick = (path) => {
