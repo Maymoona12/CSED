@@ -1,7 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import AddPhoto from "./pages/photo-archive/add-photo";
-import Landingpage from "./pages/general-pages/CoverPage/Landingpage";
 import Signup from "./pages/general-pages/Signup/signup";
 import Login from "./pages/general-pages/Login/login";
 import Forgotpassword from "./pages/general-pages/PasswordPage/passwordpage";
@@ -24,13 +23,15 @@ import ProtectedRoutes from "./utils/ProtectedRoutes ";
 import AppLayout from "./components/AppLayout";
 import Unauthorized from "./components/Unauthorized";
 import { userRole } from "./role";
-
+import LandingPage from "./pages/general-pages/CoverPage/Landingpage";
 function App() {
   const { admin, doctor, student } = userRole;
   return (
     <>
       <Routes>
-        <Route path="/*" element={<Landingpage />} />
+        <Route path="" element={<LandingPage />} />
+        <Route path="/landingPage" element={<LandingPage />} />
+
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/passwordpage" element={<Forgotpassword />} />

@@ -8,6 +8,9 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
@@ -18,7 +21,6 @@ const Alert = (props) => {
 };
 
 const isStrongPassword = (password) => {
-  // Customize the password strength criteria as needed
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   return passwordRegex.test(password);
@@ -29,6 +31,8 @@ const defaultTheme = createTheme();
 export default function Signup() {
   const [open, setOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const { mutate } = useSignup();
 
   const handleClose = (event, reason) => {
@@ -37,6 +41,14 @@ export default function Signup() {
     }
 
     setOpen(false);
+  };
+
+  const handleTogglePasswordVisibility = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
+
+  const handleToggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword((prevShowConfirmPassword) => !prevShowConfirmPassword);
   };
 
   const handleSubmit = (event) => {
@@ -69,14 +81,14 @@ export default function Signup() {
 
     if (!isStrongPassword(enteredPassword)) {
       setAlertMessage(
-        "  Password must be strong (at least 8 characters including one uppercase letter one lowercase letter, one digit, and one special character) !"
+        "  Password must be strong (at least 8 characters including one uppercase letter, one lowercase letter, one digit, and one special character) !"
       );
       setOpen(true);
       return;
     }
 
     console.log({
-      username: data.get("user_name"),
+      username: data.get("name"),
       email: enteredEmail,
       password: enteredPassword,
     });
@@ -87,36 +99,9 @@ export default function Signup() {
       <Grid
         container
         component="main"
-        sx={{ height: "100%", alignItems: "flex-start" }}
+        sx={{ height: "100vh", justifyContent: "center", alignItems: "center" }}
       >
         <CssBaseline />
-        <Grid item xs={12} sm={4} md={7}>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              margin: "16px",
-            }}
-          >
-            <img
-              src="./CoverImages/Logo.png"
-              alt="Logo"
-              style={{ width: "500px", height: "auto" }}
-            />
-            <Typography
-              variant="h1"
-              sx={{
-                mt: 2,
-                color: "black",
-                textAlign: "center",
-                fontFamily: "Brush Script MT",
-              }}
-            >
-              Welcome
-            </Typography>
-          </Box>
-        </Grid>
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
@@ -125,14 +110,14 @@ export default function Signup() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              padding: "40px",
+              padding: "10px 60px", // Adjusted padding
               margin: "auto",
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: "black" }}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component="h1" variant="h5">
+            <Typography component="h1" variant="h5" sx={{ fontSize: "1.5rem" }}> {/* Adjusted font size */}
               Sign Up
             </Typography>
             <Box
@@ -176,9 +161,19 @@ export default function Signup() {
                 fullWidth
                 name="password"
                 label="Password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 id="password"
                 autoComplete="current-password"
+                InputProps={{
+                  endAdornment: (
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleTogglePasswordVisibility}
+                    >
+                      {showPassword ? <VisibilitIcony /> : <VisibilityOffIcon />}
+                    </IconButton>
+                  ),
+                }}
               />
               <TextField
                 margin="normal"
@@ -186,9 +181,19 @@ export default function Signup() {
                 fullWidth
                 name="password_confirmation"
                 label="Confirm Password"
-                type="password"
+                type={showConfirmPassword ? "text" : "password"}
                 id="password_confirmation"
                 autoComplete="current-password"
+                InputProps={{
+                  endAdornment: (
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleToggleConfirmPasswordVisibility}
+                    >
+                      {showConfirmPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                    </IconButton>
+                  ),
+                }}
               />
               <Button
                 className="signup"
@@ -211,7 +216,6 @@ export default function Signup() {
         </Grid>
       </Grid>
 
-      {/* Snackbar outside the grid for global positioning */}
       <Snackbar
         open={open}
         autoHideDuration={10000}

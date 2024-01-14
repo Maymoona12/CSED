@@ -11,6 +11,10 @@ import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const Alert = (props) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -27,13 +31,31 @@ const defaultTheme = createTheme();
 export default function Changepassword() {
   const [open, setOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
-
     setOpen(false);
+  };
+
+  const handleTogglePasswordVisibility = (passwordType) => {
+    switch (passwordType) {
+      case "current":
+        setShowCurrentPassword(!showCurrentPassword);
+        break;
+      case "new":
+        setShowNewPassword(!showNewPassword);
+        break;
+      case "confirm":
+        setShowConfirmPassword(!showConfirmPassword);
+        break;
+      default:
+        break;
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -93,38 +115,16 @@ export default function Changepassword() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <Grid
+       marginTop={-8}
         container
         component="main"
-        sx={{ height: "100%", alignItems: "flex-start" }}
+        sx={{
+          height: "100vh",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
         <CssBaseline />
-        <Grid item xs={12} sm={4} md={7}>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              margin: "16px",
-            }}
-          >
-            <img
-              src="./CoverImages/Logo.png"
-              alt="Logo"
-              style={{ width: "500px", height: "auto" }}
-            />
-            <Typography
-              variant="h1"
-              sx={{
-                mt: 2,
-                color: "black",
-                textAlign: "center",
-                fontFamily: "Brush Script MT",
-              }}
-            >
-              CSED
-            </Typography>
-          </Box>
-        </Grid>
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
@@ -133,7 +133,7 @@ export default function Changepassword() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              padding: "40px",
+              padding: "10px 60px",
               margin: "auto",
             }}
           >
@@ -155,9 +155,25 @@ export default function Changepassword() {
                 fullWidth
                 name="current_password"
                 label="Current Password"
-                type="password"
+                type={showCurrentPassword ? "text" : "password"}
                 id="current_password"
                 autoComplete="current-password"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={() => handleTogglePasswordVisibility("current")}
+                        edge="end"
+                      >
+                        {showCurrentPassword ? (
+                          <VisibilityIcon />
+                        ) : (
+                          <VisibilityOffIcon />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
               <TextField
                 margin="normal"
@@ -165,9 +181,25 @@ export default function Changepassword() {
                 fullWidth
                 name="new_password"
                 label="New Password"
-                type="password"
+                type={showNewPassword ? "text" : "password"}
                 id="new_password"
                 autoComplete="new-password"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={() => handleTogglePasswordVisibility("new")}
+                        edge="end"
+                      >
+                        {showNewPassword ? (
+                          <VisibilityIcon />
+                        ) : (
+                          <VisibilityOffIcon />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
               <TextField
                 margin="normal"
@@ -175,9 +207,27 @@ export default function Changepassword() {
                 fullWidth
                 name="confirm_password"
                 label="Confirm Password"
-                type="password"
+                type={showConfirmPassword ? "text" : "password"}
                 id="confirm_password"
                 autoComplete="new-password"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={() =>
+                          handleTogglePasswordVisibility("confirm")
+                        }
+                        edge="end"
+                      >
+                        {showConfirmPassword ? (
+                          <VisibilityIcon />
+                        ) : (
+                          <VisibilityOffIcon />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
               <Button
                 type="submit"

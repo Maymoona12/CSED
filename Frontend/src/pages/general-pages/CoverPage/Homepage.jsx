@@ -5,7 +5,9 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-
+import About from "./About";
+import Feature from "./Feature";
+import Contact from "./Contact";
 const images = [
   "CoverImages/image2.jpg",
   "CoverImages/image3.jpg",
@@ -15,7 +17,12 @@ const images = [
 
 export default function Homepage() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
+  const scrollToSection = (section) => {
+    // Scroll to the specified section using smooth behavior
+    document.getElementById(section).scrollIntoView({
+      behavior: "smooth",
+    });
+  };
   useEffect(() => {
     // Change the image every 5 seconds
     const intervalId = setInterval(() => {
@@ -28,38 +35,40 @@ export default function Homepage() {
   const currentImage = images[currentImageIndex];
 
   return (
-    <Box
-      sx={{
-        flexGrow: 1,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
-      <AppBar
-        position="static"
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 1000,
+    <>
+    <div id="home">
+      <Box
+        sx={{
+          flexGrow: 1,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
         }}
-        sx={{ background: "black" }}
       >
-        <Toolbar>
-          <Typography
-            variant="h5"
-            component="div"
-            sx={{
-              flexGrow: 1,
-              fontFamily: "Brush Script MT",
-            }}
-          >
-            CSED
-          </Typography>
-          <Link to="/">
+        <AppBar
+          position="static"
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            zIndex: 1000,
+          }}
+          sx={{ background: "black" }}
+        >
+          <Toolbar>
+            <Typography
+              variant="h5"
+              component="div"
+              sx={{
+                flexGrow: 1,
+                fontFamily: "Brush Script MT",
+              }}
+            >
+              CSED
+            </Typography>
             <Button
+              onClick={() => scrollToSection("home")}
               color="inherit"
               sx={{
                 color: "white",
@@ -69,9 +78,8 @@ export default function Homepage() {
             >
               Home
             </Button>
-          </Link>
-          <Link to="/about">
             <Button
+              onClick={() => scrollToSection("about")}
               color="inherit"
               sx={{
                 color: "white",
@@ -81,9 +89,8 @@ export default function Homepage() {
             >
               About
             </Button>
-          </Link>
-          <Link to="/feature">
             <Button
+              onClick={() => scrollToSection("feature")}
               color="inherit"
               sx={{
                 color: "white",
@@ -93,9 +100,8 @@ export default function Homepage() {
             >
               Feature
             </Button>
-          </Link>
-          <Link to="/contact">
             <Button
+              onClick={() => scrollToSection("contact")}
               color="inherit"
               sx={{
                 color: "white",
@@ -105,71 +111,81 @@ export default function Homepage() {
             >
               Contact
             </Button>
-          </Link>
-          <Box sx={{ minWidth: "190px" }} />{" "}
-          {/* Add a big space between buttons */}
-          <Link to="/login">
-            <Button
-              color="inherit"
+            <Box sx={{ minWidth: "190px" }} />{" "}
+            {/* Add a big space between buttons */}
+            <Link to="/login">
+              <Button
+                color="inherit"
+                sx={{
+                  color: "white",
+                  marginRight: "10px",
+                  "&:hover": { backgroundColor: "lightblue" },
+                }}
+              >
+                Log in
+              </Button>
+            </Link>
+            <Link to="/signup">
+              <Button
+                color="inherit"
+                sx={{
+                  color: "white",
+                  "&:hover": { backgroundColor: "lightblue" },
+                }}
+              >
+                Sign up
+              </Button>
+            </Link>
+          </Toolbar>
+        </AppBar>
+        <Box
+          sx={{
+            flex: 1,
+            textAlign: "center",
+            marginTop: "80px",
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <div style={{ flex: 1, textAlign: "center" }}>
+            <Typography
+              variant="h3"
+              component="div"
               sx={{
-                color: "white",
-                marginRight: "10px",
-                "&:hover": { backgroundColor: "lightblue" },
+                fontFamily: "Bradley Hand ITC",
+                color: "black",
+                margin: "85px",
+                marginBottom: "0px",
               }}
             >
-              Log in
-            </Button>
-          </Link>
-          <Link to="/signup">
-            <Button
-              color="inherit"
-              sx={{
-                color: "white",
-                "&:hover": { backgroundColor: "lightblue" },
+              “Coding, it's an endless process of trial and error, of trying to
+              get the right command in the right place, with sometimes just a
+              semicolon making the difference between success and failure."
+            </Typography>
+          </div>
+          <div>
+            <img
+              src={currentImage}
+              alt="Slideshow"
+              style={{
+                width: "500px", // Adjust the width as needed
+                height: "auto",
+                display: "block",
               }}
-            >
-              Sign up
-            </Button>
-          </Link>
-        </Toolbar>
-      </AppBar>
-      <Box
-        sx={{
-          flex: 1,
-          textAlign: "center",
-          marginTop: "80px",
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
-        <div style={{ flex: 1, textAlign: "center" }}>
-          <Typography
-            variant="h3"
-            component="div"
-            sx={{
-              fontFamily: "Bradley Hand ITC",
-              color: "black",
-              margin: "85px",
-              marginBottom: "0px",
-            }}
-          >
-            “Coding, it's an endless process of trial and error, of trying to
-            get the right command in the right place, with sometimes just a
-            semicolon making the difference between success and failure."
-          </Typography>
-        </div>
-        <div>
-          <img
-            src={currentImage}
-            alt="Slideshow"
-            style={{
-              width: "500px", // Adjust the width as needed
-              height: "auto",
-              display: "block",
-            }}
-          />
-        </div>
+            />
+          </div>
+        </Box>
       </Box>
-    </Box>
+      </div>
+      <div id="about">
+        <About />
+      </div>
+      <div id="feature">
+        <Feature />
+      </div>
+      <div id="contact">
+        <Contact />
+      </div>
+    </>
   );
 }

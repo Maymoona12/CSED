@@ -3,11 +3,15 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
@@ -36,6 +40,7 @@ export default function Forgotpassword() {
   const [open, setOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [generatedVerificationCode, setGeneratedVerificationCode] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -114,41 +119,18 @@ export default function Forgotpassword() {
     }
   };
 
+  const handleTogglePasswordVisibility = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Grid
         container
         component="main"
-        sx={{ height: "100%", alignItems: "flex-start" }}
+        sx={{ height: "100vh", justifyContent: "center", alignItems: "center" }}
       >
         <CssBaseline />
-        <Grid item xs={12} sm={4} md={7}>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              margin: "16px",
-            }}
-          >
-            <img
-              src="./CoverImages/Logo.png"
-              alt="Logo"
-              style={{ width: "500px", height: "auto" }}
-            />
-            <Typography
-              variant="h1"
-              sx={{
-                mt: 2,
-                color: "black",
-                textAlign: "center",
-                fontFamily: "Brush Script MT",
-              }}
-            >
-              CSED
-            </Typography>
-          </Box>
-        </Grid>
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
@@ -157,7 +139,7 @@ export default function Forgotpassword() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              padding: "40px",
+              padding: "10px 60px",
               margin: "auto",
             }}
           >
@@ -221,9 +203,21 @@ export default function Forgotpassword() {
                 fullWidth
                 name="new_password"
                 label="New Password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 id="new_password"
                 autoComplete="current-password"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        edge="end"
+                        onClick={handleTogglePasswordVisibility}
+                      >
+                        {showPassword ? <Visibility /> : <VisibilityOff  />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
               <TextField
                 margin="normal"
@@ -231,9 +225,21 @@ export default function Forgotpassword() {
                 fullWidth
                 name="confirm_password"
                 label="Confirm Password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 id="confirm_password"
                 autoComplete="current-password"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        edge="end"
+                        onClick={handleTogglePasswordVisibility}
+                      >
+                        {showPassword ? <Visibility /> : <VisibilityOff  />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
               <Button
                 className="signup"
