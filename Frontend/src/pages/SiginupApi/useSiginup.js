@@ -2,9 +2,11 @@ import { useMutation } from "@tanstack/react-query";
 import { signup } from "./index";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import useSnackbar from "../../context/useSnackbar";
 
 const useSignup = () => {
-  const { onSignup} = useAuth();
+  const { showSnackbar } = useSnackbar();
+  const { onSignup } = useAuth();
   const navigate = useNavigate();
   const { mutate } = useMutation({
     mutationFn: signup,
@@ -12,10 +14,12 @@ const useSignup = () => {
       console.log(data);
       console.log(data.data);
       onSignup();
-      //Snackbar
+      showSnackbar({
+        severity: "success",
+        message: "Successfully signup the account",
+      });
     },
     onError: (error) => {
-      //Snackbar
       console.log(error.message);
     },
   });
