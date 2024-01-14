@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             'password'=> '123456789',
             'education_level' => 'Assistant Professor',
             'office_no' => 'H313',
+            'photo'=>'thaer.png',
             // 'phone_no' => '+970 9 2688199',
             'role' => 'admin'
         ]);

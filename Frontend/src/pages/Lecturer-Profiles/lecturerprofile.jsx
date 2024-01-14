@@ -130,7 +130,8 @@ function LecturersProfile() {
   const navigate = useNavigate(); // Use useNavigate instead of useHistory
 
   const handleAddAppointmentClick = () => {
-    <Link to="/me/BookAppointment"></Link> // Use navigate instead of push
+    // Use navigate instead of push
+    navigate("/me/BookAppointment");
   };
 
   return (

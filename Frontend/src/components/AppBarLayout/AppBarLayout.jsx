@@ -85,7 +85,15 @@ const AppBarLayout = () => {
     "ArchivePage",
   ];
 
-  const settings3 = ["AdminPage"];
+  const settings3 = [
+    "AdminPage",
+    "LectureProfile",
+    "EditProfile",
+    "PostAnnouncement",
+    "AddAppointment",
+    "ArchivePage",
+    "AddPhoto",
+  ];
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
