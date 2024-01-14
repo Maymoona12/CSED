@@ -24,6 +24,8 @@ import AppLayout from "./components/AppLayout";
 import Unauthorized from "./components/Unauthorized";
 import { userRole } from "./role";
 import LandingPage from "./pages/general-pages/CoverPage/Landingpage";
+import Snackbar from "./components/Snackbar";
+
 function App() {
   const { admin, doctor, student } = userRole;
   return (
@@ -70,6 +72,7 @@ function App() {
           </Route>
         </Route>
       </Routes>
+      <Snackbar />
     </>
   );
 }

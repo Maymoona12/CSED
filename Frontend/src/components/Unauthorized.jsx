@@ -17,12 +17,14 @@ const Unauthorized = () => {
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
+        marginLeft: "25%",
       }}
     >
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
+          justifyContent: "center",
           alignItems: "center",
           marginBottom: "40px",
         }}
@@ -34,16 +36,26 @@ const Unauthorized = () => {
             flexGrow: 1,
             fontFamily: "Times New Roman",
             marginBottom: "40px",
-            color: "#1976d2",
+            color: "black",
+            textAlign: "center",
           }}
         >
           You do not have access to the requested page!
         </Typography>
 
-        <CircularProgress disableShrink />
+        <CircularProgress disableShrink style={{ color: "black" }} />
       </Box>
-      <div>
-        <Button onClick={goBack}>Go Back</Button>
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Button onClick={goBack} style={{ color: "black" }}>
+          Go Back
+        </Button>
       </div>
     </div>
   );
