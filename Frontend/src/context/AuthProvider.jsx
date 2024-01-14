@@ -5,6 +5,7 @@ export const AuthContext = createContext({
   getUser: () => null,
   onLogin: () => {},
   onLogout: () => {},
+  onSignup: () => {},
 });
 
 export const AuthProvider = ({ children }) => {
@@ -28,6 +29,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const handleSignup = () => {
+      navigate("login", { replace: true });
+  };
+
   const handleLogout = () => {
     setUser(null);
     localStorage.removeItem("user");
@@ -39,6 +44,7 @@ export const AuthProvider = ({ children }) => {
     getUser,
     onLogin: handleLogin,
     onLogout: handleLogout,
+    onSignup: handleSignup,
   };
 
   return (

@@ -23,7 +23,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 const defaultTheme = createTheme();
 
 export default function Login() {
-  const { mutate } = useLogin();
+  const { mutate ,alert,handleClose,open} = useLogin();
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
@@ -126,7 +126,7 @@ export default function Login() {
                         edge="end"
                         onClick={handleTogglePasswordVisibility}
                       >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                        {showPassword ? <Visibility /> : <VisibilityOff  />}
                       </IconButton>
                     </InputAdornment>
                   ),
@@ -178,21 +178,16 @@ export default function Login() {
                 </Grid>
               </Grid>
             </Box>
-            <Snackbar
-              open={snackbar.open}
-              autoHideDuration={6000}
-              onClose={handleCloseSnackbar}
-              anchorOrigin={{ vertical: "top", horizontal: "center" }}
-            >
-              <MuiAlert
-                elevation={6}
-                variant="filled"
-                onClose={handleCloseSnackbar}
-                severity={snackbar.severity}
-              >
-                {snackbar.message}
-              </MuiAlert>
-            </Snackbar>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <MuiAlert
+          elevation={6}
+          variant="filled"
+    onClose={handleClose}
+    severity="success"
+  >
+    {alert}
+    </MuiAlert>
+</Snackbar>
           </Box>
         </Grid>
       </Grid>
