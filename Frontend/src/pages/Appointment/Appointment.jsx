@@ -340,7 +340,7 @@ const Appointment = () => {
             border: "1px solid #ddd",
             padding: "25px",
             borderRadius: "10px",
-            margin: "152px",
+            margin: "100px 64px",
             width: "650px",
             height: "auto",
             display: "none",

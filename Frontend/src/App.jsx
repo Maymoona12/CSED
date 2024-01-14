@@ -59,7 +59,6 @@ function App() {
             <Route path="/me/StudentProfile" element={<StudentProfile />} />
             <Route path="/me/LecturersProfile" element={<LecturerProfiles />} />
             <Route path="/me/ChangePassword" element={<ChangePassword />} />
-            <Route path="/me/AddAppointment" element={<BookAppointment />} />
           </Route>
 
           <Route element={<ProtectedRoutes allowedRoles={[doctor, student]} />}>

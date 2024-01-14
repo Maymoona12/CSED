@@ -82,7 +82,6 @@ const AppBarLayout = () => {
     "StudentProfile",
     "LecturersProfile",
     "ChangePassword",
-    "AddAppointment",
     "ArchivePage",
   ];
 
