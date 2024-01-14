@@ -18,6 +18,10 @@ const useLogout = () => {
     },
     onError: (error) => {
       console.log(error.message);
+      showSnackbar({
+        severity: "error",
+        message: "Failed Logout",
+      });
     },
   });
 

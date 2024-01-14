@@ -21,6 +21,10 @@ const useSignup = () => {
     },
     onError: (error) => {
       console.log(error.message);
+      showSnackbar({
+        severity: "error",
+        message: "Failed signup to your account",
+      });
     },
   });
   return {
