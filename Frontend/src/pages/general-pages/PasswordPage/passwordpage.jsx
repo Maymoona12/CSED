@@ -41,6 +41,7 @@ export default function Forgotpassword() {
   const [alertMessage, setAlertMessage] = useState("");
   const [generatedVerificationCode, setGeneratedVerificationCode] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -119,8 +120,12 @@ export default function Forgotpassword() {
     }
   };
 
-  const handleTogglePasswordVisibility = () => {
-    setShowPassword((prevShowPassword) => !prevShowPassword);
+  const handleTogglePasswordVisibility = (field) => {
+    if (field === 'password') {
+      setShowPassword((prevShowPassword) => !prevShowPassword);
+    } else if (field === 'confirm_password') {
+      setShowConfirmPassword((prevShowConfirmPassword) => !prevShowConfirmPassword);
+    }
   };
 
   return (
@@ -211,9 +216,9 @@ export default function Forgotpassword() {
                     <InputAdornment position="end">
                       <IconButton
                         edge="end"
-                        onClick={handleTogglePasswordVisibility}
+                        onClick={() => handleTogglePasswordVisibility('password')}
                       >
-                        {showPassword ? <Visibility /> : <VisibilityOff  />}
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
                       </IconButton>
                     </InputAdornment>
                   ),
@@ -225,7 +230,7 @@ export default function Forgotpassword() {
                 fullWidth
                 name="confirm_password"
                 label="Confirm Password"
-                type={showPassword ? "text" : "password"}
+                type={showConfirmPassword ? "text" : "password"}
                 id="confirm_password"
                 autoComplete="current-password"
                 InputProps={{
@@ -233,9 +238,9 @@ export default function Forgotpassword() {
                     <InputAdornment position="end">
                       <IconButton
                         edge="end"
-                        onClick={handleTogglePasswordVisibility}
+                        onClick={() => handleTogglePasswordVisibility('confirm_password')}
                       >
-                        {showPassword ? <Visibility /> : <VisibilityOff  />}
+                        {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
                       </IconButton>
                     </InputAdornment>
                   ),
