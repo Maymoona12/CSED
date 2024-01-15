@@ -16,6 +16,7 @@ const useLogout = () => {
         message: "Successfully logout from your account",
       });
     },
+
     onError: (error) => {
       console.log(error.message);
       showSnackbar({
