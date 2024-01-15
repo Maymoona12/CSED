@@ -175,7 +175,7 @@ const PostAnnouncementPage = ({ onSubmit }) => {
                 marginTop: "10px",
                 marginLeft: "330px",
                 padding: "10px 20px",
-                background: "#2196F3",
+                background: "black",
                 color: "white",
                 border: "none",
                 borderRadius: "5px",

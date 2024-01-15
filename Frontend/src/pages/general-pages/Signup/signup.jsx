@@ -48,7 +48,9 @@ export default function Signup() {
   };
 
   const handleToggleConfirmPasswordVisibility = () => {
-    setShowConfirmPassword((prevShowConfirmPassword) => !prevShowConfirmPassword);
+    setShowConfirmPassword(
+      (prevShowConfirmPassword) => !prevShowConfirmPassword
+    );
   };
 
   const handleSubmit = (event) => {
@@ -117,7 +119,9 @@ export default function Signup() {
             <Avatar sx={{ m: 1, bgcolor: "black" }}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component="h1" variant="h5" sx={{ fontSize: "1.5rem" }}> {/* Adjusted font size */}
+            <Typography component="h1" variant="h5" sx={{ fontSize: "1.5rem" }}>
+              {" "}
+              {/* Adjusted font size */}
               Sign Up
             </Typography>
             <Box
@@ -170,7 +174,11 @@ export default function Signup() {
                       aria-label="toggle password visibility"
                       onClick={handleTogglePasswordVisibility}
                     >
-                      {showPassword ? <VisibilitIcony /> : <VisibilityOffIcon />}
+                      {showPassword ? (
+                        <VisibilitIcony />
+                      ) : (
+                        <VisibilityOffIcon />
+                      )}
                     </IconButton>
                   ),
                 }}
@@ -190,11 +198,16 @@ export default function Signup() {
                       aria-label="toggle password visibility"
                       onClick={handleToggleConfirmPasswordVisibility}
                     >
-                      {showConfirmPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                      {showConfirmPassword ? (
+                        <VisibilityIcon />
+                      ) : (
+                        <VisibilityOffIcon />
+                      )}
                     </IconButton>
                   ),
                 }}
               />
+
               <Button
                 className="signup"
                 type="submit"

@@ -176,7 +176,7 @@ const EditProfile = () => {
                 onClick={handleEditButtonClick}
                 style={{
                   padding: "10px",
-                  backgroundColor: "#2196F3",
+                  backgroundColor: "black",
                   color: "white",
                   border: "none",
                   borderRadius: "5px",
