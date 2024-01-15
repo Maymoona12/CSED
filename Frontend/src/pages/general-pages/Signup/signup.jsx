@@ -120,7 +120,6 @@ export default function Signup() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5" sx={{ fontSize: "1.5rem" }}>
-              {" "}
               {/* Adjusted font size */}
               Sign Up
             </Typography>
