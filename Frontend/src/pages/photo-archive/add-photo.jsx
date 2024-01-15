@@ -79,8 +79,8 @@ const NewAlbum = ({ onSubmit }) => {
             borderRadius: "20px",
             marginLeft: "50%",
             marginRight: "50%",
-            justifyContent:"center",
-            alignItems:"center"
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
           <h2
@@ -135,6 +135,7 @@ const NewAlbum = ({ onSubmit }) => {
                   marginBottom: "5px",
                   background: "primary",
                   fontFamily: "Monaco",
+                  background: "black",
                 }}
               >
                 Upload Photo
@@ -153,7 +154,7 @@ const NewAlbum = ({ onSubmit }) => {
                 cursor: "pointer",
                 fontFamily: "Monaco",
                 fontSize: "18px",
-                
+                color: "black",
               }}
             >
               CREATE
@@ -164,11 +165,18 @@ const NewAlbum = ({ onSubmit }) => {
               {documentPreview && documentFiles.length > 0 ? (
                 <div>
                   {documentFiles.map((file, index) => (
-                    <div key={index} style={{ marginTop: "7px", marginLeft: "20px" }}>
+                    <div
+                      key={index}
+                      style={{ marginTop: "7px", marginLeft: "20px" }}
+                    >
                       <img
                         src={URL.createObjectURL(file)}
                         alt={`Preview ${index}`}
-                        style={{ maxWidth: "135px", maxHeight: "135px", marginRight: "5px" }}
+                        style={{
+                          maxWidth: "135px",
+                          maxHeight: "135px",
+                          marginRight: "5px",
+                        }}
                       />
                       <EditIcon
                         style={{ marginLeft: "5px", cursor: "pointer" }}

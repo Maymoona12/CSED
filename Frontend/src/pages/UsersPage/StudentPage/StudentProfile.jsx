@@ -7,6 +7,7 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import PermMediaIcon from "@mui/icons-material/PermMedia";
 import { Button, Popover, Typography } from "@mui/material";
+import test from "../../../../CoverImages/image2.jpg";
 
 const StudentProfile = () => {
   const [imageSrc, setImageSrc] = useState("Images/hamood1.jpg");
@@ -56,7 +57,7 @@ const StudentProfile = () => {
             onChange={handleImageChange}
           />
         </div>
-        <img src={imageSrc} alt="USER" />
+        <img src={test} alt="USER" />
 
         <div className="profile-title">Fatima Omar</div>
 

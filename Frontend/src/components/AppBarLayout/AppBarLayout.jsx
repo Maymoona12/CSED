@@ -278,6 +278,7 @@ const AppBarLayout = () => {
                         </Link>
                       </MenuItem>
                     ))}
+
                   <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </Menu>
               </Stack>

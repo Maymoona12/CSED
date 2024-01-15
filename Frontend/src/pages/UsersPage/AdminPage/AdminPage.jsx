@@ -91,6 +91,7 @@ const AdminPage = () => {
             color="primary"
             startIcon={<AddIcon />}
             onClick={handleAddNewLecturers}
+            style={{ color: "black" }}
           >
             Add New Lecturers
           </Button>
@@ -99,7 +100,7 @@ const AdminPage = () => {
             color="primary"
             startIcon={<DeleteIcon />}
             onClick={() => setDeleteDialogOpen(true)}
-            sx={{ marginLeft: 2 }}
+            sx={{ marginLeft: 2, color: "black" }}
           >
             Delete Lecturers
           </Button>
@@ -107,7 +108,9 @@ const AdminPage = () => {
 
         {/* Dialog for adding new lecturers */}
         <Dialog open={isAddDialogOpen} onClose={handleCloseAddDialog}>
-          <DialogTitle>Add New Lecturers</DialogTitle>
+          <DialogTitle style={{ color: "black" }}>
+            Add New Lecturers
+          </DialogTitle>
           <DialogContent>
             {/* Example input for file upload */}
             <input
@@ -117,10 +120,10 @@ const AdminPage = () => {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleCloseAddDialog} color="primary">
+            <Button onClick={handleCloseAddDialog} style={{ color: "black" }}>
               Cancel
             </Button>
-            <Button onClick={handleCloseAddDialog} color="primary">
+            <Button onClick={handleCloseAddDialog} style={{ color: "black" }}>
               Add
             </Button>
           </DialogActions>
@@ -128,7 +131,7 @@ const AdminPage = () => {
 
         {/* Dialog for deleting lecturers */}
         <Dialog open={isDeleteDialogOpen} onClose={handleCloseDeleteDialog}>
-          <DialogTitle>
+          <DialogTitle style={{ color: "black" }}>
             Delete Lecturers
             <TextField
               sx={{ marginLeft: 10 }}
@@ -168,7 +171,7 @@ const AdminPage = () => {
                       <TableCell>{lecture.phone}</TableCell>
                       <TableCell>
                         <IconButton
-                          color="primary"
+                          style={{ color: "black" }}
                           onClick={() => handleDeleteLecture(lecture.id)}
                         >
                           <ClearIcon />
@@ -181,7 +184,10 @@ const AdminPage = () => {
             </TableContainer>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleCloseDeleteDialog} color="primary">
+            <Button
+              onClick={handleCloseDeleteDialog}
+              style={{ color: "black" }}
+            >
               Cancel
             </Button>
           </DialogActions>
