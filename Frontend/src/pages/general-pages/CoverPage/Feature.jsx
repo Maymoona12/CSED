@@ -9,11 +9,11 @@ import InsertPhotoTwoToneIcon from '@mui/icons-material/InsertPhotoTwoTone';
 
 const Feature = () => {
   return (
-    <div style={{display:"block",marginTop:"2%" }}>
-    <Typography variant="h3" component="div" sx={{ color: "grey", fontFamily: "Brush Script MT", marginLeft:"80px",marginBottom:"0"}}>
+    <div>
+      <Typography variant="h3" component="div" sx={{ color: "grey", marginBottom: 2, fontFamily: "Brush Script MT", margin: "30px 100px" }}>
         Features CSED
       </Typography>
-      <div style={{ display: "flex", justifyContent: "space-around", marginTop:"150px"}}>
+      <div style={{ display: "flex", justifyContent: "space-around" }}>
         {/* Card 1 */}
         <Card sx={{ width: "290px"}}>
           <CardMedia
@@ -48,7 +48,7 @@ const Feature = () => {
         <Card sx={{ width: "290px" }}>
           <CardMedia
             component={InsertPhotoTwoToneIcon}
-            style={{ marginLeft:"35%" ,fontSize: 80, display: "flex", justifyContent: "center", alignItems: "center", height: "auto"}}
+            style={{ marginLeft:"35%" ,fontSize: 80, display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}
           />
           <CardContent>
             <Typography variant="h5" align="center" fontFamily="Comic Sans MS" color="grey">
