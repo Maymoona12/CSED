@@ -21,8 +21,13 @@ const useLogin = () => {
         message: "Successfully login in your account",
       });
     },
+
     onError: (error) => {
       console.log(error.message);
+      showSnackbar({
+        severity: "error",
+        message: "Failed login to your account",
+      });
     },
   });
   return {
