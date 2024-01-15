@@ -175,7 +175,7 @@ export default function Signup() {
                       onClick={handleTogglePasswordVisibility}
                     >
                       {showPassword ? (
-                        <VisibilitIcony />
+                        <VisibilityIcon />
                       ) : (
                         <VisibilityOffIcon />
                       )}
