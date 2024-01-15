@@ -21,11 +21,11 @@ const Contact = () => {
   };
 
   return (
-    <div>
-      <Typography variant="h3" component="div" sx={{ color: "Highlight", marginBottom: 2, fontFamily: "Brush Script MT", margin: "80px" }}>
+    <div marginTop="50px">
+      <Typography variant="h3" component="div" sx={{ color: "Highlight", fontFamily: "Brush Script MT", margin: " 80px" }}>
         Contact CSED
       </Typography>
-      <Card sx={{ maxWidth: "80%", margin: "40px", marginTop: "0px" }}>
+      <Card sx={{ maxWidth: "80%", margin: "60px 80px", }}>
         <CardContent>
           <form>
             <TextField

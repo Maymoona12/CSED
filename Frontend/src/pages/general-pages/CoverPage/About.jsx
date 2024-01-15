@@ -4,13 +4,13 @@ import Logo from "../../../../CoverImages/logo.png";
 
 const About = () => {
   return (
-    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" , marginTop: "2%"}}>
       <div>
-        <img src={Logo} alt="Logo" style={{ width: "100%", height: "auto" }} />
+        <img src={Logo} alt="Logo" style={{ width: "100%", height: "auto" , marginTop:"60px" }} />
       </div>
 
       <div style={{ maxWidth: "60%" }}>
-        <Typography variant="h3" component="div" color="secondary" sx={{  margin: "50px" , fontFamily: "Brush Script MT"}}>
+        <Typography variant="h3" component="div" color="secondary" sx={{  margin: "80px 60px" , fontFamily: "Brush Script MT"}}>
          About CSED
         </Typography>
         <Typography variant="h5" sx={{ margin: "50px " ,fontFamily: "Comic Sans MS"}}>
