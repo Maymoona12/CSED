@@ -1,27 +1,27 @@
 import { useMutation } from "@tanstack/react-query";
-import { signup } from "./index";
+import { changePassword } from "./index";
 import useAuth from "../../hooks/useAuth";
 import useSnackbar from "../../context/useSnackbar";
 
-const useSignup = () => {
+const useChangePass = () => {
   const { showSnackbar } = useSnackbar();
-  const { onSignup } = useAuth();
+  const { onLogout } = useAuth();
   const { mutate } = useMutation({
-    mutationFn: signup,
+    mutationFn: changePassword,
     onSuccess: (data) => {
       console.log(data);
       console.log(data.data);
-      onSignup();
+      onLogout();
       showSnackbar({
         severity: "success",
-        message: "Successfully signup the account",
+        message: "Change your password Successfully",
       });
     },
     onError: (error) => {
       console.log(error.message);
       showSnackbar({
         severity: "error",
-        message: "Failed signup to your account",
+        message: "Failed to change your password",
       });
     },
   });
@@ -29,4 +29,4 @@ const useSignup = () => {
     mutate,
   };
 };
-export default useSignup;
+export default useChangePass;

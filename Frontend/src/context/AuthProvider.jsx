@@ -6,6 +6,7 @@ export const AuthContext = createContext({
   onLogin: () => {},
   onLogout: () => {},
   onSignup: () => {},
+  onchangePass: () => {},
 });
 
 export const AuthProvider = ({ children }) => {
@@ -30,7 +31,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const handleSignup = () => {
-      navigate("login", { replace: true });
+    navigate("login", { replace: true });
   };
 
   const handleLogout = () => {
@@ -40,11 +41,16 @@ export const AuthProvider = ({ children }) => {
     navigate("login", { replace: true });
   };
 
+  const handelchangePass = () => {
+    navigate("login", { replace: true });
+  };
+
   const contextValues = {
     getUser,
     onLogin: handleLogin,
     onLogout: handleLogout,
     onSignup: handleSignup,
+    onchangePass: handelchangePass,
   };
 
   return (

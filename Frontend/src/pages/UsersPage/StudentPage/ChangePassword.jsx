@@ -15,6 +15,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import useChangePass from "../../ChangePassApi/useChangePass";
 
 const Alert = (props) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -34,6 +35,7 @@ export default function Changepassword() {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const { mutate } = useChangePass();
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -62,14 +64,13 @@ export default function Changepassword() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    const enteredCurrentPassword = data.get("current_password");
-    const enteredNewPassword = data.get("new_password");
-    const enteredConfirmPassword = data.get("confirm_password");
+    const old_password = data.get("old_password");
+    const new_password = data.get("new_password");
+    const new_password_confirmation = data.get("new_password_confirmation");
+    mutate({ old_password, new_password, new_password_confirmation });
 
     // You need to replace this with your authentication logic
-    const isCurrentPasswordCorrect = await checkCurrentPassword(
-      enteredCurrentPassword
-    );
+    const isCurrentPasswordCorrect = await checkCurrentPassword(old_password);
 
     if (!isCurrentPasswordCorrect) {
       setAlertMessage("Incorrect current password!");
@@ -77,13 +78,13 @@ export default function Changepassword() {
       return;
     }
 
-    if (enteredNewPassword !== enteredConfirmPassword) {
+    if (new_password !== new_password_confirmation) {
       setAlertMessage("Passwords do not match!");
       setOpen(true);
       return;
     }
 
-    if (!isStrongPassword(enteredNewPassword)) {
+    if (!isStrongPassword(new_password)) {
       setAlertMessage("Password must meet strength criteria!");
       setOpen(true);
       return;
@@ -91,7 +92,7 @@ export default function Changepassword() {
 
     try {
       // Replace the following with your actual logic to update the password
-      console.log(`Updating password to ${enteredNewPassword}`);
+      console.log(`Updating password to ${new_password}`);
 
       setAlertMessage("Password updated successfully!");
       setOpen(true);
@@ -115,7 +116,7 @@ export default function Changepassword() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <Grid
-       marginTop={-8}
+        marginTop={-8}
         container
         component="main"
         sx={{
@@ -153,7 +154,7 @@ export default function Changepassword() {
                 margin="normal"
                 required
                 fullWidth
-                name="current_password"
+                name="old_password"
                 label="Current Password"
                 type={showCurrentPassword ? "text" : "password"}
                 id="current_password"
@@ -162,7 +163,9 @@ export default function Changepassword() {
                   endAdornment: (
                     <InputAdornment position="end">
                       <IconButton
-                        onClick={() => handleTogglePasswordVisibility("current")}
+                        onClick={() =>
+                          handleTogglePasswordVisibility("current")
+                        }
                         edge="end"
                       >
                         {showCurrentPassword ? (
@@ -205,7 +208,7 @@ export default function Changepassword() {
                 margin="normal"
                 required
                 fullWidth
-                name="confirm_password"
+                name="new_password_confirmation"
                 label="Confirm Password"
                 type={showConfirmPassword ? "text" : "password"}
                 id="confirm_password"
