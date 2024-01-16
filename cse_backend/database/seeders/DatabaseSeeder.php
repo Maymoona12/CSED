@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             'education_level' => 'Assistant Professor',
             'office_no' => 'H313',
             'photo'=>'thaer.png',
-            // 'phone_no' => '+970 9 2688199',
+            'phone_no' => '+970 9 2688199',
             'role' => 'admin'
         ]);
 
@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             'password'=> '123456789',
             'education_level' => 'Assistant Professor',
             'office_no' => 'H316',
+            'photo'=>'mohmad.png',
             // 'phone_no' => '+970 9 2688199',
             'role' => 'doctor'
         ]);
@@ -42,6 +43,7 @@ class DatabaseSeeder extends Seeder
             'password'=> '123456789',
             'education_level' => 'Assistant Professor',
             'office_no' => 'H314',
+            'photo'=>'nael.png',
             // 'phone_no' => '+970 9 2688199',
             'role' => 'doctor'
         ]);
@@ -53,6 +55,7 @@ class DatabaseSeeder extends Seeder
             'password'=> '123456789',
             'education_level' => 'Assistant Professor',
             'office_no' => 'H307',
+            'photo'=>'anas.png',
             // 'phone_no' => '+970 9 2688199',
             'role' => 'doctor'
         ]);
@@ -64,6 +67,7 @@ class DatabaseSeeder extends Seeder
             'password'=> '123456789',
             'education_level' => 'Associate Professor',
             'office_no' => 'H312',
+            'photo'=>'yousef.png',
             // 'phone_no' => '+970 9 2688199',
             'role' => 'doctor'
         ]);
@@ -75,6 +79,7 @@ class DatabaseSeeder extends Seeder
             'password'=> '123456789',
             'education_level' => 'Lecturer',
             'office_no' => 'H311',
+            'photo'=>'yazeed.png',
             // 'phone_no' => '+970 9 2688199',
             'role' => 'doctor'
         ]);
@@ -85,6 +90,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'r.yousuf@ptuk.edu.ps',
             'password'=> '123456789',
             'education_level' => 'Assistant Professor',
+            'photo'=>'rami.png',
             // 'phone_no' => '+970 9 2688199',
             'role' => 'doctor'
         ]);
@@ -95,6 +101,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'osama.hamed@ptuk.edu.ps',
             'password'=> '123456789',
             'education_level' => 'Assistant Professor',
+            'photo'=>'osamah.png',
             // 'phone_no' => '+970 9 2688199',
             'role' => 'doctor'
         ]);
@@ -105,6 +112,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'osama.safarini@ptuk.edu.ps',
             'password'=> '123456789',
             'education_level' => 'Assistant Professor',
+            'photo'=>'osamas.png',
             // 'phone_no' => '+970 9 2688199',
             'role' => 'doctor'
         ]);
@@ -115,6 +123,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'nagham.hamad@ptuk.edu.ps',
             'password'=> '123456789',
             'education_level' => 'Engineering Lecturer',
+            'photo'=>'nagham.png',
             // 'phone_no' => '+970 9 2688199',
             'role' => 'doctor'
         ]);
@@ -126,6 +135,7 @@ class DatabaseSeeder extends Seeder
             'password'=> '123456789',
             'education_level' => 'Assistant Professor',
             'office_no' => 'H310',
+            'photo'=>'shatha.png',
             // 'phone_no' => '+970 9 2688199',
             'role' => 'doctor'
         ]);
@@ -136,6 +146,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'm.zakarneh@ptuk.edu.ps',
             'password'=> '123456789',
             'education_level' => 'Lecturer',
+            'photo'=>'maha.png',
             // 'phone_no' => '+970 9 2688199',
             'role' => 'doctor'
         ]);
@@ -146,6 +157,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'dema.sawalha@ptuk.edu.ps',
             'password'=> '123456789',
             'education_level' => 'Lecturer',
+            'photo'=>'deema.png',
             // 'phone_no' => '+970 9 2688199',
             'role' => 'doctor'
         ]);

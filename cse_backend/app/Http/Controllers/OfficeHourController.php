@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Appointment;
 use App\Models\OfficeHour;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Ramsey\Uuid\Type\Integer;
 
 class OfficeHourController extends Controller
 {
@@ -20,7 +23,22 @@ class OfficeHourController extends Controller
         $officeHour->created_at = Carbon::now();
         $officeHour->updated_at = Carbon::now();
         $officeHour->save();
-        return response()->json([$officeHour,201]);
+        
+        for ($current_time = Carbon::parse($officeHour->start_time);
+         $current_time < Carbon::parse($officeHour->finish_time); ) {
+            
+            $appointment=new Appointment;
+            $appointment->doctor_id=Auth::id();
+            $appointment->status =0;
+            $appointment->start_time = $current_time;
+            $current_time = $current_time->addMinutes($officeHour->time_devision);
+            $end_time = $current_time->toTimeString();
+            $appointment->end_time = $end_time;
+            $appointment->day = $officeHour->day;
+            $appointment->app_name = $officeHour->app_name;
+            $appointment->save();
+        }
+        return response()->json(['Appointments created successfully',201]);
 
     }
 }

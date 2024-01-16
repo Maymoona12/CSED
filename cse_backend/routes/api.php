@@ -5,7 +5,9 @@ use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\getDoctorController;
+use App\Http\Controllers\OfficeHourController;
 use App\Http\Controllers\PasswordController;
+use App\Models\OfficeHour;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,7 +40,7 @@ Route::get('/all_doctors',[getDoctorController::class,'getAllDoctors']);
 Route::get('/doctor/{id}',[getDoctorController::class,'showDoctor']);
 Route::get('/search/{name}',[getDoctorController::class,'search']);
 
-Route::post('/add_appointment',[AppointmentController::class,'add_appointment']);
+Route::post('/office_hour',[OfficeHourController::class,'createOfficeHour']);
 Route::post('/edit_appointment/{id}',[AppointmentController::class,'edit_appointment']);
 Route::post('/book_app',[AppointmentController::class,'bookAppointment']);
 Route::post('/AcceptOrRegict/{id}/{status}',[AppointmentController::class,'AcceptOrRejectAppointment']);
