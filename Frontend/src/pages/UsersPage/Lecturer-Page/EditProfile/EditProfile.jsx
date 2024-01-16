@@ -1,25 +1,22 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  AppBar,
-  Toolbar,
-  Avatar,
-  Typography,
-  Box,
-  Table,
-  TableContainer,
-  TableBody,
-  TableCell,
-  TableRow,
-} from "@mui/material";
+import { Avatar, Typography } from "@mui/material";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import ApartmentIcon from "@mui/icons-material/Apartment";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import thaer from "../../../../ProfileImages/thaer.png";
+import useAuth from "../../../../hooks/useAuth";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import useEditProfile from "./useEditProfile";
 
 const EditProfile = () => {
+  const { getUser } = useAuth();
+  const user = getUser();
+  const { mutate } = useEditProfile();
+
   const initialData = {
     assistant: "Initial Assistant",
     roomNumber: "Initial Room Number",
@@ -30,15 +27,6 @@ const EditProfile = () => {
   const [editMode, setEditMode] = useState(false);
   const [editedData, setEditedData] = useState(initialData);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const settings = [
-    "Profile",
-    "Edit Profile",
-    "Post Announcement",
-    "Lecturers Profile",
-    "Add Appointment",
-    "Archive Page",
-    "Logout",
-  ];
 
   const lecturers = [
     {
@@ -49,7 +37,7 @@ const EditProfile = () => {
     },
   ];
 
-  const handleEditButtonClick = () => {
+  const handleEditButtonClick = (event) => {
     if (editMode) {
       // Save the changes when leaving edit mode
       setEditMode(false);
@@ -62,7 +50,16 @@ const EditProfile = () => {
       setEditedData(initialData);
     }
   };
+  const handelSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const email = data.get("email");
+    const education_level = data.get("education_level");
+    const office_no = data.get("office_no");
+    const phone_no = data.get("phone_no");
 
+    mutate({ email, education_level, office_no, phone_no });
+  };
   const setInitialData = (data) => {
     // Logic to update your initial data, e.g., save to the database
     // For now, we just log it
@@ -104,7 +101,7 @@ const EditProfile = () => {
         >
           <Avatar
             alt={lecturers[0].name}
-            src={thaer}
+            src={user?.photo}
             sx={{
               width: 100,
               height: 100,
@@ -118,7 +115,7 @@ const EditProfile = () => {
               component="div"
               style={{ marginBottom: "8px", color: "black" }}
             >
-              {lecturers[0].name}
+              {user?.name}
             </Typography>
           </div>
         </div>
@@ -149,26 +146,43 @@ const EditProfile = () => {
             >
               User Details
             </Typography>
+
             <div style={{ color: "black", marginBottom: "20px" }}>
-              {lecturers[0].information.split("\n").map((line, i) => (
-                <div key={i}>
-                  <div style={{ display: "flex", marginBottom: "20px" }}>
-                    <ListItemIcon style={{ color: "black" }}>
-                      {i === 0 && <AccountBalanceIcon />}
-                      {i === 1 && <ApartmentIcon />}
-                      {i === 2 && <PhoneIcon />}
-                      {i === 3 && <EmailIcon />}
-                    </ListItemIcon>
-                    {i === 3 ? (
-                      <a href={`mailto:${line}`} style={{ color: "black" }}>
-                        {line}
-                      </a>
-                    ) : (
-                      <span style={{ color: "black" }}>{line}</span>
-                    )}
-                  </div>
-                </div>
-              ))}
+              <div style={{ display: "flex", marginBottom: "20px" }}>
+                <ListItemIcon style={{ color: "black" }}>
+                  <AccountBalanceIcon />
+                </ListItemIcon>
+                <Typography style={{ marginRight: "7px" }}>
+                  {user?.education_level}
+                </Typography>
+              </div>
+
+              <div style={{ display: "flex", marginBottom: "20px" }}>
+                <ListItemIcon style={{ color: "black" }}>
+                  <ApartmentIcon />
+                </ListItemIcon>
+                <Typography style={{ marginRight: "7px" }}>
+                  {user?.office_no}
+                </Typography>
+              </div>
+
+              <div style={{ display: "flex", marginBottom: "20px" }}>
+                <ListItemIcon style={{ color: "black" }}>
+                  <PhoneIcon />
+                </ListItemIcon>
+                <Typography style={{ marginRight: "7px" }}>
+                  {user?.phone_no}
+                </Typography>
+              </div>
+
+              <div style={{ display: "flex", marginBottom: "20px" }}>
+                <ListItemIcon style={{ color: "black" }}>
+                  <EmailIcon />
+                </ListItemIcon>
+                <Typography style={{ marginRight: "7px" }}>
+                  {user?.email}
+                </Typography>
+              </div>
             </div>
 
             <div style={{ marginTop: "30px", display: "flex", gap: "10px" }}>
@@ -205,91 +219,68 @@ const EditProfile = () => {
 
           {editMode && (
             <Box
-              style={{
-                border: "1px solid #ddd",
-                padding: "30px",
-                borderRadius: "20px",
-                marginLeft: "20px",
-                marginTop: "0",
-                width: "350px",
-                height: "auto",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
+              id="loginform"
+              component="form"
+              noValidate
+              onSubmit={handleEditButtonClick}
+              sx={{ mt: 1 }}
             >
-              <Typography
-                variant="h5"
-                style={{
-                  marginBottom: "8px",
-                  color: "black",
-                  fontFamily: "serif",
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="education_level"
+                label="Education Level"
+                name="education_level"
+                autoComplete="education_level"
+                autoFocus
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="office_no"
+                label="Office Number"
+                type="text"
+                id="office_no"
+                autoComplete="office_no"
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="phone_no"
+                label="Phone Number"
+                type="text"
+                id="phone_no"
+                autoComplete="phone_no"
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="email"
+                label="Email"
+                type="email"
+                id="email"
+                autoComplete="email"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{
+                  mt: 3,
+                  mb: 2,
+                  background: "black",
+                  "&:hover": {
+                    background: "black",
+                  },
                 }}
+                onClick={handelSubmit}
               >
-                Edit Profile
-              </Typography>
-              <TableContainer style={{ marginTop: "20px" }}>
-                <Table style={{ border: "1px solid black" }}>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell style={{ borderBottom: "1px solid black" }}>
-                        Assistant
-                      </TableCell>
-                      <TableCell style={{ borderBottom: "1px solid black" }}>
-                        <input
-                          type="text"
-                          placeholder="Assistant"
-                          onChange={(e) =>
-                            handleChange("assistant", e.target.value)
-                          }
-                        />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell style={{ borderBottom: "1px solid black" }}>
-                        Room Number
-                      </TableCell>
-                      <TableCell style={{ borderBottom: "1px solid black" }}>
-                        <input
-                          type="text"
-                          placeholder="Room Number"
-                          onChange={(e) =>
-                            handleChange("roomNumber", e.target.value)
-                          }
-                        />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell style={{ borderBottom: "1px solid black" }}>
-                        Phone
-                      </TableCell>
-                      <TableCell style={{ borderBottom: "1px solid black" }}>
-                        <input
-                          type="text"
-                          placeholder="Phone"
-                          onChange={(e) =>
-                            handleChange("phone", e.target.value)
-                          }
-                        />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell style={{ borderBottom: "1px solid black" }}>
-                        Email
-                      </TableCell>
-                      <TableCell style={{ borderBottom: "1px solid black" }}>
-                        <input
-                          type="text"
-                          placeholder="Email"
-                          onChange={(e) =>
-                            handleChange("email", e.target.value)
-                          }
-                        />
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </TableContainer>
+                Save Changes
+              </Button>
             </Box>
           )}
         </div>
