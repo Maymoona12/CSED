@@ -4,7 +4,7 @@ import AddPhoto from "./pages/photo-archive/add-photo";
 import Signup from "./pages/general-pages/Signup/signup";
 import Login from "./pages/general-pages/Login/login";
 import Forgotpassword from "./pages/general-pages/PasswordPage/passwordpage";
-import Home from "./pages/Home";
+import Dashboards from "./pages/Dashboards";
 
 import LectureProfile from "./pages/UsersPage/Lecturer-Page/LecturerProfile";
 import EditProfile from "./pages/UsersPage/Lecturer-Page/EditProfile";
@@ -41,7 +41,7 @@ function App() {
         <Route path="/me" element={<AppLayout />}>
           <Route path="unauthorized" element={<Unauthorized />} />
           <Route element={<ProtectedRoutes />}>
-            <Route path="Home" element={<Home />} />
+            <Route path="Dashboards" element={<Dashboards/>} />
           </Route>
 
           <Route element={<ProtectedRoutes allowedRoles={[doctor, admin]} />}>
