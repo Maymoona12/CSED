@@ -11,18 +11,19 @@ const Contact = () => {
   return (
     <div>
       <Typography
-        variant="h4"
+        variant="h3"
         component="div"
         sx={{
           color: "Highlight",
           marginBottom: 2,
-          fontFamily: "ADVERTISEMENT",
-          margin: "50px",
+          fontFamily: "Brush Script MT",
+          margin: "50px 80px",
         }}
       >
         Contact CSED
       </Typography>
-      <Card sx={{ maxWidth: "80%", margin: "40px" }}>
+      <Card fullwidth
+      sx={{ padding:"50px 20px", margin: "50px" }}>
         <CardContent>
           <div style={{ display: "flex", alignItems: "center" }}>
             <Avatar sx={{ m: 1, bgcolor: "Highlight" }}>
@@ -32,7 +33,7 @@ const Contact = () => {
               +970 9 2688199
             </Typography>
           </div>
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div style={{ display: "flex", alignItems: "center" , paddingTop:"20px"}}>
             <Avatar sx={{ m: 1, bgcolor: "Highlight" }}>
               <EmailIcon />
             </Avatar>

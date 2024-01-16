@@ -9,15 +9,20 @@ import InsertPhotoTwoToneIcon from "@mui/icons-material/InsertPhotoTwoTone";
 
 const Feature = () => {
   return (
+    <div style={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+    }}>
     <div>
       <Typography
         variant="h3"
         component="div"
         sx={{
           fontFamily: "Brush Script MT",
-          margin: "65px",
-          marginBottom: "5px",
-          color: "white",
+          margin: "90px 120px",
+          marginBottom: "0px",
+          color: "grey",
         }}
       >
         Features CSED
@@ -28,11 +33,11 @@ const Feature = () => {
           display: "flex",
           justifyContent: "space-around",
           margin: "50px",
-          marginTop: "100px",
+          marginTop: "50px",
         }}
       >
         {/* Card 1 */}
-        <Card sx={{ width: "290px" }}>
+        <Card sx={{ width: "290px" , marginLeft:"80px"}}>
           <CardMedia
             component={CampaignTwoToneIcon}
             style={{
@@ -65,7 +70,7 @@ const Feature = () => {
           </CardContent>
         </Card>
         {/* Card 2 */}
-        <Card sx={{ width: "290px" }}>
+        <Card sx={{ width: "290px",marginLeft:"80px" }}>
           <CardMedia
             component={CalendarMonthTwoToneIcon}
             style={{
@@ -99,7 +104,7 @@ const Feature = () => {
           </CardContent>
         </Card>
         {/* Card 3 */}
-        <Card sx={{ width: "290px" }}>
+        <Card sx={{ width: "290px",marginLeft:"80px" }}>
           <CardMedia
             component={InsertPhotoTwoToneIcon}
             style={{
@@ -132,6 +137,7 @@ const Feature = () => {
           </CardContent>
         </Card>
       </div>
+    </div>
     </div>
   );
 };

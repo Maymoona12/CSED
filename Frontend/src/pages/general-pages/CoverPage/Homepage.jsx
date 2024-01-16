@@ -177,15 +177,15 @@ export default function Homepage() {
           </Box>
         </Box>
       </div>
-      <div id="about" style={{ marginBottom: "20px" }}>
+      <div id="about" style={{ marginBottom: "25px", marginTop:"60px" }}>
         {/* Add margin-bottom to create space between the sections */}
         <About />
       </div>
-      <div id="feature" style={{ marginBottom: "170px" }}>
+      <div id="feature" style={{ marginBottom: "25px" }}>
         {/* Add margin-bottom to create space between the sections */}
         <Feature />
       </div>
-      <div id="contact" style={{ marginBottom: "50px" }}>
+      <div id="contact" style={{ marginBottom: "25px" }}>
         {/* Add margin-bottom to create space between the sections */}
         <Contact />
       </div>

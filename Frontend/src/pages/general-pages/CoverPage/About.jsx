@@ -12,25 +12,28 @@ const About = () => {
       }}
     >
       <div>
-        <img src={Logo} alt="Logo" style={{ width: "100%", height: "auto" }} />
+        <img src={Logo} alt="Logo" style={{ width: "100%", height: "auto", marginTop:"40px" }} />
       </div>
 
       <div style={{ maxWidth: "60%" }}>
-        {/* <Typography
+        <Typography
           variant="h3"
           component="div"
           color="secondary"
           sx={{
-            margin: "65px",
+            margin: "70px",
+            marginTop:"120",
+            marginBottom:"20px",
             fontFamily: "	Brush Script MT",
           }}
         >
           About CSED
-        </Typography> */}
+        </Typography>
         <Typography
           variant="h5"
           sx={{
-            margin: "80px",
+            margin: "75px",
+            marginTop:"40px",
             fontFamily: "ADVERTISEMENT",
           }}
         >
