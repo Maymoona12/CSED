@@ -22,7 +22,7 @@ const Contact = () => {
       >
         Contact CSED
       </Typography>
-      <Card fullwidth
+      <Card fullwidth="true"
       sx={{ padding:"50px 20px", margin: "50px" }}>
         <CardContent>
           <div style={{ display: "flex", alignItems: "center" }}>
