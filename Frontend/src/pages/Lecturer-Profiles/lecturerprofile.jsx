@@ -174,7 +174,6 @@ function LecturersProfile() {
             <Typography
               component="h1"
               variant="h2"
-              marginTop="66px"
               color="text.primary"
               style={{
                 textAlign: "left",

@@ -63,7 +63,7 @@ const StudentProfile = () => {
 
         <div className="profile-button">
           <div style={{ marginTop: "10px", marginRight: "100px" }}>
-            <Link to="/LecturersProfile" style={{ marginRight: "50px" }}>
+            <Link to="/me/LecturersProfile" style={{ marginRight: "50px" }}>
               <PeopleAltIcon
                 style={{
                   marginInline: "10px",
@@ -100,7 +100,7 @@ const StudentProfile = () => {
           </div>
 
           <div style={{ marginTop: "10px", marginRight: "100px" }}>
-            <Link to="/ArchivePage" style={{ marginRight: "50px" }}>
+            <Link to="/me/ArchivePage" style={{ marginRight: "50px" }}>
               <PermMediaIcon
                 style={{
                   marginInline: "10px",
@@ -137,7 +137,7 @@ const StudentProfile = () => {
           </div>
 
           <div style={{ marginTop: "10px", marginRight: "100px" }}>
-            <Link to="/ChangePassword" style={{ marginRight: "50px" }}>
+            <Link to="/me/ChangePassword" style={{ marginRight: "50px" }}>
               <EditNoteIcon
                 style={{
                   marginInline: "15px",

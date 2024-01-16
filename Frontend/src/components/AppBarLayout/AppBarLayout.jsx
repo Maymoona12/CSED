@@ -25,6 +25,7 @@ import { styled } from "@mui/system";
 import useAuth from "../../hooks/useAuth";
 import useLogout from "../../api/Logout/useLogout";
 import { useNavigate } from "react-router-dom";
+import thaer from "../../../ProfileImages/thaer.png";
 
 const StyledButton = styled(Button)({
   my: 2,
@@ -223,7 +224,7 @@ const AppBarLayout = () => {
                     aria-expanded={open ? "true" : undefined}
                     aria-haspopup="true"
                   >
-                    <Avatar alt="Thaer" src="ProfileImages/thaer.PNG" />
+                    <Avatar alt="Thaer" src={thaer} />
                   </IconButton>
                 </Tooltip>
               </Box>
