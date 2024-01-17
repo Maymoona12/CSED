@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { Avatar, Typography } from "@mui/material";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import ApartmentIcon from "@mui/icons-material/Apartment";
@@ -16,40 +15,39 @@ const EditProfile = () => {
   const { getUser } = useAuth();
   const user = getUser();
   const { mutate } = useEditProfile();
-
-  const initialData = {
-    assistant: "Initial Assistant",
-    roomNumber: "Initial Room Number",
-    phone: "Initial Phone",
-    email: "Initial Email",
-  };
-
   const [editMode, setEditMode] = useState(false);
-  const [editedData, setEditedData] = useState(initialData);
-  const [anchorElUser, setAnchorElUser] = useState(null);
 
-  const lecturers = [
-    {
-      name: "Dr.Thaer Samar",
-      photoUrl: "ProfileImages/thaer.png",
-      information:
-        "Assistant Professor\nRoom Number: H313\n+970 9 2688199\nthaer.sammar@ptuk.edu.ps",
-    },
-  ];
+  const [education_level, setEducation_level] = useState(
+    user?.education_level || ""
+  );
+  const [office_no, setOffice_no] = useState(user?.office_no || "");
+  const [phone_no, setPhone_no] = useState(user?.phone_no || "");
+  const [email, setEmail] = useState(user?.email || "");
+
+  const handleEducation_level = (e) => {
+    setEducation_level(e.target.value);
+  };
+  const handlePhone_no = (e) => {
+    setPhone_no(e.target.value);
+  };
+  const handleOffice_no = (e) => {
+    setOffice_no(e.target.value);
+  };
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
 
   const handleEditButtonClick = (event) => {
     if (editMode) {
       // Save the changes when leaving edit mode
       setEditMode(false);
       // Save the changes to your database or perform any other necessary actions
-      // For now, let's just update the initialData with the edited values
-      setInitialData(editedData);
     } else {
       // Enter edit mode and pre-fill the input fields with the initialData
       setEditMode(true);
-      setEditedData(initialData);
     }
   };
+
   const handelSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -59,27 +57,6 @@ const EditProfile = () => {
     const phone_no = data.get("phone_no");
 
     mutate({ email, education_level, office_no, phone_no });
-  };
-  const setInitialData = (data) => {
-    // Logic to update your initial data, e.g., save to the database
-    // For now, we just log it
-    console.log("Saved changes:", data);
-  };
-
-  const handleChange = (field, value) => {
-    // Update the editedData state
-    setEditedData((prevData) => ({
-      ...prevData,
-      [field]: value,
-    }));
-  };
-
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
   };
 
   return (
@@ -100,7 +77,7 @@ const EditProfile = () => {
           }}
         >
           <Avatar
-            alt={lecturers[0].name}
+            alt={user?.name}
             src={user?.photo}
             sx={{
               width: 100,
@@ -197,91 +174,128 @@ const EditProfile = () => {
                   cursor: "pointer",
                 }}
               >
-                {editMode ? "Save Changes" : "Edit Profile"}
+                Edit Profile
               </button>
-              {editMode && (
-                <button
-                  onClick={() => setEditMode(false)}
-                  style={{
-                    padding: "10px",
-                    backgroundColor: "grey",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                  }}
-                >
-                  Cancel
-                </button>
-              )}
             </div>
           </Box>
 
           {editMode && (
-            <Box
-              id="loginform"
-              component="form"
-              noValidate
-              onSubmit={handleEditButtonClick}
-              sx={{ mt: 1 }}
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "30px",
+                padding: "30px",
+              }}
             >
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="education_level"
-                label="Education Level"
-                name="education_level"
-                autoComplete="education_level"
-                autoFocus
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="office_no"
-                label="Office Number"
-                type="text"
-                id="office_no"
-                autoComplete="office_no"
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="phone_no"
-                label="Phone Number"
-                type="text"
-                id="phone_no"
-                autoComplete="phone_no"
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="email"
-                label="Email"
-                type="email"
-                id="email"
-                autoComplete="email"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
+              <Box
+                id="editform"
+                component="form"
+                noValidate
+                onSubmit={handelSubmit}
                 sx={{
-                  mt: 3,
-                  mb: 2,
-                  background: "black",
-                  "&:hover": {
-                    background: "black",
-                  },
+                  mt: 1,
+                  width: "300px",
+                  border: "1px solid #ddd",
+                  padding: "50px",
+                  borderRadius: "20px",
+                  marginLeft: "10px",
                 }}
-                onClick={handelSubmit}
               >
-                Save Changes
-              </Button>
-            </Box>
+                <Typography
+                  variant="h5"
+                  style={{
+                    marginBottom: "20px",
+                    color: "black",
+                    fontFamily: "serif",
+                  }}
+                >
+                  Information to edit
+                </Typography>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="education_level"
+                  name="education_level"
+                  autoComplete="education_level"
+                  type="text"
+                  value={education_level}
+                  onChange={handleEducation_level}
+                  autoFocus
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="office_no"
+                  type="text"
+                  id="office_no"
+                  autoComplete="office_no"
+                  value={office_no}
+                  onChange={handleOffice_no}
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="phone_no"
+                  type="text"
+                  id="phone_no"
+                  autoComplete="phone_no"
+                  value={phone_no}
+                  onChange={handlePhone_no}
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="email"
+                  type="email"
+                  id="email"
+                  autoComplete="email"
+                  value={email}
+                  onChange={handleEmailChange}
+                />
+                <div style={{ display: "flex", gap: "10px" }}>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{
+                      mt: 4,
+                      mb: 3,
+                      background: "black",
+                      "&:hover": {
+                        background: "black",
+                      },
+                    }}
+                  >
+                    Save Changes
+                  </Button>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    sx={{
+                      mt: 4,
+                      mb: 3,
+                      background: "grey",
+                      "&:hover": {
+                        background: "grey",
+                      },
+                      padding: "10px",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "5px",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => setEditMode(false)}
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </Box>
+            </div>
           )}
         </div>
       </div>

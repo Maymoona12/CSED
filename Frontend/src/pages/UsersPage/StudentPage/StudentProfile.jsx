@@ -6,17 +6,20 @@ import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import PermMediaIcon from "@mui/icons-material/PermMedia";
-import { Button, Popover, Typography } from "@mui/material";
+import { Button, Popover, Typography, Avatar, Tooltip } from "@mui/material";
 import test from "../../../../CoverImages/image2.jpg";
+import useAuth from "../../../hooks/useAuth";
 
 const StudentProfile = () => {
-  const [imageSrc, setImageSrc] = useState("Images/hamood1.jpg");
+  const [imageSrc, setImageSrc] = useState();
   const [popoverAnchor, setPopoverAnchor] = useState(null);
   const [lecturerProfilePopover, setLecturerProfilePopover] = useState(null);
   const [archivePagePopover, setArchivePagePopover] = useState(null);
   const [changePasswordPopover, setChangePasswordPopover] = useState(null);
   const [bookAnAppointmentPopover, setBookAnAppointmentPopover] =
     useState(null);
+  const { getUser } = useAuth();
+  const user = getUser();
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -57,9 +60,19 @@ const StudentProfile = () => {
             onChange={handleImageChange}
           />
         </div>
-        <img src={test} alt="USER" />
+        <Tooltip>
+          <Avatar
+            alt="User"
+            src={user?.photo}
+            style={{
+              width: "100px",
+              height: "100px",
+              border: "2px solid #ccc",
+            }}
+          />
+        </Tooltip>
 
-        <div className="profile-title">Fatima Omar</div>
+        <div className="profile-title"> {user?.name}</div>
 
         <div className="profile-button">
           <div style={{ marginTop: "10px", marginRight: "100px" }}>

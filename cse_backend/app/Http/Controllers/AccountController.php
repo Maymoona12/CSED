@@ -9,8 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class AccountController extends Controller
 {
     public function EditAccount(Request $request){
-        $id = Auth::id();
-        $user=User::find($id);
+        $user = $request->user();
         $user->education_level = $request->education_level;
         $user->office_no = $request->office_no;
         $user->phone_no = $request->phone_no;
