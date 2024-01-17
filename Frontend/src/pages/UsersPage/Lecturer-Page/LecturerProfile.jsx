@@ -6,19 +6,20 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import PermMediaIcon from "@mui/icons-material/PermMedia";
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import { Button, Popover, Typography } from "@mui/material";
-import thaer from "../../../../ProfileImages/thaer.png";
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+import { Button, Popover, Typography, Avatar, Tooltip } from "@mui/material";
+import useAuth from "../../../hooks/useAuth";
 
 const LectureProfile = () => {
-  const [imageSrc, setImageSrc] = useState("ProfileImages/thaer.PNG");
+  const [imageSrc, setImageSrc] = useState();
   const [popoverAnchor, setPopoverAnchor] = useState(null);
   const [editProfilePopover, setEditProfilePopover] = useState(null);
   const [postAnnouncementPopover, setPostAnnouncementPopover] = useState(null);
   const [addAppointmentPopover, setAddAppointmentPopover] = useState(null);
   const [archivePagePopover, setArchivePagePopover] = useState(null);
   const [AddPhotoPopover, setAddPhotoPopover] = useState(null);
-  const [popoverOpen, setPopoverOpen] = useState(false);
+  const { getUser } = useAuth();
+  const user = getUser();
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -59,11 +60,21 @@ const LectureProfile = () => {
             onChange={handleImageChange}
           />
         </div>
-        <img src={thaer} alt="Profile" />
+        <Tooltip>
+          <Avatar
+            alt="User"
+            src={user?.photo}
+            style={{
+              width: "100px",
+              height: "100px",
+              border: "2px solid #ccc",
+            }}
+          />
+        </Tooltip>
       </div>
 
       <div className="profile-title" style={{ marginLeft: "22px" }}>
-        Thaer Samar
+        {user?.name}
       </div>
 
       <div className="profile-button">
@@ -223,7 +234,7 @@ const LectureProfile = () => {
             }}
           >
             <Typography style={{ padding: "10px", fontFamily: "Garamond" }}>
-             Create Album
+              Create Album
             </Typography>
           </Popover>
         </div>

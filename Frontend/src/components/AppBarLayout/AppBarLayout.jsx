@@ -47,7 +47,6 @@ const AppBarLayout = () => {
   const onSetAnchorElUser = (closedAnchor) => setAnchorElUser(closedAnchor);
   const open = Boolean(anchorElUser);
   const { logoutOperation } = useLogout();
-  const navigate = useNavigate();
   const { getUser } = useAuth();
   const user = getUser();
 
@@ -71,8 +70,8 @@ const AppBarLayout = () => {
   ];
 
   const settings1 = [
-    "LectureProfile",
     "EditProfile",
+    "ChangePassword",
     "PostAnnouncement",
     "AddAppointment",
     "ArchivePage",
@@ -88,8 +87,8 @@ const AppBarLayout = () => {
 
   const settings3 = [
     "AdminPage",
-    "LectureProfile",
     "EditProfile",
+    "ChangePassword",
     "PostAnnouncement",
     "AddAppointment",
     "ArchivePage",
@@ -129,11 +128,6 @@ const AppBarLayout = () => {
 
   const handleLogout = () => {
     logoutOperation();
-    handleCloseUserMenu();
-  };
-
-  const onClick = (path) => {
-    navigate(`/me/${path}`);
     handleCloseUserMenu();
   };
 

@@ -41,12 +41,8 @@ function App() {
         <Route path="/me" element={<AppLayout />}>
           <Route path="unauthorized" element={<Unauthorized />} />
 
-          <Route element={<ProtectedRoutes />}>
-            <Route path="" element={<Home />} />
-          </Route>
-
           <Route element={<ProtectedRoutes allowedRoles={[doctor, admin]} />}>
-            <Route path="/me/LectureProfile" element={<LectureProfile />} />
+            <Route path="" element={<LectureProfile />} />
             <Route path="/me/EditProfile" element={<EditProfile />} />
             <Route
               path="/me/PostAnnouncement"
@@ -60,11 +56,11 @@ function App() {
           <Route element={<ProtectedRoutes allowedRoles={[student]} />}>
             <Route path="/me/StudentProfile" element={<StudentProfile />} />
             <Route path="/me/LecturersProfile" element={<LecturerProfiles />} />
-            <Route path="/me/ChangePassword" element={<ChangePassword />} />
             <Route path="/me/BookAppointment" element={<BookAppointment />} />
           </Route>
 
           <Route element={<ProtectedRoutes allowedRoles={[doctor, student]} />}>
+            <Route path="/me/ChangePassword" element={<ChangePassword />} />
             <Route path="/me/ArchivePage" element={<FoldersPage />} />
             <Route path="PhotosPage/:folderId" element={<PhotosPage />} />
           </Route>
