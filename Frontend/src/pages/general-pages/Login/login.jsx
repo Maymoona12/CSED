@@ -57,7 +57,7 @@ export default function Login() {
   };
   const isLogin = !isEmptyToken(accessToken);
   if (isLogin)
-    return <Navigate to="/me" replace state={{ from: location.pathname }} />;
+    return <Navigate to="/user" replace state={{ from: location.pathname }} />;
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -150,7 +150,7 @@ export default function Login() {
               <Grid container>
                 <Grid item xs>
                   <RouterLink
-                    to="/passwordpage"
+                    to="/user/passwordpage"
                     variant="body2"
                     style={{
                       color: "black",
@@ -162,7 +162,7 @@ export default function Login() {
                 </Grid>
                 <Grid item>
                   <RouterLink
-                    to="/signup"
+                    to="/user/signup"
                     variant="body2"
                     style={{
                       color: "black",

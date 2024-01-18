@@ -6,7 +6,6 @@ export const AuthContext = createContext({
   onLogin: () => {},
   onLogout: () => {},
   onSignup: () => {},
-  onchangePass: () => {},
 });
 
 export const AuthProvider = ({ children }) => {
@@ -31,18 +30,14 @@ export const AuthProvider = ({ children }) => {
   };
 
   const handleSignup = () => {
-    navigate("login", { replace: true });
+    navigate("/user/login", { replace: true });
   };
 
   const handleLogout = () => {
     setUser(null);
     localStorage.removeItem("user");
     localStorage.removeItem("access-token");
-    navigate("login", { replace: true });
-  };
-
-  const handelchangePass = () => {
-    navigate("login", { replace: true });
+    navigate("/user/login", { replace: true });
   };
 
   const contextValues = {
@@ -50,7 +45,6 @@ export const AuthProvider = ({ children }) => {
     onLogin: handleLogin,
     onLogout: handleLogout,
     onSignup: handleSignup,
-    onchangePass: handelchangePass,
   };
 
   return (

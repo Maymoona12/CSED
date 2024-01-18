@@ -63,11 +63,12 @@ const LectureProfile = () => {
         <Tooltip>
           <Avatar
             alt="User"
-            src={user?.photo}
+            src={imageSrc || user?.photo}
             style={{
-              width: "100px",
-              height: "100px",
-              border: "2px solid #ccc",
+              width: 100,
+              height: 100,
+              border: "1px solid #ccc",
+              objectFit: "contain",
             }}
           />
         </Tooltip>

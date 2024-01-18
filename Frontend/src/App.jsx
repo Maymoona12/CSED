@@ -25,6 +25,7 @@ import Unauthorized from "./components/Unauthorized";
 import { userRole } from "./role";
 import LandingPage from "./pages/general-pages/CoverPage/Landingpage";
 import Snackbar from "./components/Snackbar";
+import Applayout2 from "./components/AppBarLayout/Applaout2";
 
 function App() {
   const { admin, doctor, student } = userRole;
@@ -34,15 +35,17 @@ function App() {
         <Route path="" element={<LandingPage />} />
         <Route path="/landingPage" element={<LandingPage />} />
 
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/passwordpage" element={<Forgotpassword />} />
+        <Route path="/user" element={<Applayout2 />}>
+          <Route path="/user/login" element={<Login />} />
+          <Route path="/user/signup" element={<Signup />} />
+          <Route path="/user/passwordpage" element={<Forgotpassword />} />
+        </Route>
 
         <Route path="/me" element={<AppLayout />}>
           <Route path="unauthorized" element={<Unauthorized />} />
-
-          <Route element={<ProtectedRoutes allowedRoles={[doctor, admin]} />}>
-            <Route path="" element={<LectureProfile />} />
+          <Route path="" element={<Home />} />
+          <Route element={<ProtectedRoutes allowedRoles={[doctor]} />}>
+            {/* <Route path="" element={<LectureProfile />} /> */}
             <Route path="/me/EditProfile" element={<EditProfile />} />
             <Route
               path="/me/PostAnnouncement"
@@ -54,20 +57,29 @@ function App() {
           </Route>
 
           <Route element={<ProtectedRoutes allowedRoles={[student]} />}>
-            <Route path="/me/StudentProfile" element={<StudentProfile />} />
-            <Route path="/me/LecturersProfile" element={<LecturerProfiles />} />
-            <Route path="/me/BookAppointment" element={<BookAppointment />} />
+            {/* <Route path="" element={<StudentProfile />} /> */}
+            <Route path="LecturersProfile" element={<LecturerProfiles />} />
+            <Route path="BookAppointment" element={<BookAppointment />} />
           </Route>
 
-          <Route element={<ProtectedRoutes allowedRoles={[doctor, student]} />}>
+          <Route
+            element={
+              <ProtectedRoutes allowedRoles={[doctor, student, admin]} />
+            }
+          >
             <Route path="/me/ChangePassword" element={<ChangePassword />} />
-            <Route path="/me/ArchivePage" element={<FoldersPage />} />
+            <Route path="/me/GalleryPage" element={<FoldersPage />} />
             <Route path="PhotosPage/:folderId" element={<PhotosPage />} />
           </Route>
 
-          {/* <Route element={<ProtectedRoutes allowedRoles={[admin]} />}>
-            <Route path="/me/AdminPage" element={<AdminPage />} />
-          </Route> */}
+          <Route element={<ProtectedRoutes allowedRoles={[admin]} />}>
+            {/* <Route path="" element={<LectureProfile />} /> */}
+            <Route path="AdminPage" element={<AdminPage />} />
+            <Route path="EditProfile" element={<EditProfile />} />
+            <Route path="PostAnnouncement" element={<PostAnnouncementPage />} />
+            <Route path="AddAppointment" element={<Appointment />} />
+            <Route path="AddPhoto" element={<AddPhoto />} />
+          </Route>
         </Route>
       </Routes>
       <Snackbar />
