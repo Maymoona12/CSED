@@ -113,7 +113,7 @@ export default function Homepage() {
               </Button>
               <Box sx={{ minWidth: "190px" }} />{" "}
               {/* Add a big space between buttons */}
-              <Link to="/login">
+              <Link to="/user/login">
                 <Button
                   color="inherit"
                   sx={{
@@ -125,7 +125,7 @@ export default function Homepage() {
                   Log in
                 </Button>
               </Link>
-              <Link to="/signup">
+              <Link to="/user/signup">
                 <Button
                   color="inherit"
                   sx={{
@@ -177,7 +177,7 @@ export default function Homepage() {
           </Box>
         </Box>
       </div>
-      <div id="about" style={{ marginBottom: "25px", marginTop:"60px" }}>
+      <div id="about" style={{ marginBottom: "25px", marginTop: "60px" }}>
         {/* Add margin-bottom to create space between the sections */}
         <About />
       </div>

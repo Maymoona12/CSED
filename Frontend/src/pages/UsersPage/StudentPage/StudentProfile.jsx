@@ -63,7 +63,7 @@ const StudentProfile = () => {
         <Tooltip>
           <Avatar
             alt="User"
-            src={user?.photo}
+            src={imageSrc || user?.photo}
             style={{
               width: "100px",
               height: "100px",

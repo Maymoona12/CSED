@@ -44,7 +44,7 @@ const FoldersPage = ({
             marginLeft: "10px",
           }}
         >
-          Photo Archive
+          Gallery Page
         </h1>
       </div>
       {/* Render folders */}

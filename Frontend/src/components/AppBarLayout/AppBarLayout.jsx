@@ -21,11 +21,21 @@ import {
 } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import CampaignIcon from "@mui/icons-material/Campaign";
-import { styled } from "@mui/system";
+import { styled, useTheme } from "@mui/system";
 import useAuth from "../../hooks/useAuth";
 import useLogout from "../../api/Logout/useLogout";
-import { useNavigate } from "react-router-dom";
-import thaer from "../../../ProfileImages/thaer.png";
+import MenuIcon from "@mui/icons-material/Menu";
+import Drawer from "@mui/material/Drawer";
+import Divider from "@mui/material/Divider";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MailIcon from "@mui/icons-material/Mail";
 
 const StyledButton = styled(Button)({
   my: 2,
@@ -74,16 +84,11 @@ const AppBarLayout = () => {
     "ChangePassword",
     "PostAnnouncement",
     "AddAppointment",
-    "ArchivePage",
+    "GalleryPage",
     "AddPhoto",
   ];
 
-  const settings2 = [
-    "StudentProfile",
-    "LecturersProfile",
-    "ChangePassword",
-    "ArchivePage",
-  ];
+  const settings2 = ["LecturersProfile", "ChangePassword", "GalleryPage"];
 
   const settings3 = [
     "AdminPage",
@@ -91,7 +96,7 @@ const AppBarLayout = () => {
     "ChangePassword",
     "PostAnnouncement",
     "AddAppointment",
-    "ArchivePage",
+    "GalleryPage",
     "AddPhoto",
   ];
 
@@ -116,10 +121,6 @@ const AppBarLayout = () => {
     setSelectedAnnouncement(announcements[index]);
     setDialogOpen(true);
     setAnchorElAnnouncement(null);
-  };
-
-  const handleOpenDialog = () => {
-    setDialogOpen(true);
   };
 
   const handleCloseDialog = () => {
@@ -155,6 +156,15 @@ const AppBarLayout = () => {
             sx={{ background: "black" }}
           >
             <Toolbar>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                // onClick={handleDrawerOpen}
+                edge="start"
+                sx={{ mr: 2, ...(open && { display: "none" }) }}
+              >
+                <MenuIcon />
+              </IconButton>
               <Typography
                 variant="h5"
                 component="div"
@@ -219,7 +229,7 @@ const AppBarLayout = () => {
                     aria-expanded={open ? "true" : undefined}
                     aria-haspopup="true"
                   >
-                    <Avatar alt="Thaer" src={thaer} />
+                    <Avatar alt="User" src={user?.photo} />
                   </IconButton>
                 </Tooltip>
               </Box>
