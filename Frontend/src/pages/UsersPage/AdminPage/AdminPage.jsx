@@ -24,6 +24,8 @@ import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ClearIcon from "@mui/icons-material/Clear";
 import SearchIcon from "@mui/icons-material/Search";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import "./style.css"; // Import the external stylesheet
 
 const AdminPage = () => {
@@ -46,13 +48,26 @@ const AdminPage = () => {
   const [isAddDialogOpen, setAddDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [newLecturerEmail, setNewLecturerEmail] = useState("");
+  const [newLecturerPassword, setNewLecturerPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogout = () => {
     // Add your logout logic here
   };
 
   const handleAddNewLecturers = () => {
+    setNewLecturerEmail("");
+    setNewLecturerPassword("");
     setAddDialogOpen(true);
+  };
+
+  const handleAddLecturer = () => {
+    // Handle logic for adding a new lecturer using newLecturerEmail and newLecturerPassword
+    // For now, just log the values to the console
+    console.log("Email:", newLecturerEmail);
+    console.log("Password:", newLecturerPassword);
+    setAddDialogOpen(false);
   };
 
   const handleDeleteLecture = (lectureId) => {
@@ -112,18 +127,51 @@ const AdminPage = () => {
             Add New Lecturers
           </DialogTitle>
           <DialogContent>
-            {/* Example input for file upload */}
-            <input
-              type="file"
-              accept=".xls, .xlsx" // Specify accepted file types
-              onChange={(e) => console.log(e.target.files[0])}
+            {/* Form with email and password fields */}
+            <TextField
+              label="Email"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              value={newLecturerEmail}
+              onChange={(e) => setNewLecturerEmail(e.target.value)}
+            />
+            <TextField
+              label="Password"
+              type={showPassword ? "text" : "password"}
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              value={newLecturerPassword}
+              onChange={(e) => setNewLecturerPassword(e.target.value)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    {showPassword ? (
+                      <IconButton
+                        onClick={() => setShowPassword(false)}
+                        edge="end"
+                      >
+                        <VisibilityIcon />
+                      </IconButton>
+                    ) : (
+                      <IconButton
+                        onClick={() => setShowPassword(true)}
+                        edge="end"
+                      >
+                        <VisibilityOffIcon />
+                      </IconButton>
+                    )}
+                  </InputAdornment>
+                ),
+              }}
             />
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseAddDialog} style={{ color: "black" }}>
               Cancel
             </Button>
-            <Button onClick={handleCloseAddDialog} style={{ color: "black" }}>
+            <Button onClick={handleAddLecturer} style={{ color: "black" }}>
               Add
             </Button>
           </DialogActions>
@@ -159,7 +207,7 @@ const AdminPage = () => {
                     <TableCell>Name</TableCell>
                     <TableCell>Assistant</TableCell>
                     <TableCell>Phone</TableCell>
-                    <TableCell>Action</TableCell>
+                    <TableCell>Delete</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
