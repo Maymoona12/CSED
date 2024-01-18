@@ -158,6 +158,7 @@ export default function Login() {
                     style={{
                       color: "black",
                       textDecoration: "none",
+                      color: "#1f3f66",
                     }}
                   >
                     Forgot password?
@@ -168,7 +169,7 @@ export default function Login() {
                     to="/user/signup"
                     variant="body2"
                     style={{
-                      color: "black",
+                      color: "#1f3f66",
                       textDecoration: "none",
                     }}
                   >
