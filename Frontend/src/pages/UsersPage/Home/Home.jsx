@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./LecturerStyle.css";
+import "./Style.css";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import CampaignIcon from "@mui/icons-material/Campaign";
@@ -450,7 +450,7 @@ const Home = () => {
           </div>
 
           <div style={{ marginTop: "10px", marginRight: "100px" }}>
-            <Link to="/me/ArchivePage" style={{ marginRight: "50px" }}>
+            <Link to="/me/GalleryPage" style={{ marginRight: "50px" }}>
               <PermMediaIcon
                 style={{
                   marginInline: "10px",

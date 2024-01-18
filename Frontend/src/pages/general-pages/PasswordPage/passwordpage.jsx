@@ -25,12 +25,15 @@ const generateRandomVerificationCode = () => {
 };
 
 const sendVerificationEmail = async (email, verificationCode) => {
-  console.log(`Sending verification email to ${email} with code ${verificationCode}`);
+  console.log(
+    `Sending verification email to ${email} with code ${verificationCode}`
+  );
   // Example: Use a service like Nodemailer or an API to send the email
 };
 
 const isStrongPassword = (password) => {
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   return passwordRegex.test(password);
 };
 
@@ -39,7 +42,8 @@ const defaultTheme = createTheme();
 export default function Forgotpassword() {
   const [open, setOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
-  const [generatedVerificationCode, setGeneratedVerificationCode] = useState("");
+  const [generatedVerificationCode, setGeneratedVerificationCode] =
+    useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -107,7 +111,9 @@ export default function Forgotpassword() {
 
     try {
       // Replace the following with your actual logic to update the password
-      console.log(`Updating password for ${enteredEmail} to ${enteredNewPassword}`);
+      console.log(
+        `Updating password for ${enteredEmail} to ${enteredNewPassword}`
+      );
 
       setAlertMessage("Password updated successfully!");
       setOpen(true);
@@ -121,10 +127,12 @@ export default function Forgotpassword() {
   };
 
   const handleTogglePasswordVisibility = (field) => {
-    if (field === 'password') {
+    if (field === "password") {
       setShowPassword((prevShowPassword) => !prevShowPassword);
-    } else if (field === 'confirm_password') {
-      setShowConfirmPassword((prevShowConfirmPassword) => !prevShowConfirmPassword);
+    } else if (field === "confirm_password") {
+      setShowConfirmPassword(
+        (prevShowConfirmPassword) => !prevShowConfirmPassword
+      );
     }
   };
 
@@ -148,7 +156,7 @@ export default function Forgotpassword() {
               margin: "auto",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "black" }}>
+            <Avatar sx={{ m: 1, bgcolor: "#1f3f66" }}>
               <KeyOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
@@ -178,9 +186,9 @@ export default function Forgotpassword() {
                 sx={{
                   mt: 3,
                   mb: 2,
-                  background: "black",
+                  background: "#1f3f66",
                   "&:hover": {
-                    background: "black",
+                    background: "#1f3f66",
                   },
                 }}
               >
@@ -216,7 +224,9 @@ export default function Forgotpassword() {
                     <InputAdornment position="end">
                       <IconButton
                         edge="end"
-                        onClick={() => handleTogglePasswordVisibility('password')}
+                        onClick={() =>
+                          handleTogglePasswordVisibility("password")
+                        }
                       >
                         {showPassword ? <Visibility /> : <VisibilityOff />}
                       </IconButton>
@@ -238,9 +248,15 @@ export default function Forgotpassword() {
                     <InputAdornment position="end">
                       <IconButton
                         edge="end"
-                        onClick={() => handleTogglePasswordVisibility('confirm_password')}
+                        onClick={() =>
+                          handleTogglePasswordVisibility("confirm_password")
+                        }
                       >
-                        {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                        {showConfirmPassword ? (
+                          <Visibility />
+                        ) : (
+                          <VisibilityOff />
+                        )}
                       </IconButton>
                     </InputAdornment>
                   ),
@@ -254,9 +270,9 @@ export default function Forgotpassword() {
                 sx={{
                   mt: 3,
                   mb: 2,
-                  background: "black",
+                  background: "#1f3f66",
                   "&:hover": {
-                    background: "black",
+                    background: "#1f3f66",
                   },
                 }}
               >

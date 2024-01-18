@@ -69,15 +69,7 @@ const AppBarLayout = () => {
     },
   ];
 
-  const settings1 = [
-    "LectureProfile",
-    "EditProfile",
-    "ChangePassword",
-    "PostAnnouncement",
-    "AddAppointment",
-    "GalleryPage",
-    "AddPhoto",
-  ];
+  const settings1 = ["EditProfile", "ChangePassword"];
 
   const settings2 = ["LecturersProfile", "ChangePassword", "GalleryPage"];
 
@@ -148,7 +140,7 @@ const AppBarLayout = () => {
               right: 0,
               zIndex: 1000,
             }}
-            sx={{ background: "black" }}
+            sx={{ background: "#1f3f66" }}
           >
             <Toolbar>
               <IconButton
