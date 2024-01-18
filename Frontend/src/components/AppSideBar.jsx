@@ -18,8 +18,8 @@ export const AppSideBar = () => {
           width: drawerWidth,
           boxSizing: "border-box",
           marginTop: "64px",
-          backgroundColor: "#1E1E1E",
-          // opacity: "0.8",
+          backgroundColor: "#1f3f66",
+          opacity: "1",
         },
       }}
       variant="persistent"

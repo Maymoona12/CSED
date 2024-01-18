@@ -86,7 +86,7 @@ export default function Login() {
               margin: "0px 0px",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "black" }}>
+            <Avatar sx={{ m: 1, bgcolor: "#1f3f66" }}>
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
@@ -142,9 +142,9 @@ export default function Login() {
                 sx={{
                   mt: 3,
                   mb: 2,
-                  background: "black",
+                  background: "#1f3f66",
                   "&:hover": {
-                    background: "black",
+                    background: "#1f3f66",
                   },
                 }}
               >

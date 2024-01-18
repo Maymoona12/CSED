@@ -17,6 +17,7 @@ export default function AppBarGeneral() {
           right: 0,
           zIndex: 1000,
         }}
+        sx={{ background: "#1f3f66" }}
       >
         <Toolbar>
           <Stack

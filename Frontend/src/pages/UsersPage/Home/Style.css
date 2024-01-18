@@ -1,7 +1,7 @@
 .upc {
   position: relative;
-  /* width: 100%;
-  height: 100%; */
+  width: 100%;
+  height: 100%;
   border: 1px solid #ccc;
   margin: 20px;
   border-radius: 4px;
@@ -12,7 +12,7 @@
 }
 
 .gradiant {
-  background-image: linear-gradient(to bottom, #080808, #222223);
+  background-image: linear-gradient(to bottom, #1f3f66, #2b3f57);
   height: 125px;
   border-radius: 4px 4px 0px 0px;
 }
@@ -28,7 +28,7 @@
   left: 20px;
   width: 40px;
   height: 40px;
-  background: #080808;
+  background: #1f3f66;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -63,7 +63,7 @@
 
 .profile-button a {
   text-decoration: none;
-  background-color: #080808;
+  background-color: #1f3f66;
   color: white;
   padding: 10px 15px;
   border-radius: 10px;

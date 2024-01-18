@@ -12,7 +12,6 @@ import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
 const SideBarMenu = () => {
-  const [anchorElUser, setAnchorElUser] = useState(null);
   const { getUser, sideBar, setSideBar } = useAuth();
   const user = getUser();
 

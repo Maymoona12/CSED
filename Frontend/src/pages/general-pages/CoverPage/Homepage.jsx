@@ -54,7 +54,7 @@ export default function Homepage() {
               right: 0,
               zIndex: 1000,
             }}
-            sx={{ background: "black" }}
+            sx={{ background: "#1f3f66" }}
           >
             <Toolbar>
               <Typography

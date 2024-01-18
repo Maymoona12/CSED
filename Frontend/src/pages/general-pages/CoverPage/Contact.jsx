@@ -14,7 +14,7 @@ const Contact = () => {
         variant="h3"
         component="div"
         sx={{
-          color: "Highlight",
+          color: "#1f3f66",
           marginBottom: 2,
           fontFamily: "Brush Script MT",
           margin: "50px 80px",
@@ -22,19 +22,24 @@ const Contact = () => {
       >
         Contact CSED
       </Typography>
-      <Card fullwidth="true"
-      sx={{ padding:"50px 20px", margin: "50px" }}>
+      <Card fullwidth="true" sx={{ padding: "50px 20px", margin: "50px" }}>
         <CardContent>
           <div style={{ display: "flex", alignItems: "center" }}>
-            <Avatar sx={{ m: 1, bgcolor: "Highlight" }}>
+            <Avatar sx={{ m: 1, bgcolor: "#1f3f66" }}>
               <PhoneIcon />
             </Avatar>
             <Typography component="h1" variant="h7" sx={{ fontSize: "1.5rem" }}>
               +970 9 2688199
             </Typography>
           </div>
-          <div style={{ display: "flex", alignItems: "center" , paddingTop:"20px"}}>
-            <Avatar sx={{ m: 1, bgcolor: "Highlight" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              paddingTop: "20px",
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: "#1f3f66" }}>
               <EmailIcon />
             </Avatar>
             <Typography component="h1" variant="h7" sx={{ fontSize: "1.5rem" }}>
