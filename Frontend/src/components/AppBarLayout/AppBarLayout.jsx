@@ -21,21 +21,11 @@ import {
 } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import CampaignIcon from "@mui/icons-material/Campaign";
-import { styled, useTheme } from "@mui/system";
+import { styled } from "@mui/system";
 import useAuth from "../../hooks/useAuth";
 import useLogout from "../../api/Logout/useLogout";
 import MenuIcon from "@mui/icons-material/Menu";
-import Drawer from "@mui/material/Drawer";
-import Divider from "@mui/material/Divider";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 
 const StyledButton = styled(Button)({
   my: 2,
@@ -57,7 +47,7 @@ const AppBarLayout = () => {
   const onSetAnchorElUser = (closedAnchor) => setAnchorElUser(closedAnchor);
   const open = Boolean(anchorElUser);
   const { logoutOperation } = useLogout();
-  const { getUser } = useAuth();
+  const { getUser, sideBar, setSideBar } = useAuth();
   const user = getUser();
 
   const announcements = [
@@ -80,6 +70,7 @@ const AppBarLayout = () => {
   ];
 
   const settings1 = [
+    "LectureProfile",
     "EditProfile",
     "ChangePassword",
     "PostAnnouncement",
@@ -133,6 +124,10 @@ const AppBarLayout = () => {
     handleCloseUserMenu();
   };
 
+  const handleDrawerOpen = () => {
+    setSideBar((previous) => !previous);
+  };
+
   return (
     <>
       <div
@@ -159,12 +154,22 @@ const AppBarLayout = () => {
               <IconButton
                 color="inherit"
                 aria-label="open drawer"
-                // onClick={handleDrawerOpen}
+                onClick={handleDrawerOpen}
                 edge="start"
                 sx={{ mr: 2, ...(open && { display: "none" }) }}
               >
+                {sideBar && (
+                  <ChevronLeftIcon
+                    fontSize="small"
+                    sx={{
+                      marginRight: -0.5,
+                      fontSize: "1rem",
+                    }}
+                  />
+                )}
                 <MenuIcon />
               </IconButton>
+
               <Typography
                 variant="h5"
                 component="div"

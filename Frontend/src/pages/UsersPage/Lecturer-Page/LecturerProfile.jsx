@@ -1,14 +1,27 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./LecturerStyle.css";
+// import "./LecturerStyle.css";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import PermMediaIcon from "@mui/icons-material/PermMedia";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
-import PendingActionsIcon from '@mui/icons-material/PendingActions';
-import { Button, Popover, Typography, Avatar, Tooltip, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
+import PendingActionsIcon from "@mui/icons-material/PendingActions";
+import {
+  Button,
+  Popover,
+  Typography,
+  Avatar,
+  Tooltip,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from "@mui/material";
 import useAuth from "../../../hooks/useAuth";
 
 const LectureProfile = () => {
@@ -52,11 +65,36 @@ const LectureProfile = () => {
 
   // Sample data for the table
   const scheduleData = [
-    { day: "Sunday", timeInterval: "10:00 - 12:00 ", student: "Ahmad", reason: "Meeting" },
-    { day: "Monday", timeInterval: "10:00 - 12:00 ", student: "Lena", reason: "Meeting" },
-    { day: "Tuesday", timeInterval: "10:00 - 12:00 ", student: "Yazeed", reason: "Meeting" },
-    { day: "Wedenday", timeInterval: "10:00 - 12:00 ", student: "Fatima", reason: "Meeting" },
-    { day: "Thursday", timeInterval: "10:00 - 12:00 ", student: "Malak", reason: "Meeting" },
+    {
+      day: "Sunday",
+      timeInterval: "10:00 - 12:00 ",
+      student: "Ahmad",
+      reason: "Meeting",
+    },
+    {
+      day: "Monday",
+      timeInterval: "10:00 - 12:00 ",
+      student: "Lena",
+      reason: "Meeting",
+    },
+    {
+      day: "Tuesday",
+      timeInterval: "10:00 - 12:00 ",
+      student: "Yazeed",
+      reason: "Meeting",
+    },
+    {
+      day: "Wedenday",
+      timeInterval: "10:00 - 12:00 ",
+      student: "Fatima",
+      reason: "Meeting",
+    },
+    {
+      day: "Thursday",
+      timeInterval: "10:00 - 12:00 ",
+      student: "Malak",
+      reason: "Meeting",
+    },
     // Add more sample data as needed
   ];
 
@@ -256,7 +294,11 @@ const LectureProfile = () => {
           </Popover>
         </div>
         <div style={{ marginTop: "10px", marginRight: "100px" }}>
-          <Link to="" style={{ marginLeft: "50px" }} onClick={handleViewScheduleClick}>
+          <Link
+            to=""
+            style={{ marginLeft: "50px" }}
+            onClick={handleViewScheduleClick}
+          >
             <PendingActionsIcon
               style={{ marginInline: "15px", marginTop: "10px", fontSize: 25 }}
             />
@@ -292,7 +334,9 @@ const LectureProfile = () => {
         </div>
       </div>
       {showScheduleCard && (
-        <div style={{ marginTop: "60px", marginLeft: "50px" , maxWidth:"auto" }}>
+        <div
+          style={{ marginTop: "60px", marginLeft: "50px", maxWidth: "auto" }}
+        >
           <TableContainer component={Paper}>
             <Table>
               <TableHead>
@@ -308,8 +352,8 @@ const LectureProfile = () => {
                 {scheduleData.map((row, index) => (
                   <TableRow key={index}>
                     <TableCell>{row.day}</TableCell>
-                    <TableCell>{row.timeInterval.split(' - ')[0]}</TableCell>
-                    <TableCell>{row.timeInterval.split(' - ')[1]}</TableCell>
+                    <TableCell>{row.timeInterval.split(" - ")[0]}</TableCell>
+                    <TableCell>{row.timeInterval.split(" - ")[1]}</TableCell>
                     <TableCell>{row.student}</TableCell>
                     <TableCell>{row.reason}</TableCell>
                   </TableRow>
