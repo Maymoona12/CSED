@@ -11,40 +11,40 @@ use Illuminate\Support\Facades\Auth;
 
 class AppointmentController extends Controller
 {
-    public function add_appointment(Request $request){
+    // public function add_appointment(Request $request){
 
-        $appointment=new Appointment;
+    //     $appointment=new Appointment;
         
-        $appointment->doctor_id=Auth::id();
-        $appointment->status=0;
-        $appointment->start_time=$request->start_time;
-        $appointment->finish_time=$request->finish_time;
-        $appointment->day=$request->day;
-        $appointment->app_name=$request->app_name;
-        $appointment->created_at = Carbon::now();
-        $appointment->updated_at = Carbon::now();
-        $appointment->save();
-        return response($appointment,201);
+    //     $appointment->doctor_id=Auth::id();
+    //     $appointment->status=0;
+    //     $appointment->start_time=$request->start_time;
+    //     $appointment->finish_time=$request->finish_time;
+    //     $appointment->day=$request->day;
+    //     $appointment->app_name=$request->app_name;
+    //     $appointment->created_at = Carbon::now();
+    //     $appointment->updated_at = Carbon::now();
+    //     $appointment->save();
+    //     return response($appointment,201);
         
     
-    }
+    // }
 
 
-    public function edit_appointment(Request $request,$id){
+    // public function edit_appointment(Request $request,$id){
 
-        $appointment=Appointment::find($id);
+    //     $appointment=Appointment::find($id);
         
-        $appointment->status=$request->status;
-        $appointment->start_time=$request->start_time;
-        $appointment->finish_time=$request->finish_time;
-        $appointment->day=$request->day;
-        $appointment->app_name=$request->app_name;
+    //     $appointment->status=$request->status;
+    //     $appointment->start_time=$request->start_time;
+    //     $appointment->finish_time=$request->finish_time;
+    //     $appointment->day=$request->day;
+    //     $appointment->app_name=$request->app_name;
         
-        $appointment->updated_at = Carbon::now();
-        $appointment->update();
-        return response($appointment,201);
+    //     $appointment->updated_at = Carbon::now();
+    //     $appointment->update();
+    //     return response($appointment,201);
         
-    }
+    // }
 
     public function bookAppointment (Request $request){
         $appointment=new BookAppointment;

@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId("doctor_id")->references('id')->on('users');
             $table->tinyInteger("status");
-            $table->datetime("start_time");
-            $table->datetime("finish_time");
+            $table->time("start_time");
+            $table->time("end_time");
             $table->string("day");
             $table->string("app_name");
-            // $table->integer('time_period');
+            
             $table->timestamps();
         });
     }

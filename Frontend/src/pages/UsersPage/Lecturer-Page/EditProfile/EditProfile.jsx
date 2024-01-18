@@ -108,8 +108,10 @@ const EditProfile = () => {
             style={{
               width: "300px",
               border: "1px solid #ddd",
+              height:"350px",
               padding: "30px",
               borderRadius: "20px",
+              marginTop: "10px",
               marginLeft: "10px",
             }}
           >
@@ -119,13 +121,15 @@ const EditProfile = () => {
                 marginBottom: "20px",
                 color: "black",
                 fontFamily: "serif",
+                paddingTop: "20px ",
+                paddingBottom: "10px",
               }}
             >
               User Details
             </Typography>
 
             <div style={{ color: "black", marginBottom: "20px" }}>
-              <div style={{ display: "flex", marginBottom: "20px" }}>
+              <div style={{ display: "flex", marginBottom: "30px" }}>
                 <ListItemIcon style={{ color: "black" }}>
                   <AccountBalanceIcon />
                 </ListItemIcon>
@@ -134,7 +138,7 @@ const EditProfile = () => {
                 </Typography>
               </div>
 
-              <div style={{ display: "flex", marginBottom: "20px" }}>
+              <div style={{ display: "flex", marginBottom: "30px" }}>
                 <ListItemIcon style={{ color: "black" }}>
                   <ApartmentIcon />
                 </ListItemIcon>
@@ -143,7 +147,7 @@ const EditProfile = () => {
                 </Typography>
               </div>
 
-              <div style={{ display: "flex", marginBottom: "20px" }}>
+              <div style={{ display: "flex", marginBottom: "30px" }}>
                 <ListItemIcon style={{ color: "black" }}>
                   <PhoneIcon />
                 </ListItemIcon>
@@ -152,7 +156,7 @@ const EditProfile = () => {
                 </Typography>
               </div>
 
-              <div style={{ display: "flex", marginBottom: "20px" }}>
+              <div style={{ display: "flex", marginBottom: "30px" }}>
                 <ListItemIcon style={{ color: "black" }}>
                   <EmailIcon />
                 </ListItemIcon>
@@ -194,8 +198,8 @@ const EditProfile = () => {
                 noValidate
                 onSubmit={handelSubmit}
                 sx={{
-                  mt: 1,
-                  width: "300px",
+                  mt: -2,
+                  width: "330px",
                   border: "1px solid #ddd",
                   padding: "50px",
                   borderRadius: "20px",
@@ -218,7 +222,7 @@ const EditProfile = () => {
                   fullWidth
                   id="education_level"
                   name="education_level"
-                  autoComplete="education_level"
+                  label="Education Level"
                   type="text"
                   value={education_level}
                   onChange={handleEducation_level}
@@ -229,6 +233,7 @@ const EditProfile = () => {
                   required
                   fullWidth
                   name="office_no"
+                  label="Office Room"
                   type="text"
                   id="office_no"
                   autoComplete="office_no"
@@ -240,6 +245,7 @@ const EditProfile = () => {
                   required
                   fullWidth
                   name="phone_no"
+                  label="Phone"
                   type="text"
                   id="phone_no"
                   autoComplete="phone_no"
@@ -251,6 +257,7 @@ const EditProfile = () => {
                   required
                   fullWidth
                   name="email"
+                  label="Email"
                   type="email"
                   id="email"
                   autoComplete="email"

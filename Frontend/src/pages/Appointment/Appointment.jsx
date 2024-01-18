@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import {
-  AppBar,
-  Toolbar,
   Typography,
   Button,
   Card,
@@ -38,13 +36,16 @@ const Appointment = () => {
     endTime,
     selectedDay
   ) => {
+    
     const division = timeDivision;
-    const start = new Date(`2023-01-01T${startTime}`);
-    const end = new Date(`2023-01-01T${endTime}`);
+    const start = new Date(`2023-01-01T${startTime}:00`);
+    const end = new Date(`2023-01-01T${endTime}:00`);
     const interval = division * 60 * 1000;
 
     const appointments = [];
     let previousEndTime = start;
+
+
 
     for (
       let current = start;
@@ -54,12 +55,14 @@ const Appointment = () => {
       const formattedTime = current.toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
+        hour12: false,
       });
 
       const nextEndTime = new Date(current.getTime() + interval);
       const formattedEndTime = nextEndTime.toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
+        hour12: false,
       });
 
       appointments.push({
@@ -144,8 +147,12 @@ const Appointment = () => {
     setSchedule(updatedSchedule);
   };
 
-  const handleSaveButtonClick = (dayIndex) => {
-    const tableElement = document.getElementById(`table-${dayIndex}`);
+ const handleSaveButtonClick = (dayIndex) => {
+  const tableElement = document.getElementById(`table-${dayIndex}`);
+
+  console.log("tableElement:", tableElement); // Add this line for debugging
+
+  if (tableElement && tableElement.style) {
     if (
       tableElement.style.display === "table" &&
       tableElement.style.visibility === "visible"
@@ -159,7 +166,9 @@ const Appointment = () => {
     }
 
     console.log("mySchedule:", schedule);
-  };
+  }
+};
+
 
   const handleInputChange = () => {
     const selectedDay = document.getElementById(`day-0`).value;
@@ -237,9 +246,9 @@ const Appointment = () => {
               <div className="select__wrapper">
                 <label
                   htmlFor={`appointment-0`}
-                  style={{ marginRight: "18px" }}
+                  style={{ marginRight: "15px" }}
                 >
-                  Add Appointment
+                   Appointment Title
                 </label>
                 <input
                   type="text"
@@ -264,10 +273,13 @@ const Appointment = () => {
                     Add End Time
                   </label>
                   <input
-                    type="time"
-                    id={`endTime-0`}
-                    onChange={handleInputChange}
-                  />
+    type="time"
+    id={`endTime-0`}
+    step="300" // Set the step attribute to 300 seconds (5 minutes)
+    value="00:00" // Set a default time in the "HH:mm" format
+    onChange={handleInputChange}
+    required
+  />
                 </div>
                 <div className="select__wrapper" style={{ marginTop: "10px" }}>
                   <label
