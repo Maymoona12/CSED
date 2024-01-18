@@ -4,7 +4,6 @@ import "./StudentProfile.css";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import EditNoteIcon from "@mui/icons-material/EditNote";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import PermMediaIcon from "@mui/icons-material/PermMedia";
 import { Button, Popover, Typography, Avatar, Tooltip } from "@mui/material";
 import test from "../../../../CoverImages/image2.jpg";
@@ -51,7 +50,6 @@ const StudentProfile = () => {
           <label htmlFor="imageInput">
             <AddAPhotoIcon className="add-photo-icon" />
           </label>
-          {/* Hidden file input triggered by the label */}
           <input
             type="file"
             id="imageInput"
@@ -185,45 +183,6 @@ const StudentProfile = () => {
               </Typography>
             </Popover>
           </div>
-
-          {/* <div style={{ marginTop: "10px", marginRight: "100px" }}>
-            <Link to="/AddAppointment" style={{ marginRight: "50px" }}>
-              <CalendarMonthIcon
-                style={{
-                  marginInline: "10px",
-                  marginTop: "10px",
-                  fontSize: 25,
-                }}
-              />
-            </Link>
-            <Button
-              onMouseEnter={(event) =>
-                handleButtonHover(event, setBookAnAppointmentPopover)
-              }
-              onMouseLeave={() =>
-                handleButtonLeave(setBookAnAppointmentPopover)
-              }
-            ></Button>
-            <Popover
-              open={Boolean(bookAnAppointmentPopover)}
-              anchorEl={bookAnAppointmentPopover}
-              onClose={() => handleButtonLeave(setBookAnAppointmentPopover)}
-              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-              transformOrigin={{ vertical: "top", horizontal: "center" }}
-              PaperProps={{
-                style: {
-                  background: "rgba(10, 10, 10, 0.8)",
-                  color: "white",
-                  padding: "10px",
-                  fontFamily: "Garamond",
-                },
-              }}
-            >
-              <Typography style={{ padding: "10px", fontFamily: "Garamond" }}>
-                Book An Appointment
-              </Typography>
-            </Popover>
-          </div> */}
         </div>
       </div>
     </div>

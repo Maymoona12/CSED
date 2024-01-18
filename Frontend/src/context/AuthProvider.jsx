@@ -6,11 +6,13 @@ export const AuthContext = createContext({
   onLogin: () => {},
   onLogout: () => {},
   onSignup: () => {},
+  sideBar: false,
 });
 
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [sideBar, setSideBar] = useState(false);
 
   const [user, setUser] = useState(null);
 
@@ -45,6 +47,8 @@ export const AuthProvider = ({ children }) => {
     onLogin: handleLogin,
     onLogout: handleLogout,
     onSignup: handleSignup,
+    sideBar,
+    setSideBar,
   };
 
   return (

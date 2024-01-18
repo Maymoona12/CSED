@@ -57,7 +57,9 @@ export default function Login() {
   };
   const isLogin = !isEmptyToken(accessToken);
   if (isLogin)
-    return <Navigate to="/user" replace state={{ from: location.pathname }} />;
+    return (
+      <Navigate to="/user/login" replace state={{ from: location.pathname }} />
+    );
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -68,6 +70,7 @@ export default function Login() {
           height: "100vh",
           justifyContent: "center",
           alignItems: "center",
+          position: "relative",
         }}
       >
         <CssBaseline />

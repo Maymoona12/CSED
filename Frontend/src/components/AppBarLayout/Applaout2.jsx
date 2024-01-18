@@ -7,7 +7,7 @@ const Applayout2 = () => {
   return (
     <>
       <AppBarGeneral />
-      <Grid container>
+      <Grid container sx={{ marginTop: "20px" }}>
         <Outlet />
       </Grid>
     </>

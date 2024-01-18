@@ -2,10 +2,9 @@ import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import { Avatar } from "@mui/material";
-import logo1 from "../../../CoverImages/UniversityLogo.jpg";
-import logo2 from "../../../CoverImages/UniversityLogo2.jpg";
-import logo3 from "../../../CoverImages/UniversityLogo3.jpg";
+import { Stack, ImageListItem } from "@mui/material";
+import circle from "../../../CoverImages/circle.png";
+import text from "../../../CoverImages/text.png";
 
 export default function AppBarGeneral() {
   return (
@@ -19,15 +18,29 @@ export default function AppBarGeneral() {
           zIndex: 1000,
         }}
       >
-        <Toolbar sx={{ justifyContent: "center" }}>
-          <Avatar
-            alt="User"
-            src={logo1}
-            style={{
-              border: "1px solid #ccc",
-              objectFit: "contain",
+        <Toolbar>
+          <Stack
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            sx={{
+              height: (theme) => theme.mixins.toolbar.minHeight,
+              maxWidth: "275px",
+              mx: "auto", // Center the Stack horizontally
+              gap: 1,
             }}
-          />
+          >
+            <ImageListItem>
+              <img
+                src={circle}
+                style={{ height: 54, width: 54 }}
+                alt="Circle"
+              ></img>
+            </ImageListItem>
+            <ImageListItem>
+              <img src={text} alt="Text"></img>
+            </ImageListItem>
+          </Stack>
         </Toolbar>
       </AppBar>
     </Box>

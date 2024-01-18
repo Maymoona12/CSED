@@ -1,7 +1,7 @@
 .upc {
   position: relative;
-  width: auto;
-  /* height: auto; */
+  /* width: 100%;
+  height: 100%; */
   border: 1px solid #ccc;
   margin: 20px;
   border-radius: 4px;

@@ -4,7 +4,7 @@ import AddPhoto from "./pages/photo-archive/add-photo";
 import Signup from "./pages/general-pages/Signup/signup";
 import Login from "./pages/general-pages/Login/login";
 import Forgotpassword from "./pages/general-pages/PasswordPage/passwordpage";
-import Home from "./pages/Home";
+import Home from "./pages/UsersPage/Home/Home";
 
 import LectureProfile from "./pages/UsersPage/Lecturer-Page/LecturerProfile";
 import EditProfile from "./pages/UsersPage/Lecturer-Page/EditProfile/EditProfile";
@@ -44,7 +44,8 @@ function App() {
         <Route path="/me" element={<AppLayout />}>
           <Route path="unauthorized" element={<Unauthorized />} />
           <Route path="" element={<Home />} />
-          <Route element={<ProtectedRoutes allowedRoles={[doctor]} />}>
+
+          <Route element={<ProtectedRoutes allowedRoles={[doctor, admin]} />}>
             {/* <Route path="" element={<LectureProfile />} /> */}
             <Route path="/me/EditProfile" element={<EditProfile />} />
             <Route
@@ -53,11 +54,9 @@ function App() {
             />
             <Route path="/me/AddAppointment" element={<Appointment />} />
             <Route path="/me/AddPhoto" element={<AddPhoto />} />
-            <Route path="/me/AdminPage" element={<AdminPage />} />
           </Route>
 
           <Route element={<ProtectedRoutes allowedRoles={[student]} />}>
-            {/* <Route path="" element={<StudentProfile />} /> */}
             <Route path="LecturersProfile" element={<LecturerProfiles />} />
             <Route path="BookAppointment" element={<BookAppointment />} />
           </Route>
@@ -73,12 +72,7 @@ function App() {
           </Route>
 
           <Route element={<ProtectedRoutes allowedRoles={[admin]} />}>
-            {/* <Route path="" element={<LectureProfile />} /> */}
             <Route path="AdminPage" element={<AdminPage />} />
-            <Route path="EditProfile" element={<EditProfile />} />
-            <Route path="PostAnnouncement" element={<PostAnnouncementPage />} />
-            <Route path="AddAppointment" element={<Appointment />} />
-            <Route path="AddPhoto" element={<AddPhoto />} />
           </Route>
         </Route>
       </Routes>
