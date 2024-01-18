@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('office_hours', function (Blueprint $table) {
             $table->id();
             $table->foreignId("doctor_id")->references('id')->on('users');
-            $table->datetime("start_time");
-            $table->datetime("finish_time");
+            $table->time("start_time");
+            $table->time("finish_time");
             $table->string("day");
             $table->string("app_name");
             $table->integer('time_devision');

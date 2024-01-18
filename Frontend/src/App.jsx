@@ -62,11 +62,7 @@ function App() {
             <Route path="BookAppointment" element={<BookAppointment />} />
           </Route>
 
-          <Route
-            element={
-              <ProtectedRoutes allowedRoles={[doctor, student, admin]} />
-            }
-          >
+          <Route element={<ProtectedRoutes allowedRoles={[doctor, student,admin]} />}>
             <Route path="/me/ChangePassword" element={<ChangePassword />} />
             <Route path="/me/GalleryPage" element={<FoldersPage />} />
             <Route path="PhotosPage/:folderId" element={<PhotosPage />} />
