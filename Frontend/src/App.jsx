@@ -59,7 +59,7 @@ function App() {
             <Route path="/me/BookAppointment" element={<BookAppointment />} />
           </Route>
 
-          <Route element={<ProtectedRoutes allowedRoles={[doctor, student]} />}>
+          <Route element={<ProtectedRoutes allowedRoles={[doctor, student,admin]} />}>
             <Route path="/me/ChangePassword" element={<ChangePassword />} />
             <Route path="/me/ArchivePage" element={<FoldersPage />} />
             <Route path="PhotosPage/:folderId" element={<PhotosPage />} />
