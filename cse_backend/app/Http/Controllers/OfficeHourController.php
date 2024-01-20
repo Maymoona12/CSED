@@ -13,10 +13,13 @@ use Ramsey\Uuid\Type\Integer;
 class OfficeHourController extends Controller
 {
     public function createOfficeHour(Request $request){
+
+        
+        
         $officeHour = new OfficeHour;
         $officeHour->doctor_id=Auth::id(); 
-        $officeHour->start_time=$request->start_time;
-        $officeHour->finish_time=$request->finish_time;
+        $officeHour->start_time=Carbon::createFromFormat('g:i A', $request->start_time)->format('H:i');
+        $officeHour->finish_time=Carbon::createFromFormat('g:i A', $request->finish_time)->format('H:i');
         $officeHour->day=$request->day;
         $officeHour->app_name=$request->app_name;
         $officeHour->time_devision=$request->time_devision;
@@ -30,9 +33,10 @@ class OfficeHourController extends Controller
             $appointment=new Appointment;
             $appointment->doctor_id=Auth::id();
             $appointment->status =0;
-            $appointment->start_time = $current_time;
+            $appointment->start_time = $current_time->toTimeString();
             $current_time = $current_time->addMinutes($officeHour->time_devision);
             $end_time = $current_time->toTimeString();
+            
             $appointment->end_time = $end_time;
             $appointment->day = $officeHour->day;
             $appointment->app_name = $officeHour->app_name;

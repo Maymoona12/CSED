@@ -23,4 +23,15 @@ class AccountController extends Controller
         }
     
     }
+
+
+    public function deleteAccount($id){
+        $auth=Auth::user();
+        if($auth->role == 'admin'){
+            $user=User::find($id);
+            $user->account_status = 1;
+            $user->save();
+        }
+        return response()->json(['deleted',200]);
+    }
 }

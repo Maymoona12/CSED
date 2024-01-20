@@ -130,7 +130,7 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\User::factory()->create([
             'reg_no' => '201821',
-            'name' => '.Dr.Shatha AbuShanab',
+            'name' => 'Dr.Shatha AbuShanab',
             'email' => 'shatha.abushanab@ptuk.edu.ps',
             'password'=> '123456789',
             'education_level' => 'Assistant Professor',
