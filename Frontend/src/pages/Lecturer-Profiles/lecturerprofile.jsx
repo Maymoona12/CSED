@@ -140,7 +140,7 @@ function LecturersProfile() {
       <AppBar
         position="static"
         style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000 }}
-        sx={{ background: "black" }}
+        sx={{ background: "#1f3f66" }}
       >
         <Toolbar>
           <Typography
@@ -231,10 +231,18 @@ function LecturersProfile() {
                       </Typography>
                     </CardContent>
                     <CardActions>
-                      <Button size="small" onClick={() => handleView(index)}>
+                      <Button
+                        size="small"
+                        onClick={() => handleView(index)}
+                        style={{ color: "#1f3f66" }}
+                      >
                         View
                       </Button>
-                      <Button size="small" onClick={handleAddAppointmentClick}>
+                      <Button
+                        size="small"
+                        onClick={handleAddAppointmentClick}
+                        style={{ color: "#1f3f66" }}
+                      >
                         Book Now
                       </Button>
                     </CardActions>

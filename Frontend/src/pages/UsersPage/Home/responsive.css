@@ -1,0 +1,13 @@
+@media only screen and (max-width: 600px) {
+  /* Define responsive styles for smaller screens */
+  .profile-down {
+    flex-direction: column; /* Change the layout to column for smaller screens */
+    align-items: center; /* Center the content */
+  }
+
+  .profile-title {
+    margin: 20px 0; /* Add margin for better spacing */
+  }
+
+  /* Add more responsive styles as needed */
+}

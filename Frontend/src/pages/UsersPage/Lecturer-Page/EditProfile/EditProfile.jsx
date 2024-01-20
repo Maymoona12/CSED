@@ -108,7 +108,7 @@ const EditProfile = () => {
             style={{
               width: "300px",
               border: "1px solid #ddd",
-              height:"350px",
+              height: "350px",
               padding: "30px",
               borderRadius: "20px",
               marginTop: "10px",
@@ -171,7 +171,7 @@ const EditProfile = () => {
                 onClick={handleEditButtonClick}
                 style={{
                   padding: "10px",
-                  backgroundColor: "black",
+                  backgroundColor: "#1f3f66",
                   color: "white",
                   border: "none",
                   borderRadius: "5px",
@@ -272,9 +272,9 @@ const EditProfile = () => {
                     sx={{
                       mt: 4,
                       mb: 3,
-                      background: "black",
+                      background: "#1f3f66",
                       "&:hover": {
-                        background: "black",
+                        background: "#1f3f66",
                       },
                     }}
                   >

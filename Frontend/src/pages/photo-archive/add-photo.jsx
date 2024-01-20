@@ -85,7 +85,7 @@ const NewAlbum = ({ onSubmit }) => {
         >
           <h2
             style={{
-              color: "black",
+              color: "#1f3f66",
               fontFamily: "Monaco",
               marginBottom: "40px",
               marginLeft: "175px",
@@ -135,7 +135,7 @@ const NewAlbum = ({ onSubmit }) => {
                   marginBottom: "5px",
                   background: "primary",
                   fontFamily: "Monaco",
-                  background: "black",
+                  background: "#1f3f66",
                 }}
               >
                 Upload Photo
@@ -154,7 +154,8 @@ const NewAlbum = ({ onSubmit }) => {
                 cursor: "pointer",
                 fontFamily: "Monaco",
                 fontSize: "18px",
-                color: "black",
+                color: "white",
+                backgroundColor: "#1f3f66",
               }}
             >
               CREATE

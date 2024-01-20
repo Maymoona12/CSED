@@ -23,50 +23,75 @@ const SideBarMenu = () => {
     "GalleryPage",
     "AddPhoto",
   ];
+
+  const settings2 = ["LecturersProfile", "GalleryPage"];
+
+  const settings3 = [
+    "AdminPage",
+    "EditProfile",
+    "PostAnnouncement",
+    "AddAppointment",
+    "GalleryPage",
+    "AddPhoto",
+  ];
+  // const settings4 = ["Home"];
+
   const handleDrawerClose = () => {
     setSideBar((previous) => !previous);
   };
 
   return (
     <Stack direction="row">
-      <List>
-        {user?.role == "doctor" &&
-          settings1.map((setting) => (
-            <ListItemButton key={setting} onClick={handleDrawerClose}>
-              <Link
-                to={`/me/${setting}`}
-                style={{ textDecoration: "none", color: "black" }}
-              >
-                <Typography style={{ color: "white" }}>{setting}</Typography>
-              </Link>
-            </ListItemButton>
-          ))}
-      </List>
+      <div style={{ marginTop: "-50px" }}>
+        <List>
+          {user?.role == "doctor" &&
+            settings1.map((setting) => (
+              <ListItemButton key={setting} onClick={handleDrawerClose}>
+                <Link
+                  to={`/me/${setting}`}
+                  style={{
+                    textDecoration: "none",
+                    color: "black",
+                    "&:hover": { backgroundColor: "lightblue" },
+                  }}
+                >
+                  <Typography style={{ color: "white" }}>{setting}</Typography>
+                </Link>
+              </ListItemButton>
+            ))}
 
-      {/* {user?.role == "student" &&
-          settings2.map((setting) => (
-            <MenuItem key={setting} onClick={handleCloseUserMenu}>
-              <Link
-                to={`/me/${setting}`}
-                style={{ textDecoration: "none", color: "black" }}
-              >
-                <Typography>{setting}</Typography>
-              </Link>
-            </MenuItem>
-          ))} */}
-      {/* {user?.role == "admin" &&
-          settings3.map((setting) => (
-            <MenuItem key={setting} onClick={handleCloseUserMenu}>
-              <Link
-                to={`/me/${setting}`}
-                style={{ textDecoration: "none", color: "black" }}
-              >
-                <Typography>{setting}</Typography>
-              </Link>
-            </MenuItem>
-          ))} */}
-
-      {/* <MenuItem onClick={handleLogout}>Logout</MenuItem> */}
+          {user?.role == "admin" &&
+            settings3.map((setting) => (
+              <ListItemButton key={setting} onClick={handleDrawerClose}>
+                <Link
+                  to={`/me/${setting}`}
+                  style={{
+                    textDecoration: "none",
+                    color: "black",
+                    "&:hover": { backgroundColor: "lightblue" },
+                  }}
+                >
+                  <Typography style={{ color: "white" }}>{setting}</Typography>
+                </Link>
+              </ListItemButton>
+            ))}
+          {user?.role == "student" &&
+            settings2.map((setting) => (
+              <ListItemButton key={setting} onClick={handleDrawerClose}>
+                <Link
+                  to={`/me/${setting}`}
+                  style={{
+                    textDecoration: "none",
+                    color: "black",
+                    "&:hover": { backgroundColor: "lightblue" },
+                  }}
+                >
+                  <Typography style={{ color: "white" }}>{setting}</Typography>
+                </Link>
+              </ListItemButton>
+            ))}
+        </List>
+      </div>
     </Stack>
   );
 };
