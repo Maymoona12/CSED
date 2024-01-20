@@ -49,15 +49,6 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const Home = () => {
   const [imageSrc, setImageSrc] = useState();
-  const [popoverAnchor, setPopoverAnchor] = useState(null);
-  const [editProfilePopover, setEditProfilePopover] = useState(null);
-  const [postAnnouncementPopover, setPostAnnouncementPopover] = useState(null);
-  const [addAppointmentPopover, setAddAppointmentPopover] = useState(null);
-  const [archivePagePopover, setArchivePagePopover] = useState(null);
-  const [AddPhotoPopover, setAddPhotoPopover] = useState(null);
-  const [ViewSchedulePopover, setViewSchedulePopover] = useState(null);
-  const [lecturerProfilePopover, setLecturerProfilePopover] = useState(null);
-  const [changePasswordPopover, setChangePasswordPopover] = useState(null);
   const [lectures, setLectures] = useState([
     { id: 1, name: "Thear sammar", assistant: "PROF", phone: "123-456-7890" },
     {
@@ -80,15 +71,18 @@ const Home = () => {
   const [newLecturerPassword, setNewLecturerPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const handleAddNewLecturers = () => {
-    setNewLecturerEmail("");
-    setNewLecturerPassword("");
-  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // const data = new FormData(event.currentTarget);
+    // const name = data.get("name");
+    // const reg_no = data.get("reg_no");
+    // const email = data.get("email");
+    // const password = data.get("password");
+    // const password_confirmation = data.get("password_confirmation");
 
-  const handleAddLecturer = () => {
-    console.log("Email:", newLecturerEmail);
-    console.log("Password:", newLecturerPassword);
+    // mutate({ name, reg_no, email, password, password_confirmation });
   };
 
   const handleDeleteLecture = (lectureId) => {
@@ -109,6 +103,16 @@ const Home = () => {
     }
   };
 
+  const handleTogglePasswordVisibility = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
+
+  const handleToggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(
+      (prevShowConfirmPassword) => !prevShowConfirmPassword
+    );
+  };
+
   // Function to filter lectures by name
   const filteredLectures = lectures.filter((lecture) =>
     lecture.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -116,8 +120,13 @@ const Home = () => {
 
   const { getUser } = useAuth();
   const user = getUser();
-  const [showScheduleCard, setShowScheduleCard] = useState(false);
-
+  const textFieldStyle = {
+    display: "none", // This will hide the TextField initially
+  };
+  const [role, setRole] = useState("doctor");
+  const handleRole = (e) => {
+    setRole(e.target.value);
+  };
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -127,16 +136,6 @@ const Home = () => {
       };
       reader.readAsDataURL(file);
     }
-  };
-
-  const handleButtonHover = (event, setPopover) => {
-    setPopover(event.currentTarget);
-  };
-
-  const handleButtonLeave = (setPopover) => {
-    setTimeout(() => {
-      setPopover(null);
-    }, 1600);
   };
 
   // Sample data for the table
@@ -484,6 +483,18 @@ const Home = () => {
                       }}
                     >
                       <TextField
+                        style={textFieldStyle}
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="role"
+                        label="Role"
+                        name="role"
+                        autoComplete="role"
+                        value={role}
+                        onChange={handleRole}
+                      />
+                      <TextField
                         label="Register Number"
                         name="reg_no"
                         type="text"
@@ -491,6 +502,7 @@ const Home = () => {
                         fullWidth
                         margin="normal"
                       />
+
                       <TextField
                         label="User Name"
                         name="name"
@@ -539,8 +551,32 @@ const Home = () => {
                           ),
                         }}
                       />
+                      <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="password_confirmation"
+                        label="Confirm Password"
+                        type={showConfirmPassword ? "text" : "password"}
+                        id="password_confirmation"
+                        autoComplete="current-password"
+                        InputProps={{
+                          endAdornment: (
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleToggleConfirmPasswordVisibility}
+                            >
+                              {showConfirmPassword ? (
+                                <VisibilityIcon />
+                              ) : (
+                                <VisibilityOffIcon />
+                              )}
+                            </IconButton>
+                          ),
+                        }}
+                      />
                       <Button
-                        onClick={handleAddLecturer}
+                        onClick={handleSubmit}
                         style={{
                           color: "white",
                           marginLeft: "40%",
@@ -567,16 +603,6 @@ const Home = () => {
                         flexDirection: "column",
                       }}
                     >
-                      {/* <Typography
-                        variant="h6"
-                        style={{
-                          color: "#1f3f66",
-                          marginBottom: "10px",
-                          alignItems: "baseline",
-                        }}
-                      >
-                        Delete Lecturers
-                      </Typography> */}
                       <TextField
                         variant="outlined"
                         size="small"
