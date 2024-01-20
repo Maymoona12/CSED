@@ -6,16 +6,12 @@ import Login from "./pages/general-pages/Login/login";
 import Forgotpassword from "./pages/general-pages/PasswordPage/passwordpage";
 import Home from "./pages/UsersPage/Home/Home";
 
-import LectureProfile from "./pages/UsersPage/Lecturer-Page/LecturerProfile";
 import EditProfile from "./pages/UsersPage/Lecturer-Page/EditProfile/EditProfile";
 import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
 import Appointment from "./pages/Appointment/Appointment";
 import FoldersPage from "./pages/photo-archive/foldersPage";
 import PhotosPage from "./pages/photo-archive/photospage";
 
-import AdminPage from "./pages/UsersPage/AdminPage/AdminPage";
-
-import StudentProfile from "./pages/UsersPage/StudentPage/StudentProfile";
 import LecturerProfiles from "./pages/Lecturer-Profiles/lecturerprofile";
 import ChangePassword from "./pages/UsersPage/StudentPage/ChangePassword";
 import BookAppointment from "./pages/Appointment/BookAppointment";
@@ -46,7 +42,6 @@ function App() {
           <Route path="" element={<Home />} />
 
           <Route element={<ProtectedRoutes allowedRoles={[doctor, admin]} />}>
-            {/* <Route path="" element={<LectureProfile />} /> */}
             <Route path="/me/EditProfile" element={<EditProfile />} />
             <Route
               path="/me/PostAnnouncement"
@@ -69,10 +64,6 @@ function App() {
             <Route path="/me/ChangePassword" element={<ChangePassword />} />
             <Route path="/me/GalleryPage" element={<FoldersPage />} />
             <Route path="PhotosPage/:folderId" element={<PhotosPage />} />
-          </Route>
-
-          <Route element={<ProtectedRoutes allowedRoles={[admin]} />}>
-            <Route path="AdminPage" element={<AdminPage />} />
           </Route>
         </Route>
       </Routes>
