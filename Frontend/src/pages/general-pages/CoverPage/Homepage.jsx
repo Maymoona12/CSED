@@ -73,7 +73,7 @@ export default function Homepage() {
                 sx={{
                   color: "white",
                   marginRight: "25px",
-                  "&:hover": { color: "lightblue" },
+                  "&:hover": { color: "#808080" },
                 }}
               >
                 Home
@@ -84,7 +84,7 @@ export default function Homepage() {
                 sx={{
                   color: "white",
                   marginRight: "25px",
-                  "&:hover": { color: "lightblue" },
+                  "&:hover": { color: "#808080"},
                 }}
               >
                 About
@@ -95,7 +95,7 @@ export default function Homepage() {
                 sx={{
                   color: "white",
                   marginRight: "25px",
-                  "&:hover": { color: "lightblue" },
+                  "&:hover": { color: "#808080"},
                 }}
               >
                 Feature
@@ -106,7 +106,7 @@ export default function Homepage() {
                 sx={{
                   color: "white",
                   marginRight: "25px",
-                  "&:hover": { color: "Lightblue" },
+                  "&:hover": { color: "#808080"},
                 }}
               >
                 Contact
@@ -119,7 +119,7 @@ export default function Homepage() {
                   sx={{
                     color: "white",
                     marginRight: "10px",
-                    "&:hover": { backgroundColor: "lightblue" },
+                    "&:hover": { backgroundColor: "#808080" },
                   }}
                 >
                   Log in
@@ -130,7 +130,7 @@ export default function Homepage() {
                   color="inherit"
                   sx={{
                     color: "white",
-                    "&:hover": { backgroundColor: "lightblue" },
+                    "&:hover": { backgroundColor: "#808080" },
                   }}
                 >
                   Sign up
@@ -144,23 +144,27 @@ export default function Homepage() {
               textAlign: "center",
               marginTop: "100px",
               display: "flex",
+              alignItems:"center",
               justifyContent: "space-between",
             }}
           >
-            <div style={{ flex: 1, textAlign: "center" }}>
+            <div style={{   margin:"10px" }}>
               <Typography
-                variant="h4"
-                component="div"
+                variant="h1"
                 sx={{
-                  fontFamily: "Bradley Hand ITC",
-                  color: "black",
-                  margin: "85px",
+                  textAlign: "center",
+                  fontFamily: "ADVERTISEMENT",
+                  color:  "#808080",
+                  marginRight :"0",
+                  marginLeft:"0px",
                   marginBottom: "0px",
+                  display:"block",
+                  // fontSize:"80px",
                 }}
               >
-                “Coding, it's an endless process of trial and error, of trying
-                to get the right command in the right place, with sometimes just
-                a semicolon making the difference between success and failure."
+              Start 
+
+              New Experience in Your Own World!
               </Typography>
             </div>
             <div>
