@@ -36,14 +36,14 @@ const Unauthorized = () => {
             flexGrow: 1,
             fontFamily: "Times New Roman",
             marginBottom: "40px",
-            color: "black",
+            color: "#1f3f66",
             textAlign: "center",
           }}
         >
           You do not have access to the requested page!
         </Typography>
 
-        <CircularProgress disableShrink style={{ color: "black" }} />
+        <CircularProgress disableShrink style={{ color: "#1f3f66" }} />
       </Box>
 
       <div
@@ -53,7 +53,7 @@ const Unauthorized = () => {
           alignItems: "center",
         }}
       >
-        <Button onClick={goBack} style={{ color: "black" }}>
+        <Button onClick={goBack} style={{ color: "#1f3f66" }}>
           Go Back
         </Button>
       </div>
