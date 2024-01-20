@@ -6,14 +6,13 @@ import CampaignIcon from "@mui/icons-material/Campaign";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import PermMediaIcon from "@mui/icons-material/PermMedia";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
-import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import {
+  Container,
   Box,
   Button,
   Popover,
   Typography,
-  Avatar,
   Tooltip,
   Table,
   TableBody,
@@ -23,6 +22,13 @@ import {
   TableRow,
   Paper,
   Stack,
+  IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+  InputAdornment,
 } from "@mui/material";
 import useAuth from "../../../hooks/useAuth";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
@@ -32,6 +38,14 @@ import EmailIcon from "@mui/icons-material/Email";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import "./style.css";
 import "./responsive.css";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ClearIcon from "@mui/icons-material/Clear";
+import SearchIcon from "@mui/icons-material/Search";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const Home = () => {
   const [imageSrc, setImageSrc] = useState();
@@ -44,6 +58,61 @@ const Home = () => {
   const [ViewSchedulePopover, setViewSchedulePopover] = useState(null);
   const [lecturerProfilePopover, setLecturerProfilePopover] = useState(null);
   const [changePasswordPopover, setChangePasswordPopover] = useState(null);
+  const [lectures, setLectures] = useState([
+    { id: 1, name: "Thear sammar", assistant: "PROF", phone: "123-456-7890" },
+    {
+      id: 2,
+      name: "Yazeed Sleet",
+      assistant: "Lecturer",
+      phone: "987-654-3210",
+    },
+    { id: 3, name: "Anas Melhem", assistant: "PROF", phone: "123-456-7890" },
+    {
+      id: 4,
+      name: "Nagham Hammad",
+      assistant: "Lecturer",
+      phone: "987-654-3210",
+    },
+  ]);
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [newLecturerEmail, setNewLecturerEmail] = useState("");
+  const [newLecturerPassword, setNewLecturerPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [selectedTab, setSelectedTab] = useState(0);
+
+  const handleAddNewLecturers = () => {
+    setNewLecturerEmail("");
+    setNewLecturerPassword("");
+  };
+
+  const handleAddLecturer = () => {
+    console.log("Email:", newLecturerEmail);
+    console.log("Password:", newLecturerPassword);
+  };
+
+  const handleDeleteLecture = (lectureId) => {
+    // Remove the selected lecture from the state
+    setLectures((prevLectures) =>
+      prevLectures.filter((lecture) => lecture.id !== lectureId)
+    );
+  };
+
+  const handleTabChange = (event, newValue) => {
+    setSelectedTab(newValue);
+
+    // Additional logic based on the selected tab
+    if (newValue === 0) {
+      // Logic for the "Add New Lecturers" tab
+    } else if (newValue === 1) {
+      // Logic for the "Delete Lecturers" tab
+    }
+  };
+
+  // Function to filter lectures by name
+  const filteredLectures = lectures.filter((lecture) =>
+    lecture.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const { getUser } = useAuth();
   const user = getUser();
@@ -70,16 +139,6 @@ const Home = () => {
     }, 1600);
   };
 
-  const handleViewScheduleClick = (event) => {
-    setViewSchedulePopover(event.currentTarget);
-    setShowScheduleCard(true);
-
-    // Add the following lines to enable scrolling
-    document.body.style.overflow = "auto";
-
-    // Optionally, you can also set a specific height for the scrolling container
-    // document.body.style.height = '100vh';
-  };
   // Sample data for the table
   const scheduleData = [
     {
@@ -139,8 +198,7 @@ const Home = () => {
             style={{
               width: 150,
               height: 150,
-              // marginTop: "0px",
-              border: "2px solid #ccc",
+              border: "1px solid #ccc",
               borderRadius: "50%",
               boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
               objectFit: "cover",
@@ -464,6 +522,169 @@ const Home = () => {
               </div>
             </Box>
           </div>
+          {user?.role == "admin" && (
+            <div>
+              <Container
+                sx={{
+                  marginTop: 12,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "left",
+                  justifyContent: "center",
+                }}
+              >
+                <Tabs value={selectedTab} onChange={handleTabChange}>
+                  <Tab label="Add New Lecturers" icon={<AddIcon />} />
+                  <Tab label="Delete Lecturers" icon={<DeleteIcon />} />
+                </Tabs>
+
+                {selectedTab === 0 && (
+                  <div>
+                    <Box
+                      style={{
+                        marginTop: "10px",
+                        border: "1px solid #ccc",
+                        width: "100%",
+                        height: "100%",
+                        padding: "20px",
+                        borderRadius: "10px",
+                      }}
+                    >
+                      <TextField
+                        label="Email"
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        value={newLecturerEmail}
+                        onChange={(e) => setNewLecturerEmail(e.target.value)}
+                      />
+                      <TextField
+                        label="Password"
+                        type={showPassword ? "text" : "password"}
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        value={newLecturerPassword}
+                        onChange={(e) => setNewLecturerPassword(e.target.value)}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              {showPassword ? (
+                                <IconButton
+                                  onClick={() => setShowPassword(false)}
+                                  edge="end"
+                                >
+                                  <VisibilityIcon />
+                                </IconButton>
+                              ) : (
+                                <IconButton
+                                  onClick={() => setShowPassword(true)}
+                                  edge="end"
+                                >
+                                  <VisibilityOffIcon />
+                                </IconButton>
+                              )}
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                      <Button
+                        onClick={handleAddLecturer}
+                        style={{
+                          color: "white",
+                          marginLeft: "40%",
+                          background: "#1f3f66",
+                        }}
+                      >
+                        Add
+                      </Button>
+                    </Box>
+                  </div>
+                )}
+
+                {selectedTab === 1 && (
+                  <div>
+                    <Box
+                      style={{
+                        marginTop: "10px",
+                        border: "1px solid #ccc",
+                        width: "100%",
+                        height: "100%",
+                        padding: "20px",
+                        borderRadius: "10px",
+                        display: "flex",
+                        flexDirection: "column",
+                      }}
+                    >
+                      {/* <Typography
+                        variant="h6"
+                        style={{
+                          color: "#1f3f66",
+                          marginBottom: "10px",
+                          alignItems: "baseline",
+                        }}
+                      >
+                        Delete Lecturers
+                      </Typography> */}
+                      <TextField
+                        variant="outlined"
+                        size="small"
+                        value={searchQuery}
+                        fullWidth
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        placeholder="Enter lecturer's name"
+                        style={{
+                          marginBottom: "10px",
+                          alignItems: "end",
+                        }}
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <SearchIcon />
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+
+                      <TableContainer component={Paper}>
+                        <Table>
+                          <TableHead>
+                            <TableRow>
+                              <TableCell>ID</TableCell>
+                              <TableCell>Name</TableCell>
+                              <TableCell>Assistant</TableCell>
+                              <TableCell>Phone</TableCell>
+                              <TableCell>Delete</TableCell>
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                            {filteredLectures.map((lecture) => (
+                              <TableRow key={lecture.id}>
+                                <TableCell>{lecture.id}</TableCell>
+                                <TableCell>{lecture.name}</TableCell>
+                                <TableCell>{lecture.assistant}</TableCell>
+                                <TableCell>{lecture.phone}</TableCell>
+                                <TableCell>
+                                  <IconButton
+                                    style={{ color: "#1f3f66" }}
+                                    onClick={() =>
+                                      handleDeleteLecture(lecture.id)
+                                    }
+                                  >
+                                    <ClearIcon />
+                                  </IconButton>
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </TableContainer>
+                    </Box>
+                  </div>
+                )}
+              </Container>
+            </div>
+          )}
         </div>
       )}
       {user?.role == "student" && (
