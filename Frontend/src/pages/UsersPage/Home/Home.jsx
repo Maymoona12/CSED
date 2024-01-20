@@ -544,14 +544,31 @@ const Home = () => {
                       style={{
                         marginTop: "10px",
                         border: "1px solid #ccc",
-                        width: "100%",
-                        height: "100%",
+                        width: "50%",
+                        height: "50%",
                         padding: "20px",
                         borderRadius: "10px",
                       }}
                     >
                       <TextField
+                        label="Register Number"
+                        name="reg_no"
+                        type="text"
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                      />
+                      <TextField
+                        label="User Name"
+                        name="name"
+                        type="text"
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                      />
+                      <TextField
                         label="Email"
+                        name="email"
                         variant="outlined"
                         fullWidth
                         margin="normal"
@@ -560,6 +577,7 @@ const Home = () => {
                       />
                       <TextField
                         label="Password"
+                        name="password"
                         type={showPassword ? "text" : "password"}
                         variant="outlined"
                         fullWidth

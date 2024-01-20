@@ -43,6 +43,18 @@ const SideBarMenu = () => {
     <Stack direction="row">
       <div style={{ marginTop: "-50px" }}>
         <List>
+          <ListItemButton>
+            <Link
+              to={`/me`}
+              style={{
+                textDecoration: "none",
+                color: "black",
+                "&:hover": { backgroundColor: "lightblue" },
+              }}
+            >
+              <Typography style={{ color: "white" }}>Home</Typography>
+            </Link>
+          </ListItemButton>
           {user?.role == "doctor" &&
             settings1.map((setting) => (
               <ListItemButton key={setting} onClick={handleDrawerClose}>

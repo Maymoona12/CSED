@@ -30,6 +30,9 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import MenuIcon from "@mui/icons-material/Menu";
 
 function LecturersProfile() {
   const defaultTheme = createTheme();
@@ -85,6 +88,7 @@ function LecturersProfile() {
   const [filteredLecturers, setFilteredLecturers] = React.useState(headings);
   const [viewMode, setViewMode] = React.useState(null);
   const [openDialog, setOpenDialog] = React.useState(false);
+  const { sideBar, setSideBar } = useAuth();
 
   const handleSearch = (event) => {
     if (event.key === "Enter") {
@@ -133,16 +137,37 @@ function LecturersProfile() {
     // Use navigate instead of push
     navigate("/me/BookAppointment");
   };
-
+  const handleDrawerOpen = () => {
+    setSideBar((previous) => !previous);
+  };
   return (
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
-      <AppBar
+      {/* <AppBar
         position="static"
         style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000 }}
         sx={{ background: "#1f3f66" }}
       >
         <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            sx={{ mr: 2, ...(open && { display: "none" }) }}
+          >
+            {sideBar && (
+              <ChevronLeftIcon
+                fontSize="small"
+                sx={{
+                  marginRight: -0.5,
+                  fontSize: "1rem",
+                }}
+              />
+            )}
+            <MenuIcon />
+          </IconButton>
+
           <Typography
             variant="h5"
             component="div"
@@ -167,21 +192,50 @@ function LecturersProfile() {
             />
           </div>
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
       <main>
         <Box>
           <Container>
-            <Typography
-              component="h1"
-              variant="h2"
-              color="text.primary"
-              style={{
-                textAlign: "left",
-                fontFamily: "Garamond",
-              }}
-            >
-              Lecturers Profile
-            </Typography>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <Typography
+                component="h1"
+                variant="h2"
+                color="#1f3f66"
+                style={{
+                  textAlign: "left",
+                  fontFamily: "Garamond",
+                  marginRight: "100px", // Adjust the margin as needed
+                }}
+              >
+                Lecturers Profile
+              </Typography>
+
+              <Box
+                style={{
+                  border: "1px solid #1f3f66",
+                  width: "55%",
+                  height: "55%",
+                  padding: "5px",
+                  borderRadius: "5px",
+                  marginTop: "5px",
+                }}
+              >
+                {searchQuery && (
+                  <IconButton onClick={handleClearSearch}>
+                    <CloseIcon sx={{ color: "#1f3f66" }} />
+                  </IconButton>
+                )}
+                <SearchIcon sx={{ color: "#1f3f66" }} />
+                <InputBase
+                  placeholder="Search..."
+                  inputProps={{ "aria-label": "search" }}
+                  sx={{ color: "#1f3f66", marginLeft: "8px" }}
+                  onKeyDown={handleSearch}
+                  value={searchQuery}
+                  onChange={(event) => setSearchQuery(event.target.value)}
+                />
+              </Box>
+            </div>
           </Container>
         </Box>
         <Container sx={{ py: 3 }}>
