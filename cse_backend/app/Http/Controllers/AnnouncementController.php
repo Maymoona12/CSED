@@ -25,7 +25,7 @@ class AnnouncementController extends Controller
         $announcement->updated_at = Carbon::now();
         $announcement->save();
         
-        $users=User::where('role','student')->get();
+        $users=User::where('id','!=',auth()->user()->id)->get();
         Notification::send($users,new shareAnnouncment($announcement->doctor_id,$announcement->title,$announcement->text_ann,$announcement->file,$announcement->created_at));
         
         return response($announcement,200);

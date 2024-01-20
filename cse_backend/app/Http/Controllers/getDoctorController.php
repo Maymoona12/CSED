@@ -12,15 +12,16 @@ class getDoctorController extends Controller
         
         $user=Auth::user();
         if ($user->role=='student'){
-            $doctors=User::where('role','admin')->orWhere('role','doctor')
-            ->get();
+            $doctors=User::where('account_status',0)->where(function($fun){
+            $fun->where('role','admin')->orWhere('role','doctor');
+        })->get();
             return response($doctors,200);
         }
         
     }
 
 
-    public  function showDoctor($id){
+    public function showDoctor($id){
         $doctor=User::where(function($query){
             $query->where('role',"doctor")->orWhere('role',"admin");
         })->find($id);
@@ -29,7 +30,7 @@ class getDoctorController extends Controller
 
 
     public function search($name){
-        $doctor=User::where(function($query){
+        $doctor=User::where('account_status',0)->where(function($query){
             $query->where('role',"doctor")->orWhere('role',"admin");
         })->where('name',"like",'%'.$name.'%')->get();
         return response($doctor,200);
