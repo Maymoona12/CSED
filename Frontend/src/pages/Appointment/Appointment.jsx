@@ -52,14 +52,12 @@ const Appointment = () => {
       const formattedTime = current.toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
-        hour12: false,
       });
 
       const nextEndTime = new Date(current.getTime() + interval);
       const formattedEndTime = nextEndTime.toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
-        hour12: false,
       });
 
       appointments.push({
@@ -270,11 +268,8 @@ const Appointment = () => {
                   </label>
                   <input
                     type="time"
-                    id={`endTime-0`}
-                    step="300" // Set the step attribute to 300 seconds (5 minutes)
-                    value="00:00" // Set a default time in the "HH:mm" format
+                    id={`startTime-0`}
                     onChange={handleInputChange}
-                    required
                   />
                 </div>
                 <div className="select__wrapper" style={{ marginTop: "10px" }}>

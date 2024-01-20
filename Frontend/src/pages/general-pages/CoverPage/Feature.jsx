@@ -22,7 +22,7 @@ const Feature = () => {
           fontFamily: "Brush Script MT",
           margin: "90px 120px",
           marginBottom: "0px",
-          color: "grey",
+          color:"#808080",
         }}
       >
         Features CSED
