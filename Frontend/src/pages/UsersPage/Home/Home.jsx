@@ -30,7 +30,7 @@ import ApartmentIcon from "@mui/icons-material/Apartment";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import "./homeStyle.css";
+import "./style.css";
 import "./responsive.css";
 
 const Home = () => {
@@ -133,14 +133,17 @@ const Home = () => {
           />
         </div>
         <Tooltip>
-          <Avatar
+          <img
             alt="User"
             src={imageSrc || user?.photo}
             style={{
-              width: 100,
-              height: 100,
-              border: "1px solid #ccc",
-              objectFit: "contain",
+              width: 150,
+              height: 150,
+              // marginTop: "0px",
+              border: "2px solid #ccc",
+              borderRadius: "50%",
+              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+              objectFit: "cover",
               marginLeft: "20px",
             }}
           />

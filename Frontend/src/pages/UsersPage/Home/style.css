@@ -8,11 +8,11 @@
   padding-bottom: 20px;
   background: white;
   overflow: hidden;
-  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .gradiant {
-  background-image: linear-gradient(to bottom, #1f3f66, #2b3b4e);
+  background-image: linear-gradient(to bottom, #1f3f66, #555b63);
   height: 125px;
   border-radius: 4px 4px 0px 0px;
 }
@@ -24,11 +24,11 @@
 
 .add-photo-container {
   position: absolute;
-  top: 85px;
-  left: 20px;
-  width: 40px;
-  height: 40px;
-  background: #1f3f66;
+  top: 50px;
+  left: 170px;
+  width: 35px;
+  height: 35px;
+  background: #f4f1f1;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -37,8 +37,8 @@
 }
 
 .add-photo-icon {
-  color: white;
-  font-size: 20px;
+  color: #1f3f66;
+  font-size: 22px;
   cursor: pointer;
 }
 
