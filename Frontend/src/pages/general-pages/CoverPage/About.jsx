@@ -19,7 +19,7 @@ const About = () => {
         <Typography
           variant="h3"
           component="div"
-          color="secondary"
+          color="#808080"
           sx={{
             margin: "70px",
             marginTop:"120",

@@ -10,22 +10,22 @@ import { Avatar } from "@mui/material";
 const Contact = () => {
   return (
     <div>
-      <Typography
+      <Card sx={{ padding: "22px", margin: "50px", border:"1px solid #1f3f66" }}>
+        <CardContent  >
+        <Typography
         variant="h3"
         component="div"
         sx={{
           color: "#1f3f66",
           marginBottom: 2,
           fontFamily: "Brush Script MT",
-          margin: "50px 80px",
+          margin: "20px 10px",
         }}
       >
         Contact CSED
       </Typography>
-      <Card fullwidth="true" sx={{ padding: "50px 20px", margin: "50px" }}>
-        <CardContent>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <Avatar sx={{ m: 1, bgcolor: "#1f3f66" }}>
+          <div style={{ display: "flex", alignItems: "center",paddingTop: "13px", }}>
+            <Avatar sx={{ m: 2, bgcolor: "#1f3f66" }}>
               <PhoneIcon />
             </Avatar>
             <Typography component="h1" variant="h7" sx={{ fontSize: "1.5rem" }}>
@@ -36,10 +36,10 @@ const Contact = () => {
             style={{
               display: "flex",
               alignItems: "center",
-              paddingTop: "20px",
+              paddingTop: "13px",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "#1f3f66" }}>
+            <Avatar sx={{ m: 2, bgcolor: "#1f3f66" }}>
               <EmailIcon />
             </Avatar>
             <Typography component="h1" variant="h7" sx={{ fontSize: "1.5rem" }}>
