@@ -12,8 +12,6 @@ import Appointment from "./pages/Appointment/Appointment";
 import FoldersPage from "./pages/photo-archive/foldersPage";
 import PhotosPage from "./pages/photo-archive/photospage";
 
-import AdminPage from "./pages/UsersPage/AdminPage/AdminPage";
-
 import LecturerProfiles from "./pages/Lecturer-Profiles/lecturerprofile";
 import ChangePassword from "./pages/UsersPage/StudentPage/ChangePassword";
 import BookAppointment from "./pages/Appointment/BookAppointment";
@@ -66,10 +64,6 @@ function App() {
             <Route path="/me/ChangePassword" element={<ChangePassword />} />
             <Route path="/me/GalleryPage" element={<FoldersPage />} />
             <Route path="PhotosPage/:folderId" element={<PhotosPage />} />
-          </Route>
-
-          <Route element={<ProtectedRoutes allowedRoles={[admin]} />}>
-            <Route path="AdminPage" element={<AdminPage />} />
           </Route>
         </Route>
       </Routes>

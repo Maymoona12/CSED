@@ -27,7 +27,6 @@ const SideBarMenu = () => {
   const settings2 = ["LecturersProfile", "GalleryPage"];
 
   const settings3 = [
-    "AdminPage",
     "EditProfile",
     "PostAnnouncement",
     "AddAppointment",
