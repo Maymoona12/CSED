@@ -88,7 +88,7 @@ const PostAnnouncementPage = ({ onSubmit }) => {
         >
           <h2
             style={{
-              color: "black",
+              color: "#1f3f66",
               fontFamily: "Monaco",
               marginBottom: "40px",
               marginLeft: "150px",
@@ -164,7 +164,7 @@ const PostAnnouncementPage = ({ onSubmit }) => {
                   marginTop: "10px",
                   marginRight: "10px",
                   marginBottom: "5px",
-                  background: "black",
+                  background: "#1f3f66",
                 }}
               ></Button>
             </div>
@@ -175,7 +175,7 @@ const PostAnnouncementPage = ({ onSubmit }) => {
                 marginTop: "10px",
                 marginLeft: "330px",
                 padding: "10px 20px",
-                background: "black",
+                background: "#1f3f66",
                 color: "white",
                 border: "none",
                 borderRadius: "5px",

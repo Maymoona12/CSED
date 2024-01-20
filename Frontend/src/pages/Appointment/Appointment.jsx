@@ -36,7 +36,6 @@ const Appointment = () => {
     endTime,
     selectedDay
   ) => {
-    
     const division = timeDivision;
     const start = new Date(`2023-01-01T${startTime}:00`);
     const end = new Date(`2023-01-01T${endTime}:00`);
@@ -44,8 +43,6 @@ const Appointment = () => {
 
     const appointments = [];
     let previousEndTime = start;
-
-
 
     for (
       let current = start;
@@ -147,28 +144,27 @@ const Appointment = () => {
     setSchedule(updatedSchedule);
   };
 
- const handleSaveButtonClick = (dayIndex) => {
-  const tableElement = document.getElementById(`table-${dayIndex}`);
+  const handleSaveButtonClick = (dayIndex) => {
+    const tableElement = document.getElementById(`table-${dayIndex}`);
 
-  console.log("tableElement:", tableElement); // Add this line for debugging
+    console.log("tableElement:", tableElement); // Add this line for debugging
 
-  if (tableElement && tableElement.style) {
-    if (
-      tableElement.style.display === "table" &&
-      tableElement.style.visibility === "visible"
-    ) {
-      console.log("Table saved:", schedule[dayIndex].appointments);
-      localStorage.setItem(
-        "BookAppointments",
-        JSON.stringify(schedule[dayIndex].appointments)
-      );
-      navigate("/appointment");
+    if (tableElement && tableElement.style) {
+      if (
+        tableElement.style.display === "table" &&
+        tableElement.style.visibility === "visible"
+      ) {
+        console.log("Table saved:", schedule[dayIndex].appointments);
+        localStorage.setItem(
+          "BookAppointments",
+          JSON.stringify(schedule[dayIndex].appointments)
+        );
+        navigate("/appointment");
+      }
+
+      console.log("mySchedule:", schedule);
     }
-
-    console.log("mySchedule:", schedule);
-  }
-};
-
+  };
 
   const handleInputChange = () => {
     const selectedDay = document.getElementById(`day-0`).value;
@@ -197,7 +193,7 @@ const Appointment = () => {
             marginLeft: "30px",
           }}
         >
-          <h1 style={{ color: "black", fontFamily: "Garamond" }}>
+          <h1 style={{ color: "#1f3f66", fontFamily: "Garamond" }}>
             Add Office Hours
           </h1>
         </div>
@@ -248,7 +244,7 @@ const Appointment = () => {
                   htmlFor={`appointment-0`}
                   style={{ marginRight: "15px" }}
                 >
-                   Appointment Title
+                  Appointment Title
                 </label>
                 <input
                   type="text"
@@ -273,13 +269,13 @@ const Appointment = () => {
                     Add End Time
                   </label>
                   <input
-    type="time"
-    id={`endTime-0`}
-    step="300" // Set the step attribute to 300 seconds (5 minutes)
-    value="00:00" // Set a default time in the "HH:mm" format
-    onChange={handleInputChange}
-    required
-  />
+                    type="time"
+                    id={`endTime-0`}
+                    step="300" // Set the step attribute to 300 seconds (5 minutes)
+                    value="00:00" // Set a default time in the "HH:mm" format
+                    onChange={handleInputChange}
+                    required
+                  />
                 </div>
                 <div className="select__wrapper" style={{ marginTop: "10px" }}>
                   <label

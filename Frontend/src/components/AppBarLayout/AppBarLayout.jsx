@@ -71,17 +71,9 @@ const AppBarLayout = () => {
 
   const settings1 = ["EditProfile", "ChangePassword"];
 
-  const settings2 = ["LecturersProfile", "ChangePassword", "GalleryPage"];
+  const settings2 = ["ChangePassword"];
 
-  const settings3 = [
-    "AdminPage",
-    "EditProfile",
-    "ChangePassword",
-    "PostAnnouncement",
-    "AddAppointment",
-    "GalleryPage",
-    "AddPhoto",
-  ];
+  const settings3 = ["EditProfile", "ChangePassword"];
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);

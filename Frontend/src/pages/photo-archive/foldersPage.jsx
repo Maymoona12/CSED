@@ -39,7 +39,7 @@ const FoldersPage = ({
       >
         <h1
           style={{
-            color: "black",
+            color: "#1f3f66",
             fontFamily: "Garamond",
             marginLeft: "10px",
           }}
