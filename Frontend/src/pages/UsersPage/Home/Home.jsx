@@ -208,13 +208,16 @@ const Home = () => {
         </Tooltip>
       </div>
 
-      <div className="profile-title" style={{ marginLeft: "42px" }}>
+      <div
+        className="profile-title"
+        style={{ marginLeft: "42px", color: "#1f3f66" }}
+      >
         {user?.name}
       </div>
 
       {(user?.role == "doctor" || user?.role == "admin") && (
         <div className="profile-button">
-          <div style={{ marginTop: "10px", marginRight: "100px" }}>
+          <div style={{ marginTop: "20px", marginRight: "100px" }}>
             <Link to="/me/EditProfile" style={{ marginLeft: "50px" }}>
               <EditNoteIcon
                 style={{
@@ -223,34 +226,20 @@ const Home = () => {
                   fontSize: 25,
                 }}
               />
-              <Button
-                onMouseEnter={(event) =>
-                  handleButtonHover(event, setEditProfilePopover)
-                }
-                onMouseLeave={() => handleButtonLeave(setEditProfilePopover)}
-              ></Button>
             </Link>
-            <Popover
-              open={Boolean(editProfilePopover)}
-              anchorEl={editProfilePopover}
-              onClose={() => handleButtonLeave(setEditProfilePopover)}
-              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-              transformOrigin={{ vertical: "top", horizontal: "center" }}
-              PaperProps={{
-                style: {
-                  background: "rgba(10, 10, 10, 0.8)",
-                  color: "white",
-                  padding: "10px",
-                  fontFamily: "Garamond",
-                },
+
+            <Typography
+              style={{
+                color: "#1f3f66",
+                marginLeft: "50px",
+                fontSize: "20px",
+                fontFamily: "Cursive",
               }}
             >
-              <Typography style={{ padding: "10px", fontFamily: "Garamond" }}>
-                Edit Profile
-              </Typography>
-            </Popover>
+              Edit Profile
+            </Typography>
           </div>
-          <div style={{ marginTop: "10px", marginRight: "100px" }}>
+          <div style={{ marginTop: "20px", marginRight: "100px" }}>
             <Link to="/me/PostAnnouncement" style={{ marginLeft: "50px" }}>
               <CampaignIcon
                 style={{
@@ -259,36 +248,19 @@ const Home = () => {
                   fontSize: 25,
                 }}
               />
-              <Button
-                onMouseEnter={(event) =>
-                  handleButtonHover(event, setPostAnnouncementPopover)
-                }
-                onMouseLeave={() =>
-                  handleButtonLeave(setPostAnnouncementPopover)
-                }
-              ></Button>
             </Link>
-            <Popover
-              open={Boolean(postAnnouncementPopover)}
-              anchorEl={postAnnouncementPopover}
-              onClose={() => handleButtonLeave(setPostAnnouncementPopover)}
-              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-              transformOrigin={{ vertical: "top", horizontal: "center" }}
-              PaperProps={{
-                style: {
-                  background: "rgba(10, 10, 10, 0.8)",
-                  color: "white",
-                  padding: "10px",
-                  fontFamily: "Garamond",
-                },
+            <Typography
+              style={{
+                color: "#1f3f66",
+                marginLeft: "50px",
+                fontSize: "20px",
+                fontFamily: "Cursive",
               }}
             >
-              <Typography style={{ padding: "10px", fontFamily: "Garamond" }}>
-                Post Announcement
-              </Typography>
-            </Popover>
+              Post Announcement
+            </Typography>
           </div>
-          <div style={{ marginTop: "10px", marginRight: "100px" }}>
+          <div style={{ marginTop: "20px", marginRight: "100px" }}>
             <Link to="/me/AddAppointment" style={{ marginLeft: "50px" }}>
               <EditCalendarIcon
                 style={{
@@ -297,35 +269,20 @@ const Home = () => {
                   fontSize: 25,
                 }}
               />
-              <Button
-                onMouseEnter={(event) =>
-                  handleButtonHover(event, setAddAppointmentPopover)
-                }
-                onMouseLeave={() => handleButtonLeave(setAddAppointmentPopover)}
-              ></Button>
             </Link>
-            <Popover
-              open={Boolean(addAppointmentPopover)}
-              anchorEl={addAppointmentPopover}
-              onClose={() => handleButtonLeave(setAddAppointmentPopover)}
-              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-              transformOrigin={{ vertical: "top", horizontal: "center" }}
-              PaperProps={{
-                style: {
-                  background: "rgba(10, 10, 10, 0.8)",
-                  color: "white",
-                  padding: "10px",
-                  fontFamily: "Garamond",
-                },
+            <Typography
+              style={{
+                color: "#1f3f66",
+                marginLeft: "50px",
+                fontSize: "20px",
+                fontFamily: "Cursive",
               }}
             >
-              <Typography style={{ padding: "10px", fontFamily: "Garamond" }}>
-                Add Appointment
-              </Typography>
-            </Popover>
+              Add Appointment
+            </Typography>
           </div>
-          <div style={{ marginTop: "10px", marginRight: "100px" }}>
-            <Link to="/me/ArchivePage" style={{ marginLeft: "50px" }}>
+          <div style={{ marginTop: "20px", marginRight: "70px" }}>
+            <Link to="/me/GalleryPage" style={{ marginLeft: "50px" }}>
               <PermMediaIcon
                 style={{
                   marginInline: "15px",
@@ -333,35 +290,20 @@ const Home = () => {
                   fontSize: 25,
                 }}
               />
-              <Button
-                onMouseEnter={(event) =>
-                  handleButtonHover(event, setArchivePagePopover)
-                }
-                onMouseLeave={() => handleButtonLeave(setArchivePagePopover)}
-              ></Button>
             </Link>
-            <Popover
-              open={Boolean(archivePagePopover)}
-              anchorEl={archivePagePopover}
-              onClose={() => handleButtonLeave(setArchivePagePopover)}
-              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-              transformOrigin={{ vertical: "top", horizontal: "center" }}
-              PaperProps={{
-                style: {
-                  background: "rgba(10, 10, 10, 0.8)",
-                  color: "white",
-                  padding: "10px",
-                  fontFamily: "Garamond",
-                },
+            <Typography
+              style={{
+                color: "#1f3f66",
+                marginLeft: "50px",
+                fontSize: "20px",
+                fontFamily: "Cursive",
               }}
             >
-              <Typography style={{ padding: "10px", fontFamily: "Garamond" }}>
-                Archive Page
-              </Typography>
-            </Popover>
+              Gallery Page
+            </Typography>
           </div>
-          <div style={{ marginTop: "10px", marginRight: "100px" }}>
-            <Link to="/me/AddPhoto" style={{ marginLeft: "0px" }}>
+          <div style={{ marginTop: "20px", marginRight: "100px" }}>
+            <Link to="/me/AddPhoto" style={{ marginLeft: "80px" }}>
               <AddPhotoAlternateIcon
                 style={{
                   marginInline: "15px",
@@ -369,159 +311,150 @@ const Home = () => {
                   fontSize: 25,
                 }}
               />
-              <Button
-                onMouseEnter={(event) =>
-                  handleButtonHover(event, setAddPhotoPopover)
-                }
-                onMouseLeave={() => handleButtonLeave(setAddPhotoPopover)}
-              ></Button>
             </Link>
-            <Popover
-              open={Boolean(AddPhotoPopover)}
-              anchorEl={AddPhotoPopover}
-              onClose={() => handleButtonLeave(setAddPhotoPopover)}
-              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-              transformOrigin={{ vertical: "top", horizontal: "center" }}
-              PaperProps={{
-                style: {
-                  background: "rgba(10, 10, 10, 0.8)",
-                  color: "white",
-                  padding: "10px",
-                  fontFamily: "Garamond",
-                },
-              }}
-            >
-              <Typography style={{ padding: "10px", fontFamily: "Garamond" }}>
-                Create Album
-              </Typography>
-            </Popover>
-          </div>
-
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "40px",
-              padding: "30px",
-              marginTop: "10px",
-            }}
-          >
-            <Box
+            <Typography
               style={{
-                width: "300px",
-                border: "1px solid lightgray",
-                height: "200px",
-                padding: "30px",
-                borderRadius: "10px",
-                marginTop: "10px",
-                marginLeft: "10px",
+                color: "#1f3f66",
+                marginLeft: "85px",
+                fontSize: "20px",
+                fontFamily: "Cursive",
               }}
             >
-              <div style={{ color: "black", marginBottom: "20px" }}>
-                <div style={{ display: "flex", marginBottom: "30px" }}>
-                  <ListItemIcon style={{ color: "black" }}>
-                    <AccountBalanceIcon />
-                  </ListItemIcon>
-                  <Typography style={{ marginRight: "7px" }}>
-                    {user?.education_level}
-                  </Typography>
-                </div>
-
-                <div style={{ display: "flex", marginBottom: "30px" }}>
-                  <ListItemIcon style={{ color: "black" }}>
-                    <ApartmentIcon />
-                  </ListItemIcon>
-                  <Typography style={{ marginRight: "7px" }}>
-                    {user?.office_no}
-                  </Typography>
-                </div>
-
-                <div style={{ display: "flex", marginBottom: "30px" }}>
-                  <ListItemIcon style={{ color: "black" }}>
-                    <PhoneIcon />
-                  </ListItemIcon>
-                  <Typography style={{ marginRight: "7px" }}>
-                    {user?.phone_no}
-                  </Typography>
-                </div>
-
-                <div style={{ display: "flex", marginBottom: "30px" }}>
-                  <ListItemIcon style={{ color: "black" }}>
-                    <EmailIcon />
-                  </ListItemIcon>
-                  <Typography style={{ marginRight: "7px" }}>
-                    {user?.email}
-                  </Typography>
-                </div>
-              </div>
-            </Box>
+              Add Album
+            </Typography>
           </div>
           <div
             style={{
               display: "flex",
-              flexWrap: "wrap",
-              gap: "40px",
-              padding: "30px",
-              marginTop: "10px",
+              flexDirection: "row",
+              alignItems: "center",
             }}
           >
-            <Box
+            <div
               style={{
-                width: "500px",
-                border: "1px solid lightgray",
-                height: "auto",
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "40px",
                 padding: "30px",
-                borderRadius: "10px",
-                marginTop: "10px",
-                marginLeft: "10px",
               }}
             >
-              <Typography
-                variant="h5"
+              <Box
                 style={{
-                  marginBottom: "20px",
-                  color: "black",
-                  fontFamily: "serif",
+                  width: "300px",
+                  border: "1px solid lightgray",
+                  height: "200px",
+                  padding: "30px",
+                  borderRadius: "10px",
+                  marginTop: "-40%",
                 }}
               >
-                Schedule Data
-              </Typography>
-              <div
+                <div style={{ color: "black", marginBottom: "20px" }}>
+                  <div style={{ display: "flex", marginBottom: "30px" }}>
+                    <ListItemIcon style={{ color: "black" }}>
+                      <AccountBalanceIcon />
+                    </ListItemIcon>
+                    <Typography style={{ marginRight: "7px" }}>
+                      {user?.education_level}
+                    </Typography>
+                  </div>
+
+                  <div style={{ display: "flex", marginBottom: "30px" }}>
+                    <ListItemIcon style={{ color: "black" }}>
+                      <ApartmentIcon />
+                    </ListItemIcon>
+                    <Typography style={{ marginRight: "7px" }}>
+                      {user?.office_no}
+                    </Typography>
+                  </div>
+
+                  <div style={{ display: "flex", marginBottom: "30px" }}>
+                    <ListItemIcon style={{ color: "black" }}>
+                      <PhoneIcon />
+                    </ListItemIcon>
+                    <Typography style={{ marginRight: "7px" }}>
+                      {user?.phone_no}
+                    </Typography>
+                  </div>
+
+                  <div style={{ display: "flex", marginBottom: "30px" }}>
+                    <ListItemIcon style={{ color: "black" }}>
+                      <EmailIcon />
+                    </ListItemIcon>
+                    <Typography style={{ marginRight: "7px" }}>
+                      {user?.email}
+                    </Typography>
+                  </div>
+                </div>
+              </Box>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "40px",
+                padding: "30px",
+                marginTop: "10px",
+              }}
+            >
+              <Box
                 style={{
-                  maxWidth: "auto",
+                  width: "500px",
+                  border: "1px solid lightgray",
+                  height: "auto",
+                  padding: "30px",
+                  borderRadius: "10px",
+                  marginTop: "10px",
+                  marginLeft: "10px",
                 }}
               >
-                <TableContainer component={Paper}>
-                  <Table>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Day</TableCell>
-                        <TableCell>Start At</TableCell>
-                        <TableCell>End At</TableCell>
-                        <TableCell>Student</TableCell>
-                        <TableCell>Reason</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {scheduleData.map((row, index) => (
-                        <TableRow key={index}>
-                          <TableCell>{row.day}</TableCell>
-                          <TableCell>
-                            {row.timeInterval.split(" - ")[0]}
-                          </TableCell>
-                          <TableCell>
-                            {row.timeInterval.split(" - ")[1]}
-                          </TableCell>
-                          <TableCell>{row.student}</TableCell>
-                          <TableCell>{row.reason}</TableCell>
+                <Typography
+                  variant="h5"
+                  style={{
+                    marginBottom: "20px",
+                    color: "black",
+                    fontFamily: "serif",
+                  }}
+                >
+                  Schedule Data
+                </Typography>
+                <div
+                  style={{
+                    maxWidth: "auto",
+                  }}
+                >
+                  <TableContainer component={Paper}>
+                    <Table>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>Day</TableCell>
+                          <TableCell>Start At</TableCell>
+                          <TableCell>End At</TableCell>
+                          <TableCell>Student</TableCell>
+                          <TableCell>Reason</TableCell>
                         </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </div>
-            </Box>
+                      </TableHead>
+                      <TableBody>
+                        {scheduleData.map((row, index) => (
+                          <TableRow key={index}>
+                            <TableCell>{row.day}</TableCell>
+                            <TableCell>
+                              {row.timeInterval.split(" - ")[0]}
+                            </TableCell>
+                            <TableCell>
+                              {row.timeInterval.split(" - ")[1]}
+                            </TableCell>
+                            <TableCell>{row.student}</TableCell>
+                            <TableCell>{row.reason}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </div>
+              </Box>
+            </div>
           </div>
+
           {user?.role == "admin" && (
             <div>
               <Container
@@ -707,7 +640,13 @@ const Home = () => {
       )}
       {user?.role == "student" && (
         <div className="profile-button">
-          <div style={{ marginTop: "10px", marginRight: "100px" }}>
+          <div
+            style={{
+              marginTop: "10px",
+              marginRight: "90px",
+              marginLeft: "10px",
+            }}
+          >
             <Link to="/me/LecturersProfile" style={{ marginLeft: "20px" }}>
               <PeopleAltIcon
                 style={{
@@ -717,31 +656,16 @@ const Home = () => {
                 }}
               />
             </Link>
-            <Button
-              onMouseEnter={(event) =>
-                handleButtonHover(event, setLecturerProfilePopover)
-              }
-              onMouseLeave={() => handleButtonLeave(setLecturerProfilePopover)}
-            ></Button>
-            <Popover
-              open={Boolean(lecturerProfilePopover)}
-              anchorEl={lecturerProfilePopover}
-              onClose={() => handleButtonLeave(setLecturerProfilePopover)}
-              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-              transformOrigin={{ vertical: "top", horizontal: "center" }}
-              PaperProps={{
-                style: {
-                  background: "rgba(10, 10, 10, 0.8)",
-                  color: "white",
-                  padding: "10px",
-                  fontFamily: "Garamond",
-                },
+            <Typography
+              style={{
+                color: "#1f3f66",
+                marginLeft: "10px",
+                fontSize: "20px",
+                fontFamily: "Cursive",
               }}
             >
-              <Typography style={{ padding: "10px", fontFamily: "Garamond" }}>
-                Lecturers Profile
-              </Typography>
-            </Popover>
+              Lecturers Profile
+            </Typography>
           </div>
 
           <div style={{ marginTop: "10px", marginRight: "100px" }}>
@@ -754,31 +678,16 @@ const Home = () => {
                 }}
               />
             </Link>
-            <Button
-              onMouseEnter={(event) =>
-                handleButtonHover(event, setArchivePagePopover)
-              }
-              onMouseLeave={() => handleButtonLeave(setArchivePagePopover)}
-            ></Button>
-            <Popover
-              open={Boolean(archivePagePopover)}
-              anchorEl={archivePagePopover}
-              onClose={() => handleButtonLeave(setArchivePagePopover)}
-              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-              transformOrigin={{ vertical: "top", horizontal: "center" }}
-              PaperProps={{
-                style: {
-                  background: "rgba(10, 10, 10, 0.8)",
-                  color: "white",
-                  padding: "10px",
-                  fontFamily: "Garamond",
-                },
+            <Typography
+              style={{
+                color: "#1f3f66",
+                marginLeft: "-15px",
+                fontSize: "20px",
+                fontFamily: "Cursive",
               }}
             >
-              <Typography style={{ padding: "10px", fontFamily: "Garamond" }}>
-                Archive Page
-              </Typography>
-            </Popover>
+              Gallery Page
+            </Typography>
           </div>
 
           <div style={{ marginTop: "10px", marginRight: "100px" }}>
@@ -791,31 +700,16 @@ const Home = () => {
                 }}
               />
             </Link>
-            <Button
-              onMouseEnter={(event) =>
-                handleButtonHover(event, setChangePasswordPopover)
-              }
-              onMouseLeave={() => handleButtonLeave(setChangePasswordPopover)}
-            ></Button>
-            <Popover
-              open={Boolean(changePasswordPopover)}
-              anchorEl={changePasswordPopover}
-              onClose={() => handleButtonLeave(setChangePasswordPopover)}
-              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-              transformOrigin={{ vertical: "top", horizontal: "center" }}
-              PaperProps={{
-                style: {
-                  background: "rgba(10, 10, 10, 0.8)",
-                  color: "white",
-                  padding: "10px",
-                  fontFamily: "Garamond",
-                },
+            <Typography
+              style={{
+                color: "#1f3f66",
+                marginLeft: "-20px",
+                fontSize: "20px",
+                fontFamily: "Cursive",
               }}
             >
-              <Typography style={{ padding: "10px", fontFamily: "Garamond" }}>
-                Change Password
-              </Typography>
-            </Popover>
+              Change Password
+            </Typography>
           </div>
         </div>
       )}
