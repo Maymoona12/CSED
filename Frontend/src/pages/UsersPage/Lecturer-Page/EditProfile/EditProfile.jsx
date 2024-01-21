@@ -78,7 +78,7 @@ const EditProfile = () => {
         >
           <Avatar
             alt={user?.name}
-            src={user?.photo}
+            src={`/ProfileImages/${user?.photo}`}
             sx={{
               width: 100,
               height: 100,

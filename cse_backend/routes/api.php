@@ -5,6 +5,7 @@ use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\getDoctorController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OfficeHourController;
 use App\Http\Controllers\PasswordController;
 use App\Models\Appointment;
@@ -50,6 +51,9 @@ Route::get('/my_appointments',[AppointmentController::class,'myAppointments']);/
 Route::get('/doctor_appointments/{id}',[AppointmentController::class,'doctorAppointments']);//student
 Route::post('/delete_app/{id}',[AppointmentController::class,'deleteApp']);//doctor
 Route::post('/blocked_app/{id}',[AppointmentController::class,'blockedApp']);//doctor
+
+Route::get('/get_notifi',[NotificationController::class,'getNotifi']);
+Route::get('/markNotifi/{id}', [NotificationController::class, 'markNotifi']);
 
 Route::post('/createAnnouncement',[AnnouncementController::class,'createAnnouncement']);//doctor
 Route::get('/all_announcement',[AnnouncementController::class,'allAnnouncement']);//all

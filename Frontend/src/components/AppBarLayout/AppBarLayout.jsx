@@ -218,7 +218,7 @@ const AppBarLayout = () => {
                     aria-expanded={open ? "true" : undefined}
                     aria-haspopup="true"
                   >
-                    <Avatar alt="User" src={user?.photo} />
+                    <Avatar alt="User" src={`/ProfileImages/${user?.photo}`} />
                   </IconButton>
                 </Tooltip>
               </Box>
