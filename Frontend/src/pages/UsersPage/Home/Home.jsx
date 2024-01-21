@@ -117,9 +117,12 @@ const Home = () => {
   const filteredLectures = lectures.filter((lecture) =>
     lecture.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
   const { getUser } = useAuth();
   const user = getUser();
+  const [dynamicPhotoPath, setDynamicPhotoPath] = useState(
+    `/ProfileImages/${user?.photo}`
+  );
+
   const textFieldStyle = {
     display: "none", // This will hide the TextField initially
   };
@@ -127,12 +130,15 @@ const Home = () => {
   const handleRole = (e) => {
     setRole(e.target.value);
   };
+
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
         setImageSrc(reader.result);
+        // update the dynamic photo path based on the uploaded file
+        setDynamicPhotoPath(reader.result);
       };
       reader.readAsDataURL(file);
     }
@@ -190,20 +196,24 @@ const Home = () => {
             onChange={handleImageChange}
           />
         </div>
-        <Tooltip>
-          <img
-            alt="User"
-            src={imageSrc || user?.photo}
-            style={{
-              width: 150,
-              height: 150,
-              border: "1px solid #ccc",
-              borderRadius: "50%",
-              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-              objectFit: "cover",
-              marginLeft: "20px",
-            }}
-          />
+        <Tooltip title="Change Photo">
+          <div>
+            <img
+              alt="User"
+              src={dynamicPhotoPath || user?.photo}
+              style={{
+                width: 150,
+                height: 150,
+                border: "1px solid #ccc",
+                borderRadius: "50%",
+                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+                objectFit: "cover",
+                marginLeft: "20px",
+                cursor: "pointer",
+              }}
+              onClick={() => document.getElementById("imageInput").click()} // trigger file input click
+            />
+          </div>
         </Tooltip>
       </div>
 
