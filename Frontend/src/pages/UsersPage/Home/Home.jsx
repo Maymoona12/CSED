@@ -119,9 +119,12 @@ const Home = () => {
   );
   const { getUser } = useAuth();
   const user = getUser();
+
   const [dynamicPhotoPath, setDynamicPhotoPath] = useState(
     `/ProfileImages/${user?.photo}`
   );
+
+
 
   const textFieldStyle = {
     display: "none", // This will hide the TextField initially
