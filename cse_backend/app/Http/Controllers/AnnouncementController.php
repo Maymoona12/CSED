@@ -17,13 +17,16 @@ class AnnouncementController extends Controller
         
         $announcement = new Announcement;
         $announcement->doctor_id=Auth::id();
-        $announcement->title=$request->title;
-        $announcement->text_ann=$request->text_ann;
-        $announcement->file=$request->file;
+        $user=Auth::user();
+        if($user->role == 'doctor' || $user->role == 'admin'){
+            $announcement->title=$request->title;
+            $announcement->text_ann=$request->text_ann;
+            $announcement->file=$request->file;
         
-        $announcement->created_at = Carbon::now();
-        $announcement->updated_at = Carbon::now();
-        $announcement->save();
+            $announcement->created_at = Carbon::now();
+            $announcement->updated_at = Carbon::now();
+            $announcement->save();
+        }
         
         $users=User::where('id','!=',auth()->user()->id)->get();
         Notification::send($users,new shareAnnouncment($announcement->doctor_id,$announcement->title,$announcement->text_ann,$announcement->file,$announcement->created_at));

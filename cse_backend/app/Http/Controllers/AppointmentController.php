@@ -69,15 +69,36 @@ class AppointmentController extends Controller
     
      
     public function acceptAppointment($id){ //doctor
-        // Book Appointments : status 0->wait , 1->accept , 2->canceled
-        $book_appointment=bookAppointment::find($id);
-        $book_appointment->status=1; // accept
-        $book_appointment->save();
-        // Appointments : status 0->available , 1-buzy , 2->blocked , 3->deleted
-        $appointment=Appointment::find($book_appointment->appointment_id); 
-        $appointment->status=1; // buzy
-        $appointment->save(); 
+        $user=Auth::user();
+        if($user->role == 'doctor' || $user->role == 'admin'){
+            // Book Appointments : status 0->sent, 1->reject, 2->canceled
+            $book_appointment=bookAppointment::find($id);
+            $book_appointment->status=1; // accept
+            $book_appointment->save();
+            // Appointments : status 0->available , 1-buzy , 2->blocked , 3->deleted
+            $appointment=Appointment::find($book_appointment->appointment_id); 
+            $appointment->status=1; // buzy
+            $appointment->save(); 
+        }
+        
+        return response()->json(['accepted',200]);
+        
+    
+    }
 
+    public function rejectAppointment($id){ //doctor
+        $user=Auth::user();
+        if($user->role == 'doctor' || $user->role == 'admin'){
+            // Book Appointments : status 0->wait , 1->accept , 2->reject, 2->canceled
+            $book_appointment=bookAppointment::find($id);
+            $book_appointment->status=1; // accept
+            $book_appointment->save();
+            // Appointments : status 0->available , 1-buzy , 2->blocked , 3->deleted
+            $appointment=Appointment::find($book_appointment->appointment_id); 
+            $appointment->status=1; // buzy
+            $appointment->save(); 
+        }
+        
         return response()->json(['accepted',200]);
         
     
