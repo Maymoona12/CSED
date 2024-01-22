@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
-import EditNoteIcon from "@mui/icons-material/EditNote";
+import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import PermMediaIcon from "@mui/icons-material/PermMedia";
@@ -255,7 +255,7 @@ const Home = () => {
 
       {(user?.role == "doctor" || user?.role == "admin") && (
         <div className="profile-button">
-          <div style={{ marginTop: "20px", marginRight: "50px" }}>
+          <div style={{ marginTop: "20px", marginRight: "0px" }}>
             <Link to="/me/EditProfile" style={{ marginLeft: "50px" }}>
               <ManageAccountsIcon
                 style={{
@@ -277,8 +277,8 @@ const Home = () => {
               Edit Profile
             </Typography>
           </div>
-          <div style={{ marginTop: "20px", marginRight: "50px" }}>
-            <Link to="/me/PostAnnouncement" style={{ marginLeft: "50px" }}>
+          <div style={{ marginTop: "20px", marginRight: "0px" }}>
+            <Link to="/me/PostAnnouncement" style={{ marginLeft: "60px" }}>
               <CampaignIcon
                 style={{
                   marginInline: "15px",
@@ -298,8 +298,8 @@ const Home = () => {
               Post Announcement
             </Typography>
           </div>
-          <div style={{ marginTop: "20px", marginRight: "50px" }}>
-            <Link to="/me/AddAppointment" style={{ marginLeft: "50px" }}>
+          <div style={{ marginTop: "20px", marginRight: "0px" }}>
+            <Link to="/me/AddAppointment" style={{ marginLeft: "60px" }}>
               <EditCalendarIcon
                 style={{
                   marginInline: "12px",
@@ -319,7 +319,7 @@ const Home = () => {
               Add Appointment
             </Typography>
           </div>
-          <div style={{ marginTop: "20px", marginRight: "50px" }}>
+          <div style={{ marginTop: "20px", marginRight: "0px" }}>
             <Link to="/me/GalleryPage" style={{ marginLeft: "50px" }}>
               <PermMediaIcon
                 style={{
@@ -340,7 +340,7 @@ const Home = () => {
               Gallery Page
             </Typography>
           </div>
-          <div style={{ marginTop: "20px", marginRight: "50px" }}>
+          <div style={{ marginTop: "20px", marginRight: "0px" }}>
             <Link to="/me/AddPhoto" style={{ marginLeft: "50px" }}>
               <AddPhotoAlternateIcon
                 style={{
@@ -361,9 +361,9 @@ const Home = () => {
               Add Album
             </Typography>
           </div>
-          <div style={{ marginTop: "20px", marginRight: "50px" }}>
+          <div style={{ marginTop: "20px", marginRight: "0px" }}>
             <Link to="/me/ChangePassword" style={{ marginLeft: "50px" }}>
-              <EditNoteIcon
+              <KeyOutlinedIcon
                 style={{
                   marginInline: "15px",
                   marginTop: "10px",

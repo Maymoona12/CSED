@@ -268,7 +268,7 @@ const Appointment = () => {
                   </label>
                   <input
                     type="time"
-                    id={`startTime-0`}
+                    id={`endTime-0`}
                     onChange={handleInputChange}
                   />
                 </div>
