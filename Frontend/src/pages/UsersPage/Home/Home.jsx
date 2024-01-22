@@ -225,7 +225,7 @@ const Home = () => {
             onChange={handleImageChange}
           />
         </div>
-        <Tooltip title="Change Photo">
+        <Tooltip>
           <div>
             <img
               alt="User"
@@ -271,7 +271,7 @@ const Home = () => {
                 color: "#1f3f66",
                 marginLeft: "50px",
                 fontSize: "20px",
-                fontFamily: "Cursive",
+                fontFamily: "	Times New Roman",
               }}
             >
               Edit Profile
@@ -292,7 +292,7 @@ const Home = () => {
                 color: "#1f3f66",
                 marginLeft: "50px",
                 fontSize: "20px",
-                fontFamily: "Cursive",
+                fontFamily: "Times New Roman",
               }}
             >
               Post Announcement
@@ -313,7 +313,7 @@ const Home = () => {
                 color: "#1f3f66",
                 marginLeft: "50px",
                 fontSize: "20px",
-                fontFamily: "Cursive",
+                fontFamily: "	Times New Roman",
               }}
             >
               Add Appointment
@@ -334,14 +334,14 @@ const Home = () => {
                 color: "#1f3f66",
                 marginLeft: "50px",
                 fontSize: "20px",
-                fontFamily: "Cursive",
+                fontFamily: "Times New Roman",
               }}
             >
               Gallery Page
             </Typography>
           </div>
           <div style={{ marginTop: "20px", marginRight: "0px" }}>
-            <Link to="/me/AddPhoto" style={{ marginLeft: "50px" }}>
+            <Link to="/me/AddAlbum" style={{ marginLeft: "50px" }}>
               <AddPhotoAlternateIcon
                 style={{
                   marginInline: "15px",
@@ -355,7 +355,7 @@ const Home = () => {
                 color: "#1f3f66",
                 marginLeft: "50px",
                 fontSize: "20px",
-                fontFamily: "Cursive",
+                fontFamily: "Times New Roman",
               }}
             >
               Add Album
@@ -376,7 +376,7 @@ const Home = () => {
                 color: "#1f3f66",
                 marginLeft: "50px",
                 fontSize: "20px",
-                fontFamily: "Cursive",
+                fontFamily: "Times New Roman",
               }}
             >
               Change Password
@@ -748,7 +748,7 @@ const Home = () => {
                 color: "#1f3f66",
                 marginLeft: "10px",
                 fontSize: "20px",
-                fontFamily: "Cursive",
+                fontFamily: "Times New Roman",
               }}
             >
               Lecturers Profile
@@ -770,7 +770,7 @@ const Home = () => {
                 color: "#1f3f66",
                 marginLeft: "-15px",
                 fontSize: "20px",
-                fontFamily: "Cursive",
+                fontFamily: "Times New Roman",
               }}
             >
               Gallery Page
@@ -779,7 +779,7 @@ const Home = () => {
 
           <div style={{ marginTop: "10px", marginRight: "100px" }}>
             <Link to="/me/ChangePassword" style={{ marginRight: "50px" }}>
-              <EditNoteIcon
+              <KeyOutlinedIcon
                 style={{
                   marginInline: "15px",
                   marginTop: "10px",
@@ -792,7 +792,7 @@ const Home = () => {
                 color: "#1f3f66",
                 marginLeft: "-20px",
                 fontSize: "20px",
-                fontFamily: "Cursive",
+                fontFamily: "Times New Roman",
               }}
             >
               Change Password
