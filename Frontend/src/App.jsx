@@ -48,7 +48,7 @@ function App() {
               element={<PostAnnouncementPage />}
             />
             <Route path="/me/AddAppointment" element={<Appointment />} />
-            <Route path="/me/AddPhoto" element={<AddPhoto />} />
+            <Route path="/me/AddAlbum" element={<AddPhoto />} />
           </Route>
 
           <Route element={<ProtectedRoutes allowedRoles={[student]} />}>

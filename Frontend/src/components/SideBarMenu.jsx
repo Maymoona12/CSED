@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import {
-  MenuItem,
   Typography,
-  Menu,
   Stack,
   List,
   ListItemButton,
@@ -21,7 +19,7 @@ const SideBarMenu = () => {
     "PostAnnouncement",
     "AddAppointment",
     "GalleryPage",
-    "AddPhoto",
+    "AddAlbum",
   ];
 
   const settings2 = ["LecturersProfile", "GalleryPage"];
@@ -31,7 +29,7 @@ const SideBarMenu = () => {
     "PostAnnouncement",
     "AddAppointment",
     "GalleryPage",
-    "AddPhoto",
+    "AddAlbum",
   ];
   // const settings4 = ["Home"];
 
