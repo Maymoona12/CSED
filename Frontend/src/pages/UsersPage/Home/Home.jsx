@@ -46,6 +46,8 @@ import ClearIcon from "@mui/icons-material/Clear";
 import SearchIcon from "@mui/icons-material/Search";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 const Home = () => {
   const [imageSrc, setImageSrc] = useState();
@@ -72,6 +74,12 @@ const Home = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [enteredConfirmPassword, setEnteredConfirmPassword] = useState("");
+
+  const [role, setRole] = useState("doctor");
+  const handleRole = (e) => {
+    setRole(e.target.value);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -83,6 +91,29 @@ const Home = () => {
     // const password_confirmation = data.get("password_confirmation");
 
     // mutate({ name, reg_no, email, password, password_confirmation });
+  };
+
+  const handleAddLecturer = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(newLecturerEmail)) {
+      setAlertMessage("Invalid email format!");
+      setOpen(true);
+      return;
+    }
+    if (newLecturerPassword !== enteredConfirmPassword) {
+      setAlertMessage("Passwords do not match!");
+      setOpen(true);
+      return;
+    }
+
+    // Your existing logic for adding a lecturer
+
+    setNewLecturerEmail("");
+    setNewLecturerPassword("");
+    setEnteredConfirmPassword("");
+
+    // Close the Snackbar
+    setOpen(false);
   };
 
   const handleDeleteLecture = (lectureId) => {
@@ -117,6 +148,7 @@ const Home = () => {
   const filteredLectures = lectures.filter((lecture) =>
     lecture.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
   const { getUser } = useAuth();
   const user = getUser();
 
@@ -124,14 +156,8 @@ const Home = () => {
     `/ProfileImages/${user?.photo}`
   );
 
-
-
   const textFieldStyle = {
     display: "none", // This will hide the TextField initially
-  };
-  const [role, setRole] = useState("doctor");
-  const handleRole = (e) => {
-    setRole(e.target.value);
   };
 
   const handleImageChange = (event) => {
@@ -168,20 +194,19 @@ const Home = () => {
       reason: "Meeting",
     },
     {
-      day: "Wedenday",
+      day: "Wednesday",
       timeInterval: "10:00 - 12:00 ",
-      student: "Fatima",
+      student: "Nagham",
       reason: "Meeting",
     },
-    {
-      day: "Thursday",
-      timeInterval: "10:00 - 12:00 ",
-      student: "Malak",
-      reason: "Meeting",
-    },
-
-    // Add more sample data as needed
   ];
+
+  const [open, setOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <Stack className="upc">
@@ -229,7 +254,7 @@ const Home = () => {
 
       {(user?.role == "doctor" || user?.role == "admin") && (
         <div className="profile-button">
-          <div style={{ marginTop: "20px", marginRight: "100px" }}>
+          <div style={{ marginTop: "20px", marginRight: "50px" }}>
             <Link to="/me/EditProfile" style={{ marginLeft: "50px" }}>
               <EditNoteIcon
                 style={{
@@ -251,7 +276,7 @@ const Home = () => {
               Edit Profile
             </Typography>
           </div>
-          <div style={{ marginTop: "20px", marginRight: "100px" }}>
+          <div style={{ marginTop: "20px", marginRight: "50px" }}>
             <Link to="/me/PostAnnouncement" style={{ marginLeft: "50px" }}>
               <CampaignIcon
                 style={{
@@ -272,7 +297,7 @@ const Home = () => {
               Post Announcement
             </Typography>
           </div>
-          <div style={{ marginTop: "20px", marginRight: "100px" }}>
+          <div style={{ marginTop: "20px", marginRight: "50px" }}>
             <Link to="/me/AddAppointment" style={{ marginLeft: "50px" }}>
               <EditCalendarIcon
                 style={{
@@ -293,7 +318,7 @@ const Home = () => {
               Add Appointment
             </Typography>
           </div>
-          <div style={{ marginTop: "20px", marginRight: "70px" }}>
+          <div style={{ marginTop: "20px", marginRight: "50px" }}>
             <Link to="/me/GalleryPage" style={{ marginLeft: "50px" }}>
               <PermMediaIcon
                 style={{
@@ -314,8 +339,8 @@ const Home = () => {
               Gallery Page
             </Typography>
           </div>
-          <div style={{ marginTop: "20px", marginRight: "100px" }}>
-            <Link to="/me/AddPhoto" style={{ marginLeft: "80px" }}>
+          <div style={{ marginTop: "20px", marginRight: "50px" }}>
+            <Link to="/me/AddPhoto" style={{ marginLeft: "50px" }}>
               <AddPhotoAlternateIcon
                 style={{
                   marginInline: "15px",
@@ -327,7 +352,7 @@ const Home = () => {
             <Typography
               style={{
                 color: "#1f3f66",
-                marginLeft: "85px",
+                marginLeft: "50px",
                 fontSize: "20px",
                 fontFamily: "Cursive",
               }}
@@ -589,7 +614,7 @@ const Home = () => {
                         }}
                       />
                       <Button
-                        onClick={handleSubmit}
+                        onClick={handleAddLecturer}
                         style={{
                           color: "white",
                           marginLeft: "40%",
@@ -752,6 +777,25 @@ const Home = () => {
           </div>
         </div>
       )}
+      <Snackbar
+        open={open}
+        autoHideDuration={10000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <div>
+          <Alert
+            onClose={() => {
+              handleClose();
+              setAlertMessage("");
+            }}
+            severity="error"
+            sx={{ width: "100%" }}
+          >
+            {alertMessage}
+          </Alert>
+        </div>
+      </Snackbar>
     </Stack>
   );
 };

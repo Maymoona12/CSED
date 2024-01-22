@@ -7,66 +7,54 @@ import TextareaAutosize from "@mui/material/TextareaAutosize";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import AddLinkIcon from "@mui/icons-material/AddLink";
+import usePostAnnouncement from "./usePostAnnouncement";
 
-const PostAnnouncementPage = ({ onSubmit }) => {
-  const [announcementData, setAnnouncementData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [documentFiles, setDocumentFiles] = useState([]);
-  const [documentPreview, setDocumentPreview] = useState(null);
-  const [announcementText, setAnnouncementText] = useState("");
-  const [editingIndex, setEditingIndex] = useState(null);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const documentInputRef = useRef(null);
+const PostAnnouncement = () => {
+  const { mutate } = usePostAnnouncement();
+  const [title, setTitle] = useState("");
+  const [text_ann, setTextAnn] = useState("");
+  const [file, setFile] = useState([]);
+  const fileInputRef = useRef(null);
 
-  const deleteDocumentFile = (index) => {
-    const updatedDocumentFiles = [...documentFiles];
-    updatedDocumentFiles.splice(index, 1);
-    setDocumentFiles(updatedDocumentFiles);
+  const deleteFile = (index) => {
+    const updatedFile = [...file];
+    updatedFile.splice(index, 1);
+    setFile(updatedFile);
   };
 
-  const handleDocumentChange = (e) => {
-    const files = e.target.files;
-    setDocumentFiles([...documentFiles, ...files]);
-
-    if (files.length > 0) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setDocumentPreview(reader.result);
-      };
-      reader.readAsDataURL(files[0]);
-    }
-  };
-
-  const handleFolderIconClick = (inputRef) => {
-    inputRef.current.click();
-  };
-
-  const editDocumentFile = (index) => {
+  const editFile = (index) => {
     const input = document.createElement("input");
     input.type = "file";
     input.addEventListener("change", (event) => handleFileChange(event, index));
     input.click();
   };
 
-  const handleFileChange = (event, index) => {
-    const selectedFile = event.target.files[0];
+  const handleFileChange = (e, index) => {
+    const selectedFiles = e.target.files;
+    const updatedFiles = [...file];
 
-    if (selectedFile) {
-      const updatedDocumentFiles = [...documentFiles];
-      updatedDocumentFiles[index] = selectedFile;
-      setDocumentFiles(updatedDocumentFiles);
+    for (let i = 0; i < selectedFiles.length; i++) {
+      updatedFiles[index + i] = selectedFiles[i];
     }
+
+    setFile(updatedFiles);
+  };
+
+  const handleFolderIconClick = () => {
+    fileInputRef.current.click();
   };
 
   const handleSubmit = () => {
-    const data = {
-      title: "", // You might want to add a title here
-      announcementText,
-      documentFiles,
-    };
-    onSubmit(data);
-    setAnnouncementText("");
-    setDocumentFiles([]);
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("text_ann", text_ann);
+  
+    // Iterate through the file array and append each file to formData
+    file.forEach((fileItem, index) => {
+      formData.append(`file${index + 1}`, fileItem);
+    });
+  
+    mutate(formData);
   };
 
   return (
@@ -105,7 +93,13 @@ const PostAnnouncementPage = ({ onSubmit }) => {
           >
             Title
           </Typography>
-          <TextField fullWidth id="fullWidth" />
+          <TextField
+            fullWidth
+            id="title"
+            label="Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
           <Typography
             variant="h5"
             sx={{
@@ -122,8 +116,8 @@ const PostAnnouncementPage = ({ onSubmit }) => {
               aria-label="Announcement"
               minRows={3}
               placeholder="Write your announcement text here..."
-              value={announcementText}
-              onChange={(e) => setAnnouncementText(e.target.value)}
+              value={text_ann}
+              onChange={(e) => setTextAnn(e.target.value)}
               style={{
                 width: "100%",
                 marginTop: "8px",
@@ -144,16 +138,16 @@ const PostAnnouncementPage = ({ onSubmit }) => {
             <div>
               <input
                 type="file"
-                id="documentInput"
+                id="fileInput"
                 style={{ display: "none" }}
-                onChange={handleDocumentChange}
-                ref={documentInputRef}
+                onChange={(e) => handleFileChange(e, file.length)}
+                ref={fileInputRef}
                 multiple
               />
               <Button
                 variant="contained"
                 component="label"
-                onClick={() => handleFolderIconClick(documentInputRef)}
+                onClick={handleFolderIconClick}
                 startIcon={<AddLinkIcon />}
                 style={{
                   flex: "0 0 auto",
@@ -189,30 +183,30 @@ const PostAnnouncementPage = ({ onSubmit }) => {
           </div>
           <div style={{ display: "flex" }}>
             <div style={{ flex: 1, marginRight: "5px" }}>
-              {documentPreview && documentFiles.length > 0 ? (
+              {file.length > 0 ? (
                 <div>
-                  {documentFiles.map((file, index) => (
+                  {file.map((fileItem, index) => (
                     <div
                       key={index}
                       style={{ marginTop: "5px", marginLeft: "20px" }}
                     >
-                      {file.type.startsWith("image/") ? (
+                      {fileItem.type.startsWith("image/") ? (
                         <img
-                          src={URL.createObjectURL(file)}
+                          src={URL.createObjectURL(fileItem)}
                           alt={`Image ${index + 1}`}
                           style={{ maxWidth: "180px", maxHeight: "180px" }}
                         />
                       ) : (
-                        <span>{file.name}</span>
+                        <span>{fileItem.name}</span>
                       )}
 
                       <EditIcon
                         style={{ marginLeft: "5px", cursor: "pointer" }}
-                        onClick={() => editDocumentFile(index)}
+                        onClick={() => editFile(index)}
                       />
                       <DeleteIcon
                         style={{ marginLeft: "10px", cursor: "pointer" }}
-                        onClick={() => deleteDocumentFile(index)}
+                        onClick={() => deleteFile(index)}
                       />
                     </div>
                   ))}
@@ -226,4 +220,4 @@ const PostAnnouncementPage = ({ onSubmit }) => {
   );
 };
 
-export default PostAnnouncementPage;
+export default PostAnnouncement;
