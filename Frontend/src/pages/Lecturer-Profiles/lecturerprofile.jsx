@@ -1,5 +1,4 @@
 import * as React from "react";
-import AppBar from "@mui/material/AppBar";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -8,7 +7,6 @@ import CardMedia from "@mui/material/CardMedia";
 import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -16,7 +14,6 @@ import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 import IconButton from "@mui/material/IconButton";
-import Link from "@mui/material/Link";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -30,85 +27,40 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import { useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import MenuIcon from "@mui/icons-material/Menu";
+import uselecturersprofile from "./uselecturersprofile";
 
 function LecturersProfile() {
   const defaultTheme = createTheme();
 
-  const images = [
-    "ProfileImages/thaer.png",
-    "ProfileImages/mohmad.png",
-    "ProfileImages/nael.png",
-    "ProfileImages/anas.png",
-    "ProfileImages/yousef.png",
-    "ProfileImages/yazeed.png",
-    "ProfileImages/rami.png",
-    "ProfileImages/osamah.png",
-    "ProfileImages/osamas.png",
-    "ProfileImages/nagham.png",
-    "ProfileImages/shatha.png",
-    "ProfileImages/maha.png",
-    "ProfileImages/deema.png",
-  ];
-
-  const headings = [
-    "Dr.Thaer Samar",
-    "Dr.Mohammed Khalil",
-    "Dr.Nael Salman",
-    "Dr.Anas Melhem",
-    "Dr.Yousef Daraghmi",
-    "Dr.Yazeed Sleet",
-    "Dr.Rami Yousef",
-    "Dr.Osama Hamed",
-    "Dr.Osama Safarini",
-    "Dr.Nagham Hamad",
-    "Dr.Shada Abushanab",
-    "Dr.May Zakarneh",
-    "Dr.Dema Sawalha",
-  ];
-
-  const views = [
-    "Assistant Professor\nRoom Number: H313\n+970 9 2688199\nthaer.sammar@ptuk.edu.ps",
-    "Assistant Professor\nRoom Number: H316\n+970 9 2688199\nm.khalil@ptuk.edu.ps",
-    "Assistant Professor\nRoom Number: H314\n+970 9 2688199\nn.salman@ptuk.edu.ps",
-    "Assistant Professor\nRoom Number: H307\n+970 9 2688199\na.melhem@ptuk.edu.ps",
-    "Associate Professor\nRoom Number: H312\n+970 9 2688199\ny.awwad@ptuk.edu.ps",
-    "Lecturer\nRoom Number: H311\n+970 9 2688199\ny.sleet@ptuk.edu.ps",
-    "Assistant Professor\nRoom Number:\n+970 9 2688199\nr.yousuf@ptuk.edu.ps",
-    "Assistant Professor\nRoom Number:\n+970 9 2688199\nosama.hamed@ptuk.edu.ps",
-    "Assistant Professor\nRoom Number:\n+970 9 2688199\nosama.safarini@ptuk.edu.ps",
-    "Engineering Lecturer\nRoom Number:\n+970 9 2688199\nnagham.hamad@ptuk.edu.ps",
-    "Assistant Professor\nRoom Number: H310\n+970 9 2688199\nshatha.abushanab@ptuk.edu.ps",
-    "Lecturer\nRoom Number:\n+970 9 2688199\nm.zakarneh@ptuk.edu.ps",
-    "Lecturer\nRoom Number:\n+970 9 2688199\ndema.sawalha@ptuk.edu.ps",
-  ];
+  const { doctors } = uselecturersprofile();
   const [searchQuery, setSearchQuery] = React.useState("");
-  const [filteredLecturers, setFilteredLecturers] = React.useState(headings);
+  const [filteredLecturers, setFilteredLecturers] = React.useState(doctors);
   const [viewMode, setViewMode] = React.useState(null);
   const [openDialog, setOpenDialog] = React.useState(false);
-  const { sideBar, setSideBar } = useAuth();
+  const cardRefs = React.useRef([]);
+  const [matchingIndices, setMatchingIndices] = React.useState([]);
 
   const handleSearch = (event) => {
     if (event.key === "Enter") {
-      const query = event.target.value;
+      const query = event.target.value.toLowerCase();
       setSearchQuery(query);
 
-      const filtered = headings.filter((lecturer) =>
-        lecturer.toLowerCase().includes(query.toLowerCase())
+      const filteredDoctors = doctors?.filter((doctor) =>
+        doctor.name.toLowerCase().includes(query)
       );
 
-      setFilteredLecturers(filtered);
+      setFilteredLecturers(filteredDoctors);
 
-      const firstMatchingIndex = headings.findIndex((lecturer) =>
-        lecturer.toLowerCase().includes(query.toLowerCase())
+      // set the matching indices
+      const matchingIndices = filteredDoctors.map((doctor) =>
+        doctors.findIndex((d) => d === doctor)
       );
+      setMatchingIndices(matchingIndices);
 
-      if (firstMatchingIndex !== -1) {
-        const cardElement = document.getElementById(
-          `lecturer-card-${firstMatchingIndex}`
-        );
+      // scroll to the first matching card
+      if (matchingIndices.length > 0) {
+        const firstMatchingIndex = matchingIndices[0];
+        const cardElement = cardRefs.current[firstMatchingIndex];
         if (cardElement) {
           cardElement.scrollIntoView({ behavior: "smooth", block: "start" });
         }
@@ -118,7 +70,8 @@ function LecturersProfile() {
 
   const handleClearSearch = () => {
     setSearchQuery("");
-    setFilteredLecturers(headings);
+    setFilteredLecturers(doctors);
+    setMatchingIndices([]); // clear matching indices
   };
 
   const handleView = (index) => {
@@ -131,68 +84,16 @@ function LecturersProfile() {
     setOpenDialog(false);
   };
 
-  const navigate = useNavigate(); // Use useNavigate instead of useHistory
+  const navigate = useNavigate();
 
   const handleAddAppointmentClick = () => {
     // Use navigate instead of push
     navigate("/me/BookAppointment");
   };
-  const handleDrawerOpen = () => {
-    setSideBar((previous) => !previous);
-  };
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
-      {/* <AppBar
-        position="static"
-        style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000 }}
-        sx={{ background: "#1f3f66" }}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{ mr: 2, ...(open && { display: "none" }) }}
-          >
-            {sideBar && (
-              <ChevronLeftIcon
-                fontSize="small"
-                sx={{
-                  marginRight: -0.5,
-                  fontSize: "1rem",
-                }}
-              />
-            )}
-            <MenuIcon />
-          </IconButton>
-
-          <Typography
-            variant="h5"
-            component="div"
-            sx={{ flexGrow: 1, fontFamily: "Brush Script MT" }}
-          >
-            CSED
-          </Typography>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            {searchQuery && (
-              <IconButton onClick={handleClearSearch}>
-                <CloseIcon sx={{ color: "white" }} />
-              </IconButton>
-            )}
-            <SearchIcon sx={{ color: "white" }} />
-            <InputBase
-              placeholder="Search..."
-              inputProps={{ "aria-label": "search" }}
-              sx={{ color: "white", marginLeft: "8px" }}
-              onKeyDown={handleSearch}
-              value={searchQuery}
-              onChange={(event) => setSearchQuery(event.target.value)}
-            />
-          </div>
-        </Toolbar>
-      </AppBar> */}
       <main>
         <Box>
           <Container>
@@ -204,7 +105,7 @@ function LecturersProfile() {
                 style={{
                   textAlign: "left",
                   fontFamily: "Garamond",
-                  marginRight: "100px", // Adjust the margin as needed
+                  marginRight: "100px",
                 }}
               >
                 Lecturers Profile
@@ -239,37 +140,50 @@ function LecturersProfile() {
           </Container>
         </Box>
         <Container sx={{ py: 3 }}>
-          {filteredLecturers.length === 0 ? (
+          {filteredLecturers?.length === 0 ? (
             <Typography
               variant="h2"
               align="center"
               color="text.primary"
               style={{
                 textAlign: "center",
+                marginTop: "10%",
+                marginLeft: "50%",
                 fontFamily: "Garamond",
                 color: "red",
               }}
             >
-              No Result
+              No Result!
             </Typography>
           ) : (
             <Grid container spacing={3}>
-              {filteredLecturers.map((lecturer, index) => (
-                <Grid item key={lecturer} xs={2} sm={6} md={3} lg={2}>
+              {doctors?.map((doctor, index) => (
+                <Grid
+                  item
+                  key={`${doctor.id}-${index}`}
+                  xs={2}
+                  sm={6}
+                  md={3}
+                  lg={2}
+                >
                   <Card
-                    id={`lecturer-card-${index}`}
+                    ref={(el) => (cardRefs.current[index] = el)}
+                    id={`doctor-card-${index}`}
                     sx={{
                       height: "100%",
                       width: "100%",
                       display: "flex",
                       flexDirection: "column",
+                      backgroundColor: matchingIndices.includes(index)
+                        ? "#ffcccb"
+                        : "white", // Change color here
                     }}
                   >
                     <CardMedia
                       component="div"
                       sx={{
-                        pt: "100%", // Adjust the height of the image here
-                        backgroundImage: `url(/${images[index]})`,
+                        pt: "100%",
+                        backgroundImage: `url(/ProfileImages/${doctors[index]?.photo})`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                       }}
@@ -281,7 +195,7 @@ function LecturersProfile() {
                         component="h2"
                         style={{ fontFamily: "Sarfi" }}
                       >
-                        {lecturer}
+                        {doctors[index]?.name}
                       </Typography>
                     </CardContent>
                     <CardActions>
@@ -304,32 +218,45 @@ function LecturersProfile() {
                       open={viewMode === index}
                       onClose={handleCloseDialog}
                     >
-                      <DialogTitle>{lecturer}</DialogTitle>
+                      <DialogTitle>{doctors[index]?.name}</DialogTitle>
                       <DialogContent>
                         <CardContent>
                           {/* Additional information goes here */}
                           <List>
-                            {views[index].split("\n").map((line, i) => (
-                              <ListItem key={i}>
-                                <ListItemIcon>
-                                  {i === 0 && <AccountBalanceIcon />}
-                                  {i === 1 && <ApartmentIcon />}
-                                  {i === 2 && <PhoneIcon />}
-                                  {i === 3 && <EmailIcon />}
-                                </ListItemIcon>
-                                <ListItemText
-                                  primary={
-                                    i === 3 ? (
-                                      <Link href={`mailto:${line}`}>
-                                        {line}
-                                      </Link>
-                                    ) : (
-                                      line
-                                    )
-                                  }
-                                />
-                              </ListItem>
-                            ))}
+                            <ListItem>
+                              <ListItemIcon>
+                                <AccountBalanceIcon />
+                              </ListItemIcon>
+                              <ListItemText>
+                                {doctors[index]?.education_level}
+                              </ListItemText>
+                            </ListItem>
+
+                            <ListItem>
+                              <ListItemIcon>
+                                <ApartmentIcon />
+                              </ListItemIcon>
+                              <ListItemText>
+                                {doctors[index]?.office_no}
+                              </ListItemText>
+                            </ListItem>
+                            <ListItem>
+                              <ListItemIcon>
+                                <PhoneIcon />
+                              </ListItemIcon>
+                              <ListItemText>
+                                {doctors[index]?.phone_no}
+                              </ListItemText>
+                            </ListItem>
+
+                            <ListItem>
+                              <ListItemIcon>
+                                <EmailIcon />
+                              </ListItemIcon>
+                              <ListItemText>
+                                {doctors[index]?.email}
+                              </ListItemText>
+                            </ListItem>
                           </List>
                         </CardContent>
                       </DialogContent>

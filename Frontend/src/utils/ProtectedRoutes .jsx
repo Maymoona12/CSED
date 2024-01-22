@@ -8,7 +8,9 @@ const ProtectedRoutes = ({ children, allowedRoles }) => {
   const user = getUser();
 
   if (!user)
-    return <Navigate to="/login" replace state={{ from: location.pathname }} />;
+    return (
+      <Navigate to="/user/login" replace state={{ from: location.pathname }} />
+    );
 
   if (user && allowedRoles && !allowedRoles?.includes(user.role))
     return (

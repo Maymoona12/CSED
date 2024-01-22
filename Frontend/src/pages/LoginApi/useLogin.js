@@ -1,7 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { login } from "./index";
 import useAuth from "../../hooks/useAuth";
-import { useState } from "react";
 import useSnackbar from "../../context/useSnackbar";
 
 const useLogin = () => {
