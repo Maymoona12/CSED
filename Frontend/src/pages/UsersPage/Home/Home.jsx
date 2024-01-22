@@ -48,6 +48,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 
 const Home = () => {
   const [imageSrc, setImageSrc] = useState();
@@ -256,7 +257,7 @@ const Home = () => {
         <div className="profile-button">
           <div style={{ marginTop: "20px", marginRight: "50px" }}>
             <Link to="/me/EditProfile" style={{ marginLeft: "50px" }}>
-              <EditNoteIcon
+              <ManageAccountsIcon
                 style={{
                   marginInline: "15px",
                   marginTop: "10px",
@@ -358,6 +359,27 @@ const Home = () => {
               }}
             >
               Add Album
+            </Typography>
+          </div>
+          <div style={{ marginTop: "20px", marginRight: "50px" }}>
+            <Link to="/me/ChangePassword" style={{ marginLeft: "50px" }}>
+              <EditNoteIcon
+                style={{
+                  marginInline: "15px",
+                  marginTop: "10px",
+                  fontSize: 25,
+                }}
+              />
+            </Link>
+            <Typography
+              style={{
+                color: "#1f3f66",
+                marginLeft: "50px",
+                fontSize: "20px",
+                fontFamily: "Cursive",
+              }}
+            >
+              Change Password
             </Typography>
           </div>
           <div
@@ -559,33 +581,29 @@ const Home = () => {
                         onChange={(e) => setNewLecturerEmail(e.target.value)}
                       />
                       <TextField
-                        label="Password"
-                        name="password"
-                        type={showPassword ? "text" : "password"}
-                        variant="outlined"
-                        fullWidth
                         margin="normal"
+                        required
+                        fullWidth
+                        name="password"
+                        label="Password"
+                        type={showPassword ? "text" : "password"}
+                        id="password"
+                        autoComplete="current-password"
+                        variant="outlined"
                         value={newLecturerPassword}
                         onChange={(e) => setNewLecturerPassword(e.target.value)}
                         InputProps={{
                           endAdornment: (
-                            <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleTogglePasswordVisibility}
+                            >
                               {showPassword ? (
-                                <IconButton
-                                  onClick={() => setShowPassword(false)}
-                                  edge="end"
-                                >
-                                  <VisibilityIcon />
-                                </IconButton>
+                                <VisibilityIcon />
                               ) : (
-                                <IconButton
-                                  onClick={() => setShowPassword(true)}
-                                  edge="end"
-                                >
-                                  <VisibilityOffIcon />
-                                </IconButton>
+                                <VisibilityOffIcon />
                               )}
-                            </InputAdornment>
+                            </IconButton>
                           ),
                         }}
                       />
@@ -612,7 +630,12 @@ const Home = () => {
                             </IconButton>
                           ),
                         }}
+                        value={enteredConfirmPassword}
+                        onChange={(e) =>
+                          setEnteredConfirmPassword(e.target.value)
+                        } // Update enteredConfirmPassword state
                       />
+
                       <Button
                         onClick={handleAddLecturer}
                         style={{
