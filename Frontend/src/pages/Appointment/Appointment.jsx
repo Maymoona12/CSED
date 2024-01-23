@@ -130,28 +130,7 @@ const Appointment = () => {
 
   const handleSaveButtonClick = (dayIndex, event) => {
     event.preventDefault();
-    const tableElement = document.getElementById(`table-${dayIndex}`);
-
-    if (!tableElement || !tableElement.style) {
-      console.error(
-        `Table element with ID 'table-${dayIndex}' not found or does not have a style property`
-      );
-      return;
-    }
-
-    if (
-      tableElement.style.display === "table" &&
-      tableElement.style.visibility === "visible"
-    ) {
-      console.log("Table saved:", schedule[dayIndex].appointments);
-      localStorage.setItem(
-        "BookAppointments",
-        JSON.stringify(schedule[dayIndex].appointments)
-      );
-      navigate("/appointment");
-    }
-
-    console.log("mySchedule:", schedule);
+    const tableElement = document.getElementById(`table-${dayIndex}`)
 
     const formElement = formRef.current;
 
