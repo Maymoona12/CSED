@@ -45,7 +45,7 @@ class AppointmentController extends Controller
     public function doctorAppointments($id){ //student
         $appointment=Appointment::where('doctor_id',$id)->where('status','0')->get(); // status available
         $data = array();
-
+//
         foreach ($appointment as $appointment) {
             $data[] = [
                 'id' => $appointment->id,
