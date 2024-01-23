@@ -11,8 +11,13 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { MobileTimePicker } from "@mui/x-date-pickers/MobileTimePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useNavigate } from "react-router-dom";
 import useAppointment from "./useAppointment";
+import Collapse from "@mui/material/Collapse";
+import { blue, green } from "@mui/material/colors";
 
 const Appointment = () => {
   const formRef = useRef(null);
@@ -30,8 +35,12 @@ const Appointment = () => {
   );
   const [timeDivision, setTimeDivision] = useState(10);
   const [allFieldsFilled, setAllFieldsFilled] = useState(false);
-  const navigate = useNavigate();
   const [tableVisibility, setTableVisibility] = useState(false);
+  const dayRef = useRef(null);
+  const appointmentRef = useRef(null);
+  const startTimeRef = useRef(null);
+  const endTimeRef = useRef(null);
+  const [open, setOpen] = useState(false);
 
   const handleAddAppointment = (
     dayIndex,
@@ -98,7 +107,7 @@ const Appointment = () => {
     console.log("Data saved to state:", updatedSchedule);
   };
 
-  const handleViewButtonClick = (dayIndex) => {
+  const handleViewButtonClick = () => {
     setTableVisibility(!tableVisibility);
   };
 
@@ -128,9 +137,8 @@ const Appointment = () => {
     setSchedule(updatedSchedule);
   };
 
-  const handleSaveButtonClick = (dayIndex, event) => {
+  const handleSaveButtonClick = (event) => {
     event.preventDefault();
-    const tableElement = document.getElementById(`table-${dayIndex}`)
 
     const formElement = formRef.current;
 
@@ -154,14 +162,18 @@ const Appointment = () => {
   };
 
   const handleInputChange = () => {
-    const selectedDay = document.getElementById(`day-0`).value;
-    const appointmentName = document.getElementById(`appointment-0`).value;
-    const startTime = document.getElementById(`startTime-0`).value;
-    const endTime = document.getElementById(`endTime-0`).value;
+    const selectedDay = dayRef.current.value;
+    const appointmentName = appointmentRef.current.value;
+    const startTime = startTimeRef.current.value;
+    const endTime = endTimeRef.current.value;
 
     const areLastFieldsFilled =
       selectedDay && appointmentName && startTime && endTime;
     setAllFieldsFilled(areLastFieldsFilled);
+    console.log(startTime);
+  };
+  const handleChange = () => {
+    setOpen((prev) => !prev);
   };
 
   return (
@@ -204,7 +216,7 @@ const Appointment = () => {
                 marginRight: "5px",
                 padding: "10px",
                 minWidth: "395px",
-                height: "230px",
+                height: "330px",
                 border: "1px solid #ddd",
                 borderRadius: "20px",
                 color: "black",
@@ -218,7 +230,12 @@ const Appointment = () => {
                   >
                     Day
                   </label>
-                  <select id={`day-0`} name="day" onChange={handleInputChange}>
+                  <select
+                    ref={dayRef}
+                    id={`day-0`}
+                    name="day"
+                    onChange={handleInputChange}
+                  >
                     <option value="Sun">Sunday</option>
                     <option value="Mon">Monday</option>
                     <option value="Tue">Tuesday</option>
@@ -226,19 +243,21 @@ const Appointment = () => {
                     <option value="Thu">Thursday</option>
                   </select>
                 </Typography>
-
-                <label
-                  htmlFor={`appointment-0`}
-                  style={{ marginRight: "15px" }}
-                >
-                  Appointment Title
-                </label>
-                <input
-                  id={`appointment-0`}
-                  name="app_name"
-                  type="text"
-                  onChange={handleInputChange}
-                />
+                <div className="select__wrapper">
+                  <label
+                    htmlFor={`appointment-0`}
+                    style={{ marginRight: "15px" }}
+                  >
+                    Appointment Title
+                  </label>
+                  <input
+                    ref={appointmentRef}
+                    id={`appointment-0`}
+                    name="app_name"
+                    type="text"
+                    onChange={handleInputChange}
+                  />
+                </div>
                 <div className="select__wrapper" style={{ marginTop: "10px" }}>
                   <label
                     htmlFor={`startTime-0`}
@@ -246,23 +265,31 @@ const Appointment = () => {
                   >
                     Add Start Time
                   </label>
-                  <input
-                    id={`startTime-0`}
-                    name="start_time"
-                    type="time"
-                    onChange={handleInputChange}
-                  />
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <MobileTimePicker
+                      ref={startTimeRef}
+                      id={`startTime-0`}
+                      name="start_time"
+                      label={"Start Time"}
+                      views={["hours", "minutes", "seconds"]}
+                      onChange={handleInputChange}
+                    />
+                  </LocalizationProvider>
                 </div>
                 <div className="select__wrapper" style={{ marginTop: "10px" }}>
                   <label htmlFor={`endTime-0`} style={{ marginRight: "37px" }}>
                     Add End Time
                   </label>
-                  <input
-                    id={`endTime-0`}
-                    name="finish_time"
-                    type="time"
-                    onChange={handleInputChange}
-                  />
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <MobileTimePicker
+                      ref={endTimeRef}
+                      id={`endTime-0`}
+                      name="finish_time"
+                      label={"End Time"}
+                      views={["hours", "minutes", "seconds"]}
+                      onChange={handleInputChange}
+                    />
+                  </LocalizationProvider>
                 </div>
                 <div className="select__wrapper" style={{ marginTop: "10px" }}>
                   <label
@@ -283,154 +310,159 @@ const Appointment = () => {
                     <option value={30}>30 minutes</option>
                   </select>
                 </div>
-                <button
-                  onClick={() => {
-                    const selectedDay = document.getElementById(`day-0`).value;
-                    const appointmentName =
-                      document.getElementById(`appointment-0`).value;
-                    const startTime =
-                      document.getElementById(`startTime-0`).value;
-                    const endTime = document.getElementById(`endTime-0`).value;
-                    const dayIndex = schedule.findIndex(
-                      (day) => day.day === selectedDay
-                    );
 
-                    if (
-                      dayIndex !== -1 &&
-                      appointmentName &&
-                      startTime &&
-                      endTime &&
-                      allFieldsFilled
-                    ) {
-                      handleAddAppointment(
-                        dayIndex,
-                        appointmentName,
-                        startTime,
-                        endTime,
-                        selectedDay
-                      );
-                      document.getElementById(
-                        `table-${dayIndex}`
-                      ).style.display = "table";
-                    }
+                <button
+                  onClick={(event) => {
+                    handleSaveButtonClick((0, event));
+                    // const selectedDay =
+                    //   document.getElementById(`day-0`).value;
+                    // const appointmentName =
+                    //   document.getElementById(`appointment-0`).value;
+                    // const startTime =
+                    //   document.getElementById(`startTime-0`).value;
+                    // const endTime =
+                    //   document.getElementById(`endTime-0`).value;
+                    // const dayIndex = schedule.findIndex(
+                    //   (day) => day.day === selectedDay
+                    // );
+
+                    // if (
+                    //   dayIndex !== -1 &&
+                    //   appointmentName &&
+                    //   startTime &&
+                    //   endTime &&
+                    //   allFieldsFilled
+                    // ) {
+                    //   handleAddAppointment(
+                    //     dayIndex,
+                    //     appointmentName,
+                    //     startTime,
+                    //     endTime,
+                    //     selectedDay
+                    //   );
+                    //   document.getElementById(
+                    //     `table-${dayIndex}`
+                    //   ).style.display = "table";
+                    // }
                   }}
                   style={{ marginTop: "20px", marginLeft: "128px" }}
-                  disabled={!allFieldsFilled}
+                  // disabled={!allFieldsFilled}
                 >
                   Add
                 </button>
                 <button
-                  onClick={() => handleViewButtonClick(0)}
+                  onClick={() => handleChange()}
                   style={{ marginTop: "20px", marginLeft: "20px" }}
                 >
-                  View
+                  {open ? "Hide Table" : "View"}
                 </button>
               </CardContent>
             </Card>
           </div>
         </div>
-        <div>
-          <TableContainer
-            style={{
-              border: "1px solid #ddd",
-              padding: "25px",
-              borderRadius: "10px",
-              margin: "100px 64px",
-              width: "650px",
-              height: "auto",
-              display: tableVisibility ? "flex" : "none", // Use the state here
-
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-            id={`table-0`}
-          >
-            <Table style={{ border: "1px solid black" }}>
-              <TableHead>
-                <TableRow>
-                  <TableCell style={{ borderBottom: "1px solid black" }}>
-                    Day
-                  </TableCell>
-                  <TableCell style={{ borderBottom: "1px solid black" }}>
-                    Appointment
-                  </TableCell>
-                  <TableCell style={{ borderBottom: "1px solid black" }}>
-                    Start Time
-                  </TableCell>
-                  <TableCell style={{ borderBottom: "1px solid black" }}>
-                    End Time
-                  </TableCell>
-                  <TableCell style={{ borderBottom: "1px solid black" }}>
-                    <Button
-                      onClick={(event) => handleSaveButtonClick(0, event)}
-                      style={{
-                        color: "black",
-                        border: "1px solid black",
-                        padding: "2px",
-                      }}
-                    >
-                      Save
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {schedule.map((day, dayIndex) =>
-                  day.appointments.map((appointment, appIndex) => (
-                    <TableRow
-                      key={appIndex}
-                      style={{
-                        opacity: appointment.blocked ? 0.5 : 1,
-                        backgroundColor: appointment.blocked
-                          ? "#ffcccc"
-                          : "inherit",
-                      }}
-                    >
-                      <TableCell style={{ borderBottom: "1px solid black" }}>
-                        {day.day}
-                      </TableCell>
-                      <TableCell style={{ borderBottom: "1px solid black" }}>
-                        {appointment.name}
-                      </TableCell>
-                      <TableCell style={{ borderBottom: "1px solid black" }}>
-                        {appointment.startTime}
-                      </TableCell>
-                      <TableCell style={{ borderBottom: "1px solid black" }}>
-                        {appointment.endTime}
-                      </TableCell>
-                      <TableCell style={{ borderBottom: "1px solid black" }}>
-                        <Button
-                          onClick={() =>
-                            handleDeleteAppointment(dayIndex, appIndex)
-                          }
-                        >
-                          Delete
-                        </Button>
-                        {appointment.blocked ? (
+        <Collapse in={open}>
+          <div>
+            <TableContainer
+              style={{
+                border: "1px solid #ddd",
+                padding: "25px",
+                borderRadius: "10px",
+                margin: "100px 64px",
+                width: "650px",
+                height: "auto",
+                display: tableVisibility ? "flex" : "none", // Use the state here
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+              id={`table-0`}
+            >
+              <Table style={{ border: "1px solid black" }}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell style={{ borderBottom: "1px solid black" }}>
+                      Day
+                    </TableCell>
+                    <TableCell style={{ borderBottom: "1px solid black" }}>
+                      Appointment
+                    </TableCell>
+                    <TableCell style={{ borderBottom: "1px solid black" }}>
+                      Start Time
+                    </TableCell>
+                    <TableCell style={{ borderBottom: "1px solid black" }}>
+                      End Time
+                    </TableCell>
+                    <TableCell style={{ borderBottom: "1px solid black" }}>
+                      {/* <Button
+                        onClick={(event) => handleSaveButtonClick(0, event)}
+                        style={{
+                          color: "black",
+                          border: "1px solid black",
+                          padding: "2px",
+                        }}
+                      >
+                        Save
+                      </Button> */}
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {schedule.map((day, dayIndex) =>
+                    day.appointments.map((appointment, appIndex) => (
+                      <TableRow
+                        key={appIndex}
+                        style={{
+                          opacity: appointment.blocked ? 0.5 : 1,
+                          backgroundColor: appointment.blocked
+                            ? "#ffcccc"
+                            : "inherit",
+                        }}
+                      >
+                        <TableCell style={{ borderBottom: "1px solid black" }}>
+                          {day.day}
+                        </TableCell>
+                        <TableCell style={{ borderBottom: "1px solid black" }}>
+                          {appointment.name}
+                        </TableCell>
+                        <TableCell style={{ borderBottom: "1px solid black" }}>
+                          {appointment.startTime}
+                        </TableCell>
+                        <TableCell style={{ borderBottom: "1px solid black" }}>
+                          {appointment.endTime}
+                        </TableCell>
+                        <TableCell style={{ borderBottom: "1px solid black" }}>
                           <Button
                             onClick={() =>
-                              handleUnblockAppointment(dayIndex, appIndex)
+                              handleDeleteAppointment(dayIndex, appIndex)
                             }
                           >
-                            Unblock
+                            Delete
                           </Button>
-                        ) : (
-                          <Button
-                            onClick={() =>
-                              handleBlockAppointment(dayIndex, appIndex)
-                            }
-                          >
-                            Block
-                          </Button>
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </div>
+                          {appointment.blocked ? (
+                            <Button
+                              onClick={() =>
+                                handleUnblockAppointment(dayIndex, appIndex)
+                              }
+                            >
+                              Unblock
+                            </Button>
+                          ) : (
+                            <Button
+                              onClick={() =>
+                                handleBlockAppointment(dayIndex, appIndex)
+                              }
+                            >
+                              Block
+                            </Button>
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </div>
+        </Collapse>
       </form>
     </div>
   );
