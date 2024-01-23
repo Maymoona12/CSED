@@ -6,9 +6,14 @@ use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
-    public function  getNotifi(){
+    public function  getNotifiAnn(){
     
-        $notifi =Auth()->user()->unreadnotifications;
+        $notifi =Auth()->user()->unreadnotifications->where('type','App\Notifications\shareAnnouncment');
+        return response()->json([$notifi]);
+    }
+    
+    public function getNotifiApp(){
+        $notifi =Auth()->user()->unreadnotifications->where('type','!=','App\Notifications\shareAnnouncment');
         return response()->json([$notifi]);
     }
 }
