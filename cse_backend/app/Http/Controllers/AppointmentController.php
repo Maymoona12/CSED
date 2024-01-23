@@ -45,9 +45,10 @@ class AppointmentController extends Controller
     public function doctorAppointments($id){ //student
         $appointment=Appointment::where('doctor_id',$id)->where('status','0')->get(); // status available
         $data = array();
-
+//
         foreach ($appointment as $appointment) {
             $data[] = [
+                'id' => $appointment->id,
                 'start_time' => Carbon::createFromFormat('H:i:s', $appointment->start_time)->format('g:i a'),
                 'end_time' => Carbon::createFromFormat('H:i:s', $appointment->end_time)->format('g:i a'),
                 'day' => $appointment->day,
@@ -104,7 +105,18 @@ class AppointmentController extends Controller
     public function myAppointments(){ //doctor
         $id=Auth::id();
         $appointments=Appointment::where('doctor_id',$id)->get();
-        return response($appointments,200);        
+        $data = array();
+
+        foreach ($appointments as $appointments) {
+            $data[] = [
+                'id' => $appointments->id,
+                'start_time' => Carbon::createFromFormat('H:i:s', $appointments->start_time)->format('g:i a'),
+                'end_time' => Carbon::createFromFormat('H:i:s', $appointments->end_time)->format('g:i a'),
+                'day' => $appointments->day,
+                'app_name' =>$appointments->app_name
+            ];
+        }
+        return response($data,200);        
     }
 
     public function deleteApp($id){
