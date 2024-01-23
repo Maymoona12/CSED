@@ -4,6 +4,7 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\GalleryFolderController;
 use App\Http\Controllers\getDoctorController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OfficeHourController;
@@ -45,15 +46,18 @@ Route::post('/delete_account/{id}',[AccountController::class,'deleteAccount']);
 
 Route::post('/office_hour',[OfficeHourController::class,'createOfficeHour']);//doctor
 Route::post('/book_app',[AppointmentController::class,'bookAppointment']);//student
-Route::post('/accept_appointment/{id}',[AppointmentController::class,'acceptAppointment']);//doctor
+Route::post('/reject_appointment/{id}',[AppointmentController::class,'rejectAppointment']);//doctor
 Route::post('/cancel_book_app/{id}',[AppointmentController::class,'cancelBookApp']);//student
 Route::get('/my_appointments',[AppointmentController::class,'myAppointments']);//doctor
 Route::get('/doctor_appointments/{id}',[AppointmentController::class,'doctorAppointments']);//student
 Route::post('/delete_app/{id}',[AppointmentController::class,'deleteApp']);//doctor
 Route::post('/blocked_app/{id}',[AppointmentController::class,'blockedApp']);//doctor
 
-Route::get('/get_notifi',[NotificationController::class,'getNotifi']);
-Route::get('/markNotifi/{id}', [NotificationController::class, 'markNotifi']);
+Route::get('/get_notifi_ann',[NotificationController::class,'getNotifiAnn']);
+Route::get('/get_notifi_app', [NotificationController::class, 'getNotifiApp']);
 
 Route::post('/createAnnouncement',[AnnouncementController::class,'createAnnouncement']);//doctor
 Route::get('/all_announcement',[AnnouncementController::class,'allAnnouncement']);//all
+
+Route::post('/create_folder',[GalleryFolderController::class,'createFolder']);
+Route::post('/add_images/{id}',[GalleryFolderController::class,'createAlbum']);

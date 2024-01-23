@@ -21,7 +21,13 @@ class AnnouncementController extends Controller
         if($user->role == 'doctor' || $user->role == 'admin'){
             $announcement->title=$request->title;
             $announcement->text_ann=$request->text_ann;
-            $announcement->file=$request->file;
+            
+            
+            $file=$request->file('file');
+            $filename=time().'.'.$file->getClientOriginalExtension();
+            $request->file->move('files',$filename);
+            
+            $announcement->file=$filename;
         
             $announcement->created_at = Carbon::now();
             $announcement->updated_at = Carbon::now();
