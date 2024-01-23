@@ -48,12 +48,12 @@ const PostAnnouncement = () => {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("text_ann", text_ann);
-  
+
     // Iterate through the file array and append each file to formData
     file.forEach((fileItem, index) => {
       formData.append(`file${index + 1}`, fileItem);
     });
-  
+
     mutate(formData);
   };
 
@@ -97,6 +97,7 @@ const PostAnnouncement = () => {
             fullWidth
             id="title"
             label="Title"
+            name="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
@@ -117,6 +118,7 @@ const PostAnnouncement = () => {
               minRows={3}
               placeholder="Write your announcement text here..."
               value={text_ann}
+              name="text_ann"
               onChange={(e) => setTextAnn(e.target.value)}
               style={{
                 width: "100%",
@@ -140,6 +142,7 @@ const PostAnnouncement = () => {
                 type="file"
                 id="fileInput"
                 style={{ display: "none" }}
+                name=""
                 onChange={(e) => handleFileChange(e, file.length)}
                 ref={fileInputRef}
                 multiple

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   Typography,
   Button,
@@ -12,8 +12,11 @@ import {
   TableRow,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import useAppointment from "./useAppointment";
 
 const Appointment = () => {
+  const formRef = useRef(null);
+  const { mutate } = useAppointment();
   const [editingAppointment, setEditingAppointment] = useState(null);
   const [schedule, setSchedule] = useState([
     { day: "Sun", appointments: [] },
@@ -28,6 +31,7 @@ const Appointment = () => {
   const [timeDivision, setTimeDivision] = useState(10);
   const [allFieldsFilled, setAllFieldsFilled] = useState(false);
   const navigate = useNavigate();
+  const [tableVisibility, setTableVisibility] = useState(false);
 
   const handleAddAppointment = (
     dayIndex,
@@ -95,25 +99,7 @@ const Appointment = () => {
   };
 
   const handleViewButtonClick = (dayIndex) => {
-    const tableElement = document.getElementById(`table-${dayIndex}`);
-    const isVisible = tableElement.style.display === "table";
-
-    if (isVisible) {
-      tableElement.style.display = "none";
-    } else {
-      tableElement.style.display = "table";
-    }
-
-    console.log(
-      "Appointments for view button:",
-      schedule[dayIndex].appointments
-    );
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("_id");
-    localStorage.removeItem("_myEmail");
-    navigate("/");
+    setTableVisibility(!tableVisibility);
   };
 
   const handleDeleteAppointment = (dayIndex, appIndex) => {
@@ -142,26 +128,50 @@ const Appointment = () => {
     setSchedule(updatedSchedule);
   };
 
-  const handleSaveButtonClick = (dayIndex) => {
+  const handleSaveButtonClick = (dayIndex, event) => {
+    event.preventDefault();
     const tableElement = document.getElementById(`table-${dayIndex}`);
 
-    console.log("tableElement:", tableElement); // Add this line for debugging
-
-    if (tableElement && tableElement.style) {
-      if (
-        tableElement.style.display === "table" &&
-        tableElement.style.visibility === "visible"
-      ) {
-        console.log("Table saved:", schedule[dayIndex].appointments);
-        localStorage.setItem(
-          "BookAppointments",
-          JSON.stringify(schedule[dayIndex].appointments)
-        );
-        navigate("/appointment");
-      }
-
-      console.log("mySchedule:", schedule);
+    if (!tableElement || !tableElement.style) {
+      console.error(
+        `Table element with ID 'table-${dayIndex}' not found or does not have a style property`
+      );
+      return;
     }
+
+    if (
+      tableElement.style.display === "table" &&
+      tableElement.style.visibility === "visible"
+    ) {
+      console.log("Table saved:", schedule[dayIndex].appointments);
+      localStorage.setItem(
+        "BookAppointments",
+        JSON.stringify(schedule[dayIndex].appointments)
+      );
+      navigate("/appointment");
+    }
+
+    console.log("mySchedule:", schedule);
+
+    const formElement = formRef.current;
+
+    if (!formElement) {
+      console.error("Form element is null");
+      return;
+    }
+
+    const formData = new FormData(formElement);
+    const data = {};
+
+    // Convert FormData to a simple object
+    formData.forEach((value, key) => {
+      data[key] = value;
+    });
+
+    // Use the data object for your mutation
+    const { start_time, finish_time, day, app_name, time_devision } = data;
+
+    mutate({ start_time, finish_time, day, app_name, time_devision });
   };
 
   const handleInputChange = () => {
@@ -183,61 +193,61 @@ const Appointment = () => {
         justifyContent: "space-between",
       }}
     >
-      <div>
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            marginLeft: "30px",
-          }}
-        >
-          <h1 style={{ color: "#1f3f66", fontFamily: "Garamond" }}>
-            Add Office Hours
-          </h1>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            margin: "20px",
-            minWidth: "200px",
-            color: "black",
-          }}
-        >
-          <Card
+      <form ref={formRef} onSubmit={(event) => handleSaveButtonClick(0, event)}>
+        <div>
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              marginLeft: "30px",
+            }}
+          >
+            <h1 style={{ color: "#1f3f66", fontFamily: "Garamond" }}>
+              Add Office Hours
+            </h1>
+          </div>
+          <div
             style={{
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              marginLeft: "6px",
-              marginRight: "5px",
-              padding: "10px",
-              minWidth: "395px",
-              height: "230px",
-              border: "1px solid #ddd",
-              borderRadius: "20px",
+              margin: "20px",
+              minWidth: "200px",
               color: "black",
             }}
           >
-            <CardContent>
-              <Typography gutterBottom>
-                <label
-                  htmlFor={`day-0`}
-                  style={{ marginRight: "105px", fontFamily: "sarfi" }}
-                >
-                  {" "}
-                  Day
-                </label>
-                <select id={`day-0`} onChange={handleInputChange}>
-                  <option value="Sun">Sunday</option>
-                  <option value="Mon">Monday</option>
-                  <option value="Tue">Tuesday</option>
-                  <option value="Wed">Wednesday</option>
-                  <option value="Thu">Thursday</option>
-                </select>
-              </Typography>
-              <div className="select__wrapper">
+            <Card
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                marginLeft: "6px",
+                marginRight: "5px",
+                padding: "10px",
+                minWidth: "395px",
+                height: "230px",
+                border: "1px solid #ddd",
+                borderRadius: "20px",
+                color: "black",
+              }}
+            >
+              <CardContent>
+                <Typography gutterBottom>
+                  <label
+                    htmlFor={`day-0`}
+                    style={{ marginRight: "105px", fontFamily: "sarfi" }}
+                  >
+                    Day
+                  </label>
+                  <select id={`day-0`} name="day" onChange={handleInputChange}>
+                    <option value="Sun">Sunday</option>
+                    <option value="Mon">Monday</option>
+                    <option value="Tue">Tuesday</option>
+                    <option value="Wed">Wednesday</option>
+                    <option value="Thu">Thursday</option>
+                  </select>
+                </Typography>
+
                 <label
                   htmlFor={`appointment-0`}
                   style={{ marginRight: "15px" }}
@@ -245,8 +255,9 @@ const Appointment = () => {
                   Appointment Title
                 </label>
                 <input
-                  type="text"
                   id={`appointment-0`}
+                  name="app_name"
+                  type="text"
                   onChange={handleInputChange}
                 />
                 <div className="select__wrapper" style={{ marginTop: "10px" }}>
@@ -257,8 +268,9 @@ const Appointment = () => {
                     Add Start Time
                   </label>
                   <input
-                    type="time"
                     id={`startTime-0`}
+                    name="start_time"
+                    type="time"
                     onChange={handleInputChange}
                   />
                 </div>
@@ -267,8 +279,9 @@ const Appointment = () => {
                     Add End Time
                   </label>
                   <input
-                    type="time"
                     id={`endTime-0`}
+                    name="finish_time"
+                    type="time"
                     onChange={handleInputChange}
                   />
                 </div>
@@ -281,6 +294,7 @@ const Appointment = () => {
                   </label>
                   <select
                     id={`timeDivision`}
+                    name="time_devision"
                     value={timeDivision}
                     onChange={(e) => setTimeDivision(Number(e.target.value))}
                   >
@@ -332,114 +346,113 @@ const Appointment = () => {
                 >
                   View
                 </button>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </div>
         </div>
-      </div>
-      <div>
-        <TableContainer
-          style={{
-            border: "1px solid #ddd",
-            padding: "25px",
-            borderRadius: "10px",
-            margin: "100px 64px",
-            width: "650px",
-            height: "auto",
-            display: "none",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-          id={`table-0`}
-        >
-          <Table style={{ border: "1px solid black" }}>
-            <TableHead>
-              <TableRow>
-                <TableCell style={{ borderBottom: "1px solid black" }}>
-                  Day
-                </TableCell>
-                <TableCell style={{ borderBottom: "1px solid black" }}>
-                  Appointment
-                </TableCell>
-                <TableCell style={{ borderBottom: "1px solid black" }}>
-                  Start Time
-                </TableCell>
-                <TableCell style={{ borderBottom: "1px solid black" }}>
-                  End Time
-                </TableCell>
-                <TableCell style={{ borderBottom: "1px solid black" }}>
-                  <Button
-                    onClick={() => {
-                      handleSaveButtonClick(0);
-                    }}
-                    style={{
-                      color: "black",
-                      border: "1px solid black",
-                      padding: "2px",
-                    }}
-                  >
-                    Save
-                  </Button>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {schedule.map((day, dayIndex) =>
-                day.appointments.map((appointment, appIndex) => (
-                  <TableRow
-                    key={appIndex}
-                    style={{
-                      opacity: appointment.blocked ? 0.5 : 1,
-                      backgroundColor: appointment.blocked
-                        ? "#ffcccc"
-                        : "inherit",
-                    }}
-                  >
-                    <TableCell style={{ borderBottom: "1px solid black" }}>
-                      {day.day}
-                    </TableCell>
-                    <TableCell style={{ borderBottom: "1px solid black" }}>
-                      {appointment.name}
-                    </TableCell>
-                    <TableCell style={{ borderBottom: "1px solid black" }}>
-                      {appointment.startTime}
-                    </TableCell>
-                    <TableCell style={{ borderBottom: "1px solid black" }}>
-                      {appointment.endTime}
-                    </TableCell>
-                    <TableCell style={{ borderBottom: "1px solid black" }}>
-                      <Button
-                        onClick={() =>
-                          handleDeleteAppointment(dayIndex, appIndex)
-                        }
-                      >
-                        Delete
-                      </Button>
-                      {appointment.blocked ? (
+        <div>
+          <TableContainer
+            style={{
+              border: "1px solid #ddd",
+              padding: "25px",
+              borderRadius: "10px",
+              margin: "100px 64px",
+              width: "650px",
+              height: "auto",
+              display: tableVisibility ? "flex" : "none", // Use the state here
+
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+            id={`table-0`}
+          >
+            <Table style={{ border: "1px solid black" }}>
+              <TableHead>
+                <TableRow>
+                  <TableCell style={{ borderBottom: "1px solid black" }}>
+                    Day
+                  </TableCell>
+                  <TableCell style={{ borderBottom: "1px solid black" }}>
+                    Appointment
+                  </TableCell>
+                  <TableCell style={{ borderBottom: "1px solid black" }}>
+                    Start Time
+                  </TableCell>
+                  <TableCell style={{ borderBottom: "1px solid black" }}>
+                    End Time
+                  </TableCell>
+                  <TableCell style={{ borderBottom: "1px solid black" }}>
+                    <Button
+                      onClick={(event) => handleSaveButtonClick(0, event)}
+                      style={{
+                        color: "black",
+                        border: "1px solid black",
+                        padding: "2px",
+                      }}
+                    >
+                      Save
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {schedule.map((day, dayIndex) =>
+                  day.appointments.map((appointment, appIndex) => (
+                    <TableRow
+                      key={appIndex}
+                      style={{
+                        opacity: appointment.blocked ? 0.5 : 1,
+                        backgroundColor: appointment.blocked
+                          ? "#ffcccc"
+                          : "inherit",
+                      }}
+                    >
+                      <TableCell style={{ borderBottom: "1px solid black" }}>
+                        {day.day}
+                      </TableCell>
+                      <TableCell style={{ borderBottom: "1px solid black" }}>
+                        {appointment.name}
+                      </TableCell>
+                      <TableCell style={{ borderBottom: "1px solid black" }}>
+                        {appointment.startTime}
+                      </TableCell>
+                      <TableCell style={{ borderBottom: "1px solid black" }}>
+                        {appointment.endTime}
+                      </TableCell>
+                      <TableCell style={{ borderBottom: "1px solid black" }}>
                         <Button
                           onClick={() =>
-                            handleUnblockAppointment(dayIndex, appIndex)
+                            handleDeleteAppointment(dayIndex, appIndex)
                           }
                         >
-                          Unblock
+                          Delete
                         </Button>
-                      ) : (
-                        <Button
-                          onClick={() =>
-                            handleBlockAppointment(dayIndex, appIndex)
-                          }
-                        >
-                          Block
-                        </Button>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
+                        {appointment.blocked ? (
+                          <Button
+                            onClick={() =>
+                              handleUnblockAppointment(dayIndex, appIndex)
+                            }
+                          >
+                            Unblock
+                          </Button>
+                        ) : (
+                          <Button
+                            onClick={() =>
+                              handleBlockAppointment(dayIndex, appIndex)
+                            }
+                          >
+                            Block
+                          </Button>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
+      </form>
     </div>
   );
 };
