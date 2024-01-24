@@ -88,7 +88,7 @@ function LecturersProfile() {
 
   const handleAddAppointmentClick = () => {
     // Use navigate instead of push
-    navigate("/me/BookAppointment");
+    navigate(`/me/BookAppointment`);
   };
 
   return (
@@ -208,7 +208,7 @@ function LecturersProfile() {
                       </Button>
                       <Button
                         size="small"
-                        onClick={handleAddAppointmentClick}
+                        onClick={() => handleAddAppointmentClick()}
                         style={{ color: "#1f3f66" }}
                       >
                         Book Now

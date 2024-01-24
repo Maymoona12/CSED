@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
-  AppBar,
-  Toolbar,
-  Typography,
   Button,
+  Typography,
   Table,
   TableBody,
   TableCell,
@@ -19,67 +17,17 @@ import {
   Snackbar,
   Alert,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import useBookAppointment from "./useBookAppointmet";
 
 const BookAppointment = () => {
-  const navigate = useNavigate();
-  const [bookedAppointments, setBookedAppointments] = useState([]);
+  const { book } = useBookAppointment();
+  const [bookedAppointments, setBookedAppointments] = useState(book || []);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [reason, setReason] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
-
-  // Retrieve data from localStorage on component mount
-  useEffect(() => {
-    const storedAppointments = localStorage.getItem("BookAppointments");
-    const parsedAppointments = JSON.parse(storedAppointments);
-    setBookedAppointments(parsedAppointments || []);
-  }, []);
-
-  const addSampleData = () => {
-    // Replace this with your actual data or logic
-    const sampleData = [
-      {
-        day: "Monday",
-        name: "office hours",
-        startTime: "09:30 AM",
-        endTime: "10:00 AM",
-      },
-      {
-        day: "Monday",
-        name: "office hours",
-        startTime: "10:00 AM",
-        endTime: "10:30 AM",
-      },
-      {
-        day: "Tuesday",
-        name: "office hours",
-        startTime: "02:00 PM",
-        endTime: "02:20 PM",
-      },
-      {
-        day: "Tuesday",
-        name: "office hours",
-        startTime: "02:20 PM",
-        endTime: "02:40 PM",
-      },
-      {
-        day: "Tuesday",
-        name: "office hours",
-        startTime: "02:40 PM",
-        endTime: "03:00 PM",
-      },
-      // Add more sample data as needed
-    ];
-
-    // Update the state with the sample data
-    setBookedAppointments(sampleData);
-
-    // Save the sample data to localStorage
-    localStorage.setItem("BookAppointments", JSON.stringify(sampleData));
-  };
 
   const handleBookNow = (appointment) => {
     setSelectedAppointment(appointment);
@@ -93,9 +41,6 @@ const BookAppointment = () => {
       setSnackbarOpen(true);
       return;
     }
-
-    // Add your logic for handling the booking confirmation
-    // You can save the booking details or perform any other actions here
     setDialogOpen(false);
     setSelectedAppointment(null);
     setReason(""); // Clear the reason field
@@ -114,7 +59,7 @@ const BookAppointment = () => {
 
   return (
     <div>
-      <div style={{ marginTop: "80px", padding: "20px" }}>
+      <div style={{ marginTop: "10px", padding: "20px" }}>
         <Typography
           variant="h4"
           component="div"
@@ -123,14 +68,7 @@ const BookAppointment = () => {
         >
           Book An Appointments
         </Typography>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={addSampleData}
-          style={{ marginBottom: "10px" }}
-        >
-          Add Sample Data
-        </Button>
+
         <TableContainer
           style={{
             border: "1px solid #ddd",
@@ -155,11 +93,11 @@ const BookAppointment = () => {
             </TableHead>
             <TableBody>
               {bookedAppointments.map((appointment, index) => (
-                <TableRow key={index}>
+                <TableRow key={`${appointment.id}-${index}`}>
                   <TableCell>{appointment.day}</TableCell>
                   <TableCell>{appointment.name}</TableCell>
-                  <TableCell>{appointment.startTime}</TableCell>
-                  <TableCell>{appointment.endTime}</TableCell>
+                  <TableCell>{appointment.start_time}</TableCell>
+                  <TableCell>{appointment.end_time}</TableCell>
                   <TableCell>
                     <IconButton
                       onClick={() => handleBookNow(appointment)}
