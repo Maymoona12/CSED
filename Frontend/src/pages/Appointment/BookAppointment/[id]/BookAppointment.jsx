@@ -42,23 +42,8 @@ const BookAppointment = () => {
     setDialogOpen(true);
   };
 
-  // const getLoggedInStudentId = () => {
-  //   // Assuming you have an authentication context or a user object
-  //   const user = getUser(); // Replace with your actual function to get the current user
-  //   return user ? user.id : null;
-  // };
-
   const handleConfirmBooking = (event, id) => {
     event.preventDefault();
-
-    // const student = getLoggedInStudentId();
-
-    // if (!student) {
-    //   // Handle the case where the student information is not available
-    //   console.error("Student information not available.");
-    //   return;
-    // }
-
     const formElement = formRef.current;
     const formData = new FormData(formElement);
     const data = {};
