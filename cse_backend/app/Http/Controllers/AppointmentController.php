@@ -102,9 +102,26 @@ class AppointmentController extends Controller
     }
 
     
-    public function myAppointments(){ //doctor
+    public function myAppointments(){ //doctor كل المواعيد
         $id=Auth::id();
         $appointments=Appointment::where('doctor_id',$id)->get();
+        $data = array();
+
+        foreach ($appointments as $appointments) {
+            $data[] = [
+                'id' => $appointments->id,
+                'start_time' => Carbon::createFromFormat('H:i:s', $appointments->start_time)->format('g:i a'),
+                'end_time' => Carbon::createFromFormat('H:i:s', $appointments->end_time)->format('g:i a'),
+                'day' => $appointments->day,
+                'app_name' =>$appointments->app_name
+            ];
+        }
+        return response($data,200);        
+    }
+
+    public function myBookedAppointments(){ //doctor
+        $id=Auth::id();
+        $appointments=Appointment::where('doctor_id',$id)->where('status',1)->get();
         $data = array();
 
         foreach ($appointments as $appointments) {
