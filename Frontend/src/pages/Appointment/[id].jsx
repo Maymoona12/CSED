@@ -18,7 +18,7 @@ import {
   Alert,
 } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import useBookAppointment from "./useBookAppointmet";
+import useBookAppointment from "../../useBookAppointmet";
 
 const BookAppointment = () => {
   const { book } = useBookAppointment();
