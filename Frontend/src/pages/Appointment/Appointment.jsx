@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import {
   Typography,
   Button,
+  TextField,
   Card,
   CardContent,
   Table,
@@ -17,7 +18,12 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useNavigate } from "react-router-dom";
 import useAppointment from "./useAppointment";
 import Collapse from "@mui/material/Collapse";
-import { blue, green } from "@mui/material/colors";
+import {
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@mui/material";
 
 const Appointment = () => {
   const formRef = useRef(null);
@@ -30,9 +36,7 @@ const Appointment = () => {
     { day: "Wed", appointments: [] },
     { day: "Thu", appointments: [] },
   ]);
-  const [blockedRows, setBlockedRows] = useState(
-    Array(schedule.length).fill(false)
-  );
+  const [blockedRows, setBlockedRows] = useState(Array(schedule.length).fill(false));
   const [timeDivision, setTimeDivision] = useState(10);
   const [allFieldsFilled, setAllFieldsFilled] = useState(false);
   const [tableVisibility, setTableVisibility] = useState(false);
@@ -99,9 +103,10 @@ const Appointment = () => {
 
     setSchedule(updatedSchedule);
 
-    document.getElementById(`appointment-0`).value = "";
-    document.getElementById(`startTime-0`).value = "";
-    document.getElementById(`endTime-0`).value = "";
+    dayRef.current.value = "";
+    appointmentRef.current.value = "";
+    startTimeRef.current.value = "";
+    endTimeRef.current.value = "";
 
     setAllFieldsFilled(false); // Reset the state
     console.log("Data saved to state:", updatedSchedule);
@@ -167,11 +172,11 @@ const Appointment = () => {
     const startTime = startTimeRef.current.value;
     const endTime = endTimeRef.current.value;
 
-    const areLastFieldsFilled =
-      selectedDay && appointmentName && startTime && endTime;
+    const areLastFieldsFilled = selectedDay && appointmentName && startTime && endTime;
     setAllFieldsFilled(areLastFieldsFilled);
     console.log(startTime);
   };
+
   const handleChange = () => {
     setOpen((prev) => !prev);
   };
@@ -184,13 +189,13 @@ const Appointment = () => {
         justifyContent: "space-between",
       }}
     >
-      <form ref={formRef} onSubmit={(event) => handleSaveButtonClick(0, event)}>
+      <form ref={formRef} onSubmit={(event) => handleSaveButtonClick(event)}>
         <div>
           <div
             style={{
               display: "flex",
               flexWrap: "wrap",
-              marginLeft: "30px",
+              marginLeft: "40px",
             }}
           >
             <h1 style={{ color: "#1f3f66", fontFamily: "Garamond" }}>
@@ -203,6 +208,7 @@ const Appointment = () => {
               flexDirection: "column",
               alignItems: "center",
               margin: "20px",
+              marginTop: "10px",
               minWidth: "200px",
               color: "black",
             }}
@@ -216,56 +222,44 @@ const Appointment = () => {
                 marginRight: "5px",
                 padding: "10px",
                 minWidth: "395px",
-                height: "330px",
+                height: "450px",
                 border: "1px solid #ddd",
                 borderRadius: "20px",
                 color: "black",
               }}
             >
               <CardContent>
-                <Typography gutterBottom>
-                  <label
-                    htmlFor={`day-0`}
-                    style={{ marginRight: "105px", fontFamily: "sarfi" }}
-                  >
-                    Day
-                  </label>
-                  <select
-                    ref={dayRef}
-                    id={`day-0`}
-                    name="day"
-                    onChange={handleInputChange}
-                  >
-                    <option value="Sun">Sunday</option>
-                    <option value="Mon">Monday</option>
-                    <option value="Tue">Tuesday</option>
-                    <option value="Wed">Wednesday</option>
-                    <option value="Thu">Thursday</option>
-                  </select>
+                <Typography gutterBottom marginTop={2}>
+                  <FormControl fullWidth>
+                    <InputLabel id="Daylabel">Day</InputLabel>
+                    <Select
+                      labelId="Daylabel"
+                      label="Day"
+                      ref={dayRef}
+                      id={`day-0`}
+                      name="day"
+                      onChange={handleInputChange}
+                    >
+                      <MenuItem value={"Sun"}>Sunday</MenuItem>
+                      <MenuItem value={"Mon"}>Monday</MenuItem>
+                      <MenuItem value={"Tue"}>Tuesday</MenuItem>
+                      <MenuItem value={"Wed"}>Wednesday</MenuItem>
+                      <MenuItem value={"Thu"}>Thursday</MenuItem>
+                    </Select>
+                  </FormControl>
                 </Typography>
-                <div className="select__wrapper">
-                  <label
-                    htmlFor={`appointment-0`}
-                    style={{ marginRight: "15px" }}
-                  >
-                    Appointment Title
-                  </label>
-                  <input
-                    ref={appointmentRef}
+                <Typography marginTop={2}>
+                  <TextField
+                    fullWidth
                     id={`appointment-0`}
                     name="app_name"
-                    type="text"
+                    label="Appointment Title"
+                    variant="outlined"
                     onChange={handleInputChange}
                   />
-                </div>
-                <div className="select__wrapper" style={{ marginTop: "10px" }}>
-                  <label
-                    htmlFor={`startTime-0`}
-                    style={{ marginRight: "33px" }}
-                  >
-                    Add Start Time
-                  </label>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                </Typography>
+                <Typography marginTop={2}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs} fullWidth>
                     <MobileTimePicker
                       ref={startTimeRef}
                       id={`startTime-0`}
@@ -275,11 +269,8 @@ const Appointment = () => {
                       onChange={handleInputChange}
                     />
                   </LocalizationProvider>
-                </div>
-                <div className="select__wrapper" style={{ marginTop: "10px" }}>
-                  <label htmlFor={`endTime-0`} style={{ marginRight: "37px" }}>
-                    Add End Time
-                  </label>
+                </Typography>
+                <Typography marginTop={2}>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <MobileTimePicker
                       ref={endTimeRef}
@@ -290,30 +281,27 @@ const Appointment = () => {
                       onChange={handleInputChange}
                     />
                   </LocalizationProvider>
-                </div>
-                <div className="select__wrapper" style={{ marginTop: "10px" }}>
-                  <label
-                    htmlFor={`timeDivision`}
-                    style={{ marginRight: "38px" }}
-                  >
-                    Time Division
-                  </label>
-                  <select
-                    id={`timeDivision`}
-                    name="time_devision"
-                    value={timeDivision}
-                    onChange={(e) => setTimeDivision(Number(e.target.value))}
-                  >
-                    <option value={10}>10 minutes</option>
-                    <option value={15}>15 minutes</option>
-                    <option value={20}>20 minutes</option>
-                    <option value={30}>30 minutes</option>
-                  </select>
-                </div>
-
-                <button
+                </Typography>
+                <Typography marginTop={2}>
+                  <FormControl fullWidth>
+                    <InputLabel id="TimeDivision">Time Division</InputLabel>
+                    <Select
+                      labelId="TimeDivisionlable"
+                      label="Time Division"
+                      id={`timeDivision`}
+                      name="time_devision"
+                      onChange={handleInputChange}
+                    >
+                      <MenuItem value={10}>10 minutes</MenuItem>
+                      <MenuItem value={20}>15 minutes</MenuItem>
+                      <MenuItem value={30}>20 minutes</MenuItem>
+                      <MenuItem value={40}>30 minutes</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Typography>
+                <Button
                   onClick={(event) => {
-                    handleSaveButtonClick((0, event));
+                    handleSaveButtonClick(event);
                     // const selectedDay =
                     //   document.getElementById(`day-0`).value;
                     // const appointmentName =
@@ -345,17 +333,10 @@ const Appointment = () => {
                     //   ).style.display = "table";
                     // }
                   }}
-                  style={{ marginTop: "20px", marginLeft: "128px" }}
-                  // disabled={!allFieldsFilled}
+                  style={{ marginTop: "30px", marginLeft: "270px", backgroundColor: "#1f3f66", color: "white" }}
                 >
                   Add
-                </button>
-                <button
-                  onClick={() => handleChange()}
-                  style={{ marginTop: "20px", marginLeft: "20px" }}
-                >
-                  {open ? "Hide Table" : "View"}
-                </button>
+                </Button>
               </CardContent>
             </Card>
           </div>
@@ -392,16 +373,6 @@ const Appointment = () => {
                       End Time
                     </TableCell>
                     <TableCell style={{ borderBottom: "1px solid black" }}>
-                      {/* <Button
-                        onClick={(event) => handleSaveButtonClick(0, event)}
-                        style={{
-                          color: "black",
-                          border: "1px solid black",
-                          padding: "2px",
-                        }}
-                      >
-                        Save
-                      </Button> */}
                     </TableCell>
                   </TableRow>
                 </TableHead>
