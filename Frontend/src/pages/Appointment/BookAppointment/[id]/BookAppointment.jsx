@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   Button,
   Typography,
@@ -20,31 +20,66 @@ import {
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import useBookAppointment from "../../useBookAppointmet";
 import { useParams } from "react-router-dom";
+import useReason from "../../useReason";
+import useAuth from "../../../../hooks/useAuth";
 
 const BookAppointment = () => {
+  const { getUser } = useAuth();
+  const formRef = useRef(null);
   const { id } = useParams();
   const { book } = useBookAppointment(id);
+  const { mutate } = useReason();
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [reason, setReason] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 
-  const handleBookNow = (index) => {
-    setSelectedAppointment(index);
+  const handleBookNow = (id) => {
+    console.log("Selected Appointment ID:", id);
+
+    setSelectedAppointment(id);
     setDialogOpen(true);
   };
 
-  const handleConfirmBooking = () => {
-    // Check if the reason is not empty before confirming the booking
+  // const getLoggedInStudentId = () => {
+  //   // Assuming you have an authentication context or a user object
+  //   const user = getUser(); // Replace with your actual function to get the current user
+  //   return user ? user.id : null;
+  // };
+
+  const handleConfirmBooking = (event, id) => {
+    event.preventDefault();
+
+    // const student = getLoggedInStudentId();
+
+    // if (!student) {
+    //   // Handle the case where the student information is not available
+    //   console.error("Student information not available.");
+    //   return;
+    // }
+
+    const formElement = formRef.current;
+    const formData = new FormData(formElement);
+    const data = {};
+
+    formData.forEach((value, key) => {
+      data[key] = value;
+    });
+
+    const { reason } = data;
+
+    mutate({ reason, appointment_id: id });
+
     if (reason.trim() === "") {
       setAlertMessage("Please provide a reason for the booking.");
       setSnackbarOpen(true);
       return;
     }
+
     setDialogOpen(false);
     setSelectedAppointment(null);
-    setReason(""); // Clear the reason field
+    setReason("");
   };
 
   const handleDialogClose = () => {
@@ -57,6 +92,7 @@ const BookAppointment = () => {
     setSnackbarOpen(false);
     setAlertMessage("");
   };
+
   return (
     <div>
       <div style={{ marginTop: "10px", padding: "20px" }}>
@@ -85,6 +121,7 @@ const BookAppointment = () => {
             <TableHead>
               <TableRow>
                 <TableCell>Day</TableCell>
+                <TableCell>Id</TableCell>
                 <TableCell>Appointment Name</TableCell>
                 <TableCell>Start Time</TableCell>
                 <TableCell>End Time</TableCell>
@@ -95,12 +132,13 @@ const BookAppointment = () => {
               {book?.map((appointment, index) => (
                 <TableRow key={`${appointment.id}-${index}`}>
                   <TableCell>{appointment?.day}</TableCell>
+                  <TableCell>{appointment?.id}</TableCell>
                   <TableCell>{appointment?.app_name}</TableCell>
                   <TableCell>{appointment?.start_time}</TableCell>
                   <TableCell>{appointment?.end_time}</TableCell>
                   <TableCell>
                     <IconButton
-                      onClick={() => handleBookNow(index)}
+                      onClick={() => handleBookNow(appointment.id)}
                       color="primary"
                     >
                       <AddCircleIcon />
@@ -115,32 +153,39 @@ const BookAppointment = () => {
 
       {/* Dialog for booking */}
       <Dialog open={dialogOpen} onClose={handleDialogClose}>
-        <DialogTitle>{`Book Now - ${selectedAppointment?.name}`}</DialogTitle>
-        <DialogContent>
-          <TextField
-            label="Reason"
-            multiline
-            rows={4}
-            fullWidth
-            variant="outlined"
-            value={reason}
-            onChange={(e) => setReason(e.target.value)}
-            placeholder="Enter your reason here.. with section and name of course"
-            required // Adding the required attribute
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleDialogClose} color="primary">
-            Cancel
-          </Button>
-          <Button
-            onClick={handleConfirmBooking}
-            color="primary"
-            variant="contained"
-          >
-            Confirm Booking
-          </Button>
-        </DialogActions>
+        <DialogTitle>{`Book Now`}</DialogTitle>
+        <form
+          ref={formRef}
+          onSubmit={(event) => handleConfirmBooking(event, selectedAppointment)}
+        >
+          <DialogContent>
+            <TextField
+              label="Reason"
+              multiline
+              rows={4}
+              fullWidth
+              variant="outlined"
+              name="reason"
+              onChange={(e) => setReason(e.target.value)}
+              placeholder="Enter your reason here.. with section and name of course"
+              required
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleDialogClose} color="primary">
+              Cancel
+            </Button>
+            <Button
+              onClick={(event) =>
+                handleConfirmBooking(event, selectedAppointment)
+              }
+              color="primary"
+              variant="contained"
+            >
+              Confirm Booking
+            </Button>
+          </DialogActions>
+        </form>
       </Dialog>
 
       {/* Snackbar for displaying alerts */}
