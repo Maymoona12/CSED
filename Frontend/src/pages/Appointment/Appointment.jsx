@@ -35,14 +35,16 @@ const Appointment = () => {
     Array(schedule.length).fill(false)
   );
   const [timeDivision, setTimeDivision] = useState(10);
-  const [allFieldsFilled, setAllFieldsFilled] = useState(false);
-  const [tableVisibility, setTableVisibility] = useState(false);
+  const [isTableVisible, setIsTableVisible] = useState(false); 
   const dayRef = useRef(null);
   const appointmentRef = useRef(null);
   const startTimeRef = useRef(null);
   const endTimeRef = useRef(null);
   const [open, setOpen] = useState(false);
 
+  const handleShowSchedule = () => {
+    setIsTableVisible(!isTableVisible); 
+  };
   const handleAddAppointment = (
     dayIndex,
     appointment,
@@ -110,7 +112,7 @@ const Appointment = () => {
   };
 
   const handleViewButtonClick = () => {
-    setTableVisibility(!tableVisibility);
+    setIsTableVisible(!isTableVisible);
   };
 
   const handleDeleteAppointment = (dayIndex, appIndex) => {
@@ -354,7 +356,7 @@ const Appointment = () => {
                 margin: "100px 64px",
                 width: "650px",
                 height: "auto",
-                display: tableVisibility ? "flex" : "none", // Use the state here
+                display: isTableVisible ? "flex" : "none",
                 flexDirection: "column",
                 alignItems: "center",
               }}
@@ -367,7 +369,7 @@ const Appointment = () => {
                       Day
                     </TableCell>
                     <TableCell style={{ borderBottom: "1px solid black" }}>
-                      Appointment
+                      Appointment Title
                     </TableCell>
                     <TableCell style={{ borderBottom: "1px solid black" }}>
                       Start Time
@@ -439,6 +441,17 @@ const Appointment = () => {
           </div>
         </Collapse>
       </form>
+      <Button
+        onClick={handleShowSchedule}
+        style={{
+          marginTop: "20px",
+          marginLeft: "10px",
+          backgroundColor: "#1f3f66",
+          color: "white",
+        }}
+      >
+        {isTableVisible ? "Hide Schedule" : "Show Schedule"}
+      </Button>
     </div>
   );
 };
