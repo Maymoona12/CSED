@@ -103,7 +103,7 @@ const AppBarLayout = () => {
   };
 
   const handleLogout = () => {
-    localStorage.clear();
+    // localStorage.clear();
     logoutOperation();
     handleCloseUserMenu();
   };
