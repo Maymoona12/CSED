@@ -21,7 +21,7 @@ import { userRole } from "./role";
 import LandingPage from "./pages/general-pages/CoverPage/Landingpage";
 import Snackbar from "./components/Snackbar";
 import Applayout2 from "./components/AppBarLayout/Applaout2";
-import BookAppointment from "./pages/Appointment/BookAppointment/[id]";
+import BookAppointment from "./pages/Appointment/BookAppointment/[id]/BookAppointment";
 
 function App() {
   const { admin, doctor, student } = userRole;
@@ -53,7 +53,10 @@ function App() {
 
           <Route element={<ProtectedRoutes allowedRoles={[student]} />}>
             <Route path="LecturersProfile" element={<LecturerProfiles />} />
-            <Route path="/me/:id" element={<BookAppointment />} />
+            <Route
+              path="/me/BookAppointment/:id"
+              element={<BookAppointment />}
+            />
           </Route>
 
           <Route
