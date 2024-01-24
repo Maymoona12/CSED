@@ -18,12 +18,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useNavigate } from "react-router-dom";
 import useAppointment from "./useAppointment";
 import Collapse from "@mui/material/Collapse";
-import {
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-} from "@mui/material";
+import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 
 const Appointment = () => {
   const formRef = useRef(null);
@@ -36,7 +31,9 @@ const Appointment = () => {
     { day: "Wed", appointments: [] },
     { day: "Thu", appointments: [] },
   ]);
-  const [blockedRows, setBlockedRows] = useState(Array(schedule.length).fill(false));
+  const [blockedRows, setBlockedRows] = useState(
+    Array(schedule.length).fill(false)
+  );
   const [timeDivision, setTimeDivision] = useState(10);
   const [allFieldsFilled, setAllFieldsFilled] = useState(false);
   const [tableVisibility, setTableVisibility] = useState(false);
@@ -172,7 +169,8 @@ const Appointment = () => {
     const startTime = startTimeRef.current.value;
     const endTime = endTimeRef.current.value;
 
-    const areLastFieldsFilled = selectedDay && appointmentName && startTime && endTime;
+    const areLastFieldsFilled =
+      selectedDay && appointmentName && startTime && endTime;
     setAllFieldsFilled(areLastFieldsFilled);
     console.log(startTime);
   };
@@ -221,7 +219,7 @@ const Appointment = () => {
                 marginLeft: "6px",
                 marginRight: "5px",
                 padding: "10px",
-                minWidth: "395px",
+                minWidth: "310px",
                 height: "450px",
                 border: "1px solid #ddd",
                 borderRadius: "20px",
@@ -293,9 +291,9 @@ const Appointment = () => {
                       onChange={handleInputChange}
                     >
                       <MenuItem value={10}>10 minutes</MenuItem>
-                      <MenuItem value={20}>15 minutes</MenuItem>
-                      <MenuItem value={30}>20 minutes</MenuItem>
-                      <MenuItem value={40}>30 minutes</MenuItem>
+                      <MenuItem value={15}>15 minutes</MenuItem>
+                      <MenuItem value={20}>20 minutes</MenuItem>
+                      <MenuItem value={30}>30 minutes</MenuItem>
                     </Select>
                   </FormControl>
                 </Typography>
@@ -333,7 +331,12 @@ const Appointment = () => {
                     //   ).style.display = "table";
                     // }
                   }}
-                  style={{ marginTop: "30px", marginLeft: "270px", backgroundColor: "#1f3f66", color: "white" }}
+                  style={{
+                    marginTop: "30px",
+                    marginLeft: "30%",
+                    backgroundColor: "#1f3f66",
+                    color: "white",
+                  }}
                 >
                   Add
                 </Button>
@@ -372,8 +375,9 @@ const Appointment = () => {
                     <TableCell style={{ borderBottom: "1px solid black" }}>
                       End Time
                     </TableCell>
-                    <TableCell style={{ borderBottom: "1px solid black" }}>
-                    </TableCell>
+                    <TableCell
+                      style={{ borderBottom: "1px solid black" }}
+                    ></TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
