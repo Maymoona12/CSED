@@ -29,8 +29,8 @@ const BookAppointment = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 
-  const handleBookNow = (appointment) => {
-    setSelectedAppointment(appointment);
+  const handleBookNow = (index) => {
+    setSelectedAppointment(index);
     setDialogOpen(true);
   };
 
@@ -92,15 +92,15 @@ const BookAppointment = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {bookedAppointments.map((appointment, index) => (
+              {book?.map((appointment, index) => (
                 <TableRow key={`${appointment.id}-${index}`}>
-                  <TableCell>{appointment.day}</TableCell>
-                  <TableCell>{appointment.name}</TableCell>
-                  <TableCell>{appointment.start_time}</TableCell>
-                  <TableCell>{appointment.end_time}</TableCell>
+                  <TableCell>{book[index]?.day}</TableCell>
+                  <TableCell>{book[index]?.name}</TableCell>
+                  <TableCell>{book[index]?.start_time}</TableCell>
+                  <TableCell>{book[index]?.end_time}</TableCell>
                   <TableCell>
                     <IconButton
-                      onClick={() => handleBookNow(appointment)}
+                      onClick={() => handleBookNow(index)}
                       color="primary"
                     >
                       <AddCircleIcon />

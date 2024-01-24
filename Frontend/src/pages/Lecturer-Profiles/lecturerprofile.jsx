@@ -28,11 +28,12 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import { useNavigate } from "react-router-dom";
 import uselecturersprofile from "./uselecturersprofile";
+import useBookAppointment from "../Appointment/useBookAppointmet";
 
 function LecturersProfile() {
   const defaultTheme = createTheme();
-
   const { doctors } = uselecturersprofile();
+  const { book } = useBookAppointment();
   const [searchQuery, setSearchQuery] = React.useState("");
   const [filteredLecturers, setFilteredLecturers] = React.useState(doctors);
   const [viewMode, setViewMode] = React.useState(null);
@@ -86,9 +87,10 @@ function LecturersProfile() {
 
   const navigate = useNavigate();
 
-  const handleAddAppointmentClick = () => {
-    // Use navigate instead of push
-    navigate(`/me/BookAppointment`);
+  const handleAddAppointmentClick = (index) => {
+    if (doctors[index]?.doctor_id) {
+      navigate(`/me/BookAppointment`);
+    }
   };
 
   return (
@@ -176,7 +178,7 @@ function LecturersProfile() {
                       flexDirection: "column",
                       backgroundColor: matchingIndices.includes(index)
                         ? "#ffcccb"
-                        : "white", // Change color here
+                        : "white",
                     }}
                   >
                     <CardMedia
@@ -208,7 +210,7 @@ function LecturersProfile() {
                       </Button>
                       <Button
                         size="small"
-                        onClick={() => handleAddAppointmentClick()}
+                        onClick={() => handleAddAppointmentClick(index)}
                         style={{ color: "#1f3f66" }}
                       >
                         Book Now
