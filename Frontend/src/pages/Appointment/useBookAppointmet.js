@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { bookedAppointments } from "./indexBookAppointment";
 
-const useBookAppointment = () => {
+const useBookAppointment = (id) => {
   const { data: book } = useQuery({
     queryKey: ["doctors_BookAppointment"],
-    queryFn: bookedAppointments,
+    queryFn: () => bookedAppointments(id),
   });
   return {
     book,
