@@ -87,8 +87,8 @@ function LecturersProfile() {
 
   const navigate = useNavigate();
 
-  const handleAddAppointmentClick = (index,doctor_id) => {
-    navigate(`/me/${doctor_id}`);
+  const handleAddAppointmentClick = (index, doctor_id) => {
+    navigate(`/me/BookAppointment/${doctor_id}`);
   };
 
   return (
@@ -208,7 +208,9 @@ function LecturersProfile() {
                       </Button>
                       <Button
                         size="small"
-                        onClick={() => handleAddAppointmentClick(index,doctor.id)}
+                        onClick={() =>
+                          handleAddAppointmentClick(index, doctor.id)
+                        }
                         style={{ color: "#1f3f66" }}
                       >
                         Book Now
