@@ -22,7 +22,6 @@ import useBookAppointment from "./useBookAppointmet";
 
 const BookAppointment = () => {
   const { book } = useBookAppointment();
-  const [bookedAppointments, setBookedAppointments] = useState(book || []);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [reason, setReason] = useState("");
@@ -85,7 +84,7 @@ const BookAppointment = () => {
             <TableHead>
               <TableRow>
                 <TableCell>Day</TableCell>
-                <TableCell>Appointment</TableCell>
+                <TableCell>Appointment Name</TableCell>
                 <TableCell>Start Time</TableCell>
                 <TableCell>End Time</TableCell>
                 <TableCell>Actions</TableCell>
@@ -95,7 +94,7 @@ const BookAppointment = () => {
               {book?.map((appointment, index) => (
                 <TableRow key={`${appointment.id}-${index}`}>
                   <TableCell>{book[index]?.day}</TableCell>
-                  <TableCell>{book[index]?.name}</TableCell>
+                  <TableCell>{book[index]?.app_name}</TableCell>
                   <TableCell>{book[index]?.start_time}</TableCell>
                   <TableCell>{book[index]?.end_time}</TableCell>
                   <TableCell>
