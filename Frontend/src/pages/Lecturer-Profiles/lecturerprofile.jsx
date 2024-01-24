@@ -88,9 +88,7 @@ function LecturersProfile() {
   const navigate = useNavigate();
 
   const handleAddAppointmentClick = (index) => {
-    if (doctors[index]?.doctor_id) {
-      navigate(`/me/BookAppointment`);
-    }
+    navigate(`/me/BookAppointment`);
   };
 
   return (
