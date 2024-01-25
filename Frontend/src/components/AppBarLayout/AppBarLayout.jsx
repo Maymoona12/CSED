@@ -7,7 +7,6 @@ import {
   Typography,
   Box,
   Stack,
-  Badge,
   Menu,
   IconButton,
   Tooltip,
@@ -26,6 +25,8 @@ import useAuth from "../../hooks/useAuth";
 import useLogout from "../../api/Logout/useLogout";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import Badge from '@mui/material/Badge';
 
 const StyledButton = styled(Button)({
   my: 2,
@@ -41,8 +42,11 @@ const AppBarLayout = () => {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElAnnouncement, setAnchorElAnnouncement] = useState(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogOpenAnnouncement, setDialogOpenAnnouncement] = useState(false);
   const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
+  const [anchorElNotification, setAnchorElNotification] = useState(null);
+  const [dialogOpenNotification, setDialogOpenNotification] = useState(false);
+  const [selectedNotification, setSelectedNotification] = useState(null);
   const [openMenu, setOpenMenu] = useState(false);
   const onSetAnchorElUser = (closedAnchor) => setAnchorElUser(closedAnchor);
   const open = Boolean(anchorElUser);
@@ -69,6 +73,45 @@ const AppBarLayout = () => {
     },
   ];
 
+  const notification = [
+    {
+      title: "An appointment was booked by: Malak ",
+      appointmentname: "meet1 ",
+      day:"sunday",
+      startat:" 11:00 am",
+      endat:" 11:20 am",
+      student:" Malak",
+      reason:" project",
+
+
+    },
+    {
+      title: "An appointment was booked by : Fatima ",
+      appointmentname: "meet2 ",
+      day:"sunday",
+      startat:" 11:20 am",
+      endat:" 11:40 am",
+      student:" Malak",
+      reason:" project",
+
+    },
+  ];
+
+  // const notificationStudent = [
+  //   {
+  //     title: "An appointment was declined by: Dr.Yazeed! ",
+  //     text:" Your apoointment has been declined ! Please book another appointment ."
+
+
+  //   },
+  //   {
+  //     title: "An appointment was declined by: Dr.Nael !",
+  //     text:" Your apoointment has been declined ! Please book another appointment ."
+
+
+  //   },
+  // ];
+
   const settings1 = ["EditProfile", "ChangePassword"];
 
   const settings2 = ["ChangePassword"];
@@ -77,7 +120,6 @@ const AppBarLayout = () => {
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
-    // setOpenMenu(true);
   };
 
   const handleCloseUserMenu = () => {
@@ -94,16 +136,30 @@ const AppBarLayout = () => {
 
   const handleOpenDialogFromTitle = (index) => {
     setSelectedAnnouncement(announcements[index]);
-    setDialogOpen(true);
+    setDialogOpenAnnouncement(true);
     setAnchorElAnnouncement(null);
   };
 
   const handleCloseDialog = () => {
-    setDialogOpen(false);
+    setDialogOpenAnnouncement(false);
+    setDialogOpenNotification(false);
+  };
+
+  const handleOpenNotificationMenu = (event) => {
+    setAnchorElNotification(event.currentTarget);
+  };
+
+  const handleCloseNotificationMenu = () => {
+    setAnchorElNotification(null);
+  };
+
+  const handleOpenDialogFromNotification = (index) => {
+    setSelectedNotification(notification[index]);
+    setDialogOpenNotification(true);
+    setAnchorElNotification(null);
   };
 
   const handleLogout = () => {
-    // localStorage.clear();
     logoutOperation();
     handleCloseUserMenu();
   };
@@ -140,7 +196,7 @@ const AppBarLayout = () => {
                 aria-label="open drawer"
                 onClick={handleDrawerOpen}
                 edge="start"
-                sx={{ mr: 2, ...(open && { display: "none" }) }}
+                sx={{ mr: 2, ...(sideBar && { display: "none" }) }}
               >
                 {sideBar && (
                   <ChevronLeftIcon
@@ -161,13 +217,6 @@ const AppBarLayout = () => {
               >
                 CSED
               </Typography>
-
-              <StyledStack spacing={2} direction="row" sx={{ color: "white" }}>
-                <Badge color="secondary" badgeContent={0}>
-                  <NotificationsIcon />
-                </Badge>
-              </StyledStack>
-
               <Box
                 sx={{
                   flexGrow: 0,
@@ -179,8 +228,51 @@ const AppBarLayout = () => {
                   direction="row"
                   sx={{ color: "white", marginTop: "10px" }}
                 >
+                  <StyledButton onClick={handleOpenNotificationMenu}>
+                  <Badge badgeContent={2} color="primary">
+                    <NotificationsIcon />
+                    </Badge>
+                  </StyledButton>
+                </StyledStack>
+                <Menu
+                  id="menu-Notification"
+                  anchorEl={anchorElNotification}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                  open={Boolean(anchorElNotification)}
+                  onClose={handleCloseNotificationMenu}
+                >
+                  {notification.map((notification, index) => (
+                    <MenuItem
+                      key={notification.title}
+                      onClick={() => handleOpenDialogFromNotification(index)}
+                    >
+                      {notification.title}
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box>
+              <Box
+                sx={{
+                  flexGrow: 0,
+                  display: { xs: "none", md: "flex" },
+                }}
+              >
+                <StyledStack
+                  spacing={2}
+                  direction="row"
+                  sx={{ color: "white", marginTop: "10px" , marginRight:"20px"}}
+                >
                   <StyledButton onClick={handleOpenAnnouncementMenu}>
+                  <Badge badgeContent={3} color="primary">
                     <CampaignIcon />
+                    </Badge>
                   </StyledButton>
                 </StyledStack>
 
@@ -240,7 +332,7 @@ const AppBarLayout = () => {
                   onClick={handleCloseUserMenu}
                   sx={{ mt: 5 }}
                 >
-                  {user?.role == "doctor" &&
+                  {user?.role === "doctor" &&
                     settings1.map((setting) => (
                       <MenuItem key={setting} onClick={handleCloseUserMenu}>
                         <Link
@@ -251,7 +343,7 @@ const AppBarLayout = () => {
                         </Link>
                       </MenuItem>
                     ))}
-                  {user?.role == "student" &&
+                  {user?.role === "student" &&
                     settings2.map((setting) => (
                       <MenuItem key={setting} onClick={handleCloseUserMenu}>
                         <Link
@@ -262,7 +354,7 @@ const AppBarLayout = () => {
                         </Link>
                       </MenuItem>
                     ))}
-                  {user?.role == "admin" &&
+                  {user?.role === "admin" &&
                     settings3.map((setting) => (
                       <MenuItem key={setting} onClick={handleCloseUserMenu}>
                         <Link
@@ -281,7 +373,7 @@ const AppBarLayout = () => {
           </AppBar>
         </div>
         {/* Dialog for displaying announcement details */}
-        <Dialog open={dialogOpen} onClose={handleCloseDialog}>
+        <Dialog open={dialogOpenAnnouncement} onClose={handleCloseDialog}>
           <DialogTitle>
             {selectedAnnouncement && selectedAnnouncement.title}
           </DialogTitle>
@@ -322,6 +414,63 @@ const AppBarLayout = () => {
             <Button onClick={handleCloseDialog}>Close</Button>
           </DialogActions>
         </Dialog>
+        {/* Dialog for displaying Notification details */}
+        <Dialog open={dialogOpenNotification} onClose={handleCloseDialog}>
+          <DialogTitle>
+            {selectedNotification && selectedNotification.title}
+          </DialogTitle>
+          <DialogContent>
+          {selectedNotification && selectedNotification.appointmentname && (
+              <Typography>Appointment Name: {selectedNotification.appointmentname}</Typography>
+            )}
+            {selectedNotification && selectedNotification.day && (
+              <Typography>Day: {selectedNotification.day}</Typography>
+            )}
+            {selectedNotification && selectedNotification.startat && (
+              <Typography>Start At: {selectedNotification.startat}</Typography>
+            )}
+            {selectedNotification && selectedNotification.endat && (
+              <Typography>End AT: {selectedNotification.endat}</Typography>
+            )}
+            {selectedNotification && selectedNotification.reason && (
+              <Typography> Reason: {selectedNotification.reason}</Typography>
+            )}
+          </DialogContent>
+          <DialogActions>
+            <Button
+            style={{
+              marginRight:"190px",
+              marginTop: "5px",
+              fontSize: "16px",
+              backgroundColor:"#da717e",
+              color:"white",
+            }}>
+                Decline 
+                <HighlightOffIcon style={{
+                  marginBottom:"1px",
+                  fontSize: "20px",
+                  marginLeft:"5px",
+                  color:"white"
+                }}
+                />
+            </Button>
+            <Button onClick={handleCloseDialog}>Close</Button>
+          </DialogActions>
+        </Dialog>
+        {/* Dialog for displaying Notification Student details */}
+        {/* <Dialog open={dialogOpenNotification} onClose={handleCloseDialog}>
+          <DialogTitle>
+            {selectedNotification && selectedNotification.title}
+          </DialogTitle>
+          <DialogContent>
+            {selectedNotification && selectedNotification.text && (
+              <Typography Style={{color:"#1f3f66" , fontSize:"16px"}}>{selectedNotification.text}</Typography>
+            )}
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseDialog}>Close</Button>
+          </DialogActions>
+        </Dialog> */}
       </div>
     </>
   );
