@@ -272,7 +272,7 @@ const Appointment = () => {
         >
           <Box
             style={{
-              width: "400px",
+              width: "550px",
               border: "1px solid lightgray",
               height: "auto",
               padding: "30px",
@@ -307,12 +307,26 @@ const Appointment = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {myAppointment?.map((appointment, index) => (
-                      <TableRow key={`${myAppointment.id}-${index}`}>
-                        {/* <TableCell>{appointment[index]?.app_name}</TableCell> */}
-                        <TableCell>{appointment[index]?.day}</TableCell>
-                        <TableCell>{appointment[index]?.start_time}</TableCell>
-                        <TableCell>{appointment[index]?.end_time}</TableCell>
+                    {myAppointment?.map((appointment) => (
+                      <TableRow key={appointment.id}>
+                        <TableCell>{appointment.day}</TableCell>
+                        <TableCell>{appointment.start_time}</TableCell>
+                        <TableCell>{appointment.end_time}</TableCell>
+                        <TableCell>{appointment.end_time}</TableCell>
+                        <TableCell>
+                          <Button onClick={() => handleDeleteAppointment()}>
+                            Delete
+                          </Button>
+                          {appointment.blocked ? (
+                            <Button onClick={() => handleUnblockAppointment()}>
+                              Unblock
+                            </Button>
+                          ) : (
+                            <Button onClick={() => handleBlockAppointment()}>
+                              Block
+                            </Button>
+                          )}
+                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
