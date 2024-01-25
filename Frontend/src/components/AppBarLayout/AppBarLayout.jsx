@@ -28,6 +28,8 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import Badge from '@mui/material/Badge';
 
+
+
 const StyledButton = styled(Button)({
   my: 2,
   color: "white",
@@ -47,6 +49,9 @@ const AppBarLayout = () => {
   const [anchorElNotification, setAnchorElNotification] = useState(null);
   const [dialogOpenNotification, setDialogOpenNotification] = useState(false);
   const [selectedNotification, setSelectedNotification] = useState(null);
+  const [anchorElNotificationStudent, setAnchorElNotificationStudent] = useState(null);
+  const [dialogOpenNotificationStudent, setDialogOpenNotificationStudent] = useState(false);
+  const [selectedNotificationStudent, setSelectedNotificationStudent] = useState(null);
   const [openMenu, setOpenMenu] = useState(false);
   const onSetAnchorElUser = (closedAnchor) => setAnchorElUser(closedAnchor);
   const open = Boolean(anchorElUser);
@@ -97,20 +102,20 @@ const AppBarLayout = () => {
     },
   ];
 
-  // const notificationStudent = [
-  //   {
-  //     title: "An appointment was declined by: Dr.Yazeed! ",
-  //     text:" Your apoointment has been declined ! Please book another appointment ."
+  const notificationStudent = [
+    {
+      title: "An appointment was declined by: Dr.Yazeed! ",
+      text:" Your apoointment has been declined ! Please book another appointment ."
 
 
-  //   },
-  //   {
-  //     title: "An appointment was declined by: Dr.Nael !",
-  //     text:" Your apoointment has been declined ! Please book another appointment ."
+    },
+    {
+      title: "An appointment was declined by: Dr.Nael !",
+      text:" Your apoointment has been declined ! Please book another appointment ."
 
 
-  //   },
-  // ];
+    },
+  ];
 
   const settings1 = ["EditProfile", "ChangePassword"];
 
@@ -143,6 +148,7 @@ const AppBarLayout = () => {
   const handleCloseDialog = () => {
     setDialogOpenAnnouncement(false);
     setDialogOpenNotification(false);
+    setDialogOpenNotificationStudent(false);
   };
 
   const handleOpenNotificationMenu = (event) => {
@@ -157,6 +163,13 @@ const AppBarLayout = () => {
     setSelectedNotification(notification[index]);
     setDialogOpenNotification(true);
     setAnchorElNotification(null);
+  };
+
+  
+  const handleOpenDialogFromNotificationStudent = (index) => {
+    setSelectedNotificationStudent(notificationStudent[index]);
+    setDialogOpenNotificationStudent(true);
+    setAnchorElNotificationStudent(null); // Use setAnchorElNotificationStudent to close the menu
   };
 
   const handleLogout = () => {
@@ -218,46 +231,68 @@ const AppBarLayout = () => {
                 CSED
               </Typography>
               <Box
-                sx={{
-                  flexGrow: 0,
-                  display: { xs: "none", md: "flex" },
-                }}
+        sx={{
+          flexGrow: 0,
+          display: { xs: "none", md: "flex" },
+        }}
+      >
+        <StyledStack
+          spacing={2}
+          direction="row"
+          sx={{ color: "white", marginTop: "10px" }}
+        >
+          {/* Conditionally render notifications based on user role */}
+          {user?.role === "doctor" || user?.role === "admin" ? (
+            <StyledButton onClick={handleOpenNotificationMenu}>
+              <Badge badgeContent={2} color="primary">
+                <NotificationsIcon />
+              </Badge>
+            </StyledButton>
+          ) : (
+            <StyledButton onClick={handleOpenNotificationMenu}>
+              <Badge badgeContent={2} color="primary">
+                <NotificationsIcon />
+              </Badge>
+            </StyledButton>
+          )}
+        </StyledStack>
+        {/* Conditionally render notification menu based on user role */}
+        <Menu
+          id="menu-Notification"
+          anchorEl={anchorElNotification}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "left",
+          }}
+          open={Boolean(anchorElNotification)}
+          onClose={handleCloseNotificationMenu}
+        >
+          {/* Conditionally render notification items based on user role */}
+          {user?.role === "doctor" || user?.role === "admin" ? (
+            notification.map((notification, index) => (
+              <MenuItem
+                key={notification.title}
+                onClick={() => handleOpenDialogFromNotification(index)}
               >
-                <StyledStack
-                  spacing={2}
-                  direction="row"
-                  sx={{ color: "white", marginTop: "10px" }}
-                >
-                  <StyledButton onClick={handleOpenNotificationMenu}>
-                  <Badge badgeContent={2} color="primary">
-                    <NotificationsIcon />
-                    </Badge>
-                  </StyledButton>
-                </StyledStack>
-                <Menu
-                  id="menu-Notification"
-                  anchorEl={anchorElNotification}
-                  anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "left",
-                  }}
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "left",
-                  }}
-                  open={Boolean(anchorElNotification)}
-                  onClose={handleCloseNotificationMenu}
-                >
-                  {notification.map((notification, index) => (
-                    <MenuItem
-                      key={notification.title}
-                      onClick={() => handleOpenDialogFromNotification(index)}
-                    >
-                      {notification.title}
-                    </MenuItem>
-                  ))}
-                </Menu>
-              </Box>
+                {notification.title}
+              </MenuItem>
+            ))
+          ) : (
+            notificationStudent.map((notification, index) => (
+              <MenuItem
+                key={notification.title}
+                onClick={() => handleOpenDialogFromNotificationStudent(index)}
+              >
+                {notification.title}
+              </MenuItem>
+            ))
+          )}
+        </Menu>
+      </Box>
               <Box
                 sx={{
                   flexGrow: 0,
@@ -414,13 +449,14 @@ const AppBarLayout = () => {
             <Button onClick={handleCloseDialog}>Close</Button>
           </DialogActions>
         </Dialog>
-        {/* Dialog for displaying Notification details */}
+        {user?.role === "doctor" || user?.role === "admin" ? (
+        // Dialog for displaying Notification details
         <Dialog open={dialogOpenNotification} onClose={handleCloseDialog}>
           <DialogTitle>
             {selectedNotification && selectedNotification.title}
           </DialogTitle>
           <DialogContent>
-          {selectedNotification && selectedNotification.appointmentname && (
+            {selectedNotification && selectedNotification.appointmentname && (
               <Typography>Appointment Name: {selectedNotification.appointmentname}</Typography>
             )}
             {selectedNotification && selectedNotification.day && (
@@ -438,39 +474,45 @@ const AppBarLayout = () => {
           </DialogContent>
           <DialogActions>
             <Button
-            style={{
-              marginRight:"190px",
-              marginTop: "5px",
-              fontSize: "16px",
-              backgroundColor:"#da717e",
-              color:"white",
-            }}>
-                Decline 
-                <HighlightOffIcon style={{
-                  marginBottom:"1px",
+              style={{
+                marginRight: "190px",
+                marginTop: "5px",
+                fontSize: "16px",
+                backgroundColor: "#da717e",
+                color: "white",
+              }}
+            >
+              Decline
+              <HighlightOffIcon
+                style={{
+                  marginBottom: "1px",
                   fontSize: "20px",
-                  marginLeft:"5px",
-                  color:"white"
+                  marginLeft: "5px",
+                  color: "white",
                 }}
-                />
+              />
             </Button>
             <Button onClick={handleCloseDialog}>Close</Button>
           </DialogActions>
         </Dialog>
-        {/* Dialog for displaying Notification Student details */}
-        {/* <Dialog open={dialogOpenNotification} onClose={handleCloseDialog}>
-          <DialogTitle>
-            {selectedNotification && selectedNotification.title}
-          </DialogTitle>
-          <DialogContent>
-            {selectedNotification && selectedNotification.text && (
-              <Typography Style={{color:"#1f3f66" , fontSize:"16px"}}>{selectedNotification.text}</Typography>
-            )}
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleCloseDialog}>Close</Button>
-          </DialogActions>
-        </Dialog> */}
+      ) : (
+        // Dialog for displaying Notification Student details
+        <Dialog open={dialogOpenNotificationStudent} onClose={handleCloseDialog}>
+        <DialogTitle>
+          {selectedNotificationStudent && selectedNotificationStudent.title}
+        </DialogTitle>
+        <DialogContent>
+          {selectedNotificationStudent && selectedNotificationStudent.text && (
+            <Typography Style={{ color: "#1f3f66", fontSize: "16px" }}>
+              {selectedNotificationStudent.text}
+            </Typography>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog}>Close</Button>
+        </DialogActions>
+      </Dialog>
+      )}
       </div>
     </>
   );
