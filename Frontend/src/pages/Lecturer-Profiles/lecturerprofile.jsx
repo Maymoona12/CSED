@@ -28,12 +28,10 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import { useNavigate } from "react-router-dom";
 import uselecturersprofile from "./uselecturersprofile";
-import useBookAppointment from "../Appointment/useBookAppointmet";
 
 function LecturersProfile() {
   const defaultTheme = createTheme();
   const { doctors } = uselecturersprofile();
-  const { book } = useBookAppointment();
   const [searchQuery, setSearchQuery] = React.useState("");
   const [filteredLecturers, setFilteredLecturers] = React.useState(doctors);
   const [viewMode, setViewMode] = React.useState(null);

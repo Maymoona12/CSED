@@ -49,8 +49,10 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import usebookedAppointment from "./useBookedApp";
 
 const Home = () => {
+  const { booked } = usebookedAppointment();
   const [imageSrc, setImageSrc] = useState();
   const [lectures, setLectures] = useState([
     { id: 1, name: "Thear sammar", assistant: "PROF", phone: "123-456-7890" },
@@ -405,6 +407,7 @@ const Home = () => {
                   padding: "30px",
                   borderRadius: "10px",
                   marginTop: "-40%",
+                  display: "flex",
                 }}
               >
                 <div style={{ color: "black", marginBottom: "20px" }}>
@@ -488,22 +491,19 @@ const Home = () => {
                           <TableCell>Day</TableCell>
                           <TableCell>Start At</TableCell>
                           <TableCell>End At</TableCell>
-                          <TableCell>Student</TableCell>
-                          <TableCell>Reason</TableCell>
+                          {/* <TableCell>Student</TableCell> */}
+                          {/* <TableCell>Reason</TableCell> */}
+                          <TableCell>Appointment Name</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {scheduleData.map((row, index) => (
-                          <TableRow key={index}>
-                            <TableCell>{row.day}</TableCell>
-                            <TableCell>
-                              {row.timeInterval.split(" - ")[0]}
-                            </TableCell>
-                            <TableCell>
-                              {row.timeInterval.split(" - ")[1]}
-                            </TableCell>
-                            <TableCell>{row.student}</TableCell>
-                            <TableCell>{row.reason}</TableCell>
+                        {booked?.map((book, index) => (
+                          <TableRow key={`${book.id}-${index}`}>
+                            <TableCell>{booked[index]?.day}</TableCell>
+                            <TableCell>{booked[index]?.start_time}</TableCell>
+                            <TableCell>{booked[index]?.end_time}</TableCell>
+                            {/* <TableCell>{row.student}</TableCell> */}
+                            <TableCell>{booked[index]?.app_name}</TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
