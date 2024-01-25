@@ -406,7 +406,7 @@ const Home = () => {
                   height: "200px",
                   padding: "30px",
                   borderRadius: "10px",
-                  marginTop: "-40%",
+                  marginTop: "-10px",
                   display: "flex",
                 }}
               >
@@ -460,7 +460,7 @@ const Home = () => {
             >
               <Box
                 style={{
-                  width: "500px",
+                  width: "600px",
                   border: "1px solid lightgray",
                   height: "auto",
                   padding: "30px",
@@ -488,22 +488,23 @@ const Home = () => {
                     <Table>
                       <TableHead>
                         <TableRow>
+                          <TableCell>Appointment Name</TableCell>
                           <TableCell>Day</TableCell>
                           <TableCell>Start At</TableCell>
                           <TableCell>End At</TableCell>
-                          {/* <TableCell>Student</TableCell> */}
-                          {/* <TableCell>Reason</TableCell> */}
-                          <TableCell>Appointment Name</TableCell>
+                          <TableCell>Student</TableCell>
+                          <TableCell>Reason</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
                         {booked?.map((book, index) => (
                           <TableRow key={`${book.id}-${index}`}>
+                            <TableCell>{booked[index]?.app_name}</TableCell>
                             <TableCell>{booked[index]?.day}</TableCell>
                             <TableCell>{booked[index]?.start_time}</TableCell>
                             <TableCell>{booked[index]?.end_time}</TableCell>
-                            {/* <TableCell>{row.student}</TableCell> */}
-                            <TableCell>{booked[index]?.app_name}</TableCell>
+                            <TableCell>{booked[index]?.student_id}</TableCell>
+                            <TableCell>{booked[index]?.reason}</TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
