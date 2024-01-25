@@ -11,6 +11,7 @@ use App\Notifications\RejectNotifi;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use League\CommonMark\Renderer\Block\DocumentRenderer;
 
@@ -45,7 +46,7 @@ class AppointmentController extends Controller
     public function doctorAppointments($id){ //student
         $appointment=Appointment::where('doctor_id',$id)->where('status','0')->get(); // status available
         $data = array();
-//
+        
         foreach ($appointment as $appointment) {
             $data[] = [
                 'id' => $appointment->id,
@@ -56,7 +57,7 @@ class AppointmentController extends Controller
             ];
         }
         
-        return response()->json([$data,200]); 
+        return response()->json($data); 
         
     }
 
@@ -102,9 +103,9 @@ class AppointmentController extends Controller
     }
 
     
-    public function myAppointments(){ //doctor كل المواعيد
+    public function myAppointments(){ //doctor 
         $id=Auth::id();
-        $appointments=Appointment::where('doctor_id',$id)->get();
+        $appointments=Appointment::where('doctor_id',$id)->where('status',0)->get();
         $data = array();
 
         foreach ($appointments as $appointments) {
@@ -119,18 +120,24 @@ class AppointmentController extends Controller
         return response($data,200);        
     }
 
+    
     public function myBookedAppointments(){ //doctor
         $id=Auth::id();
         $appointments=Appointment::where('doctor_id',$id)->where('status',1)->get();
         $data = array();
-
-        foreach ($appointments as $appointments) {
+        
+        $result=DB::table('appointments')->where('appointments.status',1)->join('book_appointments','appointments.id','book_appointments.appointment_id')
+                    ->select('appointments.*','book_appointments.student_id','book_appointments.reason')->get();
+        
+        foreach ($result as $result) {
             $data[] = [
-                'id' => $appointments->id,
-                'start_time' => Carbon::createFromFormat('H:i:s', $appointments->start_time)->format('g:i a'),
-                'end_time' => Carbon::createFromFormat('H:i:s', $appointments->end_time)->format('g:i a'),
-                'day' => $appointments->day,
-                'app_name' =>$appointments->app_name
+                'id' => $result->id,
+                'start_time' => Carbon::createFromFormat('H:i:s', $result->start_time)->format('g:i a'),
+                'end_time' => Carbon::createFromFormat('H:i:s', $result->end_time)->format('g:i a'),
+                'day' => $result->day,
+                'app_name' =>$result->app_name,
+                'student_id' => $result->student_id,
+                'reason' => $result->reason
             ];
         }
         return response($data,200);        

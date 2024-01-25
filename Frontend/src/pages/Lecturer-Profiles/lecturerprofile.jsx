@@ -28,12 +28,10 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import { useNavigate } from "react-router-dom";
 import uselecturersprofile from "./uselecturersprofile";
-import useBookAppointment from "../Appointment/useBookAppointmet";
 
 function LecturersProfile() {
   const defaultTheme = createTheme();
   const { doctors } = uselecturersprofile();
-  const { book } = useBookAppointment();
   const [searchQuery, setSearchQuery] = React.useState("");
   const [filteredLecturers, setFilteredLecturers] = React.useState(doctors);
   const [viewMode, setViewMode] = React.useState(null);
@@ -87,8 +85,8 @@ function LecturersProfile() {
 
   const navigate = useNavigate();
 
-  const handleAddAppointmentClick = (index) => {
-    navigate(`/me/BookAppointment`);
+  const handleAddAppointmentClick = (index, doctor_id) => {
+    navigate(`/me/BookAppointment/${doctor_id}`);
   };
 
   return (
@@ -208,7 +206,9 @@ function LecturersProfile() {
                       </Button>
                       <Button
                         size="small"
-                        onClick={() => handleAddAppointmentClick(index)}
+                        onClick={() =>
+                          handleAddAppointmentClick(index, doctor.id)
+                        }
                         style={{ color: "#1f3f66" }}
                       >
                         Book Now
