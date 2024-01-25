@@ -123,21 +123,23 @@ class AppointmentController extends Controller
     
     public function myBookedAppointments(){ //doctor
         $id=Auth::id();
-        $appointments=Appointment::where('doctor_id',$id)->where('status',1)->get();
         $data = array();
         
-        $result=DB::table('appointments')->where('appointments.status',1)->join('book_appointments','appointments.id','book_appointments.appointment_id')
-                    ->select('appointments.*','book_appointments.student_id','book_appointments.reason')->get();
+        $result=DB::table('appointments')->where('appointments.doctor_id',$id)->where('appointments.status',1)
+                    ->join('book_appointments','appointments.id','book_appointments.appointment_id')
+                    ->join('users','book_appointments.student_id','users.id')
+                    ->select('appointments.*','book_appointments.student_id','book_appointments.reason','users.name')->get();
         
         foreach ($result as $result) {
+            $student_name=User::where('id',$result->student_id)->select('users.name')->get();
             $data[] = [
                 'id' => $result->id,
                 'start_time' => Carbon::createFromFormat('H:i:s', $result->start_time)->format('g:i a'),
                 'end_time' => Carbon::createFromFormat('H:i:s', $result->end_time)->format('g:i a'),
                 'day' => $result->day,
                 'app_name' =>$result->app_name,
-                'student_id' => $result->student_id,
-                'reason' => $result->reason
+                'student_id' => $result->name,
+                'reason' => $result->reason,
             ];
         }
         return response($data,200);        
