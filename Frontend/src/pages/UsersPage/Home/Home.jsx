@@ -492,7 +492,7 @@ const Home = () => {
                           <TableCell>Day</TableCell>
                           <TableCell>Start At</TableCell>
                           <TableCell>End At</TableCell>
-                          <TableCell>Student</TableCell>
+                          {/* <TableCell>Student</TableCell> */}
                           <TableCell>Reason</TableCell>
                         </TableRow>
                       </TableHead>
@@ -503,7 +503,7 @@ const Home = () => {
                             <TableCell>{booked[index]?.day}</TableCell>
                             <TableCell>{booked[index]?.start_time}</TableCell>
                             <TableCell>{booked[index]?.end_time}</TableCell>
-                            <TableCell>{booked[index]?.student_id}</TableCell>
+                            {/* <TableCell>{booked[index]?.student_id}</TableCell> */}
                             <TableCell>{booked[index]?.reason}</TableCell>
                           </TableRow>
                         ))}
