@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import {
+  Box,
   Typography,
   Button,
   TextField,
@@ -11,6 +12,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Paper,
 } from "@mui/material";
 import { MobileTimePicker } from "@mui/x-date-pickers/MobileTimePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -19,10 +21,12 @@ import { useNavigate } from "react-router-dom";
 import useAppointment from "./useAppointment";
 import Collapse from "@mui/material/Collapse";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import useMyAppo from "./useMyAppo";
 
 const Appointment = () => {
   const formRef = useRef(null);
   const { mutate } = useAppointment();
+  const { myAppointment } = useMyAppo();
   const [schedule, setSchedule] = useState([
     { day: "Sun", appointments: [] },
     { day: "Mon", appointments: [] },
@@ -257,104 +261,71 @@ const Appointment = () => {
             width: "200px",
           }}
         >
-          {isTableVisible ? "Hide Schedule" : "Show Schedule"}
+          Show Schedule
         </Button>
+        <div
+          style={{
+            gap: "40px",
+            padding: "30px",
+            marginTop: "10px",
+          }}
+        >
+          <Box
+            style={{
+              width: "400px",
+              border: "1px solid lightgray",
+              height: "auto",
+              padding: "30px",
+              borderRadius: "10px",
+              marginTop: "20px",
+              marginLeft: "200px",
+            }}
+          >
+            <Typography
+              variant="h5"
+              style={{
+                marginBottom: "20px",
+                color: "black",
+                fontFamily: "serif",
+              }}
+            >
+              Schedule Data
+            </Typography>
+            <div
+              style={{
+                maxWidth: "auto",
+              }}
+            >
+              <TableContainer component={Paper}>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      {/* <TableCell>Appointment Name</TableCell> */}
+                      <TableCell>Day</TableCell>
+                      <TableCell>Start At</TableCell>
+                      <TableCell>End At</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {myAppointment?.map((appointment, index) => (
+                      <TableRow key={`${myAppointment.id}-${index}`}>
+                        {/* <TableCell>{appointment[index]?.app_name}</TableCell> */}
+                        <TableCell>{appointment[index]?.day}</TableCell>
+                        <TableCell>{appointment[index]?.start_time}</TableCell>
+                        <TableCell>{appointment[index]?.end_time}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </div>
+          </Box>
+        </div>
       </div>
 
-      <Collapse in={open}>
-        <div>
-          <TableContainer
-            style={{
-              border: "1px solid #ddd",
-              padding: "25px",
-              borderRadius: "10px",
-              margin: "100px 64px",
-              width: "650px",
-              height: "auto",
-              display: isTableVisible ? "flex" : "none",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-            id={`table-0`}
-          >
-            <Table style={{ border: "1px solid black" }}>
-              <TableHead>
-                <TableRow>
-                  <TableCell style={{ borderBottom: "1px solid black" }}>
-                    Day
-                  </TableCell>
-                  <TableCell style={{ borderBottom: "1px solid black" }}>
-                    Appointment Title
-                  </TableCell>
-                  <TableCell style={{ borderBottom: "1px solid black" }}>
-                    Start Time
-                  </TableCell>
-                  <TableCell style={{ borderBottom: "1px solid black" }}>
-                    End Time
-                  </TableCell>
-                  <TableCell
-                    style={{ borderBottom: "1px solid black" }}
-                  ></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {schedule.map((day, dayIndex) =>
-                  day.appointments.map((appointment, appIndex) => (
-                    <TableRow
-                      key={appIndex}
-                      style={{
-                        opacity: appointment.blocked ? 0.5 : 1,
-                        backgroundColor: appointment.blocked
-                          ? "#ffcccc"
-                          : "inherit",
-                      }}
-                    >
-                      <TableCell style={{ borderBottom: "1px solid black" }}>
-                        {day.day}
-                      </TableCell>
-                      <TableCell style={{ borderBottom: "1px solid black" }}>
-                        {appointment.name}
-                      </TableCell>
-                      <TableCell style={{ borderBottom: "1px solid black" }}>
-                        {appointment.startTime}
-                      </TableCell>
-                      <TableCell style={{ borderBottom: "1px solid black" }}>
-                        {appointment.endTime}
-                      </TableCell>
-                      <TableCell style={{ borderBottom: "1px solid black" }}>
-                        <Button
-                          onClick={() =>
-                            handleDeleteAppointment(dayIndex, appIndex)
-                          }
-                        >
-                          Delete
-                        </Button>
-                        {appointment.blocked ? (
-                          <Button
-                            onClick={() =>
-                              handleUnblockAppointment(dayIndex, appIndex)
-                            }
-                          >
-                            Unblock
-                          </Button>
-                        ) : (
-                          <Button
-                            onClick={() =>
-                              handleBlockAppointment(dayIndex, appIndex)
-                            }
-                          >
-                            Block
-                          </Button>
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </div>
-      </Collapse>
+      {/* <Collapse in={open}> */}
+
+      {/* </Collapse> */}
     </div>
   );
 };
