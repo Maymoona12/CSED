@@ -82,17 +82,21 @@ class AppointmentController extends Controller
     }
     
      
-    public function rejectAppointment($id){ //doctor
+    public function rejectAppointment(Request $request){ //doctor
+        $id=$request->id;
         $user=Auth::user();
         if($user->role == 'doctor' || $user->role == 'admin'){
+           // Appointments : status 0->available , 1-buzy , 2->blocked 
+            $appointment=Appointment::find($id); 
+            $appointment->status=0; // available
+            $appointment->save();
+            
+            
             // Book Appointments : status 0->sent, 1->reject, 2->canceled
-            $book_appointment=bookAppointment::find($id);
+            $book_appointment=BookAppointment::where('appointment_id',$id)->first();
             $book_appointment->status=1; // reject
             $book_appointment->save();
-            // Appointments : status 0->available , 1-buzy , 2->blocked 
-            $appointment=Appointment::find($book_appointment->appointment_id); 
-            $appointment->status=0; // available
-            $appointment->save(); 
+             
         }
         $users=User::where('id',$book_appointment->student_id)->get();
         Notification::send($users,new RejectNotifi($user->id,$user->name,$appointment->id,$appointment->start_time));
@@ -105,7 +109,7 @@ class AppointmentController extends Controller
     
     public function myAppointments(){ //doctor 
         $id=Auth::id();
-        $appointments=Appointment::where('doctor_id',$id)->where('status',0)->get();
+        $appointments=Appointment::where('doctor_id',$id)->where('status',0)->orWhere('status',2)->get();
         $data = array();
 
         foreach ($appointments as $appointments) {
@@ -138,24 +142,34 @@ class AppointmentController extends Controller
                 'end_time' => Carbon::createFromFormat('H:i:s', $result->end_time)->format('g:i a'),
                 'day' => $result->day,
                 'app_name' =>$result->app_name,
-                'student_id' => $result->name,
+                'student_name' => $result->name,
                 'reason' => $result->reason,
             ];
         }
         return response($data,200);        
     }
 
-    public function deleteApp($id){
+    public function deleteApp(Request $request){
+        $id=$request->id;
         $appointment=Appointment::find($id);
         $appointment->delete();
         return response()->json(['deleted',200]);        
         
     }
 
-    public function blockedApp($id){
+    public function blockedApp(Request $request){
+        $id=$request->id;
         $appointment=Appointment::find($id);
         $appointment->status=2;
         $appointment->save();
         return response()->json(['blocked',200]);
+    }
+
+    public function unblockedApp(Request $request){
+        $id=$request->id;
+        $appointment=Appointment::find($id);
+        $appointment->status=0;
+        $appointment->save();
+        return response()->json(['unblocked',200]);
     }
 }
