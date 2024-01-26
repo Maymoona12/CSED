@@ -325,6 +325,7 @@ const Appointment = () => {
                         <TableCell>{appointment.start_time}</TableCell>
                         <TableCell>{appointment.end_time}</TableCell>
 
+
                         <TableCell>
                           <Button
                             onClick={(event) =>
@@ -334,10 +335,18 @@ const Appointment = () => {
                             Delete
                           </Button>
                           {/* 
+
+                        <TableCell>{appointment.end_time}</TableCell>
+                        <TableCell>
+                          <Button onClick={() => handleDeleteAppointment()}>
+                            Delete
+                          </Button>
+
                           {appointment.blocked ? (
                             <Button onClick={() => handleUnblockAppointment()}>
                               Unblock
                             </Button>
+
                           ) : ( */}
                           <Button
                             onClick={(event) =>
@@ -354,6 +363,8 @@ const Appointment = () => {
                             Unblock
                           </Button>
                           {/* )} */}
+
+
                         </TableCell>
                       </TableRow>
                     ))}
