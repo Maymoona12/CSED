@@ -27,6 +27,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import Badge from '@mui/material/Badge';
+import useNotification from "./useNotification"
 
 
 
@@ -58,6 +59,7 @@ const AppBarLayout = () => {
   const { logoutOperation } = useLogout();
   const { getUser, sideBar, setSideBar } = useAuth();
   const user = getUser();
+  const {notifications}= useNotification();
 
   const announcements = [
     {
@@ -181,6 +183,8 @@ const AppBarLayout = () => {
     setSideBar((previous) => !previous);
   };
 
+  console.log(notifications);
+
   return (
     <>
       <div
@@ -273,24 +277,25 @@ const AppBarLayout = () => {
         >
           {/* Conditionally render notification items based on user role */}
           {user?.role === "doctor" || user?.role === "admin" ? (
-            notification.map((notification, index) => (
+            notifications?.map((index) => {
               <MenuItem
-                key={notification.title}
+                key={notifications[0][index]?.notifiable_id}
                 onClick={() => handleOpenDialogFromNotification(index)}
               >
-                {notification.title}
+               `An appointment was booked by: {notifications[index]?.data?.doctor_name}` 
               </MenuItem>
-            ))
+            })
           ) : (
-            notificationStudent.map((notification, index) => (
+            notifications[0]?.map((notifi, index) => {
               <MenuItem
-                key={notification.title}
+
+                key={index}
                 onClick={() => handleOpenDialogFromNotificationStudent(index)}
               >
-                {notification.title}
+                 `An appointment was booked by: {notifications[index]?.data?.doctor_name}` 
               </MenuItem>
-            ))
-          )}
+            })
+       )}
         </Menu>
       </Box>
               <Box
