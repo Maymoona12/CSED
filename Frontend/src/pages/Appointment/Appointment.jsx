@@ -22,11 +22,18 @@ import useAppointment from "./useAppointment";
 import Collapse from "@mui/material/Collapse";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import useMyAppo from "./useMyAppo";
+import useBlock from "./Block&Delete/useBlock";
+import useDelete from "./Block&Delete/useDelete";
+import useUnBlock from "./Block&Delete/useUnBlock";
 
 const Appointment = () => {
   const formRef = useRef(null);
   const { mutate } = useAppointment();
   const { myAppointment } = useMyAppo();
+  const { mutate: block } = useBlock();
+  const { mutate: deleted } = useDelete();
+  const { mutate: unblock } = useUnBlock();
+
   const [schedule, setSchedule] = useState([
     { day: "Sun", appointments: [] },
     { day: "Mon", appointments: [] },
@@ -48,30 +55,35 @@ const Appointment = () => {
     setIsTableVisible(!isTableVisible);
   };
 
-  const handleDeleteAppointment = (dayIndex, appIndex) => {
-    const updatedSchedule = [...schedule];
-    updatedSchedule[dayIndex].appointments.splice(appIndex, 1);
-    setSchedule(updatedSchedule);
+  const handleDeleteAppointment = (event, id) => {
+    // const updatedSchedule = [...schedule];
+    // updatedSchedule[dayIndex].appointments.splice(appIndex, 1);
+    // setSchedule(updatedSchedule);
+    event.preventDefault();
+    deleted({ id });
   };
 
-  const handleBlockAppointment = (dayIndex, appIndex) => {
-    const updatedBlockedRows = [...blockedRows];
-    updatedBlockedRows[dayIndex] = true;
-    setBlockedRows(updatedBlockedRows);
+  const handleBlockAppointment = (event, id) => {
+    event.preventDefault();
+    block({ id });
 
-    const updatedSchedule = [...schedule];
-    updatedSchedule[dayIndex].appointments[appIndex].blocked = true;
-    setSchedule(updatedSchedule);
+    // const updatedBlockedRows = [...blockedRows];
+    // updatedBlockedRows[id] = true;
+    // setBlockedRows(updatedBlockedRows);
+
+    // const updatedSchedule = [...schedule];
+    // updatedSchedule[id].appointments[appIndex].blocked = true;
+    // setSchedule(updatedSchedule);
   };
 
-  const handleUnblockAppointment = (dayIndex, appIndex) => {
-    const updatedBlockedRows = [...blockedRows];
-    updatedBlockedRows[dayIndex] = false;
-    setBlockedRows(updatedBlockedRows);
-
-    const updatedSchedule = [...schedule];
-    updatedSchedule[dayIndex].appointments[appIndex].blocked = false;
-    setSchedule(updatedSchedule);
+  const handleUnblockAppointment = (event, id) => {
+    // const updatedBlockedRows = [...blockedRows];
+    // updatedBlockedRows[dayIndex] = false;
+    // setBlockedRows(updatedBlockedRows);
+    // const updatedSchedule = [...schedule];
+    // updatedSchedule[dayIndex].appointments[appIndex].blocked = false;
+    // setSchedule(updatedSchedule);
+    unblock({ id });
   };
 
   const handleSaveButtonClick = (event) => {
@@ -140,7 +152,7 @@ const Appointment = () => {
             flexDirection: "column",
             alignItems: "center",
             margin: "20px",
-            marginTop: "10px",
+            marginTop: "30px",
             minWidth: "200px",
             color: "black",
           }}
@@ -277,8 +289,8 @@ const Appointment = () => {
               height: "auto",
               padding: "30px",
               borderRadius: "10px",
-              marginTop: "20px",
-              marginLeft: "200px",
+              marginTop: "5px",
+              marginLeft: "100px",
             }}
           >
             <Typography
@@ -312,20 +324,47 @@ const Appointment = () => {
                         <TableCell>{appointment.day}</TableCell>
                         <TableCell>{appointment.start_time}</TableCell>
                         <TableCell>{appointment.end_time}</TableCell>
+
+
+                        <TableCell>
+                          <Button
+                            onClick={(event) =>
+                              handleDeleteAppointment(event, appointment.id)
+                            }
+                          >
+                            Delete
+                          </Button>
+                          {/* 
+
                         <TableCell>{appointment.end_time}</TableCell>
                         <TableCell>
                           <Button onClick={() => handleDeleteAppointment()}>
                             Delete
                           </Button>
+
                           {appointment.blocked ? (
                             <Button onClick={() => handleUnblockAppointment()}>
                               Unblock
                             </Button>
-                          ) : (
-                            <Button onClick={() => handleBlockAppointment()}>
-                              Block
-                            </Button>
-                          )}
+
+                          ) : ( */}
+                          <Button
+                            onClick={(event) =>
+                              handleBlockAppointment(event, appointment.id)
+                            }
+                          >
+                            Block
+                          </Button>
+                          <Button
+                            onClick={(event) =>
+                              handleUnblockAppointment(event, appointment.id)
+                            }
+                          >
+                            Unblock
+                          </Button>
+                          {/* )} */}
+
+
                         </TableCell>
                       </TableRow>
                     ))}

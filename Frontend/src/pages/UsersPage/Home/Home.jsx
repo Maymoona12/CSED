@@ -50,9 +50,11 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import usebookedAppointment from "./useBookedApp";
+import useReject from "./useReject";
 
 const Home = () => {
   const { booked } = usebookedAppointment();
+  const { mutate: reject } = useReject();
   const [imageSrc, setImageSrc] = useState();
   const [lectures, setLectures] = useState([
     { id: 1, name: "Thear sammar", assistant: "PROF", phone: "123-456-7890" },
@@ -209,6 +211,11 @@ const Home = () => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handelRejectApp = (event, id) => {
+    event.preventDefault();
+    reject({ id });
   };
 
   return (
@@ -454,19 +461,19 @@ const Home = () => {
                 display: "flex",
                 flexWrap: "wrap",
                 gap: "40px",
-                padding: "30px",
+                padding: "15px",
                 marginTop: "10px",
               }}
             >
               <Box
                 style={{
-                  width: "600px",
+                  width: "650px",
                   border: "1px solid lightgray",
                   height: "auto",
                   padding: "30px",
                   borderRadius: "10px",
                   marginTop: "10px",
-                  marginLeft: "10px",
+                  marginLeft: "5px",
                 }}
               >
                 <Typography
@@ -492,7 +499,8 @@ const Home = () => {
                           <TableCell>Day</TableCell>
                           <TableCell>Start At</TableCell>
                           <TableCell>End At</TableCell>
-                          {/* <TableCell>Student</TableCell> */}
+                          <TableCell>Student Name</TableCell>
+
                           <TableCell>Reason</TableCell>
                         </TableRow>
                       </TableHead>
@@ -503,8 +511,20 @@ const Home = () => {
                             <TableCell>{booked[index]?.day}</TableCell>
                             <TableCell>{booked[index]?.start_time}</TableCell>
                             <TableCell>{booked[index]?.end_time}</TableCell>
-                            {/* <TableCell>{booked[index]?.student_id}</TableCell> */}
-                            <TableCell>{booked[index]?.reason}</TableCell>
+
+                            <TableCell>{booked[index]?.student_name}</TableCell>
+                          <TableCell>{booked[index]?.reason}</TableCell>
+
+                            <TableCell>
+                              <Button
+                                style={{ color: "#1f3f66" }}
+                                onClick={(event) =>
+                                  handelRejectApp(event, book.id)
+                                }
+                              >
+                                <ClearIcon />
+                              </Button>
+                            </TableCell>
                           </TableRow>
                         ))}
                       </TableBody>

@@ -131,7 +131,7 @@ const PostAnnouncement = () => {
                 style={{ display: "none" }}
                 onChange={handleFileChange}
                 ref={fileInputRef}
-                multiple
+                // multiple
               />
               <Button
                 variant="contained"
