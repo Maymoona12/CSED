@@ -1,28 +1,33 @@
 //folderspage:
 import React, { useState } from "react";
 import FilterRoundedIcon from "@mui/icons-material/FilterRounded";
-import { useNavigate } from "react-router-dom";
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import Button from "@mui/material/Button";
 
 const FoldersPage = ({
   folders,
+  selectedFolder,
   handleFolderClick,
   handlePhotoClick,
   setLightboxOpen,
   setSelectedPhoto,
 }) => {
-  const [selectedFolder, setSelectedFolder] = useState(null);
   const navigate = useNavigate();
+
+  const { getUser } = useAuth();
+  const user = getUser();
 
   const handleClick = (folderId, callback) => {
     handleFolderClick(folderId);
-    setSelectedFolder(folderId);
 
     // Navigate to photospage only if a folder is selected
     if (folderId) {
       if (callback && typeof callback === "function") {
         callback(); // Set lightboxOpen to true
       }
-      navigate(`/PhotosPage/${folderId}`);
+      navigate(`/photospage/${folderId}`);
     }
   };
 
@@ -33,8 +38,6 @@ const FoldersPage = ({
           display: "flex",
           flexWrap: "wrap",
           marginBottom: "10px",
-          marginTop: "0px",
-          paddingTop: "60px",
         }}
       >
         <h1
@@ -47,6 +50,29 @@ const FoldersPage = ({
           Gallery Page
         </h1>
       </div>
+             {/* Add Album button */}
+             {user?.role === "doctor" || user?.role === "admin" ? (
+          <div> 
+            <Link to="/me/AddAlbum" >
+            <Button style={{ padding:"3px 20px" , 
+            backgroundColor:"gray" ,
+            color:"white", 
+            alignItems: "center ",
+            marginLeft:"1%", marginTop:"1%"}}>
+            
+            
+            <AddPhotoAlternateIcon
+                style={{
+                  color: "white",
+                  margin:"3px",
+                  fontSize: 30,
+                }}
+              />
+              Add Album
+            </Button>
+            </Link>
+          </div>
+        ) : null}
       {/* Render folders */}
       <div style={{ display: "flex", flexWrap: "wrap", marginTop: "100px" }}>
         {folders &&
@@ -58,7 +84,6 @@ const FoldersPage = ({
                 flexDirection: "column",
                 alignItems: "center",
                 marginRight: "100px",
-                marginBottom: "10px",
                 marginLeft: "10px",
                 textAlign: "center",
                 color: "black",

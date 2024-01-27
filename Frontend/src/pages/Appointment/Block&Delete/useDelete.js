@@ -11,14 +11,14 @@ const useDelete = () => {
       console.log(data.data);
       showSnackbar({
         severity: "success",
-        message: "Successfully change your details",
+        message: "Successfully Delete the appointment",
       });
     },
     onError: (error) => {
       console.log(error.message);
       showSnackbar({
         severity: "error",
-        message: "Failed to change your details",
+        message: "Failed to Delete the appointment",
       });
     },
   });
