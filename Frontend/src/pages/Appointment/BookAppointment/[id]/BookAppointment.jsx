@@ -80,12 +80,12 @@ const BookAppointment = () => {
 
   return (
     <div>
-      <div style={{ marginTop: "10px", padding: "20px" }}>
+      <div style={{  padding: "20px"  }}>
         <Typography
           variant="h4"
           component="div"
           gutterBottom
-          style={{ fontFamily: "Garamond" }}
+          style={{  color: "#1f3f66", fontFamily: "Arial" , marginBottom:"30px" }}
         >
           Book An Appointments
         </Typography>

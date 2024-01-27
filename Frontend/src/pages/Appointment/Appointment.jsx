@@ -17,9 +17,7 @@ import {
 import { MobileTimePicker } from "@mui/x-date-pickers/MobileTimePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { useNavigate } from "react-router-dom";
 import useAppointment from "./useAppointment";
-import Collapse from "@mui/material/Collapse";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import useMyAppo from "./useMyAppo";
 import useBlock from "./Block&Delete/useBlock";
@@ -34,6 +32,7 @@ const Appointment = () => {
   const { mutate: deleted } = useDelete();
   const { mutate: unblock } = useUnBlock();
 
+
   const [schedule, setSchedule] = useState([
     { day: "Sun", appointments: [] },
     { day: "Mon", appointments: [] },
@@ -41,15 +40,16 @@ const Appointment = () => {
     { day: "Wed", appointments: [] },
     { day: "Thu", appointments: [] },
   ]);
-  const [blockedRows, setBlockedRows] = useState(
-    Array(schedule.length).fill(false)
-  );
+ 
   const [isTableVisible, setIsTableVisible] = useState(false);
   const dayRef = useRef(null);
   const appointmentRef = useRef(null);
   const startTimeRef = useRef(null);
   const endTimeRef = useRef(null);
   const [open, setOpen] = useState(false);
+
+  const [blockedRows, setBlockedRows] = useState([]);
+
 
   const handleShowSchedule = () => {
     setIsTableVisible(!isTableVisible);
@@ -66,25 +66,20 @@ const Appointment = () => {
   const handleBlockAppointment = (event, id) => {
     event.preventDefault();
     block({ id });
-
-    // const updatedBlockedRows = [...blockedRows];
-    // updatedBlockedRows[id] = true;
-    // setBlockedRows(updatedBlockedRows);
-
-    // const updatedSchedule = [...schedule];
-    // updatedSchedule[id].appointments[appIndex].blocked = true;
-    // setSchedule(updatedSchedule);
+  
+    // Add the index of the blocked row to the state
+    setBlockedRows((prevBlockedRows) => [...prevBlockedRows, id]);
   };
+  
 
   const handleUnblockAppointment = (event, id) => {
-    // const updatedBlockedRows = [...blockedRows];
-    // updatedBlockedRows[dayIndex] = false;
-    // setBlockedRows(updatedBlockedRows);
-    // const updatedSchedule = [...schedule];
-    // updatedSchedule[dayIndex].appointments[appIndex].blocked = false;
-    // setSchedule(updatedSchedule);
+    event.preventDefault();
     unblock({ id });
+  
+    // Remove the index of the unblocked row from the state
+    setBlockedRows((prevBlockedRows) => prevBlockedRows.filter((rowIndex) => rowIndex !== id));
   };
+  
 
   const handleSaveButtonClick = (event) => {
     event.preventDefault();
@@ -262,19 +257,19 @@ const Appointment = () => {
       </form>
       <div>
         <Button
-          onClick={handleShowSchedule}
-          onChange={handleChange}
-          style={{
-            marginTop: "20px",
-            marginLeft: "500px",
-            backgroundColor: "#1f3f66",
-            color: "white",
-            padding: "10px",
-            width: "200px",
-          }}
-        >
-          Show Schedule
-        </Button>
+         onClick={handleShowSchedule}
+        style={{
+          marginTop: "20px",
+         marginLeft: "500px",
+         backgroundColor: isTableVisible ? "gray" : "#1f3f66",
+         color: "white",
+         padding: "10px",
+         width: "200px",
+            }}
+>
+       {isTableVisible ? "Hide Table" : "Show Table"}
+     </Button>
+        {isTableVisible && (
         <div
           style={{
             gap: "40px",
@@ -319,66 +314,45 @@ const Appointment = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {myAppointment?.map((appointment) => (
-                      <TableRow key={appointment.id}>
+                     {myAppointment?.map((appointment) => (
+                      <TableRow key={appointment.id} style={{ opacity: blockedRows.includes(appointment.id) ? 0.5 : 1 }}>
                         <TableCell>{appointment.day}</TableCell>
                         <TableCell>{appointment.start_time}</TableCell>
                         <TableCell>{appointment.end_time}</TableCell>
 
 
                         <TableCell>
-                          <Button
-                            onClick={(event) =>
-                              handleDeleteAppointment(event, appointment.id)
-                            }
-                          >
-                            Delete
-                          </Button>
-                          {/* 
-
-                        <TableCell>{appointment.end_time}</TableCell>
-                        <TableCell>
-                          <Button onClick={() => handleDeleteAppointment()}>
-                            Delete
-                          </Button>
-
-                          {appointment.blocked ? (
-                            <Button onClick={() => handleUnblockAppointment()}>
-                              Unblock
-                            </Button>
-
-                          ) : ( */}
-                          <Button
-                            onClick={(event) =>
-                              handleBlockAppointment(event, appointment.id)
-                            }
-                          >
-                            Block
-                          </Button>
-                          <Button
-                            onClick={(event) =>
-                              handleUnblockAppointment(event, appointment.id)
-                            }
-                          >
-                            Unblock
-                          </Button>
-                          {/* )} */}
-
-
-                        </TableCell>
-                      </TableRow>
-                    ))}
+      <Button
+       style={{color:"red"}}
+        onClick={(event) => handleDeleteAppointment(event, appointment.id)}
+      >
+        Delete
+      </Button>
+      <Button
+      style={{color:"black"}}
+        onClick={(event) => handleBlockAppointment(event, appointment.id)}
+        disabled={blockedRows.includes(appointment.id)}
+      >
+        Block
+      </Button>
+      <Button style={{color:"blue"}}
+        onClick={(event) => handleUnblockAppointment(event, appointment.id)}
+        disabled={!blockedRows.includes(appointment.id)}
+      >
+        Unblock
+      </Button>
+    </TableCell>
+  </TableRow>
+))}
                   </TableBody>
                 </Table>
               </TableContainer>
             </div>
           </Box>
         </div>
+        )}
       </div>
 
-      {/* <Collapse in={open}> */}
-
-      {/* </Collapse> */}
     </div>
   );
 };

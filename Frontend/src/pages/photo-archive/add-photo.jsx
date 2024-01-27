@@ -91,7 +91,7 @@ const NewAlbum = ({ onSubmit }) => {
               marginLeft: "175px",
             }}
           >
-            Create New Album
+            Add New Album
           </h2>
           <Typography
             variant="h5"
@@ -113,7 +113,7 @@ const NewAlbum = ({ onSubmit }) => {
               alignItems: "center",
             }}
           >
-            <div>
+            {/* <div>
               <input
                 type="file"
                 id="documentInput"
@@ -140,12 +140,12 @@ const NewAlbum = ({ onSubmit }) => {
               >
                 Upload Photo
               </Button>
-            </div>
+            </div> */}
             <button
               onClick={handleSubmit}
               style={{
                 marginTop: "10px",
-                marginLeft: "310px",
+                marginLeft: "88%",
                 padding: "10px 20px",
                 background: "white",
                 color: "blue",
@@ -158,10 +158,10 @@ const NewAlbum = ({ onSubmit }) => {
                 backgroundColor: "#1f3f66",
               }}
             >
-              CREATE
+              Add
             </button>
           </div>
-          <div style={{ display: "flex" }}>
+          {/* <div style={{ display: "flex" }}>
             <div style={{ flex: 1, marginRight: "5px" }}>
               {documentPreview && documentFiles.length > 0 ? (
                 <div>
@@ -192,7 +192,7 @@ const NewAlbum = ({ onSubmit }) => {
                 </div>
               ) : null}
             </div>
-          </div>
+          </div> */}
         </Box>
       </div>
     </div>

@@ -24,9 +24,8 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
     height: 0,
   });
 
-  const currentFolder = folders.find(
-    (folder) => folder.id === parseInt(selectedFolder)
-  );
+  const currentFolder = folders.find((folder) => folder.id === parseInt(selectedFolder));
+
 
   const handlePhotoClick = (photo, index, clickedFolderId) => {
     const clickedFolder =

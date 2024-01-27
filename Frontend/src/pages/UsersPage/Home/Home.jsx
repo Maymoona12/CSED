@@ -349,7 +349,7 @@ const Home = () => {
               Gallery Page
             </Typography>
           </div>
-          <div style={{ marginTop: "20px", marginRight: "0px" }}>
+          {/* <div style={{ marginTop: "20px", marginRight: "0px" }}>
             <Link to="/me/AddAlbum" style={{ marginLeft: "50px" }}>
               <AddPhotoAlternateIcon
                 style={{
@@ -369,7 +369,7 @@ const Home = () => {
             >
               Add Album
             </Typography>
-          </div>
+          </div> */}
           <div style={{ marginTop: "20px", marginRight: "0px" }}>
             <Link to="/me/ChangePassword" style={{ marginLeft: "50px" }}>
               <KeyOutlinedIcon
@@ -413,7 +413,6 @@ const Home = () => {
                   height: "200px",
                   padding: "30px",
                   borderRadius: "10px",
-                  marginTop: "-10px",
                   display: "flex",
                 }}
               >
