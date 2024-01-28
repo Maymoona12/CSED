@@ -101,7 +101,7 @@ export default function Signup() {
       <Grid
         container
         component="main"
-        sx={{ height: "100vh", justifyContent: "center", alignItems: "center" }}
+        sx={{ justifyContent: "center", alignItems: "center" ,mb:1 }}
       >
         <CssBaseline />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -112,7 +112,7 @@ export default function Signup() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              padding: "10px 60px", // Adjusted padding
+              padding: "6px 60px", // Adjusted padding
               margin: "auto",
             }}
           >
@@ -213,8 +213,8 @@ export default function Signup() {
                 fullWidth
                 variant="contained"
                 sx={{
-                  mt: 3,
-                  mb: 2,
+                  mt: 1,
+                  mb: 1,
                   background: "#1f3f66",
                   "&:hover": {
                     background: "#1f3f66",

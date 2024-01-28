@@ -134,7 +134,7 @@ export default function Changepassword() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              padding: "10px 60px",
+              padding: "35px 60px",
               margin: "auto",
             }}
           >

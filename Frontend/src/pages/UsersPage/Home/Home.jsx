@@ -349,27 +349,6 @@ const Home = () => {
               Gallery Page
             </Typography>
           </div>
-          {/* <div style={{ marginTop: "20px", marginRight: "0px" }}>
-            <Link to="/me/AddAlbum" style={{ marginLeft: "50px" }}>
-              <AddPhotoAlternateIcon
-                style={{
-                  marginInline: "15px",
-                  marginTop: "10px",
-                  fontSize: 25,
-                }}
-              />
-            </Link>
-            <Typography
-              style={{
-                color: "#1f3f66",
-                marginLeft: "50px",
-                fontSize: "20px",
-                fontFamily: "Times New Roman",
-              }}
-            >
-              Add Album
-            </Typography>
-          </div> */}
           <div style={{ marginTop: "20px", marginRight: "0px" }}>
             <Link to="/me/ChangePassword" style={{ marginLeft: "50px" }}>
               <KeyOutlinedIcon
@@ -548,8 +527,8 @@ const Home = () => {
                 <Tabs value={selectedTab} onChange={handleTabChange}>
                   <Tab label="Add New Lecturers" icon={<AddIcon />} />
                   <Tab label="Delete Lecturers" icon={<DeleteIcon />} />
+                  <Tab label="Add Students Data" icon={<AddIcon />} />
                 </Tabs>
-
                 {selectedTab === 0 && (
                   <div>
                     <Box

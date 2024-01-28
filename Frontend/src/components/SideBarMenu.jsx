@@ -19,7 +19,6 @@ const SideBarMenu = () => {
     "PostAnnouncement",
     "AddAppointment",
     "GalleryPage",
-    "AddAlbum",
   ];
 
   const settings2 = ["LecturersProfile", "GalleryPage"];
@@ -29,9 +28,9 @@ const SideBarMenu = () => {
     "PostAnnouncement",
     "AddAppointment",
     "GalleryPage",
-    "AddAlbum",
+
   ];
-  // const settings4 = ["Home"];
+  
 
   const handleDrawerClose = () => {
     setSideBar((previous) => !previous);
