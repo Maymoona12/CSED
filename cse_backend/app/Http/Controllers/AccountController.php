@@ -25,7 +25,8 @@ class AccountController extends Controller
     }
 
 
-    public function deleteAccount($id){
+    public function deleteAccount(Request $request){
+        $id=$request->id;
         $auth=Auth::user();
         if($auth->role == 'admin'){
             $user=User::find($id);
