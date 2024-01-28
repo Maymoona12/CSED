@@ -44,7 +44,7 @@ Route::post('/change_password',[PasswordController::class,'changePassword']);
 Route::get('/all_doctors',[getDoctorController::class,'getAllDoctors']);//student
 Route::get('/doctor/{id}',[getDoctorController::class,'showDoctor']);//student
 Route::get('/search/{name}',[getDoctorController::class,'search']);//student
-Route::post('/delete_account/{id}',[AccountController::class,'deleteAccount']);//admin
+Route::post('/delete_account',[AccountController::class,'deleteAccount']);//admin
 
 Route::post('/import_students',[StudentController::class,'saveStudents']);
 
