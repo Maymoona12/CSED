@@ -349,27 +349,6 @@ const Home = () => {
               Gallery Page
             </Typography>
           </div>
-          {/* <div style={{ marginTop: "20px", marginRight: "0px" }}>
-            <Link to="/me/AddAlbum" style={{ marginLeft: "50px" }}>
-              <AddPhotoAlternateIcon
-                style={{
-                  marginInline: "15px",
-                  marginTop: "10px",
-                  fontSize: 25,
-                }}
-              />
-            </Link>
-            <Typography
-              style={{
-                color: "#1f3f66",
-                marginLeft: "50px",
-                fontSize: "20px",
-                fontFamily: "Times New Roman",
-              }}
-            >
-              Add Album
-            </Typography>
-          </div> */}
           <div style={{ marginTop: "20px", marginRight: "0px" }}>
             <Link to="/me/ChangePassword" style={{ marginLeft: "50px" }}>
               <KeyOutlinedIcon
@@ -548,8 +527,8 @@ const Home = () => {
                 <Tabs value={selectedTab} onChange={handleTabChange}>
                   <Tab label="Add New Lecturers" icon={<AddIcon />} />
                   <Tab label="Delete Lecturers" icon={<DeleteIcon />} />
+                  <Tab label="Add Students Data" icon={<AddIcon />} />
                 </Tabs>
-
                 {selectedTab === 0 && (
                   <div>
                     <Box
@@ -741,6 +720,30 @@ const Home = () => {
                   </div>
                 )}
               </Container>
+              {selectedTab === 2 && (
+                  <div>
+                    <Box
+                      style={{git
+                        marginTop: "15px",
+                        border: "1px solid #ccc",
+                        width: "50%",
+                        height: "50%",
+                        padding: "20px",
+                        marginLeft:"50%",
+                        borderRadius: "10px",
+                      }}
+                    >
+                     <input
+              type="file"
+              accept=".xls, .xlsx" // Specify accepted file types
+              onChange={(e) => console.log(e.target.files[0])}
+            />
+            <Button color="primary">
+              Add
+            </Button>
+                    </Box>
+                  </div>
+                )}
             </div>
           )}
         </div>

@@ -67,7 +67,6 @@ export default function Login() {
         container
         component="main"
         sx={{
-          height: "100vh",
           justifyContent: "center",
           alignItems: "center",
           position: "relative",

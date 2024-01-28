@@ -291,7 +291,7 @@ const AppBarLayout = () => {
                               handleOpenDialogFromNotificationStudent(index)
                             }
                           >
-                            {"An appointment was booked by: "}
+                            {"An appointment was declined by: "}
                             {notify?.data?.doctor_name}
                           </MenuItem>
                         ))

@@ -141,7 +141,7 @@ export default function Forgotpassword() {
       <Grid
         container
         component="main"
-        sx={{ height: "100vh", justifyContent: "center", alignItems: "center" }}
+        sx={{  justifyContent: "center", alignItems: "center", mb:1 }}
       >
         <CssBaseline />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -152,7 +152,7 @@ export default function Forgotpassword() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              padding: "10px 60px",
+              padding: "15px 60px",
               margin: "auto",
             }}
           >
@@ -184,8 +184,8 @@ export default function Forgotpassword() {
                 fullWidth
                 variant="contained"
                 sx={{
-                  mt: 3,
-                  mb: 2,
+                  mt: 1,
+                  mb: 1,
                   background: "#1f3f66",
                   "&:hover": {
                     background: "#1f3f66",
@@ -268,8 +268,8 @@ export default function Forgotpassword() {
                 fullWidth
                 variant="contained"
                 sx={{
-                  mt: 3,
-                  mb: 2,
+                  mt: 1,
+                  mb: 1,
                   background: "#1f3f66",
                   "&:hover": {
                     background: "#1f3f66",
