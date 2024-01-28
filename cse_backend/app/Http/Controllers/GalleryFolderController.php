@@ -38,14 +38,27 @@ class GalleryFolderController extends Controller
         $album->updated_at=Carbon::now();
         $album->save();
         
-        $gallaryFolder = GalleryFolder::where('id',$album->folder_id)->select('folder_name')->get();
-        $user_name = User::where('id',$user->id)->select('name')->get();
+        $gallaryFolder = GalleryFolder::find($album->folder_id);
+        // $user_name = User::where('id',$user->id)->select('name')->get();
         $users=User::where('id','!=',$user->id)->get();
-        Notification::send($users,new galleryNotifi($user->name,$gallaryFolder));
+        Notification::send($users,new galleryNotifi($user->name,$gallaryFolder->folder_name));
         
         return response()->json(['data'=>"added successfully",'msg'=>200]);
 
         
         
     } 
+
+    public function getFolders(){
+        $folders=GalleryFolder::all();
+        return response()->json([$folders,200]);
+    }
+
+    public function getImages(Request $request){
+        $id=$request->id;
+        
+        $images=Album::where('folder_id',$id)->get();
+        return response()->json([$images,200]);
+        
+    }
 }

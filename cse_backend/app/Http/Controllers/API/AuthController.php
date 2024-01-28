@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Student;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -13,7 +14,7 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register','doctor_register']]);
     }
 
     public function login(Request $request)
@@ -48,7 +49,7 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'reg_no' => 'required|numeric',
+            'reg_no' => 'required|numeric|unique:users',
             'name' => 'required|string|between:2,100',
             'email' => 'required|string|email|max:100|unique:users',
             'phone_no' =>'string|unique:users',
@@ -59,9 +60,39 @@ class AuthController extends Controller
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }
+        $a=Student::where('reg_no',$request->reg_no);
+        if (Student::where('reg_no', $request->reg_no)->exists()){
+            $user = User::create(array_merge(
+                        $validator->validated(),
+                        ['password' => bcrypt($request->password)]
+                    ));
+            return response()->json([
+                'message' => 'User successfully registered',
+                'user' => $user
+            ], 201);
+        }
+        else return response()->json(['The Student does not CSE student']);   
+    }
+
+
+    public function doctor_register(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'reg_no' => 'required|numeric',
+            'name' => 'required|string|between:2,100',
+            'email' => 'required|string|email|max:100|unique:users',
+            'phone_no' =>'string|unique:users',
+            'password' => 'required|string|confirmed|min:6',
+            
+        ]);
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(), 400);
+        }
         $user = User::create(array_merge(
                     $validator->validated(),
-                    ['password' => bcrypt($request->password)]
+                    ['password' => bcrypt($request->password),
+                    'role' => 'doctor'
+                    ]
                 ));
         return response()->json([
             'message' => 'User successfully registered',

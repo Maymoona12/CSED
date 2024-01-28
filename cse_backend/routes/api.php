@@ -9,6 +9,7 @@ use App\Http\Controllers\getDoctorController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OfficeHourController;
 use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\StudentController;
 use App\Models\Appointment;
 use App\Models\OfficeHour;
 use Illuminate\Http\Request;
@@ -34,6 +35,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('register', 'register');
     Route::post('logout', 'logout');
     Route::post('refresh', 'refresh');
+    Route::post('doctor_register','doctor_register');
 });
 
 Route::post('/edit_profile',[AccountController::class,'EditAccount']);
@@ -43,6 +45,8 @@ Route::get('/all_doctors',[getDoctorController::class,'getAllDoctors']);//studen
 Route::get('/doctor/{id}',[getDoctorController::class,'showDoctor']);//student
 Route::get('/search/{name}',[getDoctorController::class,'search']);//student
 Route::post('/delete_account/{id}',[AccountController::class,'deleteAccount']);//admin
+
+Route::post('/import_students',[StudentController::class,'saveStudents']);
 
 Route::post('/office_hour',[OfficeHourController::class,'createOfficeHour']);//doctor
 Route::post('/book_app',[AppointmentController::class,'bookAppointment']);//student
