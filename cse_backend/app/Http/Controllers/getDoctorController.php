@@ -11,12 +11,12 @@ class getDoctorController extends Controller
     public function getAllDoctors(){
         
         $user=Auth::user();
-        if ($user->role=='student'){
+        
             $doctors=User::where('account_status',0)->where(function($fun){
             $fun->where('role','admin')->orWhere('role','doctor');
         })->get();
             return response($doctors,200);
-        }
+        
         
     }
 
