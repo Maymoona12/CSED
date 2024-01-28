@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
@@ -23,10 +23,6 @@ import {
   Paper,
   Stack,
   IconButton,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
   TextField,
   InputAdornment,
 } from "@mui/material";
@@ -51,28 +47,23 @@ import Alert from "@mui/material/Alert";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import usebookedAppointment from "./useBookedApp";
 import useReject from "./useReject";
+import uselecturersprofile from "../../Lecturer-Profiles/uselecturersprofile";
 
 const Home = () => {
+  const { getUser } = useAuth();
+  const user = getUser();
+
+  const [dynamicPhotoPath, setDynamicPhotoPath] = useState(
+    `/ProfileImages/${user?.photo}`
+  );
+
+  const textFieldStyle = {
+    display: "none", // This will hide the TextField initially
+  };
   const { booked } = usebookedAppointment();
   const { mutate: reject } = useReject();
+  const { doctors: lecturers } = uselecturersprofile();
   const [imageSrc, setImageSrc] = useState();
-  const [lectures, setLectures] = useState([
-    { id: 1, name: "Thear sammar", assistant: "PROF", phone: "123-456-7890" },
-    {
-      id: 2,
-      name: "Yazeed Sleet",
-      assistant: "Lecturer",
-      phone: "987-654-3210",
-    },
-    { id: 3, name: "Anas Melhem", assistant: "PROF", phone: "123-456-7890" },
-    {
-      id: 4,
-      name: "Nagham Hammad",
-      assistant: "Lecturer",
-      phone: "987-654-3210",
-    },
-  ]);
-
   const [searchQuery, setSearchQuery] = useState("");
   const [newLecturerEmail, setNewLecturerEmail] = useState("");
   const [newLecturerPassword, setNewLecturerPassword] = useState("");
@@ -80,6 +71,10 @@ const Home = () => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [enteredConfirmPassword, setEnteredConfirmPassword] = useState("");
+  const fileInputRef = useRef(null);
+  const [filteredLecturers, setFilteredLecturers] = React.useState(lecturers);
+  const [open, setOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
   const [role, setRole] = useState("doctor");
   const handleRole = (e) => {
@@ -149,22 +144,6 @@ const Home = () => {
     );
   };
 
-  // Function to filter lectures by name
-  const filteredLectures = lectures.filter((lecture) =>
-    lecture.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  const { getUser } = useAuth();
-  const user = getUser();
-
-  const [dynamicPhotoPath, setDynamicPhotoPath] = useState(
-    `/ProfileImages/${user?.photo}`
-  );
-
-  const textFieldStyle = {
-    display: "none", // This will hide the TextField initially
-  };
-
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -177,37 +156,6 @@ const Home = () => {
       reader.readAsDataURL(file);
     }
   };
-
-  // Sample data for the table
-  const scheduleData = [
-    {
-      day: "Sunday",
-      timeInterval: "10:00 - 12:00 ",
-      student: "Ahmad",
-      reason: "Meeting",
-    },
-    {
-      day: "Monday",
-      timeInterval: "10:00 - 12:00 ",
-      student: "Lena",
-      reason: "Meeting",
-    },
-    {
-      day: "Tuesday",
-      timeInterval: "10:00 - 12:00 ",
-      student: "Yazeed",
-      reason: "Meeting",
-    },
-    {
-      day: "Wednesday",
-      timeInterval: "10:00 - 12:00 ",
-      student: "Nagham",
-      reason: "Meeting",
-    },
-  ];
-
-  const [open, setOpen] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
 
   const handleClose = () => {
     setOpen(false);
@@ -491,7 +439,7 @@ const Home = () => {
                             <TableCell>{booked[index]?.end_time}</TableCell>
 
                             <TableCell>{booked[index]?.student_name}</TableCell>
-                          <TableCell>{booked[index]?.reason}</TableCell>
+                            <TableCell>{booked[index]?.reason}</TableCell>
 
                             <TableCell>
                               <Button
@@ -695,17 +643,21 @@ const Home = () => {
                             </TableRow>
                           </TableHead>
                           <TableBody>
-                            {filteredLectures.map((lecture) => (
-                              <TableRow key={lecture.id}>
-                                <TableCell>{lecture.id}</TableCell>
-                                <TableCell>{lecture.name}</TableCell>
-                                <TableCell>{lecture.assistant}</TableCell>
-                                <TableCell>{lecture.phone}</TableCell>
+                            {lecturers?.map((lecture, index) => (
+                              <TableRow key={`${lecture.id}-${index}`}>
+                                <TableCell>{lecturers[index]?.id}</TableCell>
+                                <TableCell>{lecturers[index]?.name}</TableCell>
+                                <TableCell>
+                                  {lecturers[index]?.education_level}
+                                </TableCell>
+                                <TableCell>
+                                  {lecturers[index]?.phone_no}
+                                </TableCell>
                                 <TableCell>
                                   <IconButton
                                     style={{ color: "#1f3f66" }}
                                     onClick={() =>
-                                      handleDeleteLecture(lecture.id)
+                                      handleDeleteLecture(lecture?.id)
                                     }
                                   >
                                     <ClearIcon />
@@ -716,6 +668,45 @@ const Home = () => {
                           </TableBody>
                         </Table>
                       </TableContainer>
+                    </Box>
+                  </div>
+                )}
+
+                {selectedTab === 2 && (
+                  <div>
+                    <Box
+                      style={{
+                        marginTop: "10px",
+                        border: "1px solid #ccc",
+                        width: "300px",
+                        height: "100px",
+                        padding: "20px",
+                        borderRadius: "10px",
+                        flexDirection: "column",
+                        marginLeft: "50%",
+                      }}
+                    >
+                      <div>
+                        <input
+                          type="file"
+                          accept=".xls, .xlsx" // Specify accepted file types
+                          onChange={(e) => console.log(e.target.files[0])}
+                        />
+
+                        <Button
+                          variant="contained"
+                          component="label"
+                          style={{
+                            width: "100px",
+                            marginTop: "40px",
+                            marginLeft: "5px",
+                            marginBottom: "5px",
+                            background: "#1f3f66",
+                          }}
+                        >
+                          Add
+                        </Button>
+                      </div>
                     </Box>
                   </div>
                 )}
