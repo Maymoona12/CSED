@@ -720,30 +720,6 @@ const Home = () => {
                   </div>
                 )}
               </Container>
-              {selectedTab === 2 && (
-                  <div>
-                    <Box
-                      style={{git
-                        marginTop: "15px",
-                        border: "1px solid #ccc",
-                        width: "50%",
-                        height: "50%",
-                        padding: "20px",
-                        marginLeft:"50%",
-                        borderRadius: "10px",
-                      }}
-                    >
-                     <input
-              type="file"
-              accept=".xls, .xlsx" // Specify accepted file types
-              onChange={(e) => console.log(e.target.files[0])}
-            />
-            <Button color="primary">
-              Add
-            </Button>
-                    </Box>
-                  </div>
-                )}
             </div>
           )}
         </div>
