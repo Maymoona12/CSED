@@ -42,6 +42,55 @@ const StyledStack = styled(Stack)({
 });
 
 const AppBarLayout = () => {
+  const renderDoctorNotifications = () => {
+    return notifications?.map((notificationGroup, groupIndex) =>
+      notificationGroup?.map((notify, index) => {
+        const sname = notify?.data?.["student_name"]?.[0]?.name;
+        const atime = notify?.data?.time;
+        const aday = notify?.data?.day;
+
+        return (
+          <MenuItem
+            key={notify?.id}
+            onClick={() => {
+              console.log("Notification clicked:", notify);
+              handleOpenDialogFromNotification(index, sname, atime, aday);
+            }}
+          >
+            An appointment was booked by:{" "}
+            {notify?.data?.["student_name"]?.[0]?.name}
+          </MenuItem>
+        );
+      })
+    );
+  };
+
+  const renderStudentNotifications = () => {
+    return notifications?.map((notificationGroup) =>
+      notificationGroup?.map((notify, index) => {
+        const adoctor = notify?.data?.doctor_name;
+        const atime2 = notify?.data?.start_time;
+        const aday2 = notify?.data?.day;
+
+        return (
+          <MenuItem
+            key={notify?.id}
+            onClick={() =>
+              handleOpenDialogFromNotificationStudent(
+                index,
+                adoctor,
+                aday2,
+                atime2
+              )
+            }
+          >
+            An appointment was declined by: {notify?.data?.doctor_name}
+          </MenuItem>
+        );
+      })
+    );
+  };
+
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [anchorElAnnouncement, setAnchorElAnnouncement] = useState(null);
   const [dialogOpenAnnouncement, setDialogOpenAnnouncement] = useState(false);
@@ -64,10 +113,12 @@ const AppBarLayout = () => {
   const { notifications } = useNotification();
   const { booked } = usebookedAppointment();
   const { mutate: reject } = useReject();
-  const [name, setName] = useState("");
-  const [day, setDay] = useState("");
-  const [time, setTime] = useState("");
-  const [dname, setDname] = useState("");
+  const [name, setName] = useState(" ");
+  const [day, setDay] = useState(" ");
+  const [time, setTime] = useState(" ");
+  const [dname, setDname] = useState(" ");
+  const [day2, setDay2] = useState(" ");
+  const [time2, setTime2] = useState(" ");
 
   const announcements = [
     {
@@ -123,7 +174,6 @@ const AppBarLayout = () => {
   };
 
   const handleOpenNotificationMenu = (event) => {
-    console.log("Notification icon clicked");
     setAnchorElNotification(event.currentTarget);
   };
 
@@ -132,8 +182,6 @@ const AppBarLayout = () => {
   };
 
   const handleOpenDialogFromNotification = (index, sname, atime, aday) => {
-    console.log("handleOpenDialogFromNotification triggered");
-    console.log("Notification data:", { index, sname, atime, aday });
     setSelectedNotification(index);
     setDialogOpenNotification(true);
     setAnchorElNotification(null);
@@ -141,12 +189,20 @@ const AppBarLayout = () => {
     setTime(atime);
     setDay(aday);
   };
-
-  const handleOpenDialogFromNotificationStudent = (index, adoctor) => {
+  const handleOpenDialogFromNotificationStudent = (
+    index,
+    adoctor,
+    aday2,
+    atime2
+  ) => {
     setSelectedNotificationStudent(index);
     setDialogOpenNotificationStudent(true);
     setAnchorElNotificationStudent(null);
     setDname(adoctor);
+    setDay2(aday2);
+    setTime2(atime2);
+
+    // Rest of your code
   };
 
   const handleLogout = () => {
@@ -257,58 +313,11 @@ const AppBarLayout = () => {
                 >
                   {/* Conditionally render notification items based on user role */}
                   {user?.role === "doctor" || user?.role === "admin"
-                    ? notifications?.map((notificationGroup, groupIndex) =>
-                        notificationGroup?.map((notify, index) => {
-                          const sname =
-                            notify?.data?.["student_name"]?.[0]?.name;
-                          const atime = notify?.data?.time;
-                          const aday = notify?.data?.day;
-                          const adoctor = notify?.data?.doctor_name;
-
-                          {
-                            Boolean(anchorElNotification) &&
-                              notifications?.flat().map((notify, index) => {
-                                console.log("Rendering MenuItem:", notify); // Add this line for debugging
-                                return (
-                                  <MenuItem
-                                    key={notify?.id}
-                                    onClick={() => {
-                                      console.log(
-                                        "Notification clicked:",
-                                        notify
-                                      ); // Add this line for debugging
-
-                                      handleOpenDialogFromNotification(
-                                        index,
-                                        notify?.data?.["student_name"]?.[0]
-                                          ?.name,
-                                        notify?.data?.time,
-                                        notify?.data?.day
-                                      );
-                                    }}
-                                  >
-                                    {`An appointment was booked by: ${notify?.data?.["student_name"]?.[0]?.name}`}
-                                  </MenuItem>
-                                );
-                              });
-                          }
-                        })
+                    ? notifications?.map((notificationGroup) =>
+                        renderDoctorNotifications(notificationGroup)
                       )
-                    : notifications?.map((notificationGroup, groupIndex) =>
-                        notificationGroup?.map((notify, index) => (
-                          <MenuItem
-                            key={notify?.id}
-                            onClick={() =>
-                              handleOpenDialogFromNotificationStudent(
-                                index,
-                                adoctor
-                              )
-                            }
-                          >
-                            {"An appointment was declined by: "}
-                            {notify?.data?.doctor_name}
-                          </MenuItem>
-                        ))
+                    : notifications?.map((notificationGroup) =>
+                        renderStudentNotifications(notificationGroup)
                       )}
                 </Menu>
               </Box>
@@ -488,11 +497,14 @@ const AppBarLayout = () => {
                 <Button
                   key={`${book.id}-${index}`}
                   style={{
-                    marginRight: "65%",
+                    marginLeft: "65%",
                     marginTop: "5px",
                     fontSize: "16px",
-                    backgroundColor: "#da717e",
-                    color: "white",
+                    // backgroundColor: "#da717e",
+                    color: "#da717e",
+                    minWidth: "100px",
+                    height: "50px",
+                    padding: "20px",
                   }}
                   onClick={(event) => handelRejectApp(event, book.id)}
                 >
@@ -502,7 +514,7 @@ const AppBarLayout = () => {
                       marginBottom: "1px",
                       fontSize: "20px",
                       marginLeft: "5px",
-                      color: "white",
+                      color: "#da717e",
                     }}
                   />
                 </Button>
@@ -515,7 +527,7 @@ const AppBarLayout = () => {
             open={dialogOpenNotificationStudent}
             onClose={handleCloseDialog}
           >
-            <DialogTitle style={{ fontWeight: "bold" }}>
+            <DialogTitle style={{ fontWeight: "bold", color: "#1f3f66" }}>
               An appointment was declined by: {dname}
             </DialogTitle>
             <DialogContent>
@@ -526,12 +538,31 @@ const AppBarLayout = () => {
                   fontWeight: "bold",
                 }}
               >
-                Your apoointment has been declined ! Please book another
-                appointment.
+                Your apoointment has been declined at:
+              </Typography>{" "}
+              <Typography style={{ fontWeight: "bold", color: "#1f3f66" }}>
+                {" "}
+                At Day: {day2}
+              </Typography>
+              <Typography style={{ fontWeight: "bold", color: "#1f3f66" }}>
+                Start time: {time2}
+              </Typography>{" "}
+              <Typography
+                style={{
+                  fontWeight: "bold",
+                  color: "#555b63",
+                }}
+              >
+                Please book another appointment.
               </Typography>
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleCloseDialog}>Close</Button>
+              <Button
+                onClick={handleCloseDialog}
+                style={{ fontWeight: "bold", color: "#1f3f66" }}
+              >
+                Close
+              </Button>
             </DialogActions>
           </Dialog>
         )}

@@ -173,7 +173,7 @@ const Home = () => {
 
     // Check if a file is selected before appending it to formData
     if (file) {
-      formData.append("file1", file);
+      formData.append("file1", file?.name);
       // Use formData directly, no need for formData1
       add(formData);
     }
@@ -349,7 +349,7 @@ const Home = () => {
                 display: "flex",
                 flexWrap: "wrap",
                 gap: "40px",
-                padding: "30px",
+                padding: "20px",
               }}
             >
               <Box
@@ -412,13 +412,13 @@ const Home = () => {
             >
               <Box
                 style={{
-                  width: "650px",
+                  width: "675px",
                   border: "1px solid lightgray",
                   height: "auto",
                   padding: "30px",
                   borderRadius: "10px",
                   marginTop: "10px",
-                  marginLeft: "5px",
+                  // marginLeft: "5px",
                 }}
               >
                 <Typography
@@ -493,8 +493,20 @@ const Home = () => {
               >
                 <Tabs value={selectedTab} onChange={handleTabChange}>
                   <Tab label="Add New Lecturers" icon={<AddIcon />} />
-                  <Tab label="Delete Lecturers" icon={<DeleteIcon />} />
-                  <Tab label="Add Students Data" icon={<AddIcon />} />
+                  <Tab
+                    label="Delete Lecturers"
+                    icon={<DeleteIcon />}
+                    sx={{
+                      marginLeft: "250px ", // Adjust the margin value as needed
+                    }}
+                  />
+                  <Tab
+                    label="Add Students Data"
+                    icon={<AddIcon />}
+                    sx={{
+                      marginLeft: "250px ", // Adjust the margin value as needed
+                    }}
+                  />
                 </Tabs>
                 {selectedTab === 0 && (
                   <div>
@@ -509,6 +521,8 @@ const Home = () => {
                         height: "50%",
                         padding: "20px",
                         borderRadius: "10px",
+                        alignItems: "center",
+                        justifyContent: "center",
                       }}
                     >
                       <TextField
@@ -613,34 +627,14 @@ const Home = () => {
                       style={{
                         marginTop: "10px",
                         border: "1px solid #ccc",
-                        width: "100%",
+                        width: "70%",
                         height: "100%",
                         padding: "20px",
                         borderRadius: "10px",
-                        display: "flex",
                         flexDirection: "column",
+                        marginLeft: "15%",
                       }}
                     >
-                      <TextField
-                        variant="outlined"
-                        size="small"
-                        value={searchQuery}
-                        fullWidth
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        placeholder="Enter lecturer's name"
-                        style={{
-                          marginBottom: "10px",
-                          alignItems: "end",
-                        }}
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <SearchIcon />
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-
                       <TableContainer component={Paper}>
                         <Table>
                           <TableHead>
@@ -694,7 +688,7 @@ const Home = () => {
                         padding: "20px",
                         borderRadius: "10px",
                         flexDirection: "column",
-                        marginLeft: "50%",
+                        marginLeft: "70%",
                       }}
                     >
                       <div>
@@ -709,9 +703,9 @@ const Home = () => {
                           component="label"
                           type="submit"
                           style={{
-                            width: "100px",
+                            width: "90px",
                             marginTop: "40px",
-                            marginLeft: "5px",
+                            marginLeft: "40%",
                             marginBottom: "5px",
                             background: "#1f3f66",
                           }}

@@ -32,19 +32,37 @@ const PostAnnouncement = () => {
   };
 
   const handleSubmit = () => {
-    const formData = new FormData();
-    const formData1 = new FormData();
-    formData.append("title", title);
-    formData.append("text_ann", text_ann);
-    // Check if a file is selected before appending it to formData
+    // Check if the file array has any items before accessing its properties
     if (file.length > 0) {
-      formData.append("file1", file);
+      // Construct a plain JavaScript object with the data
+      const postData = {
+        title: title,
+        text_ann: text_ann,
+        file: file[0]?.name, // Assuming you only upload one file
+      };
+
+      // Create a new FormData object and append the data as key-value pairs
+      const formData = new FormData();
+      Object.entries(postData).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
+      console.log({ file });
+      console.log("FormData:", formData); // Log formData before mutation
+      mutate(formData);
+    } else {
+      // Handle the case when the file array is empty
+      console.error("No file selected");
     }
-    formData1.append("title", formData.title);
-    formData1.append("text_ann", formData.text_ann);
-    formData1.append("file1", formData.file);
-    mutate(JSON.stringify(formData));
   };
+
+  // "doctor_id": 1,
+  // "title": "subject",
+  // "text_ann": "text",
+  // "file": "1706554916.PNG",
+  // "created_at": "2024-01-29T19:01:56.000000Z",
+  // "updated_at": "2024-01-29T19:01:56.000000Z",
+  // "id": 1
 
   return (
     <div className="post-announcement-page">

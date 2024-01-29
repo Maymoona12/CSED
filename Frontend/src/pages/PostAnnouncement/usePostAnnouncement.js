@@ -2,10 +2,9 @@ import { useMutation } from "@tanstack/react-query";
 import { createAnnouncement } from "./index";
 import useSnackbar from "../../context/useSnackbar";
 
-
 const usePostAnnouncement = () => {
-const { showSnackbar } = useSnackbar();
-  const { mutate } = useMutation({
+  const { showSnackbar } = useSnackbar();
+  return useMutation({
     mutationFn: createAnnouncement,
     onSuccess: (data) => {
       console.log(data);
@@ -16,15 +15,15 @@ const { showSnackbar } = useSnackbar();
       });
     },
     onError: (error) => {
-      console.log(error.message);
+      console.log(error);
       showSnackbar({
         severity: "error",
         message: "Post Announcement Failed ",
       });
     },
   });
-  return {
-    mutate,
-  };
+  // return {
+  //   mutate,
+  // };
 };
 export default usePostAnnouncement;
