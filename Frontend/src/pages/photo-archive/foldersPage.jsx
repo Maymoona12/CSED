@@ -96,7 +96,7 @@ const FoldersPage = ({
                 style={{
                   marginBottom: "5px",
                   fontSize: "40px",
-                  color: "black",
+                  color: "#1f3f66",
                   cursor: "pointer",
                 }}
                 onClick={() =>
@@ -108,6 +108,7 @@ const FoldersPage = ({
                 style={{
                   cursor: "pointer",
                   fontFamily: "Garamond",
+                  color: "#1f3f66",
                 }}
               >
                 {folder.name}
