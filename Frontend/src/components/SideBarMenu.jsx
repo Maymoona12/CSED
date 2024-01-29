@@ -1,18 +1,11 @@
 import React, { useState } from "react";
-import {
-  Typography,
-  Stack,
-  List,
-  ListItemButton,
-  ListItemText,
-} from "@mui/material";
+import { Typography, Stack, List, ListItemButton } from "@mui/material";
 import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
 const SideBarMenu = () => {
-  const { getUser, sideBar, setSideBar } = useAuth();
+  const { getUser, setSideBar } = useAuth();
   const user = getUser();
-
   const settings1 = [
     "EditProfile",
     "ChangePassword",
@@ -28,9 +21,7 @@ const SideBarMenu = () => {
     "PostAnnouncement",
     "AddAppointment",
     "GalleryPage",
-
   ];
-  
 
   const handleDrawerClose = () => {
     setSideBar((previous) => !previous);
@@ -40,18 +31,18 @@ const SideBarMenu = () => {
     <Stack direction="row">
       <div style={{ marginTop: "-50px" }}>
         <List>
-          <ListItemButton>
+          <ListItemButton onClick={handleDrawerClose}>
             <Link
               to={`/me`}
               style={{
                 textDecoration: "none",
-                color: "black",
                 "&:hover": { backgroundColor: "lightblue" },
               }}
             >
               <Typography style={{ color: "white" }}>Home</Typography>
             </Link>
           </ListItemButton>
+
           {user?.role == "doctor" &&
             settings1.map((setting) => (
               <ListItemButton key={setting} onClick={handleDrawerClose}>
@@ -83,6 +74,7 @@ const SideBarMenu = () => {
                 </Link>
               </ListItemButton>
             ))}
+
           {user?.role == "student" &&
             settings2.map((setting) => (
               <ListItemButton key={setting} onClick={handleDrawerClose}>

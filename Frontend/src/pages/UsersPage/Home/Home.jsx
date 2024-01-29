@@ -48,6 +48,9 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import usebookedAppointment from "./useBookedApp";
 import useReject from "./useReject";
 import uselecturersprofile from "../../Lecturer-Profiles/uselecturersprofile";
+import useDoctorRegister from "./useDoctorRegister";
+import useDeleteAcc from "./useDeleteAcc";
+import useAddFile from "./useAddFile";
 
 const Home = () => {
   const { getUser } = useAuth();
@@ -56,13 +59,12 @@ const Home = () => {
   const [dynamicPhotoPath, setDynamicPhotoPath] = useState(
     `/ProfileImages/${user?.photo}`
   );
-
-  const textFieldStyle = {
-    display: "none", // This will hide the TextField initially
-  };
   const { booked } = usebookedAppointment();
   const { mutate: reject } = useReject();
   const { doctors: lecturers } = uselecturersprofile();
+  const { mutate: doctorReg } = useDoctorRegister();
+  const { mutate: deleteAcc } = useDeleteAcc();
+  const { mutate: add } = useAddFile();
   const [imageSrc, setImageSrc] = useState();
   const [searchQuery, setSearchQuery] = useState("");
   const [newLecturerEmail, setNewLecturerEmail] = useState("");
@@ -76,24 +78,18 @@ const Home = () => {
   const [open, setOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 
-  const [role, setRole] = useState("doctor");
-  const handleRole = (e) => {
-    setRole(e.target.value);
-  };
-
-  const handleSubmit = (event) => {
+  const handleAddLecturer = (event) => {
     event.preventDefault();
-    // const data = new FormData(event.currentTarget);
-    // const name = data.get("name");
-    // const reg_no = data.get("reg_no");
-    // const email = data.get("email");
-    // const password = data.get("password");
-    // const password_confirmation = data.get("password_confirmation");
+    const form = event.target; // Get the form element
+    const data = new FormData(form);
+    const name = data.get("name");
+    const reg_no = data.get("reg_no");
+    const email = data.get("email");
+    const password = data.get("password");
+    const password_confirmation = data.get("password_confirmation");
 
-    // mutate({ name, reg_no, email, password, password_confirmation });
-  };
+    doctorReg({ name, reg_no, email, password, password_confirmation });
 
-  const handleAddLecturer = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(newLecturerEmail)) {
       setAlertMessage("Invalid email format!");
@@ -114,13 +110,6 @@ const Home = () => {
 
     // Close the Snackbar
     setOpen(false);
-  };
-
-  const handleDeleteLecture = (lectureId) => {
-    // Remove the selected lecture from the state
-    setLectures((prevLectures) =>
-      prevLectures.filter((lecture) => lecture.id !== lectureId)
-    );
   };
 
   const handleTabChange = (event, newValue) => {
@@ -161,9 +150,39 @@ const Home = () => {
     setOpen(false);
   };
 
+  const handleDeleteLecture = (event, id) => {
+    event.preventDefault();
+    deleteAcc({ id });
+  };
+
   const handelRejectApp = (event, id) => {
     event.preventDefault();
     reject({ id });
+  };
+
+  const [file, setFile] = useState(null);
+
+  const handleFileChange = (e) => {
+    // Set the selected file to the state
+    setFile(e.target.files[0]);
+  };
+
+  const handleAdd = (event) => {
+    event.preventDefault();
+    const formData = new FormData();
+
+    // Check if a file is selected before appending it to formData
+    if (file) {
+      formData.append("file1", file);
+      // Use formData directly, no need for formData1
+      add(formData);
+    }
+  };
+
+  const add2 = (formData) => {
+    // Perform your upload or API call here
+    // Example: axios.post('/upload', formData);
+    console.log(formData);
   };
 
   return (
@@ -480,6 +499,9 @@ const Home = () => {
                 {selectedTab === 0 && (
                   <div>
                     <Box
+                      component="form"
+                      noValidate
+                      onSubmit={handleAddLecturer}
                       style={{
                         marginTop: "10px",
                         border: "1px solid #ccc",
@@ -489,18 +511,6 @@ const Home = () => {
                         borderRadius: "10px",
                       }}
                     >
-                      <TextField
-                        style={textFieldStyle}
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="role"
-                        label="Role"
-                        name="role"
-                        autoComplete="role"
-                        value={role}
-                        onChange={handleRole}
-                      />
                       <TextField
                         label="Register Number"
                         name="reg_no"
@@ -584,7 +594,7 @@ const Home = () => {
                       />
 
                       <Button
-                        onClick={handleAddLecturer}
+                        type="submit"
                         style={{
                           color: "white",
                           marginLeft: "40%",
@@ -656,8 +666,8 @@ const Home = () => {
                                 <TableCell>
                                   <IconButton
                                     style={{ color: "#1f3f66" }}
-                                    onClick={() =>
-                                      handleDeleteLecture(lecture?.id)
+                                    onClick={(event) =>
+                                      handleDeleteLecture(event, lecture?.id)
                                     }
                                   >
                                     <ClearIcon />
@@ -675,6 +685,7 @@ const Home = () => {
                 {selectedTab === 2 && (
                   <div>
                     <Box
+                      component="form"
                       style={{
                         marginTop: "10px",
                         border: "1px solid #ccc",
@@ -689,13 +700,14 @@ const Home = () => {
                       <div>
                         <input
                           type="file"
-                          accept=".xls, .xlsx" // Specify accepted file types
-                          onChange={(e) => console.log(e.target.files[0])}
+                          accept=".xls, .xlsx"
+                          onChange={handleFileChange}
                         />
 
                         <Button
                           variant="contained"
                           component="label"
+                          type="submit"
                           style={{
                             width: "100px",
                             marginTop: "40px",
@@ -703,6 +715,7 @@ const Home = () => {
                             marginBottom: "5px",
                             background: "#1f3f66",
                           }}
+                          onClick={handleAdd}
                         >
                           Add
                         </Button>
@@ -715,6 +728,7 @@ const Home = () => {
           )}
         </div>
       )}
+
       {user?.role == "student" && (
         <div className="profile-button">
           <div
@@ -790,6 +804,7 @@ const Home = () => {
           </div>
         </div>
       )}
+
       <Snackbar
         open={open}
         autoHideDuration={10000}

@@ -123,6 +123,7 @@ const AppBarLayout = () => {
   };
 
   const handleOpenNotificationMenu = (event) => {
+    console.log("Notification icon clicked");
     setAnchorElNotification(event.currentTarget);
   };
 
@@ -130,13 +131,9 @@ const AppBarLayout = () => {
     setAnchorElNotification(null);
   };
 
-  const handleOpenDialogFromNotification = (
-    index,
-    sname,
-    atime,
-    daay,
-    doctor
-  ) => {
+  const handleOpenDialogFromNotification = (index, sname, atime, aday) => {
+    console.log("handleOpenDialogFromNotification triggered");
+    console.log("Notification data:", { index, sname, atime, aday });
     setSelectedNotification(index);
     setDialogOpenNotification(true);
     setAnchorElNotification(null);
@@ -145,10 +142,11 @@ const AppBarLayout = () => {
     setDay(aday);
   };
 
-  const handleOpenDialogFromNotificationStudent = (index) => {
+  const handleOpenDialogFromNotificationStudent = (index, adoctor) => {
     setSelectedNotificationStudent(index);
     setDialogOpenNotificationStudent(true);
     setAnchorElNotificationStudent(null);
+    setDname(adoctor);
   };
 
   const handleLogout = () => {
@@ -164,6 +162,7 @@ const AppBarLayout = () => {
     event.preventDefault();
     reject({ id });
   };
+
   console.log(notifications);
 
   return (
@@ -266,21 +265,33 @@ const AppBarLayout = () => {
                           const aday = notify?.data?.day;
                           const adoctor = notify?.data?.doctor_name;
 
-                          <MenuItem
-                            key={notify?.id}
-                            onClick={() =>
-                              handleOpenDialogFromNotification(
-                                index,
-                                sname,
-                                atime,
-                                aday,
-                                adoctor
-                              )
-                            }
-                          >
-                            {"An appointment was booked by: "}
-                            {notify?.data?.["student_name"]?.[0]?.name}
-                          </MenuItem>;
+                          {
+                            Boolean(anchorElNotification) &&
+                              notifications?.flat().map((notify, index) => {
+                                console.log("Rendering MenuItem:", notify); // Add this line for debugging
+                                return (
+                                  <MenuItem
+                                    key={notify?.id}
+                                    onClick={() => {
+                                      console.log(
+                                        "Notification clicked:",
+                                        notify
+                                      ); // Add this line for debugging
+
+                                      handleOpenDialogFromNotification(
+                                        index,
+                                        notify?.data?.["student_name"]?.[0]
+                                          ?.name,
+                                        notify?.data?.time,
+                                        notify?.data?.day
+                                      );
+                                    }}
+                                  >
+                                    {`An appointment was booked by: ${notify?.data?.["student_name"]?.[0]?.name}`}
+                                  </MenuItem>
+                                );
+                              });
+                          }
                         })
                       )
                     : notifications?.map((notificationGroup, groupIndex) =>
@@ -288,7 +299,10 @@ const AppBarLayout = () => {
                           <MenuItem
                             key={notify?.id}
                             onClick={() =>
-                              handleOpenDialogFromNotificationStudent(index)
+                              handleOpenDialogFromNotificationStudent(
+                                index,
+                                adoctor
+                              )
                             }
                           >
                             {"An appointment was declined by: "}

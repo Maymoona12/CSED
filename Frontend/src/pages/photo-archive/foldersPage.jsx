@@ -27,7 +27,7 @@ const FoldersPage = ({
       if (callback && typeof callback === "function") {
         callback(); // Set lightboxOpen to true
       }
-      navigate(`/photospage/${folderId}`);
+      navigate(`/me/GalleryPage/photospage/${folderId}`);
     }
   };
 
@@ -50,29 +50,32 @@ const FoldersPage = ({
           Gallery Page
         </h1>
       </div>
-             {/* Add Album button */}
-             {user?.role === "doctor" || user?.role === "admin" ? (
-          <div> 
-            <Link to="/me/AddAlbum" >
-            <Button style={{ padding:"3px 20px" , 
-            backgroundColor:"gray" ,
-            color:"white", 
-            alignItems: "center ",
-            marginLeft:"1%", marginTop:"1%"}}>
-            
-            
-            <AddPhotoAlternateIcon
+      {/* Add Album button */}
+      {user?.role === "doctor" || user?.role === "admin" ? (
+        <div>
+          <Link to="/me/AddAlbum">
+            <Button
+              style={{
+                padding: "3px 20px",
+                backgroundColor: "gray",
+                color: "white",
+                alignItems: "center ",
+                marginLeft: "1%",
+                marginTop: "1%",
+              }}
+            >
+              <AddPhotoAlternateIcon
                 style={{
                   color: "white",
-                  margin:"3px",
+                  margin: "3px",
                   fontSize: 30,
                 }}
               />
               Add Album
             </Button>
-            </Link>
-          </div>
-        ) : null}
+          </Link>
+        </div>
+      ) : null}
       {/* Render folders */}
       <div style={{ display: "flex", flexWrap: "wrap", marginTop: "100px" }}>
         {folders &&
