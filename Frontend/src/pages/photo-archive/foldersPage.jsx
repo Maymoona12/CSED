@@ -112,33 +112,32 @@ const FoldersPage = ({
               >
                 {folder.name}
               </h2>
+              {/* Render selected folder's photos */}
+              {selectedFolder === folder.id && (
+                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                  {folder.photos &&
+                    folder.photos.map((photo, index) => (
+                      <div
+                        key={photo.id}
+                        style={{
+                          margin: "8px",
+                          width: "150px",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => handlePhotoClick(photo, index)}
+                      >
+                        <img
+                          src={`/Images/${photo.src}`}
+                          alt={photo.alt}
+                          style={{ width: "100%", height: "auto" }}
+                        />
+                      </div>
+                    ))}
+                </div>
+              )}
             </div>
           ))}
       </div>
-      {/* Render selected folder's photos */}
-      {selectedFolder !== null && selectedFolder !== undefined && (
-        <div style={{ display: "flex", flexWrap: "wrap" }}>
-          {folders
-            .filter((folder) => folder.id === selectedFolder)
-            .flatMap(
-              (folder) =>
-                folder.photos &&
-                folder.photos.map((photo, index) => (
-                  <div
-                    key={photo.id}
-                    style={{ margin: "8px", width: "150px", cursor: "pointer" }}
-                    onClick={() => handlePhotoClick(photo, index)}
-                  >
-                    <img
-                      src={`/Images/${photo.src}`}
-                      alt={photo.alt}
-                      style={{ width: "100%", height: "auto" }}
-                    />
-                  </div>
-                ))
-            )}
-        </div>
-      )}
     </div>
   );
 };
