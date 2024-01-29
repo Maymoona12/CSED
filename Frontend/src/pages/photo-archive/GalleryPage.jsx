@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import FoldersPage from "./foldersPage";
 import PhotosPage from "./photospage";
 
+
 function GalleryPage() {
   const [selectedFolder, setSelectedFolder] = useState("defaultFolder");
   const [selectedPhoto, setSelectedPhoto] = useState(null);
@@ -61,16 +62,6 @@ function GalleryPage() {
         { id: 2, src: "image5.jpg", alt: "2022 2" },
         { id: 3, src: "image5.jpg", alt: "2022 2" },
         { id: 4, src: "image5.jpg", alt: "2022 2" },
-        { id: 5, src: "hamood1.jpg", alt: "Mohammad 1" },
-      ],
-    },
-    {
-      id: 7,
-      name: "Mohammad",
-      photos: [
-        { id: 1, src: "hamood1.jpg", alt: "Mohammad 1" },
-        { id: 2, src: "hamood2.jpg", alt: "Mohammad 1" },
-        { id: 3, src: "hamood1.jpg", alt: "Mohammad 1" },
       ],
     },
   ];

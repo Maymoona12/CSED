@@ -1,11 +1,8 @@
 import React, { useState, useRef } from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import UploadIcon from "@mui/icons-material/Upload";
+
 
 const NewAlbum = ({ onSubmit }) => {
   const [documentFiles, setDocumentFiles] = useState([]);
@@ -113,34 +110,6 @@ const NewAlbum = ({ onSubmit }) => {
               alignItems: "center",
             }}
           >
-            {/* <div>
-              <input
-                type="file"
-                id="documentInput"
-                style={{ display: "none" }}
-                onChange={handleDocumentChange}
-                ref={documentInputRef}
-                multiple
-              />
-              <Button
-                variant="contained"
-                component="label"
-                onClick={() => documentInputRef.current.click()}
-                startIcon={<UploadIcon />}
-                style={{
-                  flex: "0 0 auto",
-                  width: "190px",
-                  height: "40px",
-                  marginTop: "10px",
-                  marginBottom: "5px",
-                  background: "primary",
-                  fontFamily: "Monaco",
-                  background: "#1f3f66",
-                }}
-              >
-                Upload Photo
-              </Button>
-            </div> */}
             <button
               onClick={handleSubmit}
               style={{
@@ -161,38 +130,7 @@ const NewAlbum = ({ onSubmit }) => {
               Add
             </button>
           </div>
-          {/* <div style={{ display: "flex" }}>
-            <div style={{ flex: 1, marginRight: "5px" }}>
-              {documentPreview && documentFiles.length > 0 ? (
-                <div>
-                  {documentFiles.map((file, index) => (
-                    <div
-                      key={index}
-                      style={{ marginTop: "7px", marginLeft: "20px" }}
-                    >
-                      <img
-                        src={URL.createObjectURL(file)}
-                        alt={`Preview ${index}`}
-                        style={{
-                          maxWidth: "135px",
-                          maxHeight: "135px",
-                          marginRight: "5px",
-                        }}
-                      />
-                      <EditIcon
-                        style={{ marginLeft: "5px", cursor: "pointer" }}
-                        onClick={() => editDocumentFile(index)}
-                      />
-                      <DeleteIcon
-                        style={{ marginLeft: "10px", cursor: "pointer" }}
-                        onClick={() => deleteDocumentFile(index)}
-                      />
-                    </div>
-                  ))}
-                </div>
-              ) : null}
-            </div>
-          </div> */}
+
         </Box>
       </div>
     </div>
