@@ -17,15 +17,22 @@ import Button from "@mui/material/Button";
 const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
   const { folderId } = useParams();
   const [selectedFolder, setSelectedFolder] = useState(folderId);
+  const currentFolder = folders.find(
+    (folder) => folder.id === parseInt(selectedFolder)
+  );
+
   const [openDialog, setOpenDialog] = useState(false);
   const [dialogIndex, setDialogIndex] = useState(0);
   const [imageDimensions, setImageDimensions] = useState({
     width: 0,
     height: 0,
   });
-
-  const currentFolder = folders.find((folder) => folder.id === parseInt(selectedFolder));
-
+  useEffect(() => {
+    console.log("folderId:", folderId);
+    console.log("selectedFolder:", selectedFolder);
+    console.log("currentFolder:", currentFolder);
+    setSelectedFolder(folderId);
+  }, [folderId, selectedFolder]);
 
   const handlePhotoClick = (photo, index, clickedFolderId) => {
     const clickedFolder =
@@ -108,32 +115,6 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
 
   return (
     <div>
-      <div id="BarId">
-        <AppBar
-          position="static"
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            right: 0,
-            zIndex: 1000,
-          }}
-          sx={{ background: "black" }}
-        >
-          <Toolbar>
-            <Typography
-              variant="h5"
-              component="div"
-              sx={{
-                flexGrow: 1,
-                fontFamily: "Brush Script MT",
-              }}
-            >
-              CSED
-            </Typography>
-          </Toolbar>
-        </AppBar>
-      </div>
       {renderPhotos()}
 
       <Dialog

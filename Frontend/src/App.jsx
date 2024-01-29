@@ -11,7 +11,7 @@ import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
 import Appointment from "./pages/Appointment/Appointment";
 import FoldersPage from "./pages/photo-archive/foldersPage";
 import PhotosPage from "./pages/photo-archive/photospage";
-import GalleryPage from "./pages/photo-archive/GalleryPage"
+import GalleryPage from "./pages/photo-archive/GalleryPage";
 
 import LecturerProfiles from "./pages/Lecturer-Profiles/lecturerprofile";
 import ChangePassword from "./pages/UsersPage/StudentPage/ChangePassword";
@@ -66,8 +66,7 @@ function App() {
             }
           >
             <Route path="/me/ChangePassword" element={<ChangePassword />} />
-            <Route path="/me/GalleryPage" element={<GalleryPage/>} />
-            <Route path="PhotosPage/:folderId" element={<PhotosPage />} />
+            <Route path="/me/GalleryPage/*" element={<GalleryPage />} />
           </Route>
         </Route>
       </Routes>

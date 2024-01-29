@@ -19,7 +19,7 @@ export const AppSideBar = () => {
           boxSizing: "border-box",
           marginTop: "64px",
           backgroundColor: "#555b63",
-          opacity: "0.99",
+          opacity: "0.9",
         },
       }}
       variant="persistent"

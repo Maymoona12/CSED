@@ -32,7 +32,6 @@ const Appointment = () => {
   const { mutate: deleted } = useDelete();
   const { mutate: unblock } = useUnBlock();
 
-
   const [schedule, setSchedule] = useState([
     { day: "Sun", appointments: [] },
     { day: "Mon", appointments: [] },
@@ -40,7 +39,7 @@ const Appointment = () => {
     { day: "Wed", appointments: [] },
     { day: "Thu", appointments: [] },
   ]);
- 
+
   const [isTableVisible, setIsTableVisible] = useState(false);
   const dayRef = useRef(null);
   const appointmentRef = useRef(null);
@@ -49,7 +48,6 @@ const Appointment = () => {
   const [open, setOpen] = useState(false);
 
   const [blockedRows, setBlockedRows] = useState([]);
-
 
   const handleShowSchedule = () => {
     setIsTableVisible(!isTableVisible);
@@ -66,20 +64,20 @@ const Appointment = () => {
   const handleBlockAppointment = (event, id) => {
     event.preventDefault();
     block({ id });
-  
+
     // Add the index of the blocked row to the state
     setBlockedRows((prevBlockedRows) => [...prevBlockedRows, id]);
   };
-  
 
   const handleUnblockAppointment = (event, id) => {
     event.preventDefault();
     unblock({ id });
-  
+
     // Remove the index of the unblocked row from the state
-    setBlockedRows((prevBlockedRows) => prevBlockedRows.filter((rowIndex) => rowIndex !== id));
+    setBlockedRows((prevBlockedRows) =>
+      prevBlockedRows.filter((rowIndex) => rowIndex !== id)
+    );
   };
-  
 
   const handleSaveButtonClick = (event) => {
     event.preventDefault();
@@ -147,7 +145,6 @@ const Appointment = () => {
             flexDirection: "column",
             alignItems: "center",
             margin: "20px",
-            marginTop: "30px",
             minWidth: "200px",
             color: "black",
           }}
@@ -159,9 +156,9 @@ const Appointment = () => {
               alignItems: "center",
               marginLeft: "6px",
               marginRight: "5px",
-              padding: "10px",
-              minWidth: "310px",
-              height: "450px",
+              padding: "5px",
+              minWidth: "300px",
+              height: "440px",
               border: "1px solid #ddd",
               borderRadius: "20px",
               color: "black",
@@ -243,7 +240,7 @@ const Appointment = () => {
                   handleSaveButtonClick(event);
                 }}
                 style={{
-                  marginTop: "30px",
+                  marginTop: "10px",
                   marginLeft: "30%",
                   backgroundColor: "#1f3f66",
                   color: "white",
@@ -257,102 +254,114 @@ const Appointment = () => {
       </form>
       <div>
         <Button
-         onClick={handleShowSchedule}
-        style={{
-          marginTop: "20px",
-         marginLeft: "500px",
-         backgroundColor: isTableVisible ? "gray" : "#1f3f66",
-         color: "white",
-         padding: "10px",
-         width: "200px",
-            }}
->
-       {isTableVisible ? "Hide Table" : "Show Table"}
-     </Button>
-        {isTableVisible && (
-        <div
+          onClick={handleShowSchedule}
           style={{
-            gap: "40px",
-            padding: "30px",
-            marginTop: "10px",
+            marginTop: "20px",
+            marginLeft: "500px",
+            backgroundColor: isTableVisible ? "gray" : "#1f3f66",
+            color: "white",
+            padding: "10px",
+            width: "200px",
           }}
         >
-          <Box
+          {isTableVisible ? "Hide Table" : "Show Table"}
+        </Button>
+        {isTableVisible && (
+          <div
             style={{
-              width: "550px",
-              border: "1px solid lightgray",
-              height: "auto",
+              gap: "40px",
               padding: "30px",
-              borderRadius: "10px",
-              marginTop: "5px",
-              marginLeft: "100px",
+              // marginTop: "10px",
             }}
           >
-            <Typography
-              variant="h5"
+            <Box
               style={{
-                marginBottom: "20px",
-                color: "black",
-                fontFamily: "serif",
+                width: "550px",
+                border: "1px solid lightgray",
+                height: "auto",
+                padding: "30px",
+                borderRadius: "10px",
+                marginTop: "5px",
+                marginLeft: "100px",
               }}
             >
-              Schedule Data
-            </Typography>
-            <div
-              style={{
-                maxWidth: "auto",
-              }}
-            >
-              <TableContainer component={Paper}>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      {/* <TableCell>Appointment Name</TableCell> */}
-                      <TableCell>Day</TableCell>
-                      <TableCell>Start At</TableCell>
-                      <TableCell>End At</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                     {myAppointment?.map((appointment) => (
-                      <TableRow key={appointment.id} style={{ opacity: blockedRows.includes(appointment.id) ? 0.5 : 1 }}>
-                        <TableCell>{appointment.day}</TableCell>
-                        <TableCell>{appointment.start_time}</TableCell>
-                        <TableCell>{appointment.end_time}</TableCell>
+              <Typography
+                variant="h5"
+                style={{
+                  marginBottom: "20px",
+                  color: "black",
+                  fontFamily: "serif",
+                }}
+              >
+                Schedule Data
+              </Typography>
+              <div
+                style={{
+                  maxWidth: "auto",
+                }}
+              >
+                <TableContainer component={Paper}>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        {/* <TableCell>Appointment Name</TableCell> */}
+                        <TableCell>Day</TableCell>
+                        <TableCell>Start At</TableCell>
+                        <TableCell>End At</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {myAppointment?.map((appointment) => (
+                        <TableRow
+                          key={appointment.id}
+                          style={{
+                            opacity: blockedRows.includes(appointment.id)
+                              ? 0.5
+                              : 1,
+                          }}
+                        >
+                          <TableCell>{appointment.day}</TableCell>
+                          <TableCell>{appointment.start_time}</TableCell>
+                          <TableCell>{appointment.end_time}</TableCell>
 
-
-                        <TableCell>
-      <Button
-       style={{color:"red"}}
-        onClick={(event) => handleDeleteAppointment(event, appointment.id)}
-      >
-        Delete
-      </Button>
-      <Button
-      style={{color:"black"}}
-        onClick={(event) => handleBlockAppointment(event, appointment.id)}
-        disabled={blockedRows.includes(appointment.id)}
-      >
-        Block
-      </Button>
-      <Button style={{color:"blue"}}
-        onClick={(event) => handleUnblockAppointment(event, appointment.id)}
-        disabled={!blockedRows.includes(appointment.id)}
-      >
-        Unblock
-      </Button>
-    </TableCell>
-  </TableRow>
-))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </div>
-          </Box>
-        </div>
+                          <TableCell>
+                            <Button
+                              style={{ color: "red" }}
+                              onClick={(event) =>
+                                handleDeleteAppointment(event, appointment.id)
+                              }
+                            >
+                              Delete
+                            </Button>
+                            <Button
+                              style={{ color: "black" }}
+                              onClick={(event) =>
+                                handleBlockAppointment(event, appointment.id)
+                              }
+                              disabled={blockedRows.includes(appointment.id)}
+                            >
+                              Block
+                            </Button>
+                            <Button
+                              style={{ color: "blue" }}
+                              onClick={(event) =>
+                                handleUnblockAppointment(event, appointment.id)
+                              }
+                              disabled={!blockedRows.includes(appointment.id)}
+                            >
+                              Unblock
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </div>
+            </Box>
+          </div>
         )}
       </div>
-
     </div>
   );
 };

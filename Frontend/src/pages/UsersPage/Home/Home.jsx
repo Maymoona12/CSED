@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
@@ -23,10 +23,6 @@ import {
   Paper,
   Stack,
   IconButton,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
   TextField,
   InputAdornment,
 } from "@mui/material";
@@ -51,28 +47,25 @@ import Alert from "@mui/material/Alert";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import usebookedAppointment from "./useBookedApp";
 import useReject from "./useReject";
+import uselecturersprofile from "../../Lecturer-Profiles/uselecturersprofile";
+import useDoctorRegister from "./useDoctorRegister";
+import useDeleteAcc from "./useDeleteAcc";
+import useAddFile from "./useAddFile";
 
 const Home = () => {
+  const { getUser } = useAuth();
+  const user = getUser();
+
+  const [dynamicPhotoPath, setDynamicPhotoPath] = useState(
+    `/ProfileImages/${user?.photo}`
+  );
   const { booked } = usebookedAppointment();
   const { mutate: reject } = useReject();
+  const { doctors: lecturers } = uselecturersprofile();
+  const { mutate: doctorReg } = useDoctorRegister();
+  const { mutate: deleteAcc } = useDeleteAcc();
+  const { mutate: add } = useAddFile();
   const [imageSrc, setImageSrc] = useState();
-  const [lectures, setLectures] = useState([
-    { id: 1, name: "Thear sammar", assistant: "PROF", phone: "123-456-7890" },
-    {
-      id: 2,
-      name: "Yazeed Sleet",
-      assistant: "Lecturer",
-      phone: "987-654-3210",
-    },
-    { id: 3, name: "Anas Melhem", assistant: "PROF", phone: "123-456-7890" },
-    {
-      id: 4,
-      name: "Nagham Hammad",
-      assistant: "Lecturer",
-      phone: "987-654-3210",
-    },
-  ]);
-
   const [searchQuery, setSearchQuery] = useState("");
   const [newLecturerEmail, setNewLecturerEmail] = useState("");
   const [newLecturerPassword, setNewLecturerPassword] = useState("");
@@ -80,25 +73,23 @@ const Home = () => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [enteredConfirmPassword, setEnteredConfirmPassword] = useState("");
+  const fileInputRef = useRef(null);
+  const [filteredLecturers, setFilteredLecturers] = React.useState(lecturers);
+  const [open, setOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
-  const [role, setRole] = useState("doctor");
-  const handleRole = (e) => {
-    setRole(e.target.value);
-  };
-
-  const handleSubmit = (event) => {
+  const handleAddLecturer = (event) => {
     event.preventDefault();
-    // const data = new FormData(event.currentTarget);
-    // const name = data.get("name");
-    // const reg_no = data.get("reg_no");
-    // const email = data.get("email");
-    // const password = data.get("password");
-    // const password_confirmation = data.get("password_confirmation");
+    const form = event.target; // Get the form element
+    const data = new FormData(form);
+    const name = data.get("name");
+    const reg_no = data.get("reg_no");
+    const email = data.get("email");
+    const password = data.get("password");
+    const password_confirmation = data.get("password_confirmation");
 
-    // mutate({ name, reg_no, email, password, password_confirmation });
-  };
+    doctorReg({ name, reg_no, email, password, password_confirmation });
 
-  const handleAddLecturer = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(newLecturerEmail)) {
       setAlertMessage("Invalid email format!");
@@ -119,13 +110,6 @@ const Home = () => {
 
     // Close the Snackbar
     setOpen(false);
-  };
-
-  const handleDeleteLecture = (lectureId) => {
-    // Remove the selected lecture from the state
-    setLectures((prevLectures) =>
-      prevLectures.filter((lecture) => lecture.id !== lectureId)
-    );
   };
 
   const handleTabChange = (event, newValue) => {
@@ -149,22 +133,6 @@ const Home = () => {
     );
   };
 
-  // Function to filter lectures by name
-  const filteredLectures = lectures.filter((lecture) =>
-    lecture.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  const { getUser } = useAuth();
-  const user = getUser();
-
-  const [dynamicPhotoPath, setDynamicPhotoPath] = useState(
-    `/ProfileImages/${user?.photo}`
-  );
-
-  const textFieldStyle = {
-    display: "none", // This will hide the TextField initially
-  };
-
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -178,44 +146,43 @@ const Home = () => {
     }
   };
 
-  // Sample data for the table
-  const scheduleData = [
-    {
-      day: "Sunday",
-      timeInterval: "10:00 - 12:00 ",
-      student: "Ahmad",
-      reason: "Meeting",
-    },
-    {
-      day: "Monday",
-      timeInterval: "10:00 - 12:00 ",
-      student: "Lena",
-      reason: "Meeting",
-    },
-    {
-      day: "Tuesday",
-      timeInterval: "10:00 - 12:00 ",
-      student: "Yazeed",
-      reason: "Meeting",
-    },
-    {
-      day: "Wednesday",
-      timeInterval: "10:00 - 12:00 ",
-      student: "Nagham",
-      reason: "Meeting",
-    },
-  ];
-
-  const [open, setOpen] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
-
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleDeleteLecture = (event, id) => {
+    event.preventDefault();
+    deleteAcc({ id });
   };
 
   const handelRejectApp = (event, id) => {
     event.preventDefault();
     reject({ id });
+  };
+
+  const [file, setFile] = useState(null);
+
+  const handleFileChange = (e) => {
+    // Set the selected file to the state
+    setFile(e.target.files[0]);
+  };
+
+  const handleAdd = (event) => {
+    event.preventDefault();
+    const formData = new FormData();
+
+    // Check if a file is selected before appending it to formData
+    if (file) {
+      formData.append("file1", file);
+      // Use formData directly, no need for formData1
+      add(formData);
+    }
+  };
+
+  const add2 = (formData) => {
+    // Perform your upload or API call here
+    // Example: axios.post('/upload', formData);
+    console.log(formData);
   };
 
   return (
@@ -491,7 +458,7 @@ const Home = () => {
                             <TableCell>{booked[index]?.end_time}</TableCell>
 
                             <TableCell>{booked[index]?.student_name}</TableCell>
-                          <TableCell>{booked[index]?.reason}</TableCell>
+                            <TableCell>{booked[index]?.reason}</TableCell>
 
                             <TableCell>
                               <Button
@@ -532,6 +499,9 @@ const Home = () => {
                 {selectedTab === 0 && (
                   <div>
                     <Box
+                      component="form"
+                      noValidate
+                      onSubmit={handleAddLecturer}
                       style={{
                         marginTop: "10px",
                         border: "1px solid #ccc",
@@ -541,18 +511,6 @@ const Home = () => {
                         borderRadius: "10px",
                       }}
                     >
-                      <TextField
-                        style={textFieldStyle}
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="role"
-                        label="Role"
-                        name="role"
-                        autoComplete="role"
-                        value={role}
-                        onChange={handleRole}
-                      />
                       <TextField
                         label="Register Number"
                         name="reg_no"
@@ -636,7 +594,7 @@ const Home = () => {
                       />
 
                       <Button
-                        onClick={handleAddLecturer}
+                        type="submit"
                         style={{
                           color: "white",
                           marginLeft: "40%",
@@ -695,17 +653,21 @@ const Home = () => {
                             </TableRow>
                           </TableHead>
                           <TableBody>
-                            {filteredLectures.map((lecture) => (
-                              <TableRow key={lecture.id}>
-                                <TableCell>{lecture.id}</TableCell>
-                                <TableCell>{lecture.name}</TableCell>
-                                <TableCell>{lecture.assistant}</TableCell>
-                                <TableCell>{lecture.phone}</TableCell>
+                            {lecturers?.map((lecture, index) => (
+                              <TableRow key={`${lecture.id}-${index}`}>
+                                <TableCell>{lecturers[index]?.id}</TableCell>
+                                <TableCell>{lecturers[index]?.name}</TableCell>
+                                <TableCell>
+                                  {lecturers[index]?.education_level}
+                                </TableCell>
+                                <TableCell>
+                                  {lecturers[index]?.phone_no}
+                                </TableCell>
                                 <TableCell>
                                   <IconButton
                                     style={{ color: "#1f3f66" }}
-                                    onClick={() =>
-                                      handleDeleteLecture(lecture.id)
+                                    onClick={(event) =>
+                                      handleDeleteLecture(event, lecture?.id)
                                     }
                                   >
                                     <ClearIcon />
@@ -719,11 +681,54 @@ const Home = () => {
                     </Box>
                   </div>
                 )}
+
+                {selectedTab === 2 && (
+                  <div>
+                    <Box
+                      component="form"
+                      style={{
+                        marginTop: "10px",
+                        border: "1px solid #ccc",
+                        width: "300px",
+                        height: "100px",
+                        padding: "20px",
+                        borderRadius: "10px",
+                        flexDirection: "column",
+                        marginLeft: "50%",
+                      }}
+                    >
+                      <div>
+                        <input
+                          type="file"
+                          accept=".xls, .xlsx"
+                          onChange={handleFileChange}
+                        />
+
+                        <Button
+                          variant="contained"
+                          component="label"
+                          type="submit"
+                          style={{
+                            width: "100px",
+                            marginTop: "40px",
+                            marginLeft: "5px",
+                            marginBottom: "5px",
+                            background: "#1f3f66",
+                          }}
+                          onClick={handleAdd}
+                        >
+                          Add
+                        </Button>
+                      </div>
+                    </Box>
+                  </div>
+                )}
               </Container>
             </div>
           )}
         </div>
       )}
+
       {user?.role == "student" && (
         <div className="profile-button">
           <div
@@ -799,6 +804,7 @@ const Home = () => {
           </div>
         </div>
       )}
+
       <Snackbar
         open={open}
         autoHideDuration={10000}

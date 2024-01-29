@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Route, Routes, Link } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import FoldersPage from "./foldersPage";
 import PhotosPage from "./photospage";
 
@@ -96,13 +96,12 @@ function GalleryPage() {
           }
         />
         <Route
-          path="/photospage/:folderId"
+          path="photospage/:folderId"
           element={
             <PhotosPage
               folders={foldersData}
               selectedFolder={selectedFolder}
               setSelectedPhoto={setSelectedPhoto}
-              setLightboxOpen={setLightboxOpen}
             />
           }
         />
