@@ -13,7 +13,12 @@ class NotificationController extends Controller
     }
     
     public function getNotifiApp(){
-        $notifi =Auth()->user()->unreadnotifications->where('type','!=','App\Notifications\shareAnnouncment');
+        $notifi =Auth()->user()->notifications->where('type','!=','App\Notifications\shareAnnouncment');
         return response()->json([$notifi]);
     }
+    
+    public function markNotifi($id){
+    Auth()->user()->notifications->where('id',$id)->markAsRead();
+     
+   }
 }
