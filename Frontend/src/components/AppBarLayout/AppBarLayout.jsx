@@ -174,6 +174,7 @@ const AppBarLayout = () => {
   };
 
   const handleOpenNotificationMenu = (event) => {
+    console.log("Notification menu opened");
     setAnchorElNotification(event.currentTarget);
   };
 
@@ -182,6 +183,14 @@ const AppBarLayout = () => {
   };
 
   const handleOpenDialogFromNotification = (index, sname, atime, aday) => {
+    console.log(
+      "Opening dialog for doctor notification",
+      index,
+      sname,
+      atime,
+      aday
+    );
+
     setSelectedNotification(index);
     setDialogOpenNotification(true);
     setAnchorElNotification(null);
@@ -195,6 +204,14 @@ const AppBarLayout = () => {
     aday2,
     atime2
   ) => {
+    console.log(
+      "Opening dialog for student notification",
+      index,
+      adoctor,
+      aday2,
+      atime2
+    );
+
     setSelectedNotificationStudent(index);
     setDialogOpenNotificationStudent(true);
     setAnchorElNotificationStudent(null);
@@ -218,6 +235,9 @@ const AppBarLayout = () => {
     event.preventDefault();
     reject({ id });
   };
+  // const notificationCount = Array.isArray(notifications)
+  //   ? notifications.length
+  //   : 0;
 
   console.log(notifications);
 
@@ -284,13 +304,13 @@ const AppBarLayout = () => {
                   {/* Conditionally render notifications based on user role */}
                   {user?.role === "doctor" || user?.role === "admin" ? (
                     <StyledButton onClick={handleOpenNotificationMenu}>
-                      <Badge badgeContent={2} color="primary">
+                      <Badge badgeContent={4} color="primary">
                         <NotificationsIcon />
                       </Badge>
                     </StyledButton>
                   ) : (
                     <StyledButton onClick={handleOpenNotificationMenu}>
-                      <Badge badgeContent={2} color="primary">
+                      <Badge badgeContent={4} color="primary">
                         <NotificationsIcon />
                       </Badge>
                     </StyledButton>
@@ -312,13 +332,12 @@ const AppBarLayout = () => {
                   onClose={handleCloseNotificationMenu}
                 >
                   {/* Conditionally render notification items based on user role */}
-                  {user?.role === "doctor" || user?.role === "admin"
-                    ? notifications?.map((notificationGroup) =>
-                        renderDoctorNotifications(notificationGroup)
-                      )
-                    : notifications?.map((notificationGroup) =>
-                        renderStudentNotifications(notificationGroup)
-                      )}
+                  {(user?.role === "doctor" || user?.role === "admin") &&
+                  Array.isArray(notifications)
+                    ? renderDoctorNotifications()
+                    : Array.isArray(notifications)
+                    ? renderStudentNotifications()
+                    : null}
                 </Menu>
               </Box>
               <Box
@@ -500,7 +519,6 @@ const AppBarLayout = () => {
                     marginLeft: "65%",
                     marginTop: "5px",
                     fontSize: "16px",
-                    // backgroundColor: "#da717e",
                     color: "#da717e",
                     minWidth: "100px",
                     height: "50px",
