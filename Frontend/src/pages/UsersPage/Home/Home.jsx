@@ -174,6 +174,7 @@ const Home = () => {
     // Check if a file is selected before appending it to formData
     if (file) {
       formData.append("file1", file?.name);
+
       // Use formData directly, no need for formData1
       add(formData);
     }

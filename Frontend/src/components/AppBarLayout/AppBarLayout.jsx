@@ -500,7 +500,6 @@ const AppBarLayout = () => {
                     marginLeft: "65%",
                     marginTop: "5px",
                     fontSize: "16px",
-                    // backgroundColor: "#da717e",
                     color: "#da717e",
                     minWidth: "100px",
                     height: "50px",

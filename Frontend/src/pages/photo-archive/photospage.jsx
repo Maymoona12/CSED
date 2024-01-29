@@ -88,14 +88,6 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
   };
 
   const handleDeletePhoto = () => {
-    // Implement your logic to delete the photo.
-    // You can use the currentFolder, photoToDelete, and any other necessary information.
-    // For example, if you have a function to delete a photo, you might do something like:
-    // deletePhoto(currentFolder.id, photoToDelete.id);
-    // After deleting the photo, you might want to refresh the page or update the state.
-    // For simplicity, let's assume you have a refreshPhotos function to reload the photos.
-    // refreshPhotos();
-    // Close the delete confirmation dialog
     handleDeleteConfirmationClose();
   };
 
