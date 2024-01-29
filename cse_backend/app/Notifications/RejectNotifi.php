@@ -14,14 +14,16 @@ class RejectNotifi extends Notification
     private $doctor_name;
     private $appointment_id;
     private $start_time;
+    private $day;
     
 
-    public function __construct($doctor_id,$doctor_name,$appointment_id,$start_time)
+    public function __construct($doctor_id,$doctor_name,$appointment_id,$start_time,$day)
     {
         $this->doctor_id=$doctor_id;
         $this->doctor_name=$doctor_name;
         $this->appointment_id=$appointment_id;
         $this->start_time=$start_time;
+        $this->day=$day;
     }
 
     
@@ -39,6 +41,7 @@ class RejectNotifi extends Notification
             'doctor_name' => $this->doctor_name,
             'appointment_id' => $this->appointment_id,
             'start_time' => $this->start_time,
+            'day' =>$this->day 
         ];
     }
 }

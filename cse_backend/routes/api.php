@@ -9,6 +9,7 @@ use App\Http\Controllers\getDoctorController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OfficeHourController;
 use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\StudentController;
 use App\Models\Appointment;
 use App\Models\OfficeHour;
@@ -38,6 +39,9 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('doctor_register','doctor_register');
 });
 
+// Route::post('/password/forget-password',[PasswordController::class,'forgetPassword']);
+// Route::post('/password/reset',[ResetPasswordController::class,'passwordReset']);
+
 Route::post('/edit_profile',[AccountController::class,'EditAccount']);
 Route::post('/change_password',[PasswordController::class,'changePassword']);
 
@@ -51,7 +55,7 @@ Route::post('/import_students',[StudentController::class,'saveStudents']);
 Route::post('/office_hour',[OfficeHourController::class,'createOfficeHour']);//doctor
 Route::post('/book_app',[AppointmentController::class,'bookAppointment']);//student
 Route::post('/reject_appointment',[AppointmentController::class,'rejectAppointment']);//doctor
-Route::post('/cancel_book_app/{id}',[AppointmentController::class,'cancelBookApp']);//student
+Route::post('/finish_appointment',[AppointmentController::class,'finishAppointment']);//doctor
 Route::get('/my_appointments',[AppointmentController::class,'myAppointments']);//doctor
 Route::get('/my_booked_app',[AppointmentController::class,'myBookedAppointments']);
 Route::get('/doctor_appointments/{id}',[AppointmentController::class,'doctorAppointments']);//student
@@ -62,6 +66,8 @@ Route::post('/unblocked_app',[AppointmentController::class,'unblockedApp']);//do
 
 Route::get('/get_notifi_ann',[NotificationController::class,'getNotifiAnn']);
 Route::get('/get_notifi_app', [NotificationController::class, 'getNotifiApp']);
+Route::post('/mark_as_read/{id}',[NotificationController::class,'markNotifi']);
+
 
 Route::post('/createAnnouncement',[AnnouncementController::class,'createAnnouncement']);//doctor
 Route::get('/all_announcement',[AnnouncementController::class,'allAnnouncement']);//all

@@ -99,11 +99,32 @@ class AppointmentController extends Controller
              
         }
         $users=User::where('id',$book_appointment->student_id)->get();
-        Notification::send($users,new RejectNotifi($user->id,$user->name,$appointment->id,$appointment->start_time));
-        
+        Notification::send($users,new RejectNotifi($user->id,$user->name,$appointment->id,$appointment->start_time,$appointment->day));
+        // Notification::delete();
+        // $app_notifi=DB::table('notifications')->where();
         return response()->json(['rejected',200]);
         
     
+    }
+
+    public function finishAppointment(Request $request){
+        $id=$request->id;
+        $user=Auth::user();
+        if($user->role == 'doctor' || $user->role == 'admin'){
+           // Appointments : status 0->available , 1-buzy , 2->blocked 
+            $appointment=Appointment::find($id); 
+            $appointment->status=0; // available
+            $appointment->save();
+            
+            
+            // Book Appointments : status 0->sent, 1->reject, 2->finish
+            $book_appointment=BookAppointment::where('appointment_id',$id)->first();
+            $book_appointment->status=2; // finish
+            $book_appointment->save();
+
+            return response()->json(['finished',200]);
+             
+        }
     }
 
     
