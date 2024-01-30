@@ -63,14 +63,6 @@ const PostAnnouncement = () => {
     }
   };
 
-  // "doctor_id": 1,
-  // "title": "subject",
-  // "text_ann": "text",
-  // "file": "1706554916.PNG",
-  // "created_at": "2024-01-29T19:01:56.000000Z",
-  // "updated_at": "2024-01-29T19:01:56.000000Z",
-  // "id": 1
-
   return (
     <div className="post-announcement-page">
       <div>

@@ -86,11 +86,11 @@ class AppointmentController extends Controller
         }
         $users=User::where('id',$book_appointment->student_id)->get();
         Notification::send($users,new RejectNotifi($user->id,$user->name,$appointment->id,$appointment->start_time,$appointment->day));
+        if($request->notifi_id){
         $notification=ModelsNotification::find($notifi_id);
-        
-        if ($notification) {
-            $notification->delete();
+         $notification->delete();
         }
+        
         // $app_notifi=DB::table('notifications')->where();
         return response()->json(['rejected',200]);
         

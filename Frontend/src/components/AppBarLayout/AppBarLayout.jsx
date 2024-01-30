@@ -48,13 +48,14 @@ const AppBarLayout = () => {
         const sname = notify?.data?.["student_name"]?.[0]?.name;
         const atime = notify?.data?.time;
         const aday = notify?.data?.day;
+        const idNo = notify?.id;
 
         return (
           <MenuItem
             key={notify?.id}
             onClick={() => {
               console.log("Notification clicked:", notify);
-              handleOpenDialogFromNotification(index, sname, atime, aday);
+              handleOpenDialogFromNotification(index, sname, atime, aday, idNo);
             }}
           >
             An appointment was booked by:{" "}
@@ -119,6 +120,7 @@ const AppBarLayout = () => {
   const [dname, setDname] = useState(" ");
   const [day2, setDay2] = useState(" ");
   const [time2, setTime2] = useState(" ");
+  const [notifi_id, setNotifiId] = useState(" ");
 
   const announcements = [
     {
@@ -182,13 +184,20 @@ const AppBarLayout = () => {
     setAnchorElNotification(null);
   };
 
-  const handleOpenDialogFromNotification = (index, sname, atime, aday) => {
+  const handleOpenDialogFromNotification = (
+    index,
+    sname,
+    atime,
+    aday,
+    idNo
+  ) => {
     console.log(
       "Opening dialog for doctor notification",
       index,
       sname,
       atime,
-      aday
+      aday,
+      { idNo }
     );
 
     setSelectedNotification(index);
@@ -197,6 +206,7 @@ const AppBarLayout = () => {
     setName(sname);
     setTime(atime);
     setDay(aday);
+    setNotifiId(idNo);
   };
   const handleOpenDialogFromNotificationStudent = (
     index,
@@ -231,9 +241,9 @@ const AppBarLayout = () => {
   const handleDrawerOpen = () => {
     setSideBar((previous) => !previous);
   };
-  const handelRejectApp = (event, id) => {
+  const handelRejectApp = (event, id, notifi_id) => {
     event.preventDefault();
-    reject({ id });
+    reject({ id, notifi_id });
   };
 
   console.log(notifications);
@@ -520,7 +530,9 @@ const AppBarLayout = () => {
                     height: "50px",
                     padding: "20px",
                   }}
-                  onClick={(event) => handelRejectApp(event, book.id)}
+                  onClick={(event) =>
+                    handelRejectApp(event, book.id, notifi_id)
+                  }
                 >
                   Decline
                   <HighlightOffIcon
