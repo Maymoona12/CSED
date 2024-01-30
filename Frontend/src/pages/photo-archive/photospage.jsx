@@ -31,25 +31,18 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
     height: 0,
   });
   const documentInputRef = useRef(null);
-
-  const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
-  const [photoToDelete, setPhotoToDelete] = useState(null);
-
-  // Add state variables
-  const [documentFiles, setDocumentFiles] = useState([]);
+  const [isAddButtonVisible, setAddButtonVisibility] = useState(false);
   const [documentPreview, setDocumentPreview] = useState(null);
 
   useEffect(() => {
-    // Update document preview when file state changes
     if (file.length > 0) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        setDocumentPreview([e.target.result]); // Initialize as an array
+        setDocumentPreview([e.target.result]);
       };
       reader.readAsDataURL(file[0]);
     } else {
-      // Reset document preview when no files are present
-      setDocumentPreview([]); // Initialize as an empty array
+      setDocumentPreview([]);
     }
   }, [file]);
 
@@ -91,6 +84,7 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
   const handleDocumentChange = (event) => {
     const files = event.target.files;
     setFile((prevFiles) => [...prevFiles, ...files]);
+    setAddButtonVisibility(true);
 
     // Display a preview for each selected file
     Array.from(files).forEach((file) => {
@@ -122,6 +116,9 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
     input.click();
   };
 
+  const handleAdd = (event) => {
+    event.preventDefault();
+  };
   const renderPhotos = () => {
     if (!currentFolder) {
       return <div>No folder found</div>;
@@ -155,25 +152,63 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
                 background: "#1f3f66",
               }}
             >
-              Upload New Photo
+              Upload New Photos
             </Button>
-            {/* Display a preview of the first selected file (you can customize this part) */}
-            {documentPreview &&
-              documentPreview.map((preview, index) => (
-                <div key={index}>
-                  <img
-                    src={preview}
-                    alt={`Document Preview ${index + 1}`}
-                    style={{
-                      maxWidth: "100%",
-                      maxHeight: "200px",
-                      marginTop: "10px",
-                    }}
-                  />
-                </div>
-              ))}
-            {/* Display EditIcon and DeleteIcon for each uploaded photo */}
 
+            {/* Display the "Add" button when files are added */}
+            {isAddButtonVisible && (
+              <Button
+                variant="contained"
+                onClick={() => {
+                  // Handle the "Add" button click
+                  // You can implement the logic to add the uploaded photos to the server
+                  setAddButtonVisibility(false); // Hide the "Add" button after processing
+                }}
+                style={{
+                  flex: "0 0 auto",
+                  width: "90px",
+                  marginLeft: "5%",
+                  height: "40px",
+                  marginTop: "10px",
+                  fontFamily: "Monaco",
+                  background: "#1f3f66",
+                }}
+              >
+                Add
+              </Button>
+            )}
+
+            {/* Display a preview of the first selected file (you can customize this part) */}
+            {documentPreview && documentPreview.length > 0 && (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  flexWrap: "wrap",
+                  display: "flex",
+                }}
+              >
+                {documentPreview.map((preview, index) => (
+                  <div
+                    key={index}
+                    style={{ marginRight: "10px", marginBottom: "10px" }}
+                  >
+                    <img
+                      src={preview}
+                      alt={`Document Preview ${index + 1}`}
+                      style={{
+                        maxWidth: "200px",
+                        maxHeight: "200px",
+                        marginTop: "10px",
+                        display: "block", // Ensure each image is on a new line
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Display EditIcon and DeleteIcon for each uploaded photo */}
             {file.map((uploadedFile, index) => (
               <div key={index}>
                 <IconButton
@@ -192,6 +227,7 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
             ))}
           </div>
         ) : null}
+
         <ImageList
           sx={{
             width: "100%",
