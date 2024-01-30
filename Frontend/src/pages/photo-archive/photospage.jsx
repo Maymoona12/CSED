@@ -13,6 +13,7 @@ import Button from "@mui/material/Button";
 import UploadIcon from "@mui/icons-material/Upload";
 import DeleteIcon from "@mui/icons-material/Delete";
 import useAuth from "../../hooks/useAuth";
+import EditIcon from "@mui/icons-material/Edit";
 
 const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
   const { folderId } = useParams();
@@ -20,7 +21,7 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
   const currentFolder = folders.find(
     (folder) => folder.id === parseInt(selectedFolder)
   );
-
+  const [file, setFile] = useState([]);
   const { getUser } = useAuth();
   const user = getUser();
   const [openDialog, setOpenDialog] = useState(false);
@@ -39,8 +40,18 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
   const [documentPreview, setDocumentPreview] = useState(null);
 
   useEffect(() => {
-    setSelectedFolder(folderId);
-  }, [folderId, selectedFolder]);
+    // Update document preview when file state changes
+    if (file.length > 0) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setDocumentPreview([e.target.result]); // Initialize as an array
+      };
+      reader.readAsDataURL(file[0]);
+    } else {
+      // Reset document preview when no files are present
+      setDocumentPreview([]); // Initialize as an empty array
+    }
+  }, [file]);
 
   const handlePhotoClick = (photo, index, clickedFolderId) => {
     const clickedFolder =
@@ -77,32 +88,38 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
     });
   };
 
-  const handleDeleteConfirmationOpen = (photo) => {
-    setPhotoToDelete(photo);
-    setDeleteConfirmationOpen(true);
-  };
-
-  const handleDeleteConfirmationClose = () => {
-    setPhotoToDelete(null);
-    setDeleteConfirmationOpen(false);
-  };
-
-  const handleDeletePhoto = () => {
-    handleDeleteConfirmationClose();
-  };
-
   const handleDocumentChange = (event) => {
     const files = event.target.files;
+    setFile((prevFiles) => [...prevFiles, ...files]);
 
-    // Update documentFiles state with the selected files
-    setDocumentFiles([...documentFiles, ...files]);
+    // Display a preview for each selected file
+    Array.from(files).forEach((file) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setDocumentPreview((prevPreviews) => [
+          ...(prevPreviews ?? []),
+          e.target.result,
+        ]);
+      };
+      reader.readAsDataURL(file);
+    });
 
-    // Display a preview of the first selected file (you can customize this part)
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      setDocumentPreview(e.target.result);
-    };
-    reader.readAsDataURL(files[0]);
+    // You can use previews for any further logic or display purposes
+  };
+
+  const deleteFile = (index) => {
+    const updatedFile = [...file];
+    updatedFile.splice(index, 1);
+    setFile(updatedFile);
+  };
+
+  const editFile = (index) => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.addEventListener("change", (event) =>
+      handleDocumentChange(event, index)
+    );
+    input.click();
   };
 
   const renderPhotos = () => {
@@ -122,7 +139,7 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
               onChange={handleDocumentChange}
               ref={documentInputRef}
               multiple
-              accept="image/*" // Add this line to accept only image files
+              accept="image/*"
             />
             <Button
               variant="contained"
@@ -141,19 +158,38 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
               Upload New Photo
             </Button>
             {/* Display a preview of the first selected file (you can customize this part) */}
-            {documentPreview && (
-              <div>
-                <img
-                  src={documentPreview}
-                  alt="Document Preview"
-                  style={{
-                    maxWidth: "100%",
-                    maxHeight: "200px",
-                    marginTop: "10px",
-                  }}
-                />
+            {documentPreview &&
+              documentPreview.map((preview, index) => (
+                <div key={index}>
+                  <img
+                    src={preview}
+                    alt={`Document Preview ${index + 1}`}
+                    style={{
+                      maxWidth: "100%",
+                      maxHeight: "200px",
+                      marginTop: "10px",
+                    }}
+                  />
+                </div>
+              ))}
+            {/* Display EditIcon and DeleteIcon for each uploaded photo */}
+
+            {file.map((uploadedFile, index) => (
+              <div key={index}>
+                <IconButton
+                  onClick={() => editFile(index)}
+                  style={{ color: "#1f3f66" }}
+                >
+                  <EditIcon />
+                </IconButton>
+                <IconButton
+                  onClick={() => deleteFile(index)}
+                  style={{ color: "#1f3f66" }}
+                >
+                  <DeleteIcon />
+                </IconButton>
               </div>
-            )}
+            ))}
           </div>
         ) : null}
         <ImageList
@@ -183,27 +219,6 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
                   objectFit: "cover",
                 }}
               />
-              {user?.role === "doctor" || user?.role === "admin" ? (
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    right: 0,
-                    background: "rgba(255,255,255,0.8)",
-                    padding: "4px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <IconButton
-                    onClick={() => handleDeleteConfirmationOpen(photo)}
-                    style={{ color: "#1f3f66" }}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </div>
-              ) : null}
             </ImageListItem>
           ))}
         </ImageList>
@@ -262,24 +277,6 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
           </IconButton>
           <Button onClick={handleDialogClose} style={{ color: "#1f3f66" }}>
             Close
-          </Button>
-        </DialogActions>
-      </Dialog>
-      {/* Delete Confirmation Dialog */}
-      <Dialog
-        open={deleteConfirmationOpen}
-        onClose={handleDeleteConfirmationClose}
-      >
-        <DialogTitle>Confirm Deletion</DialogTitle>
-        <DialogContent>
-          Are you sure you want to delete this photo?
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleDeleteConfirmationClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleDeletePhoto} style={{ color: "red" }}>
-            Delete
           </Button>
         </DialogActions>
       </Dialog>

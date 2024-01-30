@@ -235,9 +235,6 @@ const AppBarLayout = () => {
     event.preventDefault();
     reject({ id });
   };
-  // const notificationCount = Array.isArray(notifications)
-  //   ? notifications.length
-  //   : 0;
 
   console.log(notifications);
 
