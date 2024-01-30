@@ -8,6 +8,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import AddLinkIcon from "@mui/icons-material/AddLink";
 import usePostAnnouncement from "./usePostAnnouncement";
+import { setContentType } from "../../api";
 
 const PostAnnouncement = () => {
   const { mutate } = usePostAnnouncement();
@@ -16,10 +17,8 @@ const PostAnnouncement = () => {
   const [file, setFile] = useState([]);
   const fileInputRef = useRef(null);
 
-  const deleteFile = (index) => {
-    const updatedFile = [...file];
-    updatedFile.splice(index, 1);
-    setFile(updatedFile);
+  const deleteFile = () => {
+    setFile([]); // Set file to an empty array to delete the file
   };
 
   const editFile = (index) => {
@@ -31,7 +30,7 @@ const PostAnnouncement = () => {
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
-    setFile(selectedFile ? [selectedFile] : []);
+    setFile([selectedFile]);
   };
 
   const handleFolderIconClick = () => {
@@ -39,28 +38,16 @@ const PostAnnouncement = () => {
   };
 
   const handleSubmit = () => {
-    // Check if the file array has any items before accessing its properties
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("text_ann", text_ann);
     if (file.length > 0) {
-      // Construct a plain JavaScript object with the data
-      const postData = {
-        title: title,
-        text_ann: text_ann,
-        file: file[0]?.name, // Assuming you only upload one file
-      };
-
-      // Create a new FormData object and append the data as key-value pairs
-      const formData = new FormData();
-      Object.entries(postData).forEach(([key, value]) => {
-        formData.append(key, value);
-      });
-
-      console.log({ file });
-      console.log("FormData:", formData); // Log formData before mutation
-      mutate(formData);
-    } else {
-      // Handle the case when the file array is empty
-      console.error("No file selected");
+      formData.append("file", file[0]);
     }
+
+    console.log("FormData:", formData); // Log formData before mutation
+    setContentType("multipart/form-data");
+    mutate(formData);
   };
 
   return (
@@ -151,6 +138,7 @@ const PostAnnouncement = () => {
                 // multiple
               />
               <Button
+                type="form"
                 variant="contained"
                 component="label"
                 onClick={handleFolderIconClick}
@@ -189,35 +177,31 @@ const PostAnnouncement = () => {
           </div>
           <div style={{ display: "flex" }}>
             <div style={{ flex: 1, marginRight: "5px" }}>
-              {file.length > 0 ? (
-                <div>
-                  {file.map((fileItem, index) => (
-                    <div
-                      key={index}
-                      style={{ marginTop: "5px", marginLeft: "20px" }}
-                    >
-                      {fileItem.type.startsWith("image/") ? (
-                        <img
-                          src={URL.createObjectURL(fileItem)}
-                          alt={`Image ${index + 1}`}
-                          style={{ maxWidth: "180px", maxHeight: "180px" }}
-                        />
-                      ) : (
-                        <span>{fileItem.name}</span>
-                      )}
-
+              <div>
+                <div style={{ marginTop: "5px", marginLeft: "20px" }}>
+                  {file.length > 0 && file[0].type.startsWith("image/") ? (
+                    <img
+                      src={URL.createObjectURL(file[0])}
+                      alt={`Image 1`}
+                      style={{ maxWidth: "180px", maxHeight: "180px" }}
+                    />
+                  ) : (
+                    file.length > 0 && <span>{file[0].name}</span>
+                  )}
+                  {file.length > 0 && (
+                    <>
                       <EditIcon
                         style={{ marginLeft: "5px", cursor: "pointer" }}
-                        onClick={() => editFile(index)}
+                        onClick={() => editFile(0)}
                       />
                       <DeleteIcon
                         style={{ marginLeft: "10px", cursor: "pointer" }}
-                        onClick={() => deleteFile(index)}
+                        onClick={deleteFile}
                       />
-                    </div>
-                  ))}
+                    </>
+                  )}
                 </div>
-              ) : null}
+              </div>
             </div>
           </div>
         </Box>

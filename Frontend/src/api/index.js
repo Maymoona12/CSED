@@ -23,4 +23,7 @@ axiosInstance.interceptors.request.use((config) => {
   return config;
 });
 
+export const setContentType = (contentType) => {
+  axiosInstance.defaults.headers["Content-Type"] = contentType;
+};
 export default axiosInstance;
