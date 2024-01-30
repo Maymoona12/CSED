@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   AppBar,
@@ -30,6 +30,7 @@ import Badge from "@mui/material/Badge";
 import useNotification from "./useNotification";
 import useReject from "../../pages/UsersPage/Home/useReject";
 import usebookedAppointment from "../../pages/UsersPage/Home/useBookedApp";
+import useNotifiAnn from "./useindexNotifiAnn";
 
 const StyledButton = styled(Button)({
   my: 2,
@@ -92,6 +93,29 @@ const AppBarLayout = () => {
     );
   };
 
+  const renderAnnNotifications = () => {
+    const firstElement = notifiAnn?.[0];
+
+    if (!firstElement || firstElement.length === 0) {
+      return <MenuItem>No announcements available</MenuItem>;
+    }
+
+    return firstElement.map((notifi, index) => {
+      const atitle = notifi?.data?.title;
+      const atext = notifi?.data?.text_ann;
+      const afile = notifi?.data?.file;
+
+      return (
+        <MenuItem
+          key={`announcement-${index}`}
+          onClick={() => handleOpenDialogFromTitle(index, atitle, atext, afile)}
+        >
+          {atitle}
+        </MenuItem>
+      );
+    });
+  };
+
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [anchorElAnnouncement, setAnchorElAnnouncement] = useState(null);
   const [dialogOpenAnnouncement, setDialogOpenAnnouncement] = useState(false);
@@ -121,25 +145,17 @@ const AppBarLayout = () => {
   const [day2, setDay2] = useState(" ");
   const [time2, setTime2] = useState(" ");
   const [notifi_id, setNotifiId] = useState(" ");
+  // const { notifiAnn } = useNotifiAnn();
+  const { notifiAnn, isLoading, isError } = useNotifiAnn();
+  console.log({ notifiAnn, isLoading, isError });
+  if (isError) {
+    // Log or handle the error
+    console.error("Error fetching announcements:", isError);
+  }
 
-  const announcements = [
-    {
-      title: "Title 1",
-      text: "Announcement text 1",
-      photo: "CoverImages/image1.jpg",
-      document: "Assignment 2.pdf",
-    },
-    {
-      title: "Title 2",
-      text: "Announcement text 2",
-      photo: "CoverImages/image2.jpg",
-    },
-    {
-      title: "Title 3",
-      text: "Announcement text 3,Announcement text 3Announcement text 3Announcement text 3Announcement text 3Announcement text 3Announcement text 3Announcement text 3 ",
-      document: "Assignment 2.pdf",
-    },
-  ];
+  const [title, setTitle] = useState(" ");
+  const [text, setText] = useState(" ");
+  const [file, setFile] = useState(" ");
 
   const settings1 = ["EditProfile", "ChangePassword"];
 
@@ -156,6 +172,9 @@ const AppBarLayout = () => {
   };
 
   const handleOpenAnnouncementMenu = (event) => {
+    console.log("Ann menu opened");
+    console.log("notifiAnn:", notifiAnn);
+
     setAnchorElAnnouncement(event.currentTarget);
   };
 
@@ -163,10 +182,13 @@ const AppBarLayout = () => {
     setAnchorElAnnouncement(null);
   };
 
-  const handleOpenDialogFromTitle = (index) => {
-    setSelectedAnnouncement(announcements[index]);
+  const handleOpenDialogFromTitle = (index, atitle, atext, afile) => {
+    setSelectedAnnouncement(index);
     setDialogOpenAnnouncement(true);
     setAnchorElAnnouncement(null);
+    setText(atext);
+    setTitle(atitle);
+    setFile(afile);
   };
 
   const handleCloseDialog = () => {
@@ -246,7 +268,15 @@ const AppBarLayout = () => {
     reject({ id, notifi_id });
   };
 
-  console.log(notifications);
+  const isImageFile = (fileName) => {
+    // Add logic to determine if the file is an image based on its extension
+    const imageExtensions = [".jpg", ".jpeg", ".png", ".gif"]; // Add more if needed
+    const fileExtension = fileName.slice(
+      ((fileName.lastIndexOf(".") - 1) >>> 0) + 2
+    );
+
+    return imageExtensions.includes(fileExtension.toLowerCase());
+  };
 
   return (
     <>
@@ -382,14 +412,13 @@ const AppBarLayout = () => {
                   open={Boolean(anchorElAnnouncement)}
                   onClose={handleCloseAnnouncementMenu}
                 >
-                  {announcements.map((announcement, index) => (
-                    <MenuItem
-                      key={announcement.title}
-                      onClick={() => handleOpenDialogFromTitle(index)}
-                    >
-                      {announcement.title}
-                    </MenuItem>
-                  ))}
+                  {isLoading ? (
+                    <MenuItem>Loading...</MenuItem>
+                  ) : notifiAnn?.length > 0 ? (
+                    renderAnnNotifications()
+                  ) : (
+                    <MenuItem>No Ann</MenuItem>
+                  )}
                 </Menu>
               </Box>
 
@@ -466,16 +495,12 @@ const AppBarLayout = () => {
         </div>
         {/* Dialog for displaying announcement details */}
         <Dialog open={dialogOpenAnnouncement} onClose={handleCloseDialog}>
-          <DialogTitle>
-            {selectedAnnouncement && selectedAnnouncement.title}
-          </DialogTitle>
+          <DialogTitle>Title is: {title}</DialogTitle>
           <DialogContent>
-            {selectedAnnouncement && selectedAnnouncement.text && (
-              <Typography>{selectedAnnouncement.text}</Typography>
-            )}
-            {selectedAnnouncement && selectedAnnouncement.photo && (
+            <Typography>Text: {text}</Typography>
+            {isImageFile(file) ? (
               <img
-                src={selectedAnnouncement.photo}
+                src={`/files/${notifiAnn?.data?.file}`}
                 alt="Announcement"
                 style={{
                   maxWidth: "80%",
@@ -483,8 +508,7 @@ const AppBarLayout = () => {
                   marginTop: "10px",
                 }}
               />
-            )}
-            {selectedAnnouncement && selectedAnnouncement.document && (
+            ) : (
               <Paper
                 elevation={3}
                 style={{ padding: "10px", marginTop: "20px" }}
@@ -492,11 +516,11 @@ const AppBarLayout = () => {
                 <Typography>
                   Attachment:{" "}
                   <a
-                    href={selectedAnnouncement.document}
+                    href={`/files/${notifiAnn?.data?.file}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    {selectedAnnouncement.document}
+                    {file}
                   </a>
                 </Typography>
               </Paper>
@@ -506,6 +530,7 @@ const AppBarLayout = () => {
             <Button onClick={handleCloseDialog}>Close</Button>
           </DialogActions>
         </Dialog>
+
         {user?.role === "doctor" || user?.role === "admin" ? (
           <Dialog open={dialogOpenNotification} onClose={handleCloseDialog}>
             <DialogTitle style={{ fontWeight: "bold" }}>
