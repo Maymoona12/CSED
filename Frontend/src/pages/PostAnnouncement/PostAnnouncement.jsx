@@ -22,6 +22,13 @@ const PostAnnouncement = () => {
     setFile(updatedFile);
   };
 
+  const editFile = (index) => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.addEventListener("change", (event) => handleFileChange(event, index));
+    input.click();
+  };
+
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile ? [selectedFile] : []);

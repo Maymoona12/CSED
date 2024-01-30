@@ -235,9 +235,6 @@ const AppBarLayout = () => {
     event.preventDefault();
     reject({ id });
   };
-  // const notificationCount = Array.isArray(notifications)
-  //   ? notifications.length
-  //   : 0;
 
   console.log(notifications);
 
@@ -299,18 +296,18 @@ const AppBarLayout = () => {
                 <StyledStack
                   spacing={2}
                   direction="row"
-                  sx={{ color: "white", marginTop: "10px" }}
+                  sx={{ color: "white" }}
                 >
                   {/* Conditionally render notifications based on user role */}
                   {user?.role === "doctor" || user?.role === "admin" ? (
                     <StyledButton onClick={handleOpenNotificationMenu}>
-                      <Badge badgeContent={4} color="primary">
+                      <Badge variant="dot" color="info">
                         <NotificationsIcon />
                       </Badge>
                     </StyledButton>
                   ) : (
                     <StyledButton onClick={handleOpenNotificationMenu}>
-                      <Badge badgeContent={4} color="primary">
+                      <Badge variant="dot" color="info">
                         <NotificationsIcon />
                       </Badge>
                     </StyledButton>
@@ -351,12 +348,11 @@ const AppBarLayout = () => {
                   direction="row"
                   sx={{
                     color: "white",
-                    marginTop: "10px",
                     marginRight: "20px",
                   }}
                 >
                   <StyledButton onClick={handleOpenAnnouncementMenu}>
-                    <Badge badgeContent={3} color="primary">
+                    <Badge variant="dot" color="info">
                       <CampaignIcon />
                     </Badge>
                   </StyledButton>
