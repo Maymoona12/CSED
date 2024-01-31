@@ -499,6 +499,7 @@ const AppBarLayout = () => {
                         </Link>
                       </MenuItem>
                     ))}
+
                   <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </Menu>
               </Stack>
@@ -559,11 +560,7 @@ const AppBarLayout = () => {
                 <Button
                   key={`${book.id}-${index}`}
                   style={{
-<<<<<<< HEAD
-                    marginLeft: "100%",
-=======
                     marginLeft: "70%",
->>>>>>> af2ca58c9170e809c70f5d31e604579e34189d6d
                     marginTop: "5px",
                     fontSize: "16px",
                     color: "#da717e",
