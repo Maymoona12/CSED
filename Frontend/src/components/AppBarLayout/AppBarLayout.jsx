@@ -44,8 +44,24 @@ const StyledStack = styled(Stack)({
 
 const AppBarLayout = () => {
   const renderDoctorNotifications = () => {
-    return notifications?.map((notificationGroup, groupIndex) =>
-      notificationGroup?.map((notify, index) => {
+    if (
+      !notifications ||
+      (Array.isArray(notifications) && notifications.length === 0)
+    ) {
+      return <MenuItem>No notifications Now</MenuItem>;
+    }
+
+    const notificationGroups = Array.isArray(notifications)
+      ? notifications
+      : Object.values(notifications);
+
+    return notificationGroups.flatMap((notificationGroup, groupIndex) => {
+      if (!Array.isArray(notificationGroup)) {
+        console.error("Invalid notificationGroup:", notificationGroup);
+        return null; // or handle the non-array case appropriately
+      }
+
+      return notificationGroup.map((notify, index) => {
         const sname = notify?.data?.["student_name"]?.[0]?.name;
         const atime = notify?.data?.time;
         const aday = notify?.data?.day;
@@ -63,13 +79,31 @@ const AppBarLayout = () => {
             {notify?.data?.["student_name"]?.[0]?.name}
           </MenuItem>
         );
-      })
-    );
+      });
+    });
   };
 
   const renderStudentNotifications = () => {
-    return notifications?.map((notificationGroup) =>
-      notificationGroup?.map((notify, index) => {
+    if (!notifications || notifications.length === 0) {
+      return <MenuItem>No notifications Now</MenuItem>;
+    }
+
+    return notifications.flatMap((notificationGroup, groupIndex) => {
+      // Check if notificationGroup is an object and convert it to an array
+      if (
+        typeof notificationGroup === "object" &&
+        !Array.isArray(notificationGroup)
+      ) {
+        notificationGroup = Object.values(notificationGroup);
+      }
+
+      // Check if notificationGroup is an array before mapping over it
+      if (!Array.isArray(notificationGroup)) {
+        console.error("Invalid notificationGroup:", notificationGroup);
+        return null; // or handle the non-array case appropriately
+      }
+
+      return notificationGroup.map((notify, index) => {
         const adoctor = notify?.data?.doctor_name;
         const atime2 = notify?.data?.start_time;
         const aday2 = notify?.data?.day;
@@ -89,14 +123,18 @@ const AppBarLayout = () => {
             An appointment was declined by: {notify?.data?.doctor_name}
           </MenuItem>
         );
-      })
-    );
+      });
+    });
   };
 
   const renderAnnNotifications = () => {
     const firstElement = notifiAnn?.[0];
 
-    if (!firstElement || firstElement.length === 0) {
+    if (
+      !Array.isArray(notifiAnn) ||
+      !firstElement ||
+      !Array.isArray(firstElement)
+    ) {
       return <MenuItem>No announcements available</MenuItem>;
     }
 
@@ -115,6 +153,8 @@ const AppBarLayout = () => {
       );
     });
   };
+
+  // Rest of your code remains unchanged
 
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [anchorElAnnouncement, setAnchorElAnnouncement] = useState(null);
@@ -147,7 +187,6 @@ const AppBarLayout = () => {
   const [notifi_id, setNotifiId] = useState(" ");
   // const { notifiAnn } = useNotifiAnn();
   const { notifiAnn, isLoading, isError } = useNotifiAnn();
-  console.log({ notifiAnn, isLoading, isError });
   if (isError) {
     // Log or handle the error
     console.error("Error fetching announcements:", isError);
@@ -172,7 +211,6 @@ const AppBarLayout = () => {
   };
 
   const handleOpenAnnouncementMenu = (event) => {
-    console.log("Ann menu opened");
     console.log("notifiAnn:", notifiAnn);
 
     setAnchorElAnnouncement(event.currentTarget);
@@ -269,6 +307,11 @@ const AppBarLayout = () => {
   };
 
   const isImageFile = (fileName) => {
+    // Ensure fileName is a valid string
+    if (typeof fileName !== "string" || fileName.trim() === "") {
+      return false;
+    }
+
     // Add logic to determine if the file is an image based on its extension
     const imageExtensions = [".jpg", ".jpeg", ".png", ".gif"]; // Add more if needed
     const fileExtension = fileName.slice(
@@ -417,7 +460,7 @@ const AppBarLayout = () => {
                   ) : notifiAnn?.length > 0 ? (
                     renderAnnNotifications()
                   ) : (
-                    <MenuItem>No Ann</MenuItem>
+                    <MenuItem></MenuItem>
                   )}
                 </Menu>
               </Box>
@@ -547,7 +590,7 @@ const AppBarLayout = () => {
                 <Button
                   key={`${book.id}-${index}`}
                   style={{
-                    marginLeft: "65%",
+                    marginLeft: "70%",
                     marginTop: "5px",
                     fontSize: "16px",
                     color: "#da717e",
