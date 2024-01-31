@@ -44,24 +44,13 @@ const StyledStack = styled(Stack)({
 
 const AppBarLayout = () => {
   const renderDoctorNotifications = () => {
-    if (
-      !notifications ||
-      (Array.isArray(notifications) && notifications.length === 0)
-    ) {
-      return <MenuItem>No notifications Now</MenuItem>;
-    }
+    return Object.keys(notifications || {}).map((groupIndex) => {
+      const notificationGroup = notifications[groupIndex];
+      console.log("notificationGroup:", notificationGroup);
 
-    const notificationGroups = Array.isArray(notifications)
-      ? notifications
-      : Object.values(notifications);
+      return Object.values(notificationGroup).map((notify, index) => {
+        console.log("notify:", notify);
 
-    return notificationGroups.flatMap((notificationGroup, groupIndex) => {
-      if (!Array.isArray(notificationGroup)) {
-        console.error("Invalid notificationGroup:", notificationGroup);
-        return null; // or handle the non-array case appropriately
-      }
-
-      return notificationGroup.map((notify, index) => {
         const sname = notify?.data?.["student_name"]?.[0]?.name;
         const atime = notify?.data?.time;
         const aday = notify?.data?.day;
@@ -75,8 +64,7 @@ const AppBarLayout = () => {
               handleOpenDialogFromNotification(index, sname, atime, aday, idNo);
             }}
           >
-            An appointment was booked by:{" "}
-            {notify?.data?.["student_name"]?.[0]?.name}
+            An appointment was booked by: {sname}
           </MenuItem>
         );
       });
@@ -84,26 +72,8 @@ const AppBarLayout = () => {
   };
 
   const renderStudentNotifications = () => {
-    if (!notifications || notifications.length === 0) {
-      return <MenuItem>No notifications Now</MenuItem>;
-    }
-
-    return notifications.flatMap((notificationGroup, groupIndex) => {
-      // Check if notificationGroup is an object and convert it to an array
-      if (
-        typeof notificationGroup === "object" &&
-        !Array.isArray(notificationGroup)
-      ) {
-        notificationGroup = Object.values(notificationGroup);
-      }
-
-      // Check if notificationGroup is an array before mapping over it
-      if (!Array.isArray(notificationGroup)) {
-        console.error("Invalid notificationGroup:", notificationGroup);
-        return null; // or handle the non-array case appropriately
-      }
-
-      return notificationGroup.map((notify, index) => {
+    return Object.values(notifications || {}).map((notificationGroup) =>
+      Object.values(notificationGroup).map((notify, index) => {
         const adoctor = notify?.data?.doctor_name;
         const atime2 = notify?.data?.start_time;
         const aday2 = notify?.data?.day;
@@ -123,8 +93,8 @@ const AppBarLayout = () => {
             An appointment was declined by: {notify?.data?.doctor_name}
           </MenuItem>
         );
-      });
-    });
+      })
+    );
   };
 
   const renderAnnNotifications = () => {
@@ -256,8 +226,7 @@ const AppBarLayout = () => {
       index,
       sname,
       atime,
-      aday,
-      { idNo }
+      aday
     );
 
     setSelectedNotification(index);
@@ -268,6 +237,7 @@ const AppBarLayout = () => {
     setDay(aday);
     setNotifiId(idNo);
   };
+
   const handleOpenDialogFromNotificationStudent = (
     index,
     adoctor,
