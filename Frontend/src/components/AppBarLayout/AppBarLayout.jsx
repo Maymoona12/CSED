@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   AppBar,
@@ -30,6 +30,7 @@ import Badge from "@mui/material/Badge";
 import useNotification from "./useNotification";
 import useReject from "../../pages/UsersPage/Home/useReject";
 import usebookedAppointment from "../../pages/UsersPage/Home/useBookedApp";
+import useNotifiAnn from "./useindexNotifiAnn";
 
 const StyledButton = styled(Button)({
   my: 2,
@@ -43,31 +44,36 @@ const StyledStack = styled(Stack)({
 
 const AppBarLayout = () => {
   const renderDoctorNotifications = () => {
-    return notifications?.map((notificationGroup, groupIndex) =>
-      notificationGroup?.map((notify, index) => {
+    return Object.keys(notifications || {}).map((groupIndex) => {
+      const notificationGroup = notifications[groupIndex];
+      console.log("notificationGroup:", notificationGroup);
+
+      return Object.values(notificationGroup).map((notify, index) => {
+        console.log("notify:", notify);
+
         const sname = notify?.data?.["student_name"]?.[0]?.name;
         const atime = notify?.data?.time;
         const aday = notify?.data?.day;
+        const idNo = notify?.id;
 
         return (
           <MenuItem
             key={notify?.id}
             onClick={() => {
               console.log("Notification clicked:", notify);
-              handleOpenDialogFromNotification(index, sname, atime, aday);
+              handleOpenDialogFromNotification(index, sname, atime, aday, idNo);
             }}
           >
-            An appointment was booked by:{" "}
-            {notify?.data?.["student_name"]?.[0]?.name}
+            An appointment was booked by: {sname}
           </MenuItem>
         );
-      })
-    );
+      });
+    });
   };
 
   const renderStudentNotifications = () => {
-    return notifications?.map((notificationGroup) =>
-      notificationGroup?.map((notify, index) => {
+    return Object.values(notifications || {}).map((notificationGroup) =>
+      Object.values(notificationGroup).map((notify, index) => {
         const adoctor = notify?.data?.doctor_name;
         const atime2 = notify?.data?.start_time;
         const aday2 = notify?.data?.day;
@@ -90,6 +96,35 @@ const AppBarLayout = () => {
       })
     );
   };
+
+  const renderAnnNotifications = () => {
+    const firstElement = notifiAnn?.[0];
+
+    if (
+      !Array.isArray(notifiAnn) ||
+      !firstElement ||
+      !Array.isArray(firstElement)
+    ) {
+      return <MenuItem>No announcements available</MenuItem>;
+    }
+
+    return firstElement.map((notifi, index) => {
+      const atitle = notifi?.data?.title;
+      const atext = notifi?.data?.text_ann;
+      const afile = notifi?.data?.file;
+
+      return (
+        <MenuItem
+          key={`announcement-${index}`}
+          onClick={() => handleOpenDialogFromTitle(index, atitle, atext, afile)}
+        >
+          {atitle}
+        </MenuItem>
+      );
+    });
+  };
+
+  // Rest of your code remains unchanged
 
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [anchorElAnnouncement, setAnchorElAnnouncement] = useState(null);
@@ -119,25 +154,17 @@ const AppBarLayout = () => {
   const [dname, setDname] = useState(" ");
   const [day2, setDay2] = useState(" ");
   const [time2, setTime2] = useState(" ");
+  const [notifi_id, setNotifiId] = useState(" ");
+  // const { notifiAnn } = useNotifiAnn();
+  const { notifiAnn, isLoading, isError } = useNotifiAnn();
+  if (isError) {
+    // Log or handle the error
+    console.error("Error fetching announcements:", isError);
+  }
 
-  const announcements = [
-    {
-      title: "Title 1",
-      text: "Announcement text 1",
-      photo: "CoverImages/image1.jpg",
-      document: "Assignment 2.pdf",
-    },
-    {
-      title: "Title 2",
-      text: "Announcement text 2",
-      photo: "CoverImages/image2.jpg",
-    },
-    {
-      title: "Title 3",
-      text: "Announcement text 3,Announcement text 3Announcement text 3Announcement text 3Announcement text 3Announcement text 3Announcement text 3Announcement text 3 ",
-      document: "Assignment 2.pdf",
-    },
-  ];
+  const [title, setTitle] = useState(" ");
+  const [text, setText] = useState(" ");
+  const [file, setFile] = useState(" ");
 
   const settings1 = ["EditProfile", "ChangePassword"];
 
@@ -154,6 +181,8 @@ const AppBarLayout = () => {
   };
 
   const handleOpenAnnouncementMenu = (event) => {
+    console.log("notifiAnn:", notifiAnn);
+
     setAnchorElAnnouncement(event.currentTarget);
   };
 
@@ -161,10 +190,13 @@ const AppBarLayout = () => {
     setAnchorElAnnouncement(null);
   };
 
-  const handleOpenDialogFromTitle = (index) => {
-    setSelectedAnnouncement(announcements[index]);
+  const handleOpenDialogFromTitle = (index, atitle, atext, afile) => {
+    setSelectedAnnouncement(index);
     setDialogOpenAnnouncement(true);
     setAnchorElAnnouncement(null);
+    setText(atext);
+    setTitle(atitle);
+    setFile(afile);
   };
 
   const handleCloseDialog = () => {
@@ -182,7 +214,13 @@ const AppBarLayout = () => {
     setAnchorElNotification(null);
   };
 
-  const handleOpenDialogFromNotification = (index, sname, atime, aday) => {
+  const handleOpenDialogFromNotification = (
+    index,
+    sname,
+    atime,
+    aday,
+    idNo
+  ) => {
     console.log(
       "Opening dialog for doctor notification",
       index,
@@ -197,7 +235,9 @@ const AppBarLayout = () => {
     setName(sname);
     setTime(atime);
     setDay(aday);
+    setNotifiId(idNo);
   };
+
   const handleOpenDialogFromNotificationStudent = (
     index,
     adoctor,
@@ -231,12 +271,25 @@ const AppBarLayout = () => {
   const handleDrawerOpen = () => {
     setSideBar((previous) => !previous);
   };
-  const handelRejectApp = (event, id) => {
+  const handelRejectApp = (event, id, notifi_id) => {
     event.preventDefault();
-    reject({ id });
+    reject({ id, notifi_id });
   };
 
-  console.log(notifications);
+  const isImageFile = (fileName) => {
+    // Ensure fileName is a valid string
+    if (typeof fileName !== "string" || fileName.trim() === "") {
+      return false;
+    }
+
+    // Add logic to determine if the file is an image based on its extension
+    const imageExtensions = [".jpg", ".jpeg", ".png", ".gif"]; // Add more if needed
+    const fileExtension = fileName.slice(
+      ((fileName.lastIndexOf(".") - 1) >>> 0) + 2
+    );
+
+    return imageExtensions.includes(fileExtension.toLowerCase());
+  };
 
   return (
     <>
@@ -372,14 +425,13 @@ const AppBarLayout = () => {
                   open={Boolean(anchorElAnnouncement)}
                   onClose={handleCloseAnnouncementMenu}
                 >
-                  {announcements.map((announcement, index) => (
-                    <MenuItem
-                      key={announcement.title}
-                      onClick={() => handleOpenDialogFromTitle(index)}
-                    >
-                      {announcement.title}
-                    </MenuItem>
-                  ))}
+                  {isLoading ? (
+                    <MenuItem>Loading...</MenuItem>
+                  ) : notifiAnn?.length > 0 ? (
+                    renderAnnNotifications()
+                  ) : (
+                    <MenuItem></MenuItem>
+                  )}
                 </Menu>
               </Box>
 
@@ -455,16 +507,12 @@ const AppBarLayout = () => {
         </div>
         {/* Dialog for displaying announcement details */}
         <Dialog open={dialogOpenAnnouncement} onClose={handleCloseDialog}>
-          <DialogTitle>
-            {selectedAnnouncement && selectedAnnouncement.title}
-          </DialogTitle>
+          <DialogTitle>Title is: {title}</DialogTitle>
           <DialogContent>
-            {selectedAnnouncement && selectedAnnouncement.text && (
-              <Typography>{selectedAnnouncement.text}</Typography>
-            )}
-            {selectedAnnouncement && selectedAnnouncement.photo && (
+            <Typography>Text: {text}</Typography>
+            {isImageFile(file) ? (
               <img
-                src={selectedAnnouncement.photo}
+                src={`/files/${notifiAnn?.data?.file}`}
                 alt="Announcement"
                 style={{
                   maxWidth: "80%",
@@ -472,8 +520,7 @@ const AppBarLayout = () => {
                   marginTop: "10px",
                 }}
               />
-            )}
-            {selectedAnnouncement && selectedAnnouncement.document && (
+            ) : (
               <Paper
                 elevation={3}
                 style={{ padding: "10px", marginTop: "20px" }}
@@ -481,11 +528,11 @@ const AppBarLayout = () => {
                 <Typography>
                   Attachment:{" "}
                   <a
-                    href={selectedAnnouncement.document}
+                    href={`/files/${notifiAnn?.data?.file}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    {selectedAnnouncement.document}
+                    {file}
                   </a>
                 </Typography>
               </Paper>
@@ -495,6 +542,7 @@ const AppBarLayout = () => {
             <Button onClick={handleCloseDialog}>Close</Button>
           </DialogActions>
         </Dialog>
+
         {user?.role === "doctor" || user?.role === "admin" ? (
           <Dialog open={dialogOpenNotification} onClose={handleCloseDialog}>
             <DialogTitle style={{ fontWeight: "bold" }}>
@@ -511,7 +559,11 @@ const AppBarLayout = () => {
                 <Button
                   key={`${book.id}-${index}`}
                   style={{
+<<<<<<< HEAD
                     marginLeft: "100%",
+=======
+                    marginLeft: "70%",
+>>>>>>> af2ca58c9170e809c70f5d31e604579e34189d6d
                     marginTop: "5px",
                     fontSize: "16px",
                     color: "#da717e",
@@ -519,7 +571,9 @@ const AppBarLayout = () => {
                     height: "50px",
                     padding: "20px",
                   }}
-                  onClick={(event) => handelRejectApp(event, book.id)}
+                  onClick={(event) =>
+                    handelRejectApp(event, book.id, notifi_id)
+                  }
                 >
                   Decline
                   <HighlightOffIcon

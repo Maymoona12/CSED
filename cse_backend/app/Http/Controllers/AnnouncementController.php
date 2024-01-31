@@ -24,10 +24,11 @@ class AnnouncementController extends Controller
             
             
             $file=$request->file('file');
+            if($file){
             $filename=time().'.'.$file->getClientOriginalExtension();
             $request->file->move('files',$filename);
             
-            $announcement->file=$filename;
+            $announcement->file=$filename;}
         
             $announcement->created_at = Carbon::now();
             $announcement->updated_at = Carbon::now();

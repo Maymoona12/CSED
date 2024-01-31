@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use App\Models\BookAppointment;
+use App\Models\Notification as ModelsNotification;
 use App\Models\User;
 use App\Notifications\AppointmentNotification;
 use App\Notifications\cancelNotifi;
@@ -63,27 +64,12 @@ class AppointmentController extends Controller
 
     
 
-    public function cancelBookApp($id){ //student
-        $user=Auth::user();
-        $user_id = Auth::id();
-        $book_appointment=BookAppointment::find($id)->where('student_id',$user_id)->first();
-        $book_appointment->status = 2;//cancel
-        $book_appointment->save();
-
-        $appointment=Appointment::find($book_appointment->appointment_id);
-        $appointment->status=0;//available
-        $appointment->save();
-
-        $users=User::where('id',$appointment->doctor_id)->get();
-        Notification::send($users,new cancelNotifi($user_id,$user->name,$appointment->id,$appointment->start_time));
-
-        return response()->json(['canceled',200]);
     
-    }
     
      
     public function rejectAppointment(Request $request){ //doctor
         $id=$request->id;
+        $notifi_id=$request->notifi_id;
         $user=Auth::user();
         if($user->role == 'doctor' || $user->role == 'admin'){
            // Appointments : status 0->available , 1-buzy , 2->blocked 
@@ -100,7 +86,11 @@ class AppointmentController extends Controller
         }
         $users=User::where('id',$book_appointment->student_id)->get();
         Notification::send($users,new RejectNotifi($user->id,$user->name,$appointment->id,$appointment->start_time,$appointment->day));
-        // Notification::delete();
+        if($request->notifi_id){
+        $notification=ModelsNotification::find($notifi_id);
+         $notification->delete();
+        }
+        
         // $app_notifi=DB::table('notifications')->where();
         return response()->json(['rejected',200]);
         
