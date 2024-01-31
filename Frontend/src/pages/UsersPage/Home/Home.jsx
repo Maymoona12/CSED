@@ -413,10 +413,10 @@ const Home = () => {
             >
               <Box
                 style={{
-                  width: "675px",
+                  width: "92%",
                   border: "1px solid lightgray",
                   height: "auto",
-                  padding: "30px",
+                  padding: "25px",
                   borderRadius: "10px",
                   marginTop: "10px",
                   // marginLeft: "5px",
@@ -730,7 +730,7 @@ const Home = () => {
             style={{
               marginTop: "10px",
               marginRight: "90px",
-              marginLeft: "10px",
+              marginLeft: "40px",
             }}
           >
             <Link to="/me/LecturersProfile" style={{ marginLeft: "20px" }}>
@@ -745,7 +745,7 @@ const Home = () => {
             <Typography
               style={{
                 color: "#1f3f66",
-                marginLeft: "10px",
+                marginLeft: "20px",
                 fontSize: "20px",
                 fontFamily: "Times New Roman",
               }}

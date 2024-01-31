@@ -38,7 +38,7 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
     if (file.length > 0) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        setDocumentPreview([e.target.result]);
+        setDocumentPreview([...(documentPreview ?? []), e.target.result]);
       };
       reader.readAsDataURL(file[0]);
     } else {
@@ -87,24 +87,29 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
     setAddButtonVisibility(true);
 
     // Display a preview for each selected file
+    const previews = [];
     Array.from(files).forEach((file) => {
       const reader = new FileReader();
       reader.onload = (e) => {
-        setDocumentPreview((prevPreviews) => [
-          ...(prevPreviews ?? []),
-          e.target.result,
-        ]);
+        previews.push(e.target.result);
       };
-      reader.readAsDataURL(file);
     });
 
-    // You can use previews for any further logic or display purposes
+    // Update the documentPreview state with all previews
+    setDocumentPreview((prevPreviews) => [...(prevPreviews ?? []), ...previews]);
   };
 
   const deleteFile = (index) => {
     const updatedFile = [...file];
     updatedFile.splice(index, 1);
     setFile(updatedFile);
+
+    // Also update the documentPreview state when deleting a file
+    setDocumentPreview((prevPreviews) => {
+      const updatedPreviews = [...prevPreviews];
+      updatedPreviews.splice(index, 1);
+      return updatedPreviews;
+    });
   };
 
   const editFile = (index) => {
@@ -118,7 +123,11 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
 
   const handleAdd = (event) => {
     event.preventDefault();
+    // Handle the "Add" button click
+    // You can implement the logic to add the uploaded photos to the server
+    setAddButtonVisibility(false); // Hide the "Add" button after processing
   };
+
   const renderPhotos = () => {
     if (!currentFolder) {
       return <div>No folder found</div>;
@@ -159,11 +168,7 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
             {isAddButtonVisible && (
               <Button
                 variant="contained"
-                onClick={() => {
-                  // Handle the "Add" button click
-                  // You can implement the logic to add the uploaded photos to the server
-                  setAddButtonVisibility(false); // Hide the "Add" button after processing
-                }}
+                onClick={handleAdd}
                 style={{
                   flex: "0 0 auto",
                   width: "90px",
@@ -177,43 +182,42 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
                 Add
               </Button>
             )}
-
-            {/* Display a preview of the first selected file (you can customize this part) */}
-            {documentPreview && documentPreview.length > 0 && (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  flexWrap: "wrap",
-                  display: "flex",
-                }}
-              >
-                {documentPreview.map((preview, index) => (
-                  <div
-                    key={index}
-                    style={{ marginRight: "10px", marginBottom: "10px" }}
-                  >
-                    <img
-                      src={preview}
-                      alt={`Document Preview ${index + 1}`}
-                      style={{
-                        maxWidth: "200px",
-                        maxHeight: "200px",
-                        marginTop: "10px",
-                        display: "block", // Ensure each image is on a new line
-                      }}
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
+          {/* Display a preview of all selected files */}
+{documentPreview && documentPreview.length > 0 && (
+  <div
+    style={{
+      display: "flex",
+      flexDirection: "row", // Set the direction to row
+      flexWrap: "wrap",
+    }}
+  >
+    {documentPreview.map((preview, index) => (
+      <div
+        key={index}
+        style={{ marginLeft: "10px", marginBottom: "2px", flex: "0 0 auto" }}
+      >
+        <img
+          src={preview}
+          alt={`Document Preview ${index + 1}`}
+          style={{
+            width: "200px", // Set a fixed width for each preview
+            height: "200px", // Set a fixed height if needed
+            marginTop: "10px",
+            // display: "block", // Ensure each image is on a new line
+          }}
+        />
+      </div>
+    ))}
+  </div>
+)}
 
             {/* Display EditIcon and DeleteIcon for each uploaded photo */}
             {file.map((uploadedFile, index) => (
               <div key={index}>
                 <IconButton
+                  accept="image/*"
                   onClick={() => editFile(index)}
-                  style={{ color: "#1f3f66" }}
+                  style={{ color: "#1f3f66", marginLeft: "10%", marginTop: "0" }}
                 >
                   <EditIcon />
                 </IconButton>
