@@ -155,25 +155,22 @@ const PostAnnouncement = () => {
               ></Button>
             </div>
 
-            <button
+            <Button
               onClick={handleSubmit}
               style={{
                 marginTop: "10px",
-                marginLeft: "330px",
-                padding: "10px 20px",
+                marginLeft: "49%",
+                padding: "10px 35px",
                 background: "#1f3f66",
                 color: "white",
-                border: "none",
-                borderRadius: "5px",
                 cursor: "pointer",
-                boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+                 fontFamily:"Monaco",
                 transition: "background 0.3s ease",
                 fontSize: "16px",
-                fontWeight: "bold",
               }}
             >
               Submit
-            </button>
+            </Button>
           </div>
           <div style={{ display: "flex" }}>
             <div style={{ flex: 1, marginRight: "5px" }}>

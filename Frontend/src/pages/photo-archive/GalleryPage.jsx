@@ -68,7 +68,7 @@ function GalleryPage() {
 
   const handleFolderClick = (folderId) => {
     setSelectedPhoto(null);
-    setSelectedFolder(folderId);
+    // setSelectedFolder(folderId);
   };
 
   return (

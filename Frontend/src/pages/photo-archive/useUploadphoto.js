@@ -1,29 +1,29 @@
 import { useMutation } from "@tanstack/react-query";
-import { createAnnouncement } from "./index";
+import { Uploadphoto } from "./indexUploadphoto";
 import useSnackbar from "../../context/useSnackbar";
 
-const usePostAnnouncement = () => {
+const useUploadphoto = () => {
   const { showSnackbar } = useSnackbar();
-  return useMutation({
-    mutationFn: createAnnouncement,
+  const { mutate } = useMutation({
+    mutationFn: Uploadphoto,
     onSuccess: (data) => {
       console.log(data);
       console.log(data.data);
       showSnackbar({
         severity: "success",
-        message: "Post Announcement Successfully",
+        message: "Upload Photo Successfully",
       });
     },
     onError: (error) => {
       console.log(error);
       showSnackbar({
         severity: "error",
-        message: "Failed to Post Announcement  ",
+        message: "Failed to Upload Photo",
       });
     },
   });
-  // return {
-  //   mutate,
-  // };
+
+  return { mutate };
 };
-export default usePostAnnouncement;
+
+export default useUploadphoto;
