@@ -41,6 +41,7 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::post('/edit_profile',[AccountController::class,'EditAccount']);
 Route::post('/change_password',[PasswordController::class,'changePassword']);
+Route::post('/Change_photo',[AccountController::class,'ChangePhoto']);
 
 Route::get('/all_doctors',[getDoctorController::class,'getAllDoctors']);//student
 Route::get('/doctor/{id}',[getDoctorController::class,'showDoctor']);//student
