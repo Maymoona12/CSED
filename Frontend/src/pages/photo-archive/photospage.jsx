@@ -14,8 +14,11 @@ import UploadIcon from "@mui/icons-material/Upload";
 import DeleteIcon from "@mui/icons-material/Delete";
 import useAuth from "../../hooks/useAuth";
 import EditIcon from "@mui/icons-material/Edit";
+import useUploadphoto from "./useUploadphoto";
+
 
 const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
+  const { mutate } = useUploadphoto();
   const { folderId } = useParams();
   const [selectedFolder, setSelectedFolder] = useState(folderId);
   const currentFolder = folders.find(
@@ -121,11 +124,16 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
     input.click();
   };
 
-  const handleAdd = (event) => {
-    event.preventDefault();
-    // Handle the "Add" button click
-    // You can implement the logic to add the uploaded photos to the server
-    setAddButtonVisibility(false); // Hide the "Add" button after processing
+  const handleAdd = () => {
+    const formData = new FormData();
+    if (file.length > 0) {
+      formData.append("file", file[0]);
+    }
+
+    console.log("FormData:", formData); 
+    setContentType("multipart/form-data");
+    mutate(formData);
+    setAddButtonVisibility(false);
   };
 
   const renderPhotos = () => {
@@ -140,11 +148,11 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
           <div>
             <input
               type="file"
-              id="documentInput"
+             name="image"
               style={{ display: "none" }}
               onChange={handleDocumentChange}
               ref={documentInputRef}
-              multiple
+              // multiple
               accept="image/*"
             />
             <Button
@@ -167,6 +175,7 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
             {/* Display the "Add" button when files are added */}
             {isAddButtonVisible && (
               <Button
+               type="submit"
                 variant="contained"
                 onClick={handleAdd}
                 style={{
@@ -183,9 +192,9 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
               </Button>
             )}
           {/* Display a preview of all selected files */}
-{documentPreview && documentPreview.length > 0 && (
-  <div
-    style={{
+          {documentPreview && documentPreview.length > 0 && (
+         <div
+       style={{
       display: "flex",
       flexDirection: "row", // Set the direction to row
       flexWrap: "wrap",
@@ -200,10 +209,9 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
           src={preview}
           alt={`Document Preview ${index + 1}`}
           style={{
-            width: "200px", // Set a fixed width for each preview
-            height: "200px", // Set a fixed height if needed
+            width: "220px", // Set a fixed width for each preview
+            height: "220px", // Set a fixed height if needed
             marginTop: "10px",
-            // display: "block", // Ensure each image is on a new line
           }}
         />
       </div>
@@ -215,7 +223,6 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
             {file.map((uploadedFile, index) => (
               <div key={index}>
                 <IconButton
-                  accept="image/*"
                   onClick={() => editFile(index)}
                   style={{ color: "#1f3f66", marginLeft: "10%", marginTop: "0" }}
                 >
