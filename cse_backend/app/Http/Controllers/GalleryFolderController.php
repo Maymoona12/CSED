@@ -26,22 +26,22 @@ class GalleryFolderController extends Controller
     public function createAlbumImage(Request $request){
         $user=Auth::user();
         $album=new Album;
-        $album->folder_id=$request->id;
+        $album->folder_id=$request->folder_id;
         
             $image=$request->image;
-            $imagename=time().'.'.$image->getClientOriginalExtension();
-            $request->image->move('C:\Users\hp\Desktop\CSED\Frontend\public\Images',$imagename);
+            $imagename=$image->getClientOriginalName();
+            $request->image->move('..\..\Frontend\public\Images',$imagename);
             
         $album->image=$imagename;
-        $album->doctor_id=Auth::id();
+        $album->doctor_id=$user->id;
         $album->created_at=Carbon::now();
         $album->updated_at=Carbon::now();
         $album->save();
         
         $gallaryFolder = GalleryFolder::find($album->folder_id);
         // $user_name = User::where('id',$user->id)->select('name')->get();
-        $users=User::where('id','!=',$user->id)->get();
-        Notification::send($users,new galleryNotifi($user->name,$gallaryFolder->folder_name));
+        // $users=User::where('id','!=',$user->id)->get();
+        // Notification::send($users,new galleryNotifi($user->name,$gallaryFolder->folder_name));
         
         return response()->json(['data'=>"added successfully",'msg'=>200]);
 
@@ -56,9 +56,8 @@ class GalleryFolderController extends Controller
 
     public function getImages(Request $request){
         $id=$request->id;
-        
-        $images=Album::where('folder_id',$id)->get();
-        return response()->json([$images,200]);
+        $image=Album::where('folder_id',$id)->get();
+        return response()->json($image,200);
         
     }
 }
