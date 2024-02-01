@@ -51,11 +51,12 @@ import uselecturersprofile from "../../Lecturer-Profiles/uselecturersprofile";
 import useDoctorRegister from "./useDoctorRegister";
 import useDeleteAcc from "./useDeleteAcc";
 import useAddFile from "./useAddFile";
+import usechangePhoto from "./useindexChangePhoto";
+import { setContentType } from "../../../api";
 
 const Home = () => {
   const { getUser } = useAuth();
   const user = getUser();
-
   const [dynamicPhotoPath, setDynamicPhotoPath] = useState(
     `/ProfileImages/${user?.photo}`
   );
@@ -77,6 +78,7 @@ const Home = () => {
   const [filteredLecturers, setFilteredLecturers] = React.useState(lecturers);
   const [open, setOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
+  const { mutate: uploadPhoto } = usechangePhoto();
 
   const handleAddLecturer = (event) => {
     event.preventDefault();
@@ -87,7 +89,6 @@ const Home = () => {
     const email = data.get("email");
     const password = data.get("password");
     const password_confirmation = data.get("password_confirmation");
-
     doctorReg({ name, reg_no, email, password, password_confirmation });
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -134,16 +135,24 @@ const Home = () => {
   };
 
   const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
+    const photo = event.target.files[0];
+    if (photo) {
       const reader = new FileReader();
       reader.onload = () => {
         setImageSrc(reader.result);
-        // update the dynamic photo path based on the uploaded file
         setDynamicPhotoPath(reader.result);
+        uploadImage(photo);
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(photo);
     }
+  };
+
+  const uploadImage = (photo) => {
+    const formData = new FormData();
+    formData.append("photo", photo);
+    console.log("FormData:", formData);
+    setContentType("multipart/form-data");
+    uploadPhoto(formData);
   };
 
   const handleClose = () => {
