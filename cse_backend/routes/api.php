@@ -9,10 +9,7 @@ use App\Http\Controllers\getDoctorController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OfficeHourController;
 use App\Http\Controllers\PasswordController;
-use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\StudentController;
-use App\Models\Appointment;
-use App\Models\OfficeHour;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -50,14 +47,14 @@ Route::get('/doctor/{id}',[getDoctorController::class,'showDoctor']);//student
 Route::get('/search/{name}',[getDoctorController::class,'search']);//student
 Route::post('/delete_account',[AccountController::class,'deleteAccount']);//admin
 
-Route::post('/import_students',[StudentController::class,'saveStudents']);
+Route::post('/import_students',[StudentController::class,'saveStudents']);//admin
 
 Route::post('/office_hour',[OfficeHourController::class,'createOfficeHour']);//doctor
 Route::post('/book_app',[AppointmentController::class,'bookAppointment']);//student
 Route::post('/reject_appointment',[AppointmentController::class,'rejectAppointment']);//doctor
 Route::post('/finish_appointment',[AppointmentController::class,'finishAppointment']);//doctor
 Route::get('/my_appointments',[AppointmentController::class,'myAppointments']);//doctor
-Route::get('/my_booked_app',[AppointmentController::class,'myBookedAppointments']);
+Route::get('/my_booked_app',[AppointmentController::class,'myBookedAppointments']);//doctor
 Route::get('/doctor_appointments/{id}',[AppointmentController::class,'doctorAppointments']);//student
 Route::post('/delete_app',[AppointmentController::class,'deleteApp']);//doctor
 Route::post('/blocked_app',[AppointmentController::class,'blockedApp']);//doctor
@@ -66,11 +63,10 @@ Route::post('/unblocked_app',[AppointmentController::class,'unblockedApp']);//do
 
 Route::get('/get_notifi_ann',[NotificationController::class,'getNotifiAnn']);
 Route::get('/get_notifi_app', [NotificationController::class, 'getNotifiApp']);
-Route::post('/mark_as_read/{id}',[NotificationController::class,'markNotifi']);
 
 
 Route::post('/createAnnouncement',[AnnouncementController::class,'createAnnouncement']);//doctor
 Route::get('/all_announcement',[AnnouncementController::class,'allAnnouncement']);//all
 
 Route::post('/create_folder',[GalleryFolderController::class,'createFolder']);
-Route::post('/add_images/{id}',[GalleryFolderController::class,'createAlbum']);
+// Route::post('/add_images',[GalleryFolderController::class,'createAlbumImage']);

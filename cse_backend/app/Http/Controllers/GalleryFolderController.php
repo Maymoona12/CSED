@@ -23,14 +23,14 @@ class GalleryFolderController extends Controller
         return response()->json(['data'=>"created successfully",'msg'=>200]);
         
     }
-    public function createAlbum($id,Request $request){
+    public function createAlbumImage(Request $request){
         $user=Auth::user();
         $album=new Album;
-        $album->folder_id=$id;
+        $album->folder_id=$request->id;
         
             $image=$request->image;
             $imagename=time().'.'.$image->getClientOriginalExtension();
-            $request->image->move('images',$imagename);
+            $request->image->move('C:\Users\hp\Desktop\CSED\Frontend\public\Images',$imagename);
             
         $album->image=$imagename;
         $album->doctor_id=Auth::id();

@@ -26,7 +26,7 @@ class AnnouncementController extends Controller
             $file=$request->file('file');
             if($file){
             $filename=time().'.'.$file->getClientOriginalExtension();
-            $request->file->move('files',$filename);
+            $request->file->move('C:\Users\hp\Desktop\CSED\Frontend\public\Images',$filename);
             
             $announcement->file=$filename;}
         
@@ -35,7 +35,7 @@ class AnnouncementController extends Controller
             $announcement->save();
         }
         
-        $users=User::where('id','!=',auth()->user()->id)->get();
+        $users=User::all();
         Notification::send($users,new shareAnnouncment($announcement->doctor_id,$announcement->title,$announcement->text_ann,$announcement->file,$announcement->created_at));
         
         return response($announcement,200);
