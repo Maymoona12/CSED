@@ -511,9 +511,9 @@ const AppBarLayout = () => {
           <DialogTitle>Title is: {title}</DialogTitle>
           <DialogContent>
             <Typography>Text: {text}</Typography>
-            {isImageFile(file) ? (
+            {/* {isImageFile(file) ? ( */}
               <img
-                src={`/files/${notifiAnn?.data?.file}`}
+                src={`/public/Images/${file}`}
                 alt="Announcement"
                 style={{
                   maxWidth: "80%",
@@ -521,7 +521,7 @@ const AppBarLayout = () => {
                   marginTop: "10px",
                 }}
               />
-            ) : (
+            {/* ) : ( */}
               <Paper
                 elevation={3}
                 style={{ padding: "10px", marginTop: "20px" }}
@@ -529,7 +529,7 @@ const AppBarLayout = () => {
                 <Typography>
                   Attachment:{" "}
                   <a
-                    href={`/files/${notifiAnn?.data?.file}`}
+                    href={`/public/Images/${file}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -537,7 +537,7 @@ const AppBarLayout = () => {
                   </a>
                 </Typography>
               </Paper>
-            )}
+            {/* )} */}
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseDialog}>Close</Button>
