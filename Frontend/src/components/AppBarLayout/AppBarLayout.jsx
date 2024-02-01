@@ -156,23 +156,16 @@ const AppBarLayout = () => {
   const [time2, setTime2] = useState(" ");
   const [notifi_id, setNotifiId] = useState(" ");
   // const { notifiAnn } = useNotifiAnn();
-  const { notifiAnn, isLoading, isError } = useNotifiAnn();
-  if (isError) {
-    // Log or handle the error
-    console.error("Error fetching announcements:", isError);
-  }
+  const { notifiAnn, isError } = useNotifiAnn();
 
   const [title, setTitle] = useState(" ");
   const [text, setText] = useState(" ");
   const [file, setFile] = useState(" ");
-  // Assuming file is the filename with extension, e.g., "example.jpg"
   const fileExtension = file.split(".").pop().toLowerCase();
-
-  // Check if the file is an image
   const isImage = ["jpg", "jpeg", "png", "gif", "bmp"].includes(fileExtension);
-
-  // Check if the file is a document
-  const isDocument = ["pdf", "doc", "docx", "txt"].includes(fileExtension);
+  const isDocument = ["pdf", "doc", "docx", "txt", "pptx"].includes(
+    fileExtension
+  );
 
   const settings1 = ["EditProfile", "ChangePassword"];
 
@@ -284,27 +277,6 @@ const AppBarLayout = () => {
     reject({ id, notifi_id });
   };
 
-  const isImageFile = (fileName) => {
-    // Ensure fileName is a valid string
-    if (typeof fileName !== "string" || fileName.trim() === "") {
-      return false;
-    }
-
-    // Extract the file extension from the fileName
-    const fileExtension = fileName.slice(
-      ((fileName.lastIndexOf(".") - 1) >>> 0) + 2
-    );
-
-    // Convert the extension to lowercase for case-insensitive comparison
-    const lowerCaseExtension = fileExtension.toLowerCase();
-
-    // Add logic to determine if the file is an image based on its extension
-    const imageExtensions = [".jpg", ".jpeg", ".png", ".gif"]; // Add more if needed
-    console.log("Lowercase Extension:", lowerCaseExtension);
-
-    return imageExtensions.includes(lowerCaseExtension);
-  };
-
   return (
     <>
       <div
@@ -365,7 +337,6 @@ const AppBarLayout = () => {
                   direction="row"
                   sx={{ color: "white" }}
                 >
-                  {/* Conditionally render notifications based on user role */}
                   {user?.role === "doctor" || user?.role === "admin" ? (
                     <StyledButton onClick={handleOpenNotificationMenu}>
                       <Badge variant="dot" color="info">
@@ -380,7 +351,6 @@ const AppBarLayout = () => {
                     </StyledButton>
                   )}
                 </StyledStack>
-                {/* Conditionally render notification menu based on user role */}
                 <Menu
                   id="menu-Notification"
                   anchorEl={anchorElNotification}
@@ -395,7 +365,6 @@ const AppBarLayout = () => {
                   open={Boolean(anchorElNotification)}
                   onClose={handleCloseNotificationMenu}
                 >
-                  {/* Conditionally render notification items based on user role */}
                   {(user?.role === "doctor" || user?.role === "admin") &&
                   Array.isArray(notifications)
                     ? renderDoctorNotifications()
@@ -439,13 +408,7 @@ const AppBarLayout = () => {
                   open={Boolean(anchorElAnnouncement)}
                   onClose={handleCloseAnnouncementMenu}
                 >
-                  {isLoading ? (
-                    <MenuItem>Loading...</MenuItem>
-                  ) : notifiAnn?.length > 0 ? (
-                    renderAnnNotifications()
-                  ) : (
-                    <MenuItem></MenuItem>
-                  )}
+                  {notifiAnn?.length > 0 && renderAnnNotifications()}
                 </Menu>
               </Box>
 
@@ -520,7 +483,7 @@ const AppBarLayout = () => {
             </Toolbar>
           </AppBar>
         </div>
-        {/* Dialog for displaying announcement details */}
+        {/* Dialog for announcement details */}
         <Dialog open={dialogOpenAnnouncement} onClose={handleCloseDialog}>
           <DialogTitle>Title is: {title}</DialogTitle>
           <DialogContent>
@@ -557,6 +520,7 @@ const AppBarLayout = () => {
           </DialogActions>
         </Dialog>
 
+        {/* Dialog for notification details */}
         {user?.role === "doctor" || user?.role === "admin" ? (
           <Dialog open={dialogOpenNotification} onClose={handleCloseDialog}>
             <DialogTitle style={{ fontWeight: "bold" }}>
