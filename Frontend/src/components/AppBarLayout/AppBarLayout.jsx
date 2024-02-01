@@ -156,7 +156,11 @@ const AppBarLayout = () => {
   const [time2, setTime2] = useState(" ");
   const [notifi_id, setNotifiId] = useState(" ");
   // const { notifiAnn } = useNotifiAnn();
-  const { notifiAnn, isError } = useNotifiAnn();
+  const { notifiAnn, isLoading, isError } = useNotifiAnn();
+  if (isError) {
+    // Log or handle the error
+    console.error("Error fetching announcements:", isError);
+  }
 
   const [title, setTitle] = useState(" ");
   const [text, setText] = useState(" ");
@@ -408,7 +412,13 @@ const AppBarLayout = () => {
                   open={Boolean(anchorElAnnouncement)}
                   onClose={handleCloseAnnouncementMenu}
                 >
-                  {notifiAnn?.length > 0 && renderAnnNotifications()}
+                  {isLoading ? (
+                    <MenuItem>Loading...</MenuItem>
+                  ) : notifiAnn?.length > 0 ? (
+                    renderAnnNotifications()
+                  ) : (
+                    <MenuItem></MenuItem>
+                  )}
                 </Menu>
               </Box>
 
