@@ -165,6 +165,14 @@ const AppBarLayout = () => {
   const [title, setTitle] = useState(" ");
   const [text, setText] = useState(" ");
   const [file, setFile] = useState(" ");
+  // Assuming file is the filename with extension, e.g., "example.jpg"
+  const fileExtension = file.split(".").pop().toLowerCase();
+
+  // Check if the file is an image
+  const isImage = ["jpg", "jpeg", "png", "gif", "bmp"].includes(fileExtension);
+
+  // Check if the file is a document
+  const isDocument = ["pdf", "doc", "docx", "txt"].includes(fileExtension);
 
   const settings1 = ["EditProfile", "ChangePassword"];
 
@@ -282,13 +290,19 @@ const AppBarLayout = () => {
       return false;
     }
 
-    // Add logic to determine if the file is an image based on its extension
-    const imageExtensions = [".jpg", ".jpeg", ".png", ".gif"]; // Add more if needed
+    // Extract the file extension from the fileName
     const fileExtension = fileName.slice(
       ((fileName.lastIndexOf(".") - 1) >>> 0) + 2
     );
 
-    return imageExtensions.includes(fileExtension.toLowerCase());
+    // Convert the extension to lowercase for case-insensitive comparison
+    const lowerCaseExtension = fileExtension.toLowerCase();
+
+    // Add logic to determine if the file is an image based on its extension
+    const imageExtensions = [".jpg", ".jpeg", ".png", ".gif"]; // Add more if needed
+    console.log("Lowercase Extension:", lowerCaseExtension);
+
+    return imageExtensions.includes(lowerCaseExtension);
   };
 
   return (
@@ -511,23 +525,11 @@ const AppBarLayout = () => {
           <DialogTitle>Title is: {title}</DialogTitle>
           <DialogContent>
             <Typography>Text: {text}</Typography>
-            {/* {isImageFile(file) ? ( */}
-              <img
-                src={`/public/Images/${file}`}
-                alt="Announcement"
-                style={{
-                  maxWidth: "80%",
-                  border: "1px solid #ccc",
-                  marginTop: "10px",
-                }}
-              />
-            {/* ) : ( */}
-              <Paper
-                elevation={3}
-                style={{ padding: "10px", marginTop: "20px" }}
-              >
-                <Typography>
-                  Attachment:{" "}
+
+            <Paper elevation={3} style={{ padding: "10px", marginTop: "20px" }}>
+              <Typography>
+                Attachment:
+                {isDocument ? (
                   <a
                     href={`/public/Images/${file}`}
                     target="_blank"
@@ -535,9 +537,20 @@ const AppBarLayout = () => {
                   >
                     {file}
                   </a>
-                </Typography>
-              </Paper>
-            {/* )} */}
+                ) : null}
+              </Typography>
+              {isImage ? (
+                <img
+                  src={`/public/Images/${file}`}
+                  alt="Announcement"
+                  style={{
+                    maxWidth: "80%",
+                    border: "1px solid #ccc",
+                    marginTop: "10px",
+                  }}
+                />
+              ) : null}
+            </Paper>
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseDialog}>Close</Button>
