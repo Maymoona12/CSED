@@ -24,6 +24,23 @@ class AccountController extends Controller
     
     }
 
+    public function ChangePhoto(Request $request){
+        $user = $request->user();
+        
+        $photo=$request->photo;
+            $photoName=$photo->getClientOriginalName();
+            $request->photo->move('..\..\Frontend\ProfileImages',$photoName);
+        $user->photo=$photoName;
+        $user->save();
+        
+        if ($user) {
+            return response()->json(['status' => true]);
+        } else {
+            return response()->json(['status' => false]);
+        }
+    
+    }
+
 
     public function deleteAccount(Request $request){
         $id=$request->id;
