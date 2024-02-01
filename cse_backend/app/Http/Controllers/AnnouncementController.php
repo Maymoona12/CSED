@@ -25,7 +25,7 @@ class AnnouncementController extends Controller
             
             $file=$request->file('file');
             if($file){
-            $filename=time().'.'.$file->getClientOriginalExtension();
+            $filename=$file->getClientOriginalName();
             $request->file->move('..\..\Frontend\public\Images',$filename);
             
             $announcement->file=$filename;}
