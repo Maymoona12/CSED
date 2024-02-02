@@ -84,7 +84,7 @@ export default function Homepage() {
                 sx={{
                   color: "white",
                   marginRight: "25px",
-                  "&:hover": { color: "#808080"},
+                  "&:hover": { color: "#808080" },
                 }}
               >
                 About
@@ -95,7 +95,7 @@ export default function Homepage() {
                 sx={{
                   color: "white",
                   marginRight: "25px",
-                  "&:hover": { color: "#808080"},
+                  "&:hover": { color: "#808080" },
                 }}
               >
                 Feature
@@ -106,7 +106,7 @@ export default function Homepage() {
                 sx={{
                   color: "white",
                   marginRight: "25px",
-                  "&:hover": { color: "#808080"},
+                  "&:hover": { color: "#808080" },
                 }}
               >
                 Contact
@@ -144,27 +144,24 @@ export default function Homepage() {
               textAlign: "center",
               marginTop: "100px",
               display: "flex",
-              alignItems:"center",
+              alignItems: "center",
               justifyContent: "space-between",
             }}
           >
-            <div style={{   margin:"10px" }}>
+            <div style={{ margin: "10px" }}>
               <Typography
-                variant="h1"
                 sx={{
                   textAlign: "center",
-                  fontFamily: "ADVERTISEMENT",
-                  color:  "#808080",
-                  marginRight :"0",
-                  marginLeft:"0px",
+                  fontFamily: "Sitka Heading",
+                  color: "#1f3f66",
+                  marginRight: "0",
+                  marginLeft: "0px",
                   marginBottom: "0px",
-                  display:"block",
-                  // fontSize:"80px",
+                  display: "block",
+                  fontSize: "70px",
                 }}
               >
-              Start 
-
-              New Experience in Your Own World!
+                Start New Experience in Your Own World!
               </Typography>
             </div>
             <div>

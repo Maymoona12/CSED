@@ -65,22 +65,22 @@ const PostAnnouncement = () => {
             marginRight: "50%",
           }}
         >
-          <h2
+          <h1
             style={{
               color: "#1f3f66",
-              fontFamily: "Monaco",
+              fontFamily: "Sitka Heading",
               marginBottom: "40px",
               marginLeft: "150px",
             }}
           >
             Post Announcement
-          </h2>
+          </h1>
           <Typography
             variant="h5"
             sx={{
               marginBottom: "5px",
               marginLeft: "8px",
-              fontFamily: "Monaco",
+              fontFamily: "Sitka Heading",
               color: "black",
             }}
           >
@@ -98,7 +98,7 @@ const PostAnnouncement = () => {
             sx={{
               marginTop: "10px",
               marginLeft: "8px",
-              fontFamily: "Monaco",
+              fontFamily: "Sitka Heading",
               color: "black",
             }}
           >
@@ -164,7 +164,7 @@ const PostAnnouncement = () => {
                 background: "#1f3f66",
                 color: "white",
                 cursor: "pointer",
-                fontFamily: "Monaco",
+                fontFamily: "Sitka Heading",
                 transition: "background 0.3s ease",
                 fontSize: "16px",
               }}
