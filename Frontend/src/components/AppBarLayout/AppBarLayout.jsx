@@ -547,7 +547,7 @@ const AppBarLayout = () => {
                 <Button
                   key={`${book.id}-${index}`}
                   style={{
-                    marginLeft: "70%",
+                    marginLeft: "75%",
                     marginTop: "5px",
                     fontSize: "16px",
                     color: "#da717e",

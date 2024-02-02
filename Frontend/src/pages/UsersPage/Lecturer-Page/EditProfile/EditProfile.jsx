@@ -109,9 +109,9 @@ const EditProfile = () => {
               width: "300px",
               border: "1px solid #ddd",
               height: "350px",
-              padding: "30px",
+              padding: "15px",
               borderRadius: "20px",
-              marginTop: "10px",
+
               marginLeft: "10px",
             }}
           >
@@ -188,8 +188,8 @@ const EditProfile = () => {
               style={{
                 display: "flex",
                 flexWrap: "wrap",
-                gap: "30px",
-                padding: "30px",
+                gap: "20px",
+                padding: "15px",
               }}
             >
               <Box
@@ -199,7 +199,8 @@ const EditProfile = () => {
                 onSubmit={handelSubmit}
                 sx={{
                   mt: -2,
-                  width: "330px",
+                  width: "300px",
+                  height: "420px",
                   border: "1px solid #ddd",
                   padding: "50px",
                   borderRadius: "20px",

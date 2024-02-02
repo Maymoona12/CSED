@@ -28,6 +28,9 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import { useNavigate } from "react-router-dom";
 import uselecturersprofile from "./uselecturersprofile";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import ErrorIcon from "@mui/icons-material/Error"; // Import ErrorIcon
 
 function LecturersProfile() {
   const defaultTheme = createTheme();
@@ -139,20 +142,29 @@ function LecturersProfile() {
         </Box>
         <Container sx={{ py: 3 }}>
           {filteredLecturers?.length === 0 ? (
-            <Typography
-              variant="h2"
-              align="center"
-              color="text.primary"
-              style={{
-                textAlign: "center",
-                marginTop: "10%",
+            <Alert
+              severity="error"
+              icon={<ErrorIcon sx={{ fontSize: 40, marginTop: "-20%" }} />}
+              sx={{
+                width: "50%",
+                align: "center",
+                justifyContent: "center",
+                alignItems: "center",
                 marginLeft: "50%",
-                fontFamily: "Garamond",
-                color: "red",
+                marginTop: "10%",
+                padding: "50px",
               }}
             >
-              No Result!
-            </Typography>
+              <Typography
+                variant="h3"
+                sx={{
+                  marginTop: "-10%",
+                  fontFamily: "Garamond",
+                }}
+              >
+                No Result!
+              </Typography>
+            </Alert>
           ) : (
             <Grid container spacing={3}>
               {doctors?.map((doctor, index) => (
