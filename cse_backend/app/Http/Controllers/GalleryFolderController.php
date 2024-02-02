@@ -23,32 +23,30 @@ class GalleryFolderController extends Controller
         return response()->json(['data'=>"created successfully",'msg'=>200]);
         
     }
-    public function createAlbumImage(Request $request){
-        $user=Auth::user();
-        $album=new Album;
-        $album->folder_id=$request->folder_id;
-        
-            $image=$request->image;
-            $imagename=$image->getClientOriginalName();
-            $request->image->move('..\..\Frontend\public\Images',$imagename);
-            
-        $album->image=$imagename;
-        $album->doctor_id=$user->id;
-        $album->created_at=Carbon::now();
-        $album->updated_at=Carbon::now();
-        $album->save();
-        
-        $gallaryFolder = GalleryFolder::find($album->folder_id);
-        // $user_name = User::where('id',$user->id)->select('name')->get();
-        // $users=User::where('id','!=',$user->id)->get();
-        // Notification::send($users,new galleryNotifi($user->name,$gallaryFolder->folder_name));
-        
-        return response()->json(['data'=>"added successfully",'msg'=>200]);
+    public function createAlbumImage(Request $request)
+    {
+        $user = Auth::user();
+        $folderId = $request->folder_id;
 
-        
-        
-    } 
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $imageName = $image->getClientOriginalName();
+                $image->move('..\..\Frontend\public\Images', $imageName);
 
+                $album = new Album;
+                $album->folder_id = $folderId;
+                $album->image = $imageName;
+                $album->doctor_id = $user->id;
+                $album->created_at = now();
+                $album->updated_at = now();
+                $album->save();
+            }
+
+            return response()->json(['data' => 'Images added successfully', 'msg' => 200]);
+        }
+
+        return response()->json(['data' => 'No images selected for upload', 'msg' => 400]);
+    }
     public function getFolders(){
         $folders=GalleryFolder::all();
         return response()->json([$folders,200]);
