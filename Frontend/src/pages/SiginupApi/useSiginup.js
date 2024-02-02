@@ -10,7 +10,10 @@ const useSignup = () => {
     mutationFn: signup,
     onSuccess: (data) => {
       console.log(data);
-      console.log(data.data);
+
+      if (data.user.reg_no) {
+        console.log("Registration successful for reg_no:", data.user.reg_no);
+      }
       onSignup();
       showSnackbar({
         severity: "success",
@@ -19,6 +22,14 @@ const useSignup = () => {
     },
     onError: (error) => {
       console.log(error.message);
+
+      // Check if error has a data property and reg_no inside it
+      if (error.response && error.response.data && error.response.data.reg_no) {
+        console.log(
+          "Error: Registration failed for reg_no:",
+          error.response.data.reg_no
+        );
+      }
       showSnackbar({
         severity: "error",
         message: "Failed to signup the account",
@@ -29,4 +40,5 @@ const useSignup = () => {
     mutate,
   };
 };
+
 export default useSignup;

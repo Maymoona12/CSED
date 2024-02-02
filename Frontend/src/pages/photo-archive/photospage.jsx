@@ -15,16 +15,20 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import useAuth from "../../hooks/useAuth";
 import EditIcon from "@mui/icons-material/Edit";
 import useUploadphoto from "./useUploadphoto";
+import useGetFolders from "./useGetFolders";
+import { setContentType } from "../../api";
+import useGetPhoto from "./useGetPhoto";
 
-
-const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
+const PhotosPage = () => {
   const { mutate } = useUploadphoto();
-  const { folderId } = useParams();
-  const [selectedFolder, setSelectedFolder] = useState(folderId);
-  const currentFolder = folders.find(
+  const { folder_Id } = useParams();
+  const { folders: folders_data } = useGetFolders();
+  const { data: images } = useGetPhoto(folder_Id);
+  const [selectedFolder, setSelectedFolder] = useState(folder_Id);
+  const currentFolder = folders_data?.find(
     (folder) => folder.id === parseInt(selectedFolder)
   );
-  const [file, setFile] = useState([]);
+  const [image, setImage] = useState([]);
   const { getUser } = useAuth();
   const user = getUser();
   const [openDialog, setOpenDialog] = useState(false);
@@ -36,18 +40,18 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
   const documentInputRef = useRef(null);
   const [isAddButtonVisible, setAddButtonVisibility] = useState(false);
   const [documentPreview, setDocumentPreview] = useState(null);
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
 
   useEffect(() => {
-    if (file.length > 0) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setDocumentPreview([...(documentPreview ?? []), e.target.result]);
-      };
-      reader.readAsDataURL(file[0]);
-    } else {
-      setDocumentPreview([]);
+    if (selectedPhoto && images) {
+      const selectedIndex = images.findIndex(
+        (photo) => photo.id === selectedPhoto.id
+      );
+      if (selectedIndex !== -1) {
+        setDialogIndex(selectedIndex);
+      }
     }
-  }, [file]);
+  }, [folder_Id, selectedPhoto, images]);
 
   const handlePhotoClick = (photo, index, clickedFolderId) => {
     const clickedFolder =
@@ -59,22 +63,20 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
     setOpenDialog(true);
   };
 
-  const handleDialogClose = () => {
-    setOpenDialog(false);
-  };
-
   const handleNextPhoto = () => {
-    setDialogIndex(
-      (prevIndex) => (prevIndex + 1) % currentFolder.photos.length
-    );
+    setDialogIndex((prevIndex) => (prevIndex + 1) % images.length);
+    setSelectedPhoto(images[(dialogIndex + 1) % images.length]);
   };
 
   const handlePrevPhoto = () => {
     setDialogIndex(
-      (prevIndex) =>
-        (prevIndex - 1 + currentFolder.photos.length) %
-        currentFolder.photos.length
+      (prevIndex) => (prevIndex - 1 + images.length) % images.length
     );
+    setSelectedPhoto(images[(dialogIndex - 1 + images.length) % images.length]);
+  };
+
+  const handleDialogClose = () => {
+    setOpenDialog(false);
   };
 
   const handleImageLoad = (event) => {
@@ -86,7 +88,7 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
 
   const handleDocumentChange = (event) => {
     const files = event.target.files;
-    setFile((prevFiles) => [...prevFiles, ...files]);
+    setImage((prevFiles) => [...prevFiles, ...files]);
     setAddButtonVisibility(true);
 
     // Display a preview for each selected file
@@ -99,13 +101,16 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
     });
 
     // Update the documentPreview state with all previews
-    setDocumentPreview((prevPreviews) => [...(prevPreviews ?? []), ...previews]);
+    setDocumentPreview((prevPreviews) => [
+      ...(prevPreviews ?? []),
+      ...previews,
+    ]);
   };
 
   const deleteFile = (index) => {
-    const updatedFile = [...file];
+    const updatedFile = [...image];
     updatedFile.splice(index, 1);
-    setFile(updatedFile);
+    setImage(updatedFile);
 
     // Also update the documentPreview state when deleting a file
     setDocumentPreview((prevPreviews) => {
@@ -126,14 +131,24 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
 
   const handleAdd = () => {
     const formData = new FormData();
-    if (file.length > 0) {
-      formData.append("file", file[0]);
-    }
 
-    console.log("FormData:", formData); 
-    setContentType("multipart/form-data");
-    mutate(formData);
-    setAddButtonVisibility(false);
+    if (image.length > 0) {
+      formData.append("image", image[0]);
+    }
+    const selectedFolderData = folders_data.find(
+      (folder) => folder.id === parseInt(folder_Id)
+    );
+
+    if (selectedFolderData) {
+      const folder_id = selectedFolderData.id;
+      formData.append("folder_id", folder_id);
+      console.log("FormData:", formData);
+      setContentType("multipart/form-data");
+      mutate(formData);
+      setAddButtonVisibility(true);
+    } else {
+      console.error("Selected folder data not found");
+    }
   };
 
   const renderPhotos = () => {
@@ -141,18 +156,25 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
       return <div>No folder found</div>;
     }
 
+    // if (!images || images.length === 0) {
+    //   return <div>No photos available in this folder</div>;
+    // }
+
     return (
       <div>
-        {/* Add New Photos */}
         {user?.role === "doctor" || user?.role === "admin" ? (
           <div>
             <input
               type="file"
-             name="image"
-              style={{ display: "none" }}
+              name="image"
+              style={{
+                position: "absolute",
+                top: "-1000px",
+                left: "-1000px",
+              }}
               onChange={handleDocumentChange}
               ref={documentInputRef}
-              // multiple
+              multiple
               accept="image/*"
             />
             <Button
@@ -175,7 +197,7 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
             {/* Display the "Add" button when files are added */}
             {isAddButtonVisible && (
               <Button
-               type="submit"
+                type="submit"
                 variant="contained"
                 onClick={handleAdd}
                 style={{
@@ -191,40 +213,48 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
                 Add
               </Button>
             )}
-          {/* Display a preview of all selected files */}
-          {documentPreview && documentPreview.length > 0 && (
-         <div
-       style={{
-      display: "flex",
-      flexDirection: "row", // Set the direction to row
-      flexWrap: "wrap",
-    }}
-  >
-    {documentPreview.map((preview, index) => (
-      <div
-        key={index}
-        style={{ marginLeft: "10px", marginBottom: "2px", flex: "0 0 auto" }}
-      >
-        <img
-          src={preview}
-          alt={`Document Preview ${index + 1}`}
-          style={{
-            width: "220px", // Set a fixed width for each preview
-            height: "220px", // Set a fixed height if needed
-            marginTop: "10px",
-          }}
-        />
-      </div>
-    ))}
-  </div>
-)}
+            {/* Display a preview of all selected files */}
+            {documentPreview && documentPreview.length > 0 && (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row", // Set the direction to row
+                  flexWrap: "wrap",
+                }}
+              >
+                {documentPreview.map((preview, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      marginLeft: "10px",
+                      marginBottom: "2px",
+                      flex: "0 0 auto",
+                    }}
+                  >
+                    <img
+                      src={preview}
+                      alt={`Document Preview ${index + 1}`}
+                      style={{
+                        width: "220px", // Set a fixed width for each preview
+                        height: "220px", // Set a fixed height if needed
+                        marginTop: "10px",
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
 
             {/* Display EditIcon and DeleteIcon for each uploaded photo */}
-            {file.map((uploadedFile, index) => (
+            {image.map((index) => (
               <div key={index}>
                 <IconButton
                   onClick={() => editFile(index)}
-                  style={{ color: "#1f3f66", marginLeft: "10%", marginTop: "0" }}
+                  style={{
+                    color: "#1f3f66",
+                    marginLeft: "10%",
+                    marginTop: "0",
+                  }}
                 >
                   <EditIcon />
                 </IconButton>
@@ -252,13 +282,13 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
           cols={3}
           gap={15}
         >
-          {currentFolder.photos.map((photo, index) => (
+          {images?.map((photo, index) => (
             <ImageListItem
               key={photo.id}
               onClick={() => handlePhotoClick(photo, index, selectedFolder)}
             >
               <img
-                src={`/Images/${photo.src}`}
+                src={`/public/Images/${photo?.image}`}
                 alt={photo.alt}
                 style={{
                   width: "100%",
@@ -292,13 +322,13 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
         id="dialog"
       >
         <DialogTitle>
-          Photo {dialogIndex + 1} of {currentFolder.photos.length}
+          Photo {dialogIndex + 1} of {images?.length}
         </DialogTitle>
         <DialogContent style={{ overflow: "hidden", minHeight: "410px" }}>
-          {currentFolder.photos[dialogIndex] && (
+          {selectedPhoto && (
             <img
-              src={`/Images/${currentFolder.photos[dialogIndex].src}`}
-              alt={currentFolder.photos[dialogIndex].alt}
+              src={`/public/Images/${selectedPhoto?.image}`}
+              alt={selectedPhoto?.alt}
               style={{
                 width: "100%",
                 height: "auto",
@@ -310,16 +340,10 @@ const PhotosPage = ({ folders, selectedPhoto, setSelectedPhoto }) => {
           )}
         </DialogContent>
         <DialogActions>
-          <IconButton
-            onClick={handlePrevPhoto}
-            disabled={currentFolder.photos.length <= 1}
-          >
+          <IconButton onClick={handlePrevPhoto} disabled={images?.length <= 1}>
             <NavigateBeforeIcon />
           </IconButton>
-          <IconButton
-            onClick={handleNextPhoto}
-            disabled={currentFolder.photos.length <= 1}
-          >
+          <IconButton onClick={handleNextPhoto} disabled={images?.length <= 1}>
             <NavigateNextIcon />
           </IconButton>
           <Button onClick={handleDialogClose} style={{ color: "#1f3f66" }}>

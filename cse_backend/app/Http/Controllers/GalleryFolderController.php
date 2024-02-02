@@ -54,8 +54,7 @@ class GalleryFolderController extends Controller
         return response()->json([$folders,200]);
     }
 
-    public function getImages(Request $request){
-        $id=$request->id;
+    public function getImages($id){
         $image=Album::where('folder_id',$id)->get();
         return response()->json($image,200);
         

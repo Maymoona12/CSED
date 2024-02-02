@@ -5,31 +5,30 @@ import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import Button from "@mui/material/Button";
+import useGetFolders from "./useGetFolders";
 
 const FoldersPage = ({
-  folders,
   selectedFolder,
   handleFolderClick,
   handlePhotoClick,
   setLightboxOpen,
-  setSelectedPhoto,
 }) => {
   const navigate = useNavigate();
 
   const { getUser } = useAuth();
   const user = getUser();
+  const { folders: folders_data } = useGetFolders();
 
-  const handleClick = (folderId, callback) => {
-    handleFolderClick(folderId);
-
-    // Navigate to photospage only if a folder is selected
-    if (folderId) {
+  const handleClick = (folder_Id, callback) => {
+    handleFolderClick(folder_Id);
+    if (folder_Id) {
       if (callback && typeof callback === "function") {
         callback(); // Set lightboxOpen to true
       }
-      navigate(`/me/GalleryPage/photospage/${folderId}`);
+      navigate(`/me/GalleryPage/photospage/${folder_Id}`);
     }
   };
+  console.log(folders_data);
 
   return (
     <div>
@@ -76,68 +75,70 @@ const FoldersPage = ({
           </Link>
         </div>
       ) : null}
+
       {/* Render folders */}
       <div style={{ display: "flex", flexWrap: "wrap", marginTop: "100px" }}>
-        {folders &&
-          folders.map((folder) => (
-            <div
-              key={folder.id}
+        {folders_data?.map((folder, index) => (
+          <div
+            key={`${folder.id}-${index}`}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              marginRight: "100px",
+              marginLeft: "10px",
+              textAlign: "center",
+              color: "black",
+            }}
+          >
+            <FilterRoundedIcon
               style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                marginRight: "100px",
-                marginLeft: "10px",
-                textAlign: "center",
-                color: "black",
+                marginBottom: "5px",
+                fontSize: "40px",
+                color: "#1f3f66",
+                cursor: "pointer",
+              }}
+              onClick={() =>
+                handleClick(folder.id, () => setLightboxOpen(true))
+              }
+            />
+            <h2
+              onClick={() =>
+                handleClick(folder?.id, () => setLightboxOpen(true))
+              }
+              style={{
+                cursor: "pointer",
+                fontFamily: "Garamond",
+                color: "#1f3f66",
               }}
             >
-              <FilterRoundedIcon
-                style={{
-                  marginBottom: "5px",
-                  fontSize: "40px",
-                  color: "#1f3f66",
-                  cursor: "pointer",
-                }}
-                onClick={() =>
-                  handleClick(folder.id, () => setLightboxOpen(true))
-                }
-              />
-              <h2
-                onClick={() => handleClick(folder.id, setLightboxOpen(true))}
-                style={{
-                  cursor: "pointer",
-                  fontFamily: "Garamond",
-                  color: "#1f3f66",
-                }}
-              >
-                {folder.name}
-              </h2>
-              {/* Render selected folder's photos */}
-              {selectedFolder === folder.id && (
-                <div style={{ display: "flex", flexWrap: "wrap" }}>
-                  {folder.photos &&
-                    folder.photos.map((photo, index) => (
-                      <div
-                        key={photo.id}
-                        style={{
-                          margin: "8px",
-                          width: "150px",
-                          cursor: "pointer",
-                        }}
-                        onClick={() => handlePhotoClick(photo, index)}
-                      >
-                        <img
-                          src={`/Images/${photo.src}`}
-                          alt={photo.alt}
-                          style={{ width: "100%", height: "auto" }}
-                        />
-                      </div>
-                    ))}
-                </div>
-              )}
-            </div>
-          ))}
+              {folder.folder_name}
+            </h2>
+
+            {/* Render selected folder's photos */}
+            {selectedFolder === folders_data?.id && (
+              <div style={{ display: "flex", flexWrap: "wrap" }}>
+                {folders_data?.image?.map((photo, index) => (
+                  <div
+                    key={`${photo.id}-${index}`}
+                    style={{
+                      margin: "8px",
+                      width: "150px",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => handlePhotoClick(photo, index)}
+                  >
+                    <img
+                      src={`/Images/${photo.src}`}
+                      alt={photo.alt}
+                      style={{ width: "100%", height: "auto" }}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );

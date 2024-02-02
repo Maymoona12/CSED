@@ -169,30 +169,22 @@ const Home = () => {
     reject({ id });
   };
 
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState([]);
 
   const handleFileChange = (e) => {
-    // Set the selected file to the state
     setFile(e.target.files[0]);
   };
 
   const handleAdd = (event) => {
     event.preventDefault();
+
     const formData = new FormData();
-
-    // Check if a file is selected before appending it to formData
     if (file) {
-      formData.append("file1", file?.name);
-
-      // Use formData directly, no need for formData1
+      formData.append("file", file);
       add(formData);
     }
-  };
 
-  const add2 = (formData) => {
-    // Perform your upload or API call here
-    // Example: axios.post('/upload', formData);
-    console.log(formData);
+    setContentType("multipart/form-data");
   };
 
   return (
@@ -416,19 +408,18 @@ const Home = () => {
                 display: "flex",
                 flexWrap: "wrap",
                 gap: "40px",
-                padding: "15px",
+                padding: "10px",
                 marginTop: "10px",
               }}
             >
               <Box
                 style={{
-                  width: "92%",
+                  width: "100%",
                   border: "1px solid lightgray",
                   height: "auto",
-                  padding: "25px",
+                  padding: "30px",
                   borderRadius: "10px",
                   marginTop: "10px",
-                  // marginLeft: "5px",
                 }}
               >
                 <Typography
@@ -469,17 +460,6 @@ const Home = () => {
 
                             <TableCell>{booked[index]?.student_name}</TableCell>
                             <TableCell>{booked[index]?.reason}</TableCell>
-
-                            <TableCell>
-                              <Button
-                                style={{ color: "#1f3f66" }}
-                                onClick={(event) =>
-                                  handelRejectApp(event, book.id)
-                                }
-                              >
-                                <ClearIcon />
-                              </Button>
-                            </TableCell>
                           </TableRow>
                         ))}
                       </TableBody>

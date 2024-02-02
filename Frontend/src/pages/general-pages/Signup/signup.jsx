@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import useSignup from "../../SiginupApi/useSiginup";
+import axios from "axios";
 
 const Alert = (props) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -35,7 +36,7 @@ export default function Signup() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const { mutate } = useSignup();
 
-  const handleClose = (event, reason) => {
+  const handleClose = (reason) => {
     if (reason === "clickaway") {
       return;
     }
@@ -101,7 +102,7 @@ export default function Signup() {
       <Grid
         container
         component="main"
-        sx={{ justifyContent: "center", alignItems: "center" ,mb:1 }}
+        sx={{ justifyContent: "center", alignItems: "center", mb: 1 }}
       >
         <CssBaseline />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>

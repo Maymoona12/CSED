@@ -1,16 +1,13 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import AddPhoto from "./pages/photo-archive/add-photo";
+import AddAlbum from "./pages/photo-archive/AddAlbum";
 import Signup from "./pages/general-pages/Signup/signup";
 import Login from "./pages/general-pages/Login/login";
-import Forgotpassword from "./pages/general-pages/PasswordPage/passwordpage";
 import Home from "./pages/UsersPage/Home/Home";
 
 import EditProfile from "./pages/UsersPage/Lecturer-Page/EditProfile/EditProfile";
 import PostAnnouncementPage from "./pages/PostAnnouncement/PostAnnouncement";
 import Appointment from "./pages/Appointment/Appointment";
-import FoldersPage from "./pages/photo-archive/foldersPage";
-import PhotosPage from "./pages/photo-archive/photospage";
 import GalleryPage from "./pages/photo-archive/GalleryPage";
 
 import LecturerProfiles from "./pages/Lecturer-Profiles/lecturerprofile";
@@ -35,7 +32,6 @@ function App() {
         <Route path="/user" element={<Applayout2 />}>
           <Route path="/user/login" element={<Login />} />
           <Route path="/user/signup" element={<Signup />} />
-          <Route path="/user/passwordpage" element={<Forgotpassword />} />
         </Route>
 
         <Route path="/me" element={<AppLayout />}>
@@ -49,7 +45,7 @@ function App() {
               element={<PostAnnouncementPage />}
             />
             <Route path="/me/AddAppointment" element={<Appointment />} />
-            <Route path="/me/AddAlbum" element={<AddPhoto />} />
+            <Route path="/me/AddAlbum" element={<AddAlbum />} />
           </Route>
 
           <Route element={<ProtectedRoutes allowedRoles={[student]} />}>

@@ -2,71 +2,24 @@ import React, { useState, useRef } from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import useAddAlbum from "./useAddAlbum";
 
-
-const NewAlbum = ({ onSubmit }) => {
-  const [documentFiles, setDocumentFiles] = useState([]);
-  const [documentPreview, setDocumentPreview] = useState(null);
-  const [announcementText, setAnnouncementText] = useState("");
-  const documentInputRef = useRef(null);
-
-  const deleteDocumentFile = (index) => {
-    const updatedDocumentFiles = [...documentFiles];
-    updatedDocumentFiles.splice(index, 1);
-    setDocumentFiles(updatedDocumentFiles);
-  };
-
-  const handleDocumentChange = (e) => {
-    const files = e.target.files;
-    const isImage = Array.from(files).every((file) =>
-      file.type.startsWith("image/")
-    );
-
-    if (isImage) {
-      setDocumentFiles([...documentFiles, ...files]);
-
-      if (files.length > 0) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setDocumentPreview(reader.result);
-        };
-        reader.readAsDataURL(files[0]);
-      }
-    }
-  };
-
-  const editDocumentFile = (index) => {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.addEventListener("change", (event) => handleFileChange(event, index));
-    input.click();
-  };
-
-  const handleFileChange = (event, index) => {
-    const selectedFile = event.target.files[0];
-
-    if (selectedFile) {
-      const updatedDocumentFiles = [...documentFiles];
-      updatedDocumentFiles[index] = selectedFile;
-      setDocumentFiles(updatedDocumentFiles);
-    }
-  };
-
-  const handleSubmit = () => {
-    const data = {
-      title: "",
-      announcementText,
-      documentFiles,
-    };
-    onSubmit(data);
-    setAnnouncementText("");
-    setDocumentFiles([]);
+const AddAlbum = () => {
+  const { mutate: AddAlbum } = useAddAlbum();
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const folder_name = data.get("folder_name");
+    console.log(folder_name);
+    AddAlbum({ folder_name });
   };
 
   return (
     <div className="New-Album">
       <div>
         <Box
+          component="form"
+          onSubmit={handleSubmit}
           sx={{
             width: 600,
             height: "auto",
@@ -101,7 +54,15 @@ const NewAlbum = ({ onSubmit }) => {
           >
             Title
           </Typography>
-          <TextField fullWidth id="title" />
+          <TextField
+            id="title"
+            margin="normal"
+            required
+            fullWidth
+            label="Title to your folder"
+            name="folder_name"
+            autoFocus
+          />
           <div
             style={{
               display: "flex",
@@ -111,7 +72,8 @@ const NewAlbum = ({ onSubmit }) => {
             }}
           >
             <button
-              onClick={handleSubmit}
+              type="submit"
+              variant="contained"
               style={{
                 marginTop: "10px",
                 marginLeft: "88%",
@@ -124,17 +86,19 @@ const NewAlbum = ({ onSubmit }) => {
                 fontFamily: "Monaco",
                 fontSize: "18px",
                 color: "white",
-                backgroundColor: "#1f3f66",
+                background: "#1f3f66",
+                "&:hover": {
+                  background: "#1f3f66",
+                },
               }}
             >
               Add
             </button>
           </div>
-
         </Box>
       </div>
     </div>
   );
 };
 
-export default NewAlbum;
+export default AddAlbum;
