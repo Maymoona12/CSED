@@ -149,20 +149,12 @@ export default function Login() {
               >
                 Sign In
               </Button>
-              <Grid container>
-                <Grid item xs>
-                  <RouterLink
-                    to="/user/passwordpage"
-                    variant="body2"
-                    style={{
-                      color: "black",
-                      textDecoration: "none",
-                      color: "#1f3f66",
-                    }}
-                  >
-                    Forgot password?
-                  </RouterLink>
-                </Grid>
+              <Grid
+                container
+                justifyContent="center"
+                alignItems="center"
+                // style={{ height: "100vh" }}
+              >
                 <Grid item>
                   <RouterLink
                     to="/user/signup"

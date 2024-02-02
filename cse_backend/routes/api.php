@@ -72,4 +72,4 @@ Route::get('/all_announcement',[AnnouncementController::class,'allAnnouncement']
 Route::post('/create_folder',[GalleryFolderController::class,'createFolder']);
 Route::post('/add_images',[GalleryFolderController::class,'createAlbumImage']);
 Route::get('/get_folders',[GalleryFolderController::class,'getFolders']);
-Route::get('/get_images',[GalleryFolderController::class,'getImages']);
+Route::get('/get_images/{id}',[GalleryFolderController::class,'getImages']);

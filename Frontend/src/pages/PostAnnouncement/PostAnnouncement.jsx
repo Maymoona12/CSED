@@ -164,7 +164,7 @@ const PostAnnouncement = () => {
                 background: "#1f3f66",
                 color: "white",
                 cursor: "pointer",
-                 fontFamily:"Monaco",
+                fontFamily: "Monaco",
                 transition: "background 0.3s ease",
                 fontSize: "16px",
               }}

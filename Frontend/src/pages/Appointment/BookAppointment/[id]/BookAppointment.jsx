@@ -24,7 +24,6 @@ import useReason from "../../useReason";
 import useAuth from "../../../../hooks/useAuth";
 
 const BookAppointment = () => {
-  const { getUser } = useAuth();
   const formRef = useRef(null);
   const { id } = useParams();
   const { book } = useBookAppointment(id);
@@ -80,12 +79,16 @@ const BookAppointment = () => {
 
   return (
     <div>
-      <div style={{  padding: "20px"  }}>
+      <div style={{ padding: "20px" }}>
         <Typography
           variant="h4"
           component="div"
           gutterBottom
-          style={{  color: "#1f3f66", fontFamily: "Arial" , marginBottom:"30px" }}
+          style={{
+            color: "#1f3f66",
+            fontFamily: "Arial",
+            marginBottom: "30px",
+          }}
         >
           Book An Appointments
         </Typography>

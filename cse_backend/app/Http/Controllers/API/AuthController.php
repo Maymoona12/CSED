@@ -71,7 +71,7 @@ class AuthController extends Controller
                 'user' => $user
             ], 201);
         }
-        else return response()->json(['The Student does not CSE student']);   
+        else return response()->json(['The Student does not CSE student', 400]);   
     }
 
 
