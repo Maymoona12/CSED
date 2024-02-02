@@ -61,7 +61,7 @@ const PostAnnouncement = () => {
             border: "1px solid #ddd",
             padding: "50px",
             borderRadius: "20px",
-            marginLeft: "50%",
+            marginLeft: "40%",
             marginRight: "50%",
           }}
         >

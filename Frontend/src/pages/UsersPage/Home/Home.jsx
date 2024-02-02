@@ -430,7 +430,7 @@ const Home = () => {
                     fontFamily: "serif",
                   }}
                 >
-                  Schedule Data
+                  Booked appointments
                 </Typography>
                 <div
                   style={{

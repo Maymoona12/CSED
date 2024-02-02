@@ -144,7 +144,7 @@ const Appointment = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            margin: "20px",
+            margin: "15px",
             minWidth: "200px",
             color: "black",
           }}

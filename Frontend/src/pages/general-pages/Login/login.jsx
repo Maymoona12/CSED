@@ -149,12 +149,7 @@ export default function Login() {
               >
                 Sign In
               </Button>
-              <Grid
-                container
-                justifyContent="center"
-                alignItems="center"
-                // style={{ height: "100vh" }}
-              >
+              <Grid container justifyContent="center" alignItems="center">
                 <Grid item>
                   <RouterLink
                     to="/user/signup"

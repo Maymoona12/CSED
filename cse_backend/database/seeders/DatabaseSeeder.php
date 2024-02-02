@@ -165,17 +165,24 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory()->create([
             'reg_no' => '201811432',
             'name' => 'Malak tabeasheh',
-            'email' => 'malak@ptuk.edu.com',
+            'email' => 'malak@students.ptuk.edu.ps',
             'password'=> '123456789',
-            'phone_no' => '0598399731',
         ]);
         
         \App\Models\User::factory()->create([
             'reg_no' => '201811433',
             'name' => 'Fatima omar',
-            'email' => 'fatima@ptuk.edu.com',
+            'email' => 'fatima@students.ptuk.edu.ps',
             'password'=> '123456789',
-            'phone_no' => '0598399732',
         ]);
+
+        \App\Models\User::factory()->create([
+            'reg_no' => '201911434',
+            'name' => 'Maymoona Aoub',
+            'email' => 'maymoona@students.ptuk.edu.ps',
+            'password'=> '123456789',
+        ]);
+     
+      
     }
 }

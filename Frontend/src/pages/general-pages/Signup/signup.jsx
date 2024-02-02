@@ -15,7 +15,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import useSignup from "../../SiginupApi/useSiginup";
-import axios from "axios";
 
 const Alert = (props) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />;

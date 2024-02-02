@@ -17,7 +17,7 @@ const Unauthorized = () => {
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
-        marginLeft: "25%",
+        marginLeft: "23%",
       }}
     >
       <Box
