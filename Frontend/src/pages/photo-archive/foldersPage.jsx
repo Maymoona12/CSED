@@ -42,7 +42,7 @@ const FoldersPage = ({
         <h1
           style={{
             color: "#1f3f66",
-            fontFamily: "Garamond",
+            fontFamily: "Sitka Heading",
             marginLeft: "10px",
           }}
         >
@@ -108,7 +108,7 @@ const FoldersPage = ({
               }
               style={{
                 cursor: "pointer",
-                fontFamily: "Garamond",
+                fontFamily: "Sitka Heading",
                 color: "#1f3f66",
               }}
             >

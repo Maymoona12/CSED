@@ -122,7 +122,7 @@ const Appointment = () => {
   return (
     <div
       style={{
-        marginBottom: "20px",
+        marginBottom: "10px",
         display: "flex",
         justifyContent: "space-between",
       }}
@@ -135,7 +135,7 @@ const Appointment = () => {
             marginLeft: "40px",
           }}
         >
-          <h1 style={{ color: "#1f3f66", fontFamily: "Garamond" }}>
+          <h1 style={{ color: "#1f3f66", fontFamily: "Sitka Heading" }}>
             Add Office Hours
           </h1>
         </div>
@@ -156,7 +156,6 @@ const Appointment = () => {
               alignItems: "center",
               marginLeft: "6px",
               marginRight: "5px",
-              padding: "5px",
               minWidth: "300px",
               height: "440px",
               border: "1px solid #ddd",

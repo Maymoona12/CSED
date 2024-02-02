@@ -86,7 +86,7 @@ const BookAppointment = () => {
           gutterBottom
           style={{
             color: "#1f3f66",
-            fontFamily: "Arial",
+            fontFamily: "Sitka Heading",
             marginBottom: "30px",
           }}
         >

@@ -101,12 +101,12 @@ function LecturersProfile() {
             <div style={{ display: "flex", alignItems: "center" }}>
               <Typography
                 component="h1"
-                variant="h2"
                 color="#1f3f66"
                 style={{
                   textAlign: "left",
-                  fontFamily: "Garamond",
-                  marginRight: "100px",
+                  fontFamily: "Sitka Heading",
+                  marginRight: "150px",
+                  fontSize: "50px",
                 }}
               >
                 Lecturers Profile
@@ -152,14 +152,13 @@ function LecturersProfile() {
                 alignItems: "center",
                 marginLeft: "50%",
                 marginTop: "10%",
-                padding: "50px",
+                padding: "30px",
               }}
             >
               <Typography
                 variant="h3"
                 sx={{
-                  marginTop: "-10%",
-                  fontFamily: "Garamond",
+                  fontFamily: "Sitka Heading",
                 }}
               >
                 No Result!

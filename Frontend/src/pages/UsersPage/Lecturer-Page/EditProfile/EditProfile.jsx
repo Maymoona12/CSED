@@ -88,9 +88,14 @@ const EditProfile = () => {
           />
           <div>
             <Typography
-              variant="h5"
+              // variant="h5"
               component="div"
-              style={{ marginBottom: "8px", color: "black" }}
+              style={{
+                marginBottom: "8px",
+                color: "black",
+                fontFamily: "Sitka Heading",
+                fontSize: "35px",
+              }}
             >
               {user?.name}
             </Typography>
@@ -120,7 +125,7 @@ const EditProfile = () => {
               style={{
                 marginBottom: "20px",
                 color: "black",
-                fontFamily: "serif",
+                fontFamily: "Sitka Heading",
                 paddingTop: "20px ",
                 paddingBottom: "10px",
               }}
@@ -202,7 +207,7 @@ const EditProfile = () => {
                   width: "300px",
                   height: "420px",
                   border: "1px solid #ddd",
-                  padding: "50px",
+                  padding: "35px",
                   borderRadius: "20px",
                   marginLeft: "10px",
                 }}
@@ -212,7 +217,7 @@ const EditProfile = () => {
                   style={{
                     marginBottom: "20px",
                     color: "black",
-                    fontFamily: "serif",
+                    fontFamily: "Sitka Heading",
                   }}
                 >
                   Information to edit

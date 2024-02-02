@@ -98,6 +98,7 @@ const PhotosPage = () => {
       reader.onload = (e) => {
         previews.push(e.target.result);
       };
+      reader.readAsDataURL(file); // Read each file as data URL
     });
 
     // Update the documentPreview state with all previews
@@ -133,7 +134,7 @@ const PhotosPage = () => {
     const formData = new FormData();
 
     if (image.length > 0) {
-      formData.append("image", image[0]);
+      formData.append("images[]", image[0]);
     }
     const selectedFolderData = folders_data.find(
       (folder) => folder.id === parseInt(folder_Id)
@@ -155,18 +156,13 @@ const PhotosPage = () => {
     if (!currentFolder) {
       return <div>No folder found</div>;
     }
-
-    // if (!images || images.length === 0) {
-    //   return <div>No photos available in this folder</div>;
-    // }
-
     return (
       <div>
         {user?.role === "doctor" || user?.role === "admin" ? (
           <div>
             <input
               type="file"
-              name="image"
+              name="images[]"
               style={{
                 position: "absolute",
                 top: "-1000px",
@@ -218,7 +214,7 @@ const PhotosPage = () => {
               <div
                 style={{
                   display: "flex",
-                  flexDirection: "row", // Set the direction to row
+                  flexDirection: "row",
                   flexWrap: "wrap",
                 }}
               >
@@ -235,8 +231,8 @@ const PhotosPage = () => {
                       src={preview}
                       alt={`Document Preview ${index + 1}`}
                       style={{
-                        width: "220px", // Set a fixed width for each preview
-                        height: "220px", // Set a fixed height if needed
+                        width: "220px",
+                        height: "220px",
                         marginTop: "10px",
                       }}
                     />
@@ -272,7 +268,6 @@ const PhotosPage = () => {
         <ImageList
           sx={{
             width: "100%",
-            maxHeight: "710px",
             height: "100%",
             overflow: "hidden",
             marginTop: "30px",

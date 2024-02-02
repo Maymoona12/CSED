@@ -430,7 +430,7 @@ const Home = () => {
                     fontFamily: "serif",
                   }}
                 >
-                  Booked appointments
+                  Schedule Data
                 </Typography>
                 <div
                   style={{
@@ -487,14 +487,14 @@ const Home = () => {
                     label="Delete Lecturers"
                     icon={<DeleteIcon />}
                     sx={{
-                      marginLeft: "250px ", // Adjust the margin value as needed
+                      marginLeft: "250px ",
                     }}
                   />
                   <Tab
                     label="Add Students Data"
                     icon={<AddIcon />}
                     sx={{
-                      marginLeft: "250px ", // Adjust the margin value as needed
+                      marginLeft: "250px ",
                     }}
                   />
                 </Tabs>
@@ -507,9 +507,9 @@ const Home = () => {
                       style={{
                         marginTop: "10px",
                         border: "1px solid #ccc",
-                        width: "50%",
-                        height: "50%",
-                        padding: "20px",
+                        width: "40%",
+                        height: "40%",
+                        padding: "12px",
                         borderRadius: "10px",
                         alignItems: "center",
                         justifyContent: "center",

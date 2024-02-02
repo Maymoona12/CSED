@@ -12,7 +12,11 @@ const About = () => {
       }}
     >
       <div>
-        <img src={Logo} alt="Logo" style={{ width: "100%", height: "auto", marginTop:"40px" }} />
+        <img
+          src={Logo}
+          alt="Logo"
+          style={{ width: "100%", height: "auto", marginTop: "40px" }}
+        />
       </div>
 
       <div style={{ maxWidth: "60%" }}>
@@ -22,9 +26,9 @@ const About = () => {
           color="#808080"
           sx={{
             margin: "70px",
-            marginTop:"120",
-            marginBottom:"20px",
-            fontFamily: "	Brush Script MT",
+            marginTop: "120",
+            marginBottom: "20px",
+            fontFamily: "Sitka Heading",
           }}
         >
           About CSED
@@ -33,8 +37,8 @@ const About = () => {
           variant="h5"
           sx={{
             margin: "75px",
-            marginTop:"40px",
-            fontFamily: "ADVERTISEMENT",
+            marginTop: "15px",
+            fontFamily: "Sitka Heading",
           }}
         >
           The CSED (Computer Systems Engineering Department) Portal is a
