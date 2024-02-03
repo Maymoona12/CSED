@@ -134,8 +134,11 @@ const PhotosPage = () => {
     const formData = new FormData();
 
     if (image.length > 0) {
-      formData.append("images[]", image[0]);
+      image.forEach((file, index) => {
+        formData.append(`images[${index}]`, file);
+      });
     }
+
     const selectedFolderData = folders_data.find(
       (folder) => folder.id === parseInt(folder_Id)
     );
