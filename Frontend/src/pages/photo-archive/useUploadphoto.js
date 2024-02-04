@@ -11,14 +11,14 @@ const useUploadphoto = () => {
       console.log(data.data);
       showSnackbar({
         severity: "success",
-        message: "Upload Photo Successfully",
+        message: "Upload Photos Successfully",
       });
     },
     onError: (error) => {
       console.log(error);
       showSnackbar({
         severity: "error",
-        message: "Failed to Upload Photo",
+        message: "Failed to Upload Photos",
       });
     },
   });
