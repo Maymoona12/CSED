@@ -165,7 +165,7 @@ const AppBarLayout = () => {
   const [title, setTitle] = useState(" ");
   const [text, setText] = useState(" ");
   const [file, setFile] = useState(" ");
-  const fileExtension = file.split(".").pop().toLowerCase();
+  const fileExtension = file ? file.split(".").pop().toLowerCase() : "";
   const isImage = ["jpg", "jpeg", "png", "gif", "bmp"].includes(fileExtension);
   const isDocument = ["pdf", "doc", "docx", "txt", "pptx"].includes(
     fileExtension

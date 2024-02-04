@@ -81,7 +81,7 @@ export default function Login() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              padding: "60px",
+              padding: "50px",
               margin: "0px 0px",
             }}
           >
